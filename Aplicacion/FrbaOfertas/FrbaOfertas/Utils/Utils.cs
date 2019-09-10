@@ -1,27 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
+using System.Data.SqlClient;
+using System.Globalization;
 using System.Windows.Forms;
-using testTpGdd.BD;
+using FrbaOfertas.ConexionBD;
 
-namespace testTpGdd.Utils
+
+
+namespace FrbaOfertas.Utils
 {
 
-    class Util
+
+    class Utils
     {
 
-        private Util utils;
+        private Utils utils;
 
-        public Util getInstance()
+        public Utils getInstance()
         {
             if (this.utils == null)
             {
-                this.utils = new Util();
+                this.utils = new Utils();
             }
             return this.utils;
         }
@@ -75,7 +78,7 @@ namespace testTpGdd.Utils
 
         public BindingSource showSelect(DataGridView data, String nomTabla, params String[] parametros)
         {
-            SqlConnection conn = ConexionBD.configDBConnection();
+            SqlConnection conn = ConexionBD.ConexionBD.configDBConnection();
             BindingSource bindingSource1 = new BindingSource();
             String query;
             if (parametros.Length == 1)
