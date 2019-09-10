@@ -54,7 +54,7 @@ namespace FrbaOfertas.ConexionBD
 
             string database = "testBd";
             string username = "sa";
-            string password = "Comafi2019";
+            string password = "";
 
             return GetDBConnection(datasource, database, username, password);
         }
