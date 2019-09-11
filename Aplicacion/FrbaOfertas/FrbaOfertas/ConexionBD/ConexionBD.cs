@@ -50,11 +50,11 @@ namespace FrbaOfertas.ConexionBD
 
         public static SqlConnection configDBConnection()
         {
-            string datasource = @"NBK033170\SQLSERVER201";
+            string datasource = @"NBK033170\SQLSERVER2012";
 
-            string database = "testBd";
-            string username = "sa";
-            string password = "";
+            string database = "GESTION_DE_GATOS"; // ¿O 'GD2C2019'?
+            string username = "gd";
+            string password = "gd2019";
 
             return GetDBConnection(datasource, database, username, password);
         }
