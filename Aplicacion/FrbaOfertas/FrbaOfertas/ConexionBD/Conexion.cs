@@ -11,16 +11,16 @@ using FrbaOfertas.Utils;
 
 namespace FrbaOfertas.ConexionBD
 {
-    class ConexionBD
+    public partial class Conexion: Form
     {
-        private ConexionBD conexion;
+        private Conexion conexion;
         private StringBuilder errorMessages = new StringBuilder();
 
-        public ConexionBD getInstance()
+        public Conexion getInstance()
         {
             if (this.conexion == null)
             {
-                this.conexion = new ConexionBD();
+                this.conexion = new Conexion();
             }
             return this.conexion;
         }
@@ -106,7 +106,7 @@ namespace FrbaOfertas.ConexionBD
         //Param 1 nombre de la funcion, los restantes serian parametros propios de la funcion
         public Object executeScalarFunction(String nomFunct, params Object[] parametros)
         {
-            SqlConnection conn = ConexionBD.configDBConnection();
+            SqlConnection conn = Conexion.configDBConnection();
             openConnection(conn);
             Object split;
             if (parametros.Length == 1)
@@ -151,7 +151,7 @@ namespace FrbaOfertas.ConexionBD
 
         public void executeProcedure(String nomProcedure, List<String> values, params Object[] parametros)
         {
-            SqlConnection conn = ConexionBD.configDBConnection();
+            SqlConnection conn = Conexion.configDBConnection();
             using (SqlCommand cmd = new SqlCommand(nomProcedure, conn))
             {
 
@@ -180,7 +180,7 @@ namespace FrbaOfertas.ConexionBD
         {
             List<Object> resultQuery = new List<Object>();
             String query = "SELECT ";
-            SqlConnection conn = ConexionBD.configDBConnection();
+            SqlConnection conn = Conexion.configDBConnection();
             for (int i = 0; i < numParametros; i++)
             {
                 query = query + parametros[i];
@@ -251,7 +251,7 @@ namespace FrbaOfertas.ConexionBD
         public DataTable selectReturnMultiplyRows(String nomTabla, int numParametros, params Object[] parametros)
         {
             string query = "SELECT ";
-            SqlConnection conn = ConexionBD.configDBConnection();
+            SqlConnection conn = Conexion.configDBConnection();
             DataTable dtResult = null;
             for (int i = 0; i < numParametros; i++)
             {
@@ -286,7 +286,7 @@ namespace FrbaOfertas.ConexionBD
 
         public int executeQuery(String query)
         {
-            SqlConnection conn = ConexionBD.configDBConnection();
+            SqlConnection conn = Conexion.configDBConnection();
             int ret = -1;
             try
             {

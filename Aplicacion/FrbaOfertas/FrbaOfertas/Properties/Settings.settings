@@ -3,7 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="Schema" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">GESTION_DE_GATOS</Value>
+    </Setting>
+    <Setting Name="fecha" Type="System.String" Scope="User">
+      <Value Profile="(Default)">14/09/2019</Value>
     </Setting>
   </Settings>
 </SettingsFile>

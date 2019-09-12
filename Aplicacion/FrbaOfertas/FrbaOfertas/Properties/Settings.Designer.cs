@@ -25,10 +25,22 @@ namespace FrbaOfertas.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("GESTION_DE_GATOS")]
         public string Schema {
             get {
                 return ((string)(this["Schema"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("14/09/2019")]
+        public string fecha {
+            get {
+                return ((string)(this["fecha"]));
+            }
+            set {
+                this["fecha"] = value;
             }
         }
     }

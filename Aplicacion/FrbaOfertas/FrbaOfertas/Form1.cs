@@ -45,5 +45,10 @@ namespace FrbaOfertas
                 error_message.Visible = true;
             }
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

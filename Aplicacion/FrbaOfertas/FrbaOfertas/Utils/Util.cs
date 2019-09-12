@@ -15,16 +15,16 @@ namespace FrbaOfertas.Utils
 {
 
 
-    class Utils
+   public partial  class Util: Form
     {
 
-        private Utils utils;
+        private Util utils;
 
-        public Utils getInstance()
+        public Util getInstance()
         {
             if (this.utils == null)
             {
-                this.utils = new Utils();
+                this.utils = new Util();
             }
             return this.utils;
         }
@@ -78,7 +78,7 @@ namespace FrbaOfertas.Utils
 
         public BindingSource showSelect(DataGridView data, String nomTabla, params String[] parametros)
         {
-            SqlConnection conn = ConexionBD.ConexionBD.configDBConnection();
+            SqlConnection conn = ConexionBD.Conexion.configDBConnection();
             BindingSource bindingSource1 = new BindingSource();
             String query;
             if (parametros.Length == 1)
