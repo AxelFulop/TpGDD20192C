@@ -44,11 +44,10 @@ namespace FrbaOfertas.Login
             List<String> values = new List<String>() { "@userName", "@bloqueado", "@fechaBloqueo" };
             if (new Util().getInstance().isAnyEmpty(this.Controls))
             {
-                MessageBox.Show("No pueden haber campos sin completar");
+                MessageBox.Show("Complete los campos");
             }
             else
             {
-
                 Object usr = new Conexion().executeScalarFunction("existeUsuario", this.textBoxUser.Text);
                 Object loginValido = new Conexion().executeScalarFunction("validateLogin",textBoxUser.Text,textBoxPassword.Text);
                 Object bloqueado = new Conexion().executeScalarFunction("userIsBlocked",textBoxUser.Text);
@@ -57,40 +56,28 @@ namespace FrbaOfertas.Login
                 Object auxTime = new Conexion().executeScalarFunction("obtenerFecha",this.textBoxUser.Text,this.tiempoBloqueo);
                 Int32 unixDateUser = Convert.ToInt32(auxTime);
                 if (Convert.ToInt32(bloqueado) == 1 && unixDateTime < unixDateUser)
-                    {
-                     
-                        new Util().ClearTextBoxes(this.Controls);
-                        MessageBox.Show("Usuario bloqueado,vuelva a intentar mas tarde");
-                       
-                    }
-                    else if ((Convert.ToInt32(loginValido) == 0) && (Convert.ToInt32(bloqueado) == 0))
                 {
-                 
-                        MessageBox.Show("Login satisfactiorio");
-                        
-                   
-                    
+                    new Util().ClearTextBoxes(this.Controls);
+                    MessageBox.Show("Usuario bloqueado, vuelva a intentar más tarde");  
                 }
-
+                else if ((Convert.ToInt32(loginValido) == 0) && (Convert.ToInt32(bloqueado) == 0))
+                {
+                    MessageBox.Show("Ingreso satisfactiorio");
+                    //Redireccionar según rol
+                }
                 else if ((Convert.ToInt32(bloqueado) == 1) && (unixDateTime >= unixDateUser))
                 {
-                
-                 new Conexion().executeProcedure("updateBloqueadoUser", values, this.textBoxUser.Text, "0","NULL");
-                 MessageBox.Show("Usuario: " + textBoxUser.Text + " desbloqueado");
+                    new Conexion().executeProcedure("updateBloqueadoUser", values, this.textBoxUser.Text, "0","NULL");
+                    MessageBox.Show("Usuario: " + textBoxUser.Text + " desbloqueado");
                     if (Convert.ToInt32(loginValido) == 0 && Convert.ToInt32(bloqueado) == 0)
-                {
-                 
+                    {
                         MessageBox.Show("Login satisfactiorio");
-                        
-                   
-                    
-                }
+                        //Redireccionar según rol
+                    }
                 }
                 else
                 {
                     contIntentosFallidos = contIntentosFallidos - 1;
-                    MessageBox.Show("Login incorrecto, le quedan: " + contIntentosFallidos + " intentos");
-
                     if (contIntentosFallidos == 0)
                     {
                         MessageBox.Show("Ha agotado el maximo de intentos permitidos, se le bloqueara el usuario por " + this.tiempoBloqueo + " minutos");
@@ -99,6 +86,10 @@ namespace FrbaOfertas.Login
                         new Util().ClearTextBoxes(this.Controls);
                         contIntentosFallidos = 3;
                     }
+                    else
+                    {
+                        MessageBox.Show("Ingreso incorrecto, le quedan: " + contIntentosFallidos + " intentos");
+                    }
                 }
             }
         }
@@ -106,6 +97,16 @@ namespace FrbaOfertas.Login
              private void buttonSalir_Click(object sender, EventArgs e)
              {
                  this.Close();
+             }
+
+             private void label1_Click(object sender, EventArgs e)
+             {
+
+             }
+
+             private void label4_Click(object sender, EventArgs e)
+             {
+
              }
 
             
