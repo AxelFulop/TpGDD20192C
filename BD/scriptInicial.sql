@@ -1,5 +1,206 @@
+----- Eliminación de stored procedures ---------
+
+IF OBJECT_ID('GESTION_DE_GATOS.altaUsuario') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.altaUsuario
+
+IF OBJECT_ID('GESTION_DE_GATOS.actualizaBloqueoUsuario') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.actualizaBloqueoUsuario
+
+
+----- Eliminación de funciones ---------
+
+IF OBJECT_ID('GESTION_DE_GATOS.existeUsuario') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.existeUsuario
+
+IF OBJECT_ID('GESTION_DE_GATOS.obtenerFecha') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.obtenerFecha
+
+IF OBJECT_ID('GESTION_DE_GATOS.usuarioEstaBloqueado') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.usuarioEstaBloqueado
+
+IF OBJECT_ID('GESTION_DE_GATOS.loginValido') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.loginValido
+
+------------ Eliminación de tablas    ------------------
+
+IF OBJECT_ID('GESTION_DE_GATOS.FuncionalidadXRol','U') IS NOT NULL
+    DROP TABLE GESTION_DE_GATOS.FuncionalidadXRol;
+
+IF OBJECT_ID('GESTION_DE_GATOS.UsuarioXRol','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.UsuarioXRol;
+
+IF OBJECT_ID('GESTION_DE_GATOS.Rol','U') IS NOT NULL
+    DROP TABLE GESTION_DE_GATOS.Rol;
+
+IF OBJECT_ID('GESTION_DE_GATOS.Usuario','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.Usuario;
+
+IF OBJECT_ID('GESTION_DE_GATOS.Funcionalidad','U') IS NOT NULL
+    DROP TABLE GESTION_DE_GATOS.Funcionalidad;
+
+IF OBJECT_ID('GESTION_DE_GATOS.FormaPago','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.FormaPago;
+
+IF OBJECT_ID('GESTION_DE_GATOS.Carga','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.Carga;
+
+IF OBJECT_ID('GESTION_DE_GATOS.Cuenta','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.Cuenta;
+
+IF OBJECT_ID('GESTION_DE_GATOS.Compra','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.Compra;
+
+IF OBJECT_ID('GESTION_DE_GATOS.Factura','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.Factura;
+
+IF OBJECT_ID('GESTION_DE_GATOS.Cliente','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.Cliente;
+
+IF OBJECT_ID('GESTION_DE_GATOS.Proveedor','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.Proveedor;
+
+IF OBJECT_ID('GESTION_DE_GATOS.Oferta','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.Oferta;
+
+IF OBJECT_ID('GESTION_DE_GATOS.Cupon','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.Cupon;
+
 --CREACION TABLAS
 
+-------Eliminación del esquema------
+
+IF EXISTS (SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'GESTION_DE_GATOS')
+    DROP SCHEMA NO_COMPILA
+GO
+ 
+/* Creación del esquema */
+CREATE SCHEMA GESTION_DE_GATOS AUTHORIZATION gdCupon2019
+GO
+
+
+/* Creación de las tablas */
+CREATE TABLE GESTION_DE_GATOS.Funcionalidad(
+funcionalidad_id INT IDENTITY PRIMARY KEY,
+funcionalidad_funcionalidad VARCHAR(100)
+);
+
+CREATE TABLE GESTION_DE_GATOS.Rol(
+rol_id INT IDENTITY PRIMARY KEY,
+rol_nombre VARCHAR(15),
+rol_habilitado BIT
+);
+
+CREATE TABLE GESTION_DE_GATOS.FuncionalidadXRol(
+rol_id INT NOT NULL FOREIGN KEY REFERENCES GESTION_DE_GATOS.Rol(rol_id),
+funcionalidad_id INT NOT NULL FOREIGN KEY REFERENCES GESTION_DE_GATOS.Funcionalidad(funcionalidad_id)
+PRIMARY KEY(rol_id,funcionalidad_id)
+);
+
+
+CREATE TABLE GESTION_DE_GATOS.Usuario(
+usuario_nombre VARCHAR(50) PRIMARY KEY,
+usuario_password VARBINARY(128),
+usuario_bloqueado INT DEFAULT 0,
+usuario_fecha_bloqueo DATETIME
+);
+
+CREATE TABLE GESTION_DE_GATOS.UsuarioXRol(
+	usuario_nombre VARCHAR(50) NOT NULL FOREIGN KEY REFERENCES GESTION_DE_GATOS.Usuario(usuario_nombre),
+	rol_id INT NOT NULL FOREIGN KEY REFERENCES GESTION_DE_GATOS.Rol(rol_id),
+	PRIMARY KEY (usuario_nombre,rol_id)
+);
 
 
 
+/* Creación de procedures */
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.altaUsuario
+@nombreUsuario varchar(50),
+@password varchar(128)
+AS
+BEGIN 
+DECLARE @passHash varbinary(128)
+SET @passHash =  HASHBYTES('SHA2_256',@password)
+INSERT INTO GESTION_DE_GATOS.Usuario (usuario_nombre,usuario_password) VALUES (@nombreUsuario,@passHash)
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.actualizaBloqueoUsuario
+@nombreUsuario VARCHAR(50),
+@bloqueado VARCHAR(1),
+@fechaBloqueo VARCHAR(20)
+AS
+BEGIN
+if @bloqueado = 1  
+BEGIN
+UPDATE GESTION_DE_GATOS.Usuario SET usuario_bloqueado = CAST(@bloqueado as INT),usuario_bloqueado = CAST(@fechaBloqueo as datetime) WHERE usuario_nombre= @nombreUsuario
+END
+if @bloqueado = 0 
+BEGIN
+UPDATE GESTION_DE_GATOS.Usuario SET usuario_bloqueado = CAST(@bloqueado as INT),usuario_fecha_bloqueo = NULL WHERE usuario_nombre = @nombreUsuario
+END
+END
+
+
+/* Creación de funciones */
+GO
+CREATE FUNCTION GESTION_DE_GATOS.existeUsuario(@nombreUsuario VARCHAR(50))
+RETURNS INT
+AS
+BEGIN
+DECLARE @ret int,@userDummy varchar(50)
+SET @userDummy = (SELECT usuario_bloqueado FROM GESTION_DE_GATOS.Usuario where usuario_nombre = @nombreUsuario)
+IF @nombreUsuario = @userDummy 
+SET @ret = 0
+ELSE
+SET @ret = 1
+RETURN @ret
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.obtenerFecha(@nombreUsuario VARCHAR(50),@increase INT)
+RETURNS BIGINT
+BEGIN 
+DECLARE @dummyUser VARCHAR(30),
+        @ret BIGINT,
+		@fechaCon15Mins DATETIME
+SET @fechaCon15Mins = (SELECT DATEADD(minute,@increase,usuario_fecha_bloqueo) FROM GESTION_DE_GATOS.Usuario WHERE usuario_nombre = @nombreUsuario)
+SET @ret = (SELECT DATEDIFF(SECOND,{d '1970-01-01'},@fechaCon15Mins) FROM GESTION_DE_GATOS.Usuario WHERE usuario_nombre = @nombreUsuario)
+IF @ret IS NULL
+BEGIN
+SET @ret =-1;
+END
+RETURN @ret;
+END
+
+GO
+CREATE  FUNCTION GESTION_DE_GATOS.usuarioEstaBloqueado(@nombreUsuario VARCHAR(50))
+RETURNS INT
+AS
+BEGIN
+DECLARE @ret INT
+SET @ret = (SELECT usuario_bloqueado FROM GESTION_DE_GATOS.Usuario WHERE usuario_nombre = @nombreUsuario)
+RETURN @ret
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.loginValido(@nombreUsuario VARCHAR(50),@password VARCHAR(128))
+RETURNS INT
+AS
+BEGIN
+DECLARE @userDummy VARCHAR(30),
+        @PasswordDummy VARBINARY(128),
+		@ret BIT
+SET @userDummy = (SELECT usuario_nombre from GESTION_DE_GATOS.Usuario  where usuario_nombre = @nombreUsuario)
+SET @PasswordDummy = (SELECT  usuario_password from GESTION_DE_GATOS.Usuario where usuario_password = HASHBYTES('SHA2_256',@password))
+IF  @userDummy IS NOT NULL AND @PasswordDummy IS NOT NULL
+BEGIN
+SET @ret = 0
+END
+ELSE
+BEGIN
+SET @ret = 1
+END
+RETURN @ret
+END
