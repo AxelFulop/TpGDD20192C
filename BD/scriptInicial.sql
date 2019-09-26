@@ -80,38 +80,62 @@ GO
 
 /* Creación de las tablas */
 CREATE TABLE GESTION_DE_GATOS.Funcionalidad(
-funcionalidad_id INT IDENTITY PRIMARY KEY,
-funcionalidad_funcionalidad VARCHAR(100)
+funcionalidad_id INT IDENTITY,
+funcionalidad_descripcion VARCHAR(100)
+PRIMARY KEY (funcionalidad_id)
 );
 
 CREATE TABLE GESTION_DE_GATOS.Rol(
-rol_id INT IDENTITY PRIMARY KEY,
+rol_id INT IDENTITY,
 rol_nombre VARCHAR(15),
-rol_habilitado BIT
+rol_habilitado BIT,
+PRIMARY KEY (rol_id)
 );
 
 CREATE TABLE GESTION_DE_GATOS.FuncionalidadXRol(
-rol_id INT NOT NULL FOREIGN KEY REFERENCES GESTION_DE_GATOS.Rol(rol_id),
-funcionalidad_id INT NOT NULL FOREIGN KEY REFERENCES GESTION_DE_GATOS.Funcionalidad(funcionalidad_id)
+rol_id INT NOT NULL,
+funcionalidad_id INT NOT NULL,
 PRIMARY KEY(rol_id,funcionalidad_id)
 );
 
 
 CREATE TABLE GESTION_DE_GATOS.Usuario(
-usuario_nombre VARCHAR(50) PRIMARY KEY,
+usuario_id INT IDENTITY,
+usuario_nombre VARCHAR(50) UNIQUE,
 usuario_password VARBINARY(128),
 usuario_bloqueado INT DEFAULT 0,
 usuario_fecha_bloqueo DATETIME
+PRIMARY KEY(usuario_id)
 );
 
 CREATE TABLE GESTION_DE_GATOS.UsuarioXRol(
-	usuario_nombre VARCHAR(50) NOT NULL FOREIGN KEY REFERENCES GESTION_DE_GATOS.Usuario(usuario_nombre),
-	rol_id INT NOT NULL FOREIGN KEY REFERENCES GESTION_DE_GATOS.Rol(rol_id),
-	PRIMARY KEY (usuario_nombre,rol_id)
+usuario_id VARCHAR(50) NOT NULL,
+rol_id INT NOT NULL,
+PRIMARY KEY (usuario_id,rol_id)
 );
 
 
+CREATE TABLE GESTION_DE_GATOS.Tarjeta(
+tarjeta_id INT IDENTITY,
+tarjeta_tipo CHAR(1),
+tarjeta_banco VARCHAR(15),
+tarjeta_fecha_vencimiento DATETIME,
+tarjeta_cvv INT,
+PRIMARY KEY (tarjeta_id)
+);
 
+CREATE TABLE GESTION_DE_GATOS.Carga(
+carga_id INT IDENTITY ,
+carga_fecha DATETIME,
+carga_monto NUMERIC(18,0)
+);
+
+/* Claves Foraneas*/
+
+FOREIGN KEY REFERENCES GESTION_DE_GATOS.FuncionalidadXRol(rol_id)
+FOREIGN KEY REFERENCES GESTION_DE_GATOS.FuncionalidadXRol(funcionalidad_id)
+FOREIGN KEY REFERENCES GESTION_DE_GATOS.UsuarioXRol(usuario_id)
+FOREIGN KEY REFERENCES GESTION_DE_GATOS.UsuarioXRol(rol_id)
 /* Creación de procedures */
 
 GO
