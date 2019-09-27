@@ -1,4 +1,4 @@
------ Eliminación de stored procedures ---------
+----- Eliminacion de stored procedures ---------
 
 IF OBJECT_ID('GESTION_DE_GATOS.altaUsuario') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.altaUsuario
@@ -7,7 +7,7 @@ IF OBJECT_ID('GESTION_DE_GATOS.actualizaBloqueoUsuario') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.actualizaBloqueoUsuario
 
 
------ Eliminación de funciones ---------
+----- Eliminacion de funciones ---------
 
 IF OBJECT_ID('GESTION_DE_GATOS.existeUsuario') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.existeUsuario
@@ -21,7 +21,7 @@ IF OBJECT_ID('GESTION_DE_GATOS.usuarioEstaBloqueado') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.loginValido') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.loginValido
 
------------- Eliminación de tablas    ------------------
+------------ Eliminacion de tablas    ------------------
 
 IF OBJECT_ID('GESTION_DE_GATOS.FuncionalidadXRol','U') IS NOT NULL
     DROP TABLE GESTION_DE_GATOS.FuncionalidadXRol;
@@ -66,18 +66,18 @@ IF OBJECT_ID('GESTION_DE_GATOS.Cupon','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.Cupon;
 
 
--------Eliminación del esquema------
+-------Eliminacion del esquema------
 
 IF EXISTS (SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'GESTION_DE_GATOS')
     DROP SCHEMA GESTION_DE_GATOS
 GO
  
-/* Creación del esquema */
+/* Creacion del esquema */
 CREATE SCHEMA GESTION_DE_GATOS AUTHORIZATION gdCupon2019
 GO
 
 
-/* Creación de las tablas */
+/* Creacion de las tablas */
 CREATE TABLE GESTION_DE_GATOS.Funcionalidad(
 funcionalidad_id INT IDENTITY,
 funcionalidad_descripcion VARCHAR(100)
@@ -167,7 +167,7 @@ END
 END
 
 
-/* Creación de funciones */
+/* Creacion de funciones */
 GO
 CREATE FUNCTION GESTION_DE_GATOS.existeUsuario(@nombreUsuario VARCHAR(50))
 RETURNS INT

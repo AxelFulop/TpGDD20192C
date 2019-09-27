@@ -38,7 +38,7 @@ namespace FrbaOfertas
             if (isValidated)
             {
                 this.Hide();
-                new AbmCliente.Form1().Show();
+                new AbmCliente.AbmCliente().Show();
             }
             else
             {
