@@ -33,15 +33,15 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.mail = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.apellido = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.dni = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.nombre = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.grid = new System.Windows.Forms.DataGridView();
             this.ApellidoColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DniColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MailColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,7 +52,7 @@
             this.FechaNacColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EditColumn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -64,13 +64,13 @@
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.textBox4);
+            this.panel1.Controls.Add(this.mail);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.textBox3);
+            this.panel1.Controls.Add(this.apellido);
             this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.textBox2);
+            this.panel1.Controls.Add(this.dni);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.nombre);
             this.panel1.Cursor = System.Windows.Forms.Cursors.Default;
             this.panel1.Location = new System.Drawing.Point(12, 3);
             this.panel1.Name = "panel1";
@@ -97,6 +97,7 @@
             this.button2.TabIndex = 9;
             this.button2.Text = "Limpiar";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label4
             // 
@@ -116,12 +117,12 @@
             this.button1.Text = "Filtrar";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // textBox4
+            // mail
             // 
-            this.textBox4.Location = new System.Drawing.Point(395, 99);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(144, 26);
-            this.textBox4.TabIndex = 6;
+            this.mail.Location = new System.Drawing.Point(395, 99);
+            this.mail.Name = "mail";
+            this.mail.Size = new System.Drawing.Size(144, 26);
+            this.mail.TabIndex = 6;
             // 
             // label3
             // 
@@ -132,12 +133,12 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "Apellido";
             // 
-            // textBox3
+            // apellido
             // 
-            this.textBox3.Location = new System.Drawing.Point(395, 54);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(144, 26);
-            this.textBox3.TabIndex = 4;
+            this.apellido.Location = new System.Drawing.Point(395, 54);
+            this.apellido.Name = "apellido";
+            this.apellido.Size = new System.Drawing.Size(144, 26);
+            this.apellido.TabIndex = 4;
             // 
             // label2
             // 
@@ -148,12 +149,12 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "DNI";
             // 
-            // textBox2
+            // dni
             // 
-            this.textBox2.Location = new System.Drawing.Point(102, 96);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(144, 26);
-            this.textBox2.TabIndex = 2;
+            this.dni.Location = new System.Drawing.Point(102, 96);
+            this.dni.Name = "dni";
+            this.dni.Size = new System.Drawing.Size(144, 26);
+            this.dni.TabIndex = 2;
             // 
             // label1
             // 
@@ -165,12 +166,12 @@
             this.label1.Text = "Nombre";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // textBox1
+            // nombre
             // 
-            this.textBox1.Location = new System.Drawing.Point(102, 51);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(144, 26);
-            this.textBox1.TabIndex = 0;
+            this.nombre.Location = new System.Drawing.Point(102, 51);
+            this.nombre.Name = "nombre";
+            this.nombre.Size = new System.Drawing.Size(144, 26);
+            this.nombre.TabIndex = 0;
             // 
             // panel3
             // 
@@ -181,10 +182,10 @@
             this.panel3.Size = new System.Drawing.Size(756, 10);
             this.panel3.TabIndex = 2;
             // 
-            // dataGridView1
+            // grid
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ApellidoColumn,
             this.DniColumn,
             this.MailColumn,
@@ -194,11 +195,13 @@
             this.CPColumn,
             this.FechaNacColumn,
             this.EditColumn});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 158);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 28;
-            this.dataGridView1.Size = new System.Drawing.Size(755, 274);
-            this.dataGridView1.TabIndex = 0;
+            this.grid.Location = new System.Drawing.Point(12, 158);
+            this.grid.Name = "grid";
+            this.grid.RowTemplate.Height = 28;
+            this.grid.Size = new System.Drawing.Size(755, 274);
+            this.grid.TabIndex = 0;
+            this.grid.Tag = "grid";
+            this.grid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // ApellidoColumn
             // 
@@ -263,18 +266,16 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(778, 444);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.grid);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
-            this.MaximumSize = new System.Drawing.Size(1200, 800);
-            this.MinimumSize = new System.Drawing.Size(800, 500);
             this.Name = "AbmCliente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ABM - Cliente";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -282,19 +283,19 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox nombre;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox mail;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox apellido;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox dni;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView grid;
         private System.Windows.Forms.DataGridViewTextBoxColumn ApellidoColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn DniColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn MailColumn;

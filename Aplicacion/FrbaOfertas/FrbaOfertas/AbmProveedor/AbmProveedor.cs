@@ -15,6 +15,28 @@ namespace FrbaOfertas.AbmProveedor
         public AbmProveedor()
         {
             InitializeComponent();
+            actualizarGridBtn();
+        }
+
+        //Es llamada cada vez que se agrega un elemento al grid
+        private void actualizarGridBtn()
+        {
+            for (int i = 0; i < grid.Rows.Count; i++)
+            {
+                grid.Rows[i].Cells[8].Value = "Editar";
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            razonSocial.Text = "";
+            cuit.Text = "";
+            mail.Text = "";
         }
     }
 }
