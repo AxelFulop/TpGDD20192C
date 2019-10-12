@@ -1,1 +1,4 @@
 # TpGDD20191C
+
+DER 
+https://www.draw.io/?state=%7B%22ids%22:%5B%221QT4fGVFv0EDqR40Wk-QvFEvGMaPmyboV%22%5D,%22action%22:%22open%22,%22userId%22:%22109248968916833803333%22%7D#G1QT4fGVFv0EDqR40Wk-QvFEvGMaPmyboV
