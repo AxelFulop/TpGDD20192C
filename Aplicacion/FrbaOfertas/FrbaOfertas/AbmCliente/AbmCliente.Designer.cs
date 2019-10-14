@@ -43,9 +43,9 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.grid = new System.Windows.Forms.DataGridView();
             this.ApellidoColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NombreColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DniColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MailColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NombreColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TelefonoColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DireccionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CPColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -187,9 +187,9 @@
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ApellidoColumn,
+            this.NombreColumn,
             this.DniColumn,
             this.MailColumn,
-            this.NombreColumn,
             this.TelefonoColumn,
             this.DireccionColumn,
             this.CPColumn,
@@ -209,6 +209,12 @@
             this.ApellidoColumn.Name = "ApellidoColumn";
             this.ApellidoColumn.ReadOnly = true;
             // 
+            // NombreColumn
+            // 
+            this.NombreColumn.HeaderText = "Nombre";
+            this.NombreColumn.Name = "NombreColumn";
+            this.NombreColumn.ReadOnly = true;
+            // 
             // DniColumn
             // 
             this.DniColumn.HeaderText = "DNI";
@@ -220,12 +226,6 @@
             this.MailColumn.HeaderText = "Mail";
             this.MailColumn.Name = "MailColumn";
             this.MailColumn.ReadOnly = true;
-            // 
-            // NombreColumn
-            // 
-            this.NombreColumn.HeaderText = "Nombre";
-            this.NombreColumn.Name = "NombreColumn";
-            this.NombreColumn.ReadOnly = true;
             // 
             // TelefonoColumn
             // 
@@ -253,7 +253,7 @@
             // 
             // EditColumn
             // 
-            this.EditColumn.DataPropertyName = "Editar";
+            this.EditColumn.DataPropertyName = "DNI";
             this.EditColumn.HeaderText = "";
             this.EditColumn.Name = "EditColumn";
             this.EditColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -297,9 +297,9 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.DataGridView grid;
         private System.Windows.Forms.DataGridViewTextBoxColumn ApellidoColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NombreColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn DniColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn MailColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NombreColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn TelefonoColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn DireccionColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn CPColumn;

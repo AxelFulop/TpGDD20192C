@@ -29,15 +29,6 @@
         private void InitializeComponent()
         {
             this.grid = new System.Windows.Forms.DataGridView();
-            this.RazonColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MailColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TelefonoColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DireccionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CPColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CuitColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RubroColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ContactoColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EditColumn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
@@ -49,6 +40,15 @@
             this.cuit = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.razonSocial = new System.Windows.Forms.TextBox();
+            this.RazonColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MailColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TelefonoColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DireccionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CPColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CuitColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RubroColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ContactoColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EditColumn = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -72,64 +72,6 @@
             this.grid.Size = new System.Drawing.Size(755, 274);
             this.grid.TabIndex = 3;
             this.grid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // RazonColumn
-            // 
-            this.RazonColumn.HeaderText = "Razón social";
-            this.RazonColumn.Name = "RazonColumn";
-            this.RazonColumn.ReadOnly = true;
-            // 
-            // MailColumn
-            // 
-            this.MailColumn.HeaderText = "Mail";
-            this.MailColumn.Name = "MailColumn";
-            this.MailColumn.ReadOnly = true;
-            // 
-            // TelefonoColumn
-            // 
-            this.TelefonoColumn.HeaderText = "Telefono";
-            this.TelefonoColumn.Name = "TelefonoColumn";
-            this.TelefonoColumn.ReadOnly = true;
-            // 
-            // DireccionColumn
-            // 
-            this.DireccionColumn.HeaderText = "Dirección";
-            this.DireccionColumn.Name = "DireccionColumn";
-            this.DireccionColumn.ReadOnly = true;
-            // 
-            // CPColumn
-            // 
-            this.CPColumn.HeaderText = "CP";
-            this.CPColumn.Name = "CPColumn";
-            this.CPColumn.ReadOnly = true;
-            // 
-            // CuitColumn
-            // 
-            this.CuitColumn.HeaderText = "CUIT";
-            this.CuitColumn.Name = "CuitColumn";
-            this.CuitColumn.ReadOnly = true;
-            // 
-            // RubroColumn
-            // 
-            this.RubroColumn.HeaderText = "Rubro";
-            this.RubroColumn.Name = "RubroColumn";
-            this.RubroColumn.ReadOnly = true;
-            // 
-            // ContactoColumn
-            // 
-            this.ContactoColumn.HeaderText = "Contacto";
-            this.ContactoColumn.Name = "ContactoColumn";
-            this.ContactoColumn.ReadOnly = true;
-            // 
-            // EditColumn
-            // 
-            this.EditColumn.DataPropertyName = "Editar";
-            this.EditColumn.HeaderText = "";
-            this.EditColumn.Name = "EditColumn";
-            this.EditColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.EditColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.EditColumn.Text = "Editar";
-            this.EditColumn.UseColumnTextForButtonValue = true;
             // 
             // panel3
             // 
@@ -238,6 +180,61 @@
             this.razonSocial.Name = "razonSocial";
             this.razonSocial.Size = new System.Drawing.Size(144, 26);
             this.razonSocial.TabIndex = 0;
+            // 
+            // RazonColumn
+            // 
+            this.RazonColumn.HeaderText = "Razón social";
+            this.RazonColumn.Name = "RazonColumn";
+            this.RazonColumn.ReadOnly = true;
+            // 
+            // MailColumn
+            // 
+            this.MailColumn.HeaderText = "Mail";
+            this.MailColumn.Name = "MailColumn";
+            this.MailColumn.ReadOnly = true;
+            // 
+            // TelefonoColumn
+            // 
+            this.TelefonoColumn.HeaderText = "Telefono";
+            this.TelefonoColumn.Name = "TelefonoColumn";
+            this.TelefonoColumn.ReadOnly = true;
+            // 
+            // DireccionColumn
+            // 
+            this.DireccionColumn.HeaderText = "Dirección";
+            this.DireccionColumn.Name = "DireccionColumn";
+            this.DireccionColumn.ReadOnly = true;
+            // 
+            // CPColumn
+            // 
+            this.CPColumn.HeaderText = "CP";
+            this.CPColumn.Name = "CPColumn";
+            this.CPColumn.ReadOnly = true;
+            // 
+            // CuitColumn
+            // 
+            this.CuitColumn.HeaderText = "CUIT";
+            this.CuitColumn.Name = "CuitColumn";
+            this.CuitColumn.ReadOnly = true;
+            // 
+            // RubroColumn
+            // 
+            this.RubroColumn.HeaderText = "Rubro";
+            this.RubroColumn.Name = "RubroColumn";
+            this.RubroColumn.ReadOnly = true;
+            // 
+            // ContactoColumn
+            // 
+            this.ContactoColumn.HeaderText = "Contacto";
+            this.ContactoColumn.Name = "ContactoColumn";
+            this.ContactoColumn.ReadOnly = true;
+            // 
+            // EditColumn
+            // 
+            this.EditColumn.DataPropertyName = "Mail";
+            this.EditColumn.HeaderText = "";
+            this.EditColumn.Name = "EditColumn";
+            this.EditColumn.Text = "Editar";
             // 
             // AbmProveedor
             // 

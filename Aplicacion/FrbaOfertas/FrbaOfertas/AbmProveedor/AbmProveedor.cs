@@ -15,16 +15,14 @@ namespace FrbaOfertas.AbmProveedor
         public AbmProveedor()
         {
             InitializeComponent();
-            actualizarGridBtn();
+            agregarFila("PLL", "antonny@gmail.com", "12368854", "Calle falsa 123",
+                    "1423", "44234234579", "Gastronomia", "Pepe");
         }
 
-        //Es llamada cada vez que se agrega un elemento al grid
-        private void actualizarGridBtn()
+        private void agregarFila(string razonSocial, string mail, string telefono, string direccion,
+                                string CP, string cuil, string rubro, string contacto)
         {
-            for (int i = 0; i < grid.Rows.Count; i++)
-            {
-                grid.Rows[i].Cells[8].Value = "Editar";
-            }
+            grid.Rows.Add(razonSocial, mail, telefono, direccion, CP, cuil, rubro, contacto, "Editar");
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

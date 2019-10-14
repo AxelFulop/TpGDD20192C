@@ -15,14 +15,14 @@ namespace FrbaOfertas.AbmCliente
         public AbmCliente()
         {
             InitializeComponent();
-            actualizarGridBtn();
+            agregarFila("Sanchez", "Roberto", "25323666", "antonny@gmail.com", "155467543", "Calle falsa 123",
+                    "1423", "23/03/1993");
         }
 
-        //Es llamada cada vez que se agrega un elemento al grid
-        private void actualizarGridBtn(){
-            for(int i = 0; i < grid.Rows.Count; i++){
-                grid.Rows[i].Cells[8].Value = "Editar";
-            }  
+        private void agregarFila(string apellido, string nombre, string dni, string mail,
+                                string telefono, string direccion, string CP, string fechaNac)
+        {
+            grid.Rows.Add(apellido, nombre, dni, mail, telefono, direccion, CP, fechaNac, "Editar");
         }
 
         private void Form1_Load(object sender, EventArgs e)
