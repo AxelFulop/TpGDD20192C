@@ -15,16 +15,11 @@ namespace FrbaOfertas.Login
 {
     public partial class LoginABM : Form
     {
-        int contIntentosFallidos;
-        int tiempoBloqueo;
         Util utils = new Util();
 
-        public LoginABM(int tiempoBloqueo, int contIntentosFallidos)
+        public LoginABM()
         {
             InitializeComponent();
-            this.contIntentosFallidos = contIntentosFallidos;
-            this.tiempoBloqueo = tiempoBloqueo;
-        
         }
 
         private void LoginABM_Load(object sender, EventArgs e)
@@ -32,36 +27,15 @@ namespace FrbaOfertas.Login
 
         }
 
-        private void buttonLimpiar_Click(object sender, EventArgs e)
-        {
-           utils.getInstance().ClearTextBoxes(this.Controls);
-        }
-
-
-        private void buttonIngesar_Click(object sender, EventArgs e)
+        private void label4_Click(object sender, EventArgs e)
         {
 
-            
         }
 
-             private void buttonSalir_Click(object sender, EventArgs e)
-             {
-                 this.Close();
-             }
-
-             private void label1_Click(object sender, EventArgs e)
-             {
-
-             }
-
-             private void label4_Click(object sender, EventArgs e)
-             {
-
-             }
-
-            
-            
-        
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //Chequear si las dos contraseñas son iguales y si los datos están completos...
+        }
     }
 
  }
