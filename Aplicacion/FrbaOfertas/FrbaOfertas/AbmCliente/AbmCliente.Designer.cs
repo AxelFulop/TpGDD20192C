@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
@@ -51,6 +52,7 @@
             this.CPColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FechaNacColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EditColumn = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.BorrarColumn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.SuspendLayout();
@@ -74,7 +76,7 @@
             this.panel1.Cursor = System.Windows.Forms.Cursors.Default;
             this.panel1.Location = new System.Drawing.Point(12, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(755, 137);
+            this.panel1.Size = new System.Drawing.Size(1166, 348);
             this.panel1.TabIndex = 0;
             this.panel1.Tag = "";
             // 
@@ -179,7 +181,7 @@
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel3.Location = new System.Drawing.Point(11, 142);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(756, 10);
+            this.panel3.Size = new System.Drawing.Size(1167, 221);
             this.panel3.TabIndex = 2;
             // 
             // grid
@@ -194,11 +196,12 @@
             this.DireccionColumn,
             this.CPColumn,
             this.FechaNacColumn,
-            this.EditColumn});
+            this.EditColumn,
+            this.BorrarColumn});
             this.grid.Location = new System.Drawing.Point(12, 158);
             this.grid.Name = "grid";
             this.grid.RowTemplate.Height = 28;
-            this.grid.Size = new System.Drawing.Size(755, 274);
+            this.grid.Size = new System.Drawing.Size(1166, 485);
             this.grid.TabIndex = 0;
             this.grid.Tag = "grid";
             this.grid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
@@ -261,14 +264,29 @@
             this.EditColumn.Text = "Editar";
             this.EditColumn.UseColumnTextForButtonValue = true;
             // 
+            // BorrarColumn
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.BorrarColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            this.BorrarColumn.HeaderText = "";
+            this.BorrarColumn.Name = "BorrarColumn";
+            // 
             // AbmCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(778, 444);
+            this.ClientSize = new System.Drawing.Size(1178, 644);
             this.Controls.Add(this.grid);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1200, 700);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(1200, 700);
             this.Name = "AbmCliente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ABM - Cliente";
@@ -305,5 +323,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn CPColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn FechaNacColumn;
         private System.Windows.Forms.DataGridViewButtonColumn EditColumn;
+        private System.Windows.Forms.DataGridViewButtonColumn BorrarColumn;
     }
 }

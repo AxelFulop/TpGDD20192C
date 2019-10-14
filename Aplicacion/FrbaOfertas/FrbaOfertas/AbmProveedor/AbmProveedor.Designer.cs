@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.grid = new System.Windows.Forms.DataGridView();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -49,6 +50,7 @@
             this.RubroColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ContactoColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EditColumn = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.BorrarColumn = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -65,11 +67,12 @@
             this.CuitColumn,
             this.RubroColumn,
             this.ContactoColumn,
-            this.EditColumn});
+            this.EditColumn,
+            this.BorrarColumn});
             this.grid.Location = new System.Drawing.Point(12, 163);
             this.grid.Name = "grid";
             this.grid.RowTemplate.Height = 28;
-            this.grid.Size = new System.Drawing.Size(755, 274);
+            this.grid.Size = new System.Drawing.Size(1162, 481);
             this.grid.TabIndex = 3;
             this.grid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -79,7 +82,7 @@
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel3.Location = new System.Drawing.Point(11, 147);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(756, 10);
+            this.panel3.Size = new System.Drawing.Size(1163, 217);
             this.panel3.TabIndex = 5;
             // 
             // panel1
@@ -99,7 +102,7 @@
             this.panel1.Cursor = System.Windows.Forms.Cursors.Default;
             this.panel1.Location = new System.Drawing.Point(12, 8);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(755, 137);
+            this.panel1.Size = new System.Drawing.Size(1162, 344);
             this.panel1.TabIndex = 4;
             this.panel1.Tag = "";
             // 
@@ -236,14 +239,29 @@
             this.EditColumn.Name = "EditColumn";
             this.EditColumn.Text = "Editar";
             // 
+            // BorrarColumn
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.BorrarColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            this.BorrarColumn.HeaderText = "";
+            this.BorrarColumn.Name = "BorrarColumn";
+            // 
             // AbmProveedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(778, 444);
+            this.ClientSize = new System.Drawing.Size(1178, 644);
             this.Controls.Add(this.grid);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1200, 700);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(1200, 700);
             this.Name = "AbmProveedor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ABM - Proveedor";
@@ -277,5 +295,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn RubroColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ContactoColumn;
         private System.Windows.Forms.DataGridViewButtonColumn EditColumn;
+        private System.Windows.Forms.DataGridViewButtonColumn BorrarColumn;
     }
 }

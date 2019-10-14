@@ -52,6 +52,12 @@
     <Compile Include="AbmCliente\AbmCliente.Designer.cs">
       <DependentUpon>AbmCliente.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmCliente\Creacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCliente\Creacion.Designer.cs">
+      <DependentUpon>Creacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmProveedor\AbmProveedor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,11 +97,11 @@
     <Compile Include="Facturar\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="Logeo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Logeo.Designer.cs">
+      <DependentUpon>Logeo.cs</DependentUpon>
     </Compile>
     <Compile Include="ListadoEstadistico\Form1.cs">
       <SubType>Form</SubType>
@@ -117,6 +123,9 @@
     <EmbeddedResource Include="AbmCliente\AbmCliente.resx">
       <DependentUpon>AbmCliente.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AbmCliente\Creacion.resx">
+      <DependentUpon>Creacion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AbmProveedor\AbmProveedor.resx">
       <DependentUpon>AbmProveedor.cs</DependentUpon>
     </EmbeddedResource>
@@ -135,8 +144,8 @@
     <EmbeddedResource Include="Facturar\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Logeo.resx">
+      <DependentUpon>Logeo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ListadoEstadistico\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

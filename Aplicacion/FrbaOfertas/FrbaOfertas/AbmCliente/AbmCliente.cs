@@ -22,7 +22,7 @@ namespace FrbaOfertas.AbmCliente
         private void agregarFila(string apellido, string nombre, string dni, string mail,
                                 string telefono, string direccion, string CP, string fechaNac)
         {
-            grid.Rows.Add(apellido, nombre, dni, mail, telefono, direccion, CP, fechaNac, "Editar");
+            grid.Rows.Add(apellido, nombre, dni, mail, telefono, direccion, CP, fechaNac, "Editar", "Eliminar");
         }
 
         private void Form1_Load(object sender, EventArgs e)

@@ -22,7 +22,7 @@ namespace FrbaOfertas.AbmProveedor
         private void agregarFila(string razonSocial, string mail, string telefono, string direccion,
                                 string CP, string cuil, string rubro, string contacto)
         {
-            grid.Rows.Add(razonSocial, mail, telefono, direccion, CP, cuil, rubro, contacto, "Editar");
+            grid.Rows.Add(razonSocial, mail, telefono, direccion, CP, cuil, rubro, contacto, "Editar", "Eliminar");
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

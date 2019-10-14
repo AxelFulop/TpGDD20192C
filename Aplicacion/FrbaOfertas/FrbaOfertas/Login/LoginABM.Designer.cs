@@ -39,7 +39,7 @@
             // 
             // textBoxUser
             // 
-            this.textBoxUser.Location = new System.Drawing.Point(261, 142);
+            this.textBoxUser.Location = new System.Drawing.Point(476, 239);
             this.textBoxUser.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxUser.Name = "textBoxUser";
             this.textBoxUser.Size = new System.Drawing.Size(253, 26);
@@ -48,7 +48,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(267, 107);
+            this.label1.Location = new System.Drawing.Point(482, 204);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(64, 20);
@@ -59,7 +59,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(267, 191);
+            this.label2.Location = new System.Drawing.Point(482, 288);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(92, 20);
@@ -68,7 +68,7 @@
             // 
             // textBoxPassword
             // 
-            this.textBoxPassword.Location = new System.Drawing.Point(261, 225);
+            this.textBoxPassword.Location = new System.Drawing.Point(476, 322);
             this.textBoxPassword.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(253, 26);
@@ -77,7 +77,7 @@
             // 
             // buttonLimpiar
             // 
-            this.buttonLimpiar.Location = new System.Drawing.Point(332, 335);
+            this.buttonLimpiar.Location = new System.Drawing.Point(547, 432);
             this.buttonLimpiar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonLimpiar.Name = "buttonLimpiar";
             this.buttonLimpiar.Size = new System.Drawing.Size(106, 36);
@@ -88,7 +88,7 @@
             // 
             // buttonIngesar
             // 
-            this.buttonIngesar.Location = new System.Drawing.Point(309, 272);
+            this.buttonIngesar.Location = new System.Drawing.Point(524, 369);
             this.buttonIngesar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonIngesar.Name = "buttonIngesar";
             this.buttonIngesar.Size = new System.Drawing.Size(150, 53);
@@ -100,10 +100,10 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(530, 9);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 32F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(371, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(236, 37);
+            this.label3.Size = new System.Drawing.Size(474, 73);
             this.label3.TabIndex = 6;
             this.label3.Text = "Inicio de sesión";
             // 
@@ -111,7 +111,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(778, 444);
+            this.ClientSize = new System.Drawing.Size(1178, 644);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.buttonIngesar);
             this.Controls.Add(this.buttonLimpiar);
@@ -121,9 +121,9 @@
             this.Controls.Add(this.textBoxUser);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(800, 500);
+            this.MaximumSize = new System.Drawing.Size(1200, 700);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(800, 500);
+            this.MinimumSize = new System.Drawing.Size(1200, 700);
             this.Name = "LoginABM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ofertas!";
