@@ -37,7 +37,29 @@ namespace FrbaOfertas.AbmCliente
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            var senderGrid = (DataGridView)sender;
 
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+                e.RowIndex >= 0)
+            {
+                if (e.ColumnIndex == 8) //Editar
+                {
+                    Dictionary<string, string> datos = ajustarDatosRow(grid.CurrentRow.Cells);
+                    this.Hide();
+                    new Editar(datos).Show();
+                }
+                else if (e.ColumnIndex == 9) //Eliminar
+                {
+                    Dictionary<string, string> datos = ajustarDatosRow(grid.CurrentRow.Cells);
+                    eliminar(datos);
+                    this.Refresh();
+                }
+            } 
+        }
+
+        private void eliminar(Dictionary<string, string> row)
+        {
+            //Eliminar cliente de la DB
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -46,6 +68,22 @@ namespace FrbaOfertas.AbmCliente
             apellido.Text = "";
             dni.Text = "";
             mail.Text = "";
+        }
+
+        private Dictionary<string, string> ajustarDatosRow(DataGridViewCellCollection row)
+        {
+            Dictionary<string, string> datosRow = new Dictionary<string, string>();
+
+            datosRow["nombre"] =  row["NombreColumn"].Value.ToString();
+            datosRow["apellido"] = row["ApellidoColumn"].Value.ToString();
+            datosRow["dni"] = row["DniColumn"].Value.ToString();
+            datosRow["mail"] = row["MailColumn"].Value.ToString();
+            datosRow["telefono"] = row["TelefonoColumn"].Value.ToString();
+            datosRow["direccion"] = row["DireccionColumn"].Value.ToString();
+            datosRow["codigoPostal"] = row["CPColumn"].Value.ToString();
+            datosRow["fechaNacimiento"] = row["FechaNacColumn"].Value.ToString();
+
+            return datosRow;
         }
     }
 }

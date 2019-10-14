@@ -41,5 +41,6 @@ C:\Users\fulopa\Desktop\UTN\GDD\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\o
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Login.LoginABM.resources
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmCliente.AbmCliente.resources
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmProveedor.AbmProveedor.resources
-C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmCliente.Creacion.resources
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Logeo.resources
+C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmCliente.Editar.resources
+C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmProveedor.Editar.resources
