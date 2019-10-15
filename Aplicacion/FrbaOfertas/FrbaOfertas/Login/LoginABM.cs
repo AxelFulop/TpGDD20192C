@@ -42,6 +42,46 @@ namespace FrbaOfertas.Login
             this.Close();
             new Logeo(5, 3).Show();
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void rol_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (this.rol.Text)
+            {
+                case "Cliente":
+                    this.panelProveedor.Hide();
+                    this.panelCliente.Show(); 
+                    break;
+                case "Proveedor":
+                    this.panelCliente.Hide();
+                    this.panelProveedor.Show(); 
+                    break;
+            }
+        }
+
+        private void razonSocial_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void telefono_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
  }
