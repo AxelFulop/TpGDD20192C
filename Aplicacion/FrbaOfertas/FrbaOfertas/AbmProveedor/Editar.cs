@@ -24,5 +24,16 @@ namespace FrbaOfertas.AbmProveedor
             this.rubro.Text = row["rubro"];
             this.contacto.Text = row["contacto"];
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            new AbmProveedor().Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //Verificar cambios y guardarlos en la DB
+        }
     }
 }

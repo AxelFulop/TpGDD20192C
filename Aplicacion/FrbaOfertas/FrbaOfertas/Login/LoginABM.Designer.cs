@@ -44,6 +44,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.rol = new System.Windows.Forms.ComboBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label3
@@ -179,7 +180,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(496, 559);
+            this.button1.Location = new System.Drawing.Point(512, 554);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(207, 48);
             this.button1.TabIndex = 21;
@@ -198,11 +199,23 @@
             this.rol.Size = new System.Drawing.Size(179, 28);
             this.rol.TabIndex = 22;
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(1058, 13);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(98, 39);
+            this.button2.TabIndex = 23;
+            this.button2.Text = "Volver";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // LoginABM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 644);
+            this.ControlBox = false;
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.rol);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox7);
@@ -251,5 +264,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox rol;
+        private System.Windows.Forms.Button button2;
     }
 }

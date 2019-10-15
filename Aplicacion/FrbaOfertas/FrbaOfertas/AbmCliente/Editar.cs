@@ -29,5 +29,16 @@ namespace FrbaOfertas.AbmCliente
         {
 
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            new AbmCliente().Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //Verificar cambios y guardarlos en la DB
+        }
     }
 }

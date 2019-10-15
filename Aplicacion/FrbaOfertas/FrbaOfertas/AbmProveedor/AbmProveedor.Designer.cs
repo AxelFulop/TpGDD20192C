@@ -30,17 +30,6 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.grid = new System.Windows.Forms.DataGridView();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.mail = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cuit = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.razonSocial = new System.Windows.Forms.TextBox();
             this.RazonColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MailColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TelefonoColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,6 +40,18 @@
             this.ContactoColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EditColumn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.BorrarColumn = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.mail = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cuit = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.razonSocial = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -76,6 +77,72 @@
             this.grid.TabIndex = 3;
             this.grid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
+            // RazonColumn
+            // 
+            this.RazonColumn.HeaderText = "Razón social";
+            this.RazonColumn.Name = "RazonColumn";
+            this.RazonColumn.ReadOnly = true;
+            // 
+            // MailColumn
+            // 
+            this.MailColumn.HeaderText = "Mail";
+            this.MailColumn.Name = "MailColumn";
+            this.MailColumn.ReadOnly = true;
+            // 
+            // TelefonoColumn
+            // 
+            this.TelefonoColumn.HeaderText = "Telefono";
+            this.TelefonoColumn.Name = "TelefonoColumn";
+            this.TelefonoColumn.ReadOnly = true;
+            // 
+            // DireccionColumn
+            // 
+            this.DireccionColumn.HeaderText = "Dirección";
+            this.DireccionColumn.Name = "DireccionColumn";
+            this.DireccionColumn.ReadOnly = true;
+            // 
+            // CPColumn
+            // 
+            this.CPColumn.HeaderText = "CP";
+            this.CPColumn.Name = "CPColumn";
+            this.CPColumn.ReadOnly = true;
+            // 
+            // CuitColumn
+            // 
+            this.CuitColumn.HeaderText = "CUIT";
+            this.CuitColumn.Name = "CuitColumn";
+            this.CuitColumn.ReadOnly = true;
+            // 
+            // RubroColumn
+            // 
+            this.RubroColumn.HeaderText = "Rubro";
+            this.RubroColumn.Name = "RubroColumn";
+            this.RubroColumn.ReadOnly = true;
+            // 
+            // ContactoColumn
+            // 
+            this.ContactoColumn.HeaderText = "Contacto";
+            this.ContactoColumn.Name = "ContactoColumn";
+            this.ContactoColumn.ReadOnly = true;
+            // 
+            // EditColumn
+            // 
+            this.EditColumn.DataPropertyName = "Mail";
+            this.EditColumn.HeaderText = "";
+            this.EditColumn.Name = "EditColumn";
+            this.EditColumn.Text = "Editar";
+            // 
+            // BorrarColumn
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.BorrarColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            this.BorrarColumn.HeaderText = "";
+            this.BorrarColumn.Name = "BorrarColumn";
+            // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
@@ -90,6 +157,7 @@
             this.panel1.AccessibleDescription = "";
             this.panel1.AccessibleName = "";
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button1);
@@ -105,6 +173,16 @@
             this.panel1.Size = new System.Drawing.Size(1162, 344);
             this.panel1.TabIndex = 4;
             this.panel1.Tag = "";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(896, 42);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(169, 57);
+            this.button3.TabIndex = 11;
+            this.button3.Text = "Nuevo proveedor";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label5
             // 
@@ -184,72 +262,6 @@
             this.razonSocial.Size = new System.Drawing.Size(144, 26);
             this.razonSocial.TabIndex = 0;
             // 
-            // RazonColumn
-            // 
-            this.RazonColumn.HeaderText = "Razón social";
-            this.RazonColumn.Name = "RazonColumn";
-            this.RazonColumn.ReadOnly = true;
-            // 
-            // MailColumn
-            // 
-            this.MailColumn.HeaderText = "Mail";
-            this.MailColumn.Name = "MailColumn";
-            this.MailColumn.ReadOnly = true;
-            // 
-            // TelefonoColumn
-            // 
-            this.TelefonoColumn.HeaderText = "Telefono";
-            this.TelefonoColumn.Name = "TelefonoColumn";
-            this.TelefonoColumn.ReadOnly = true;
-            // 
-            // DireccionColumn
-            // 
-            this.DireccionColumn.HeaderText = "Dirección";
-            this.DireccionColumn.Name = "DireccionColumn";
-            this.DireccionColumn.ReadOnly = true;
-            // 
-            // CPColumn
-            // 
-            this.CPColumn.HeaderText = "CP";
-            this.CPColumn.Name = "CPColumn";
-            this.CPColumn.ReadOnly = true;
-            // 
-            // CuitColumn
-            // 
-            this.CuitColumn.HeaderText = "CUIT";
-            this.CuitColumn.Name = "CuitColumn";
-            this.CuitColumn.ReadOnly = true;
-            // 
-            // RubroColumn
-            // 
-            this.RubroColumn.HeaderText = "Rubro";
-            this.RubroColumn.Name = "RubroColumn";
-            this.RubroColumn.ReadOnly = true;
-            // 
-            // ContactoColumn
-            // 
-            this.ContactoColumn.HeaderText = "Contacto";
-            this.ContactoColumn.Name = "ContactoColumn";
-            this.ContactoColumn.ReadOnly = true;
-            // 
-            // EditColumn
-            // 
-            this.EditColumn.DataPropertyName = "Mail";
-            this.EditColumn.HeaderText = "";
-            this.EditColumn.Name = "EditColumn";
-            this.EditColumn.Text = "Editar";
-            // 
-            // BorrarColumn
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.BorrarColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            this.BorrarColumn.HeaderText = "";
-            this.BorrarColumn.Name = "BorrarColumn";
-            // 
             // AbmProveedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -296,5 +308,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ContactoColumn;
         private System.Windows.Forms.DataGridViewButtonColumn EditColumn;
         private System.Windows.Forms.DataGridViewButtonColumn BorrarColumn;
+        private System.Windows.Forms.Button button3;
     }
 }

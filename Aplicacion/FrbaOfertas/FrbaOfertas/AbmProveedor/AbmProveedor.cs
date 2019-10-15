@@ -30,7 +30,7 @@ namespace FrbaOfertas.AbmProveedor
             var senderGrid = (DataGridView)sender;
 
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
-                e.RowIndex >= 0)
+                e.RowIndex >= 0 && e.RowIndex < grid.Rows.Count - 1)
             {
                 if (e.ColumnIndex == 8) //Editar
                 {
@@ -73,6 +73,12 @@ namespace FrbaOfertas.AbmProveedor
             datosRow["contacto"] = row["ContactoColumn"].Value.ToString();
 
             return datosRow;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new Nuevo().Show();
         }
     }
 }

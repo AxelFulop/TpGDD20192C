@@ -17,8 +17,8 @@ namespace FrbaOfertas
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Logeo(5,3));
-            //Application.Run(new AbmProveedor.AbmProveedor());
-            Application.Run(new AbmCliente.AbmCliente());
+            Application.Run(new AbmProveedor.AbmProveedor());
+            //Application.Run(new AbmCliente.AbmCliente());
         }
     }
 }

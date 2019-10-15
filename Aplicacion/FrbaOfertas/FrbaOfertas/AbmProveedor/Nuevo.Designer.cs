@@ -1,6 +1,6 @@
 ﻿namespace FrbaOfertas.AbmProveedor
 {
-    partial class Editar
+    partial class Nuevo
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.contacto = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
@@ -45,8 +46,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.razonSocial = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.contacto = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
+            // 
+            // contacto
+            // 
+            this.contacto.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.contacto.Location = new System.Drawing.Point(794, 336);
+            this.contacto.Name = "contacto";
+            this.contacto.Size = new System.Drawing.Size(309, 30);
+            this.contacto.TabIndex = 60;
             // 
             // button2
             // 
@@ -54,7 +62,7 @@
             this.button2.Location = new System.Drawing.Point(395, 505);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(174, 57);
-            this.button2.TabIndex = 41;
+            this.button2.TabIndex = 59;
             this.button2.Text = "Cancelar";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -65,8 +73,8 @@
             this.button1.Location = new System.Drawing.Point(592, 505);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(174, 57);
-            this.button1.TabIndex = 40;
-            this.button1.Text = "Guardar";
+            this.button1.TabIndex = 58;
+            this.button1.Text = "Registrar";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -77,7 +85,7 @@
             this.label11.Location = new System.Drawing.Point(624, 339);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(91, 25);
-            this.label11.TabIndex = 39;
+            this.label11.TabIndex = 57;
             this.label11.Text = "Contacto";
             // 
             // rubro
@@ -86,7 +94,7 @@
             this.rubro.Location = new System.Drawing.Point(794, 254);
             this.rubro.Name = "rubro";
             this.rubro.Size = new System.Drawing.Size(309, 30);
-            this.rubro.TabIndex = 38;
+            this.rubro.TabIndex = 56;
             // 
             // label10
             // 
@@ -95,7 +103,7 @@
             this.label10.Location = new System.Drawing.Point(624, 254);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(64, 25);
-            this.label10.TabIndex = 37;
+            this.label10.TabIndex = 55;
             this.label10.Text = "Rubro";
             // 
             // cuit
@@ -104,7 +112,7 @@
             this.cuit.Location = new System.Drawing.Point(794, 167);
             this.cuit.Name = "cuit";
             this.cuit.Size = new System.Drawing.Size(309, 30);
-            this.cuit.TabIndex = 36;
+            this.cuit.TabIndex = 54;
             // 
             // label9
             // 
@@ -113,7 +121,7 @@
             this.label9.Location = new System.Drawing.Point(624, 167);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(59, 25);
-            this.label9.TabIndex = 35;
+            this.label9.TabIndex = 53;
             this.label9.Text = "CUIT";
             // 
             // codigoPostal
@@ -122,7 +130,7 @@
             this.codigoPostal.Location = new System.Drawing.Point(794, 87);
             this.codigoPostal.Name = "codigoPostal";
             this.codigoPostal.Size = new System.Drawing.Size(309, 30);
-            this.codigoPostal.TabIndex = 34;
+            this.codigoPostal.TabIndex = 52;
             // 
             // label8
             // 
@@ -131,7 +139,7 @@
             this.label8.Location = new System.Drawing.Point(624, 87);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(132, 25);
-            this.label8.TabIndex = 33;
+            this.label8.TabIndex = 51;
             this.label8.Text = "Código postal";
             // 
             // direccion
@@ -140,7 +148,7 @@
             this.direccion.Location = new System.Drawing.Point(246, 334);
             this.direccion.Name = "direccion";
             this.direccion.Size = new System.Drawing.Size(309, 30);
-            this.direccion.TabIndex = 32;
+            this.direccion.TabIndex = 50;
             // 
             // label4
             // 
@@ -149,7 +157,7 @@
             this.label4.Location = new System.Drawing.Point(76, 334);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(93, 25);
-            this.label4.TabIndex = 31;
+            this.label4.TabIndex = 49;
             this.label4.Text = "Dirección";
             // 
             // telefono
@@ -158,7 +166,7 @@
             this.telefono.Location = new System.Drawing.Point(246, 249);
             this.telefono.Name = "telefono";
             this.telefono.Size = new System.Drawing.Size(309, 30);
-            this.telefono.TabIndex = 30;
+            this.telefono.TabIndex = 48;
             // 
             // label3
             // 
@@ -167,7 +175,7 @@
             this.label3.Location = new System.Drawing.Point(76, 249);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 25);
-            this.label3.TabIndex = 29;
+            this.label3.TabIndex = 47;
             this.label3.Text = "Teléfono";
             // 
             // mail
@@ -176,7 +184,7 @@
             this.mail.Location = new System.Drawing.Point(246, 167);
             this.mail.Name = "mail";
             this.mail.Size = new System.Drawing.Size(309, 30);
-            this.mail.TabIndex = 28;
+            this.mail.TabIndex = 46;
             // 
             // label2
             // 
@@ -185,7 +193,7 @@
             this.label2.Location = new System.Drawing.Point(76, 167);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(48, 25);
-            this.label2.TabIndex = 27;
+            this.label2.TabIndex = 45;
             this.label2.Text = "Mail";
             // 
             // razonSocial
@@ -194,7 +202,7 @@
             this.razonSocial.Location = new System.Drawing.Point(246, 82);
             this.razonSocial.Name = "razonSocial";
             this.razonSocial.Size = new System.Drawing.Size(309, 30);
-            this.razonSocial.TabIndex = 26;
+            this.razonSocial.TabIndex = 44;
             // 
             // label1
             // 
@@ -203,18 +211,10 @@
             this.label1.Location = new System.Drawing.Point(76, 82);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(123, 25);
-            this.label1.TabIndex = 25;
+            this.label1.TabIndex = 43;
             this.label1.Text = "Razón social";
             // 
-            // contacto
-            // 
-            this.contacto.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contacto.Location = new System.Drawing.Point(794, 336);
-            this.contacto.Name = "contacto";
-            this.contacto.Size = new System.Drawing.Size(309, 30);
-            this.contacto.TabIndex = 42;
-            // 
-            // Editar
+            // Nuevo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -242,9 +242,9 @@
             this.MaximumSize = new System.Drawing.Size(1200, 700);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(1200, 700);
-            this.Name = "Editar";
+            this.Name = "Nuevo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Editar proveedor";
+            this.Text = "Nuevo proveedor";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -252,6 +252,7 @@
 
         #endregion
 
+        private System.Windows.Forms.TextBox contacto;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label11;
@@ -269,6 +270,5 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox razonSocial;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox contacto;
     }
 }

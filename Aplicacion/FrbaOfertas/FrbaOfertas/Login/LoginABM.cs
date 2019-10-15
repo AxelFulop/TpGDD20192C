@@ -36,6 +36,12 @@ namespace FrbaOfertas.Login
         {
             //Chequear si las dos contraseñas son iguales y si los datos están completos...
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            new Logeo(5, 3).Show();
+        }
     }
 
  }
