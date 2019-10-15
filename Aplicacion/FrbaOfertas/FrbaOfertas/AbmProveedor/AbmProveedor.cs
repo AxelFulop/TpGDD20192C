@@ -15,8 +15,15 @@ namespace FrbaOfertas.AbmProveedor
         public AbmProveedor()
         {
             InitializeComponent();
-            agregarFila("PLL", "antonny@gmail.com", "12368854", "Calle falsa 123",
-                    "1423", "44234234579", "Gastronomia", "Pepe");
+            cargarProveedores();
+        }
+
+        private void cargarProveedores()
+        {
+            agregarFila("PLL", "plack@gmail.com", "12368854", "Electrón 123",
+                    "1423", "44234234579", "Electrónica", "Marcelo");
+            agregarFila("CPA", "blabla@gmail.com", "12368854", "Calle falsa 123",
+                    "1123", "44234234579", "Gastronomia", "Ignacio");
         }
 
         private void agregarFila(string razonSocial, string mail, string telefono, string direccion,

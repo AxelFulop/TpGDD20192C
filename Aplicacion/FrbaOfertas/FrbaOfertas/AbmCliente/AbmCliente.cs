@@ -15,8 +15,15 @@ namespace FrbaOfertas.AbmCliente
         public AbmCliente()
         {
             InitializeComponent();
-            agregarFila("Sanchez", "Roberto", "25323666", "antonny@gmail.com", "155467543", "Calle falsa 123",
-                    "1423", "23/03/1993");
+            cargarClientes();
+        }
+
+        private void cargarClientes(){
+            //Obtenerlos de la DB
+            agregarFila("Sanchez", "Roberto", "25323666", "robertito@gmail.com", "153546843", "Calle falsa 123",
+                    "1413", "23/03/1993");
+            agregarFila("Bravo", "Mario", "30398766", "mario@gmail.com", "155464543", "Mario Bravo 123",
+                    "1423", "14/09/1983");
         }
 
         private void agregarFila(string apellido, string nombre, string dni, string mail,
