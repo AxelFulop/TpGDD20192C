@@ -12,10 +12,20 @@ namespace FrbaOfertas.AbmProveedor
 {
     public partial class AbmProveedor : Form
     {
+        private List<DataGridViewRow> clientes = new List<DataGridViewRow>();
+
         public AbmProveedor()
         {
             InitializeComponent();
             cargarProveedores();
+            actualizarListaClientes();
+        }
+
+        private void actualizarListaClientes()
+        {
+            for(int i = 0; i < grid.Rows.Count; i++){
+                clientes.Add(grid.Rows[i]);
+            }
         }
 
         private void cargarProveedores()
@@ -64,6 +74,12 @@ namespace FrbaOfertas.AbmProveedor
             razonSocial.Text = "";
             cuit.Text = "";
             mail.Text = "";
+
+            grid.Rows.Clear();
+            List<DataGridViewRow> clienesSinLineaFinalVacia = new List<DataGridViewRow>();
+            clienesSinLineaFinalVacia.AddRange(clientes);
+            clienesSinLineaFinalVacia.RemoveAt(clientes.Count-1);
+            grid.Rows.AddRange(clienesSinLineaFinalVacia.ToArray());
         }
 
         private Dictionary<string, string> ajustarDatosRow(DataGridViewCellCollection row)
@@ -86,6 +102,34 @@ namespace FrbaOfertas.AbmProveedor
         {
             this.Hide();
             new Nuevo().Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string razonSocial = this.razonSocial.Text;
+            string cuit = this.cuit.Text;
+            string mail = this.mail.Text;
+
+            List<DataGridViewRow> rowsFiltered = new List<DataGridViewRow>();
+
+            for(int i = 0; i < this.clientes.Count - 1; i++){
+                DataGridViewRow row = this.clientes[i];
+                String razonCell = row.Cells["RazonColumn"].Value.ToString();
+                String mailCell = row.Cells["MailColumn"].Value.ToString();
+                String cuitCell = row.Cells["CuitColumn"].Value.ToString();
+
+                bool condicionRazonSocial = string.IsNullOrEmpty(razonSocial) || razonCell.Equals(razonSocial);
+                bool condicionCuit = string.IsNullOrEmpty(cuit) || cuitCell.Equals(cuit);
+                bool condicionMail = string.IsNullOrEmpty(mail) || mailCell.Equals(mail);
+
+                if (condicionCuit && condicionMail && condicionRazonSocial)
+                {
+                    rowsFiltered.Add(row);
+                }
+            }
+
+            grid.Rows.Clear();
+            grid.Rows.AddRange(rowsFiltered.ToArray());
         }
     }
 }
