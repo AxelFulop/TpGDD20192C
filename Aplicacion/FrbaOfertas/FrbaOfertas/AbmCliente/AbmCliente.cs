@@ -12,6 +12,8 @@ namespace FrbaOfertas.AbmCliente
 {
     public partial class AbmCliente : Form
     {
+        private DataTable clientes;
+
         public AbmCliente()
         {
             InitializeComponent();
@@ -19,17 +21,12 @@ namespace FrbaOfertas.AbmCliente
         }
 
         private void cargarClientes(){
-            //Obtenerlos de la DB
-            agregarFila("Sanchez", "Roberto", "25323666", "robertito@gmail.com", "153546843", "Calle falsa 123",
-                    "1413", "23/03/1993");
-            agregarFila("Bravo", "Mario", "30398766", "mario@gmail.com", "155464543", "Mario Bravo 123",
-                    "1423", "14/09/1983");
-        }
+            ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+            string[] param = new string[]{"cliente_nombre","cliente_apellido","cliente_numero_dni","cliente_email","cliente_telefono",
+                                          "cliente_direccion_calle","cliente_direccion_codigo_postal", "cliente_fecha_nacimiento"};
 
-        private void agregarFila(string apellido, string nombre, string dni, string mail,
-                                string telefono, string direccion, string CP, string fechaNac)
-        {
-            grid.Rows.Add(apellido, nombre, dni, mail, telefono, direccion, CP, fechaNac, "Editar", "Eliminar");
+            clientes = conection.selectReturnMultiplyRows("Cliente", 8, param);
+            grid.DataSource = clientes;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -75,6 +72,8 @@ namespace FrbaOfertas.AbmCliente
             apellido.Text = "";
             dni.Text = "";
             mail.Text = "";
+
+            grid.DataSource = clientes;
         }
 
         private Dictionary<string, string> ajustarDatosRow(DataGridViewCellCollection row)
@@ -97,6 +96,19 @@ namespace FrbaOfertas.AbmCliente
         {
             this.Hide();
             new Nuevo().Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string nombre = this.nombre.Text;
+            string apellido = this.apellido.Text;
+            string mail = this.mail.Text;
+            string dni = this.dni.Text;
+
+            DataView dataView = new DataView(clientes); 
+            dataView.RowFilter = string.Format("cliente_nombre LIKE '%{0}%' AND cliente_apellido LIKE '%{1}%' AND cliente_email LIKE '%{2}%'", nombre, apellido, mail);
+            //FALTA FILTRAR POR EL DNI
+            grid.DataSource = dataView;
         }
     }
 }

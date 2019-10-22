@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button3 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -43,17 +43,6 @@
             this.nombre = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.grid = new System.Windows.Forms.DataGridView();
-            this.ApellidoColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NombreColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DniColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MailColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TelefonoColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DireccionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CPColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FechaNacColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EditColumn = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.BorrarColumn = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.button3 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.SuspendLayout();
@@ -81,6 +70,16 @@
             this.panel1.Size = new System.Drawing.Size(1166, 133);
             this.panel1.TabIndex = 0;
             this.panel1.Tag = "";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(870, 45);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(210, 59);
+            this.button3.TabIndex = 11;
+            this.button3.Text = "Nuevo cliente";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label5
             // 
@@ -120,6 +119,7 @@
             this.button1.TabIndex = 8;
             this.button1.Text = "Filtrar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // mail
             // 
@@ -188,18 +188,8 @@
             // 
             // grid
             // 
+            this.grid.AllowUserToOrderColumns = true;
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ApellidoColumn,
-            this.NombreColumn,
-            this.DniColumn,
-            this.MailColumn,
-            this.TelefonoColumn,
-            this.DireccionColumn,
-            this.CPColumn,
-            this.FechaNacColumn,
-            this.EditColumn,
-            this.BorrarColumn});
             this.grid.Location = new System.Drawing.Point(12, 158);
             this.grid.Name = "grid";
             this.grid.RowTemplate.Height = 28;
@@ -207,85 +197,6 @@
             this.grid.TabIndex = 0;
             this.grid.Tag = "grid";
             this.grid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // ApellidoColumn
-            // 
-            this.ApellidoColumn.HeaderText = "Apellido";
-            this.ApellidoColumn.Name = "ApellidoColumn";
-            this.ApellidoColumn.ReadOnly = true;
-            // 
-            // NombreColumn
-            // 
-            this.NombreColumn.HeaderText = "Nombre";
-            this.NombreColumn.Name = "NombreColumn";
-            this.NombreColumn.ReadOnly = true;
-            // 
-            // DniColumn
-            // 
-            this.DniColumn.HeaderText = "DNI";
-            this.DniColumn.Name = "DniColumn";
-            this.DniColumn.ReadOnly = true;
-            // 
-            // MailColumn
-            // 
-            this.MailColumn.HeaderText = "Mail";
-            this.MailColumn.Name = "MailColumn";
-            this.MailColumn.ReadOnly = true;
-            // 
-            // TelefonoColumn
-            // 
-            this.TelefonoColumn.HeaderText = "Telefono";
-            this.TelefonoColumn.Name = "TelefonoColumn";
-            this.TelefonoColumn.ReadOnly = true;
-            // 
-            // DireccionColumn
-            // 
-            this.DireccionColumn.HeaderText = "Dirección";
-            this.DireccionColumn.Name = "DireccionColumn";
-            this.DireccionColumn.ReadOnly = true;
-            // 
-            // CPColumn
-            // 
-            this.CPColumn.HeaderText = "CP";
-            this.CPColumn.Name = "CPColumn";
-            this.CPColumn.ReadOnly = true;
-            // 
-            // FechaNacColumn
-            // 
-            this.FechaNacColumn.HeaderText = "Fecha Nac";
-            this.FechaNacColumn.Name = "FechaNacColumn";
-            this.FechaNacColumn.ReadOnly = true;
-            // 
-            // EditColumn
-            // 
-            this.EditColumn.DataPropertyName = "DNI";
-            this.EditColumn.HeaderText = "";
-            this.EditColumn.Name = "EditColumn";
-            this.EditColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.EditColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.EditColumn.Text = "Editar";
-            this.EditColumn.UseColumnTextForButtonValue = true;
-            // 
-            // BorrarColumn
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.BorrarColumn.DefaultCellStyle = dataGridViewCellStyle3;
-            this.BorrarColumn.HeaderText = "";
-            this.BorrarColumn.Name = "BorrarColumn";
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(870, 45);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(210, 59);
-            this.button3.TabIndex = 11;
-            this.button3.Text = "Nuevo cliente";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // AbmCliente
             // 
@@ -326,16 +237,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.DataGridView grid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ApellidoColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NombreColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DniColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MailColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TelefonoColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DireccionColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CPColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FechaNacColumn;
-        private System.Windows.Forms.DataGridViewButtonColumn EditColumn;
-        private System.Windows.Forms.DataGridViewButtonColumn BorrarColumn;
         private System.Windows.Forms.Button button3;
     }
 }

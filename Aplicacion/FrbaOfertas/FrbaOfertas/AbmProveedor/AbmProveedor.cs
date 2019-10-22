@@ -12,37 +12,22 @@ namespace FrbaOfertas.AbmProveedor
 {
     public partial class AbmProveedor : Form
     {
-        private DataTable clientes;// = new DataTable();
+        private DataTable proveedores;// = new DataTable();
 
         public AbmProveedor()
         {
             InitializeComponent();
             cargarProveedores();
-            //actualizarListaClientes();
-        }
-
-        private void actualizarListaClientes()
-        {
-            clientes = grid.DataSource as DataTable;
         }
 
         private void cargarProveedores()
         {
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
-            string[] param = new string[]{"razonSocial","mail","telefono","direccion","codigoPostal",
-                                          "cuit","rubro","contacto"/*, "Editar", "Eliminar"*/};
+            string[] param = new string[]{"proveedor_razon_social","proveedor_email","proveedor_telefono","proveedor_direccion_calle","proveedor_direccion_codigo_postal",
+                                          "proveedor_cuit","proveedor_rubro"};
 
-            clientes = conection.selectReturnMultiplyRows("Proveedores", 8, param);
-
-            BindingSource bs = new BindingSource();
-            bs.DataSource = clientes;
-            grid.DataSource = bs;
-
-            /*
-            agregarFila("PLL", "plack@gmail.com", "12368854", "Electrón 123",
-                    "1423", "44234234579", "Electrónica", "Marcelo");
-            agregarFila("CPA", "blabla@gmail.com", "12368854", "Calle falsa 123", 
-                    "1123", "44234234579", "Gastronomia", "Ignacio"); */
+            proveedores = conection.selectReturnMultiplyRows("Proveedor", 7, param);
+            grid.DataSource = proveedores;
         }
 
         private void agregarFila(string razonSocial, string mail, string telefono, string direccion,
@@ -84,7 +69,7 @@ namespace FrbaOfertas.AbmProveedor
             cuit.Text = "";
             mail.Text = "";
 
-            grid.DataSource = clientes;
+            grid.DataSource = proveedores;
         }
 
         private Dictionary<string, string> ajustarDatosRow(DataGridViewCellCollection row)
@@ -115,15 +100,9 @@ namespace FrbaOfertas.AbmProveedor
             string cuit = this.cuit.Text;
             string mail = this.mail.Text;
 
-            DataView dataView = new DataView(clientes);
-            dataView.RowFilter = string.Format("Mail LIKE '%{0}%'", mail);
+            DataView dataView = new DataView(proveedores);
+            dataView.RowFilter = string.Format("proveedor_email LIKE '%{0}%' AND proveedor_razon_social LIKE '%{1}%' AND proveedor_cuit LIKE '%{2}%'", mail, razonSocial, cuit);
             grid.DataSource = dataView;
-
-            /* BindingSource bs = new BindingSource();
-            bs.DataSource = grid.DataSource;
-            bs.Filter = "MailColumn like '%" + mail + "%'";
-            grid.DataSource = bs; */
-
         }
     }
 }

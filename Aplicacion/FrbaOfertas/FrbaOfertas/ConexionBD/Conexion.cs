@@ -50,9 +50,9 @@ namespace FrbaOfertas.ConexionBD
 
         public static SqlConnection configDBConnection()
         {
-            string datasource = @"NBK033170\SQLSERVER2012";
+            string datasource = @"LAPTOP-JEFKPT5O\SQLSERVER2012";
 
-            string database = "GESTION_DE_GATOS"; // ¿O 'GD2C2019'?
+            string database = "GD2C2019"; // ¿O 'GD2C2019'?
             string username = "gd";
             string password = "gd2019";
 
@@ -255,13 +255,10 @@ namespace FrbaOfertas.ConexionBD
             DataTable dtResult = null;
             for (int i = 0; i < numParametros; i++)
             {
-                query = query + parametros[i];
+                query = query + parametros[i] + ",";
             }
-            if (parametros[parametros.Length] == null)
-            {
-                query = query + "from " + Properties.Settings.Default.Schema + "." + nomTabla + " " + parametros[parametros.Length];
-            }
-            query = query + "from " + Properties.Settings.Default.Schema + "." + nomTabla;
+            query = query.TrimEnd(',');
+            query = query + " from " + Properties.Settings.Default.Schema + "." + nomTabla;
             openConnection(conn);
             try
             {
