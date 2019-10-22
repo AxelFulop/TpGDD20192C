@@ -15,7 +15,7 @@ namespace FrbaOfertas.Utils
 {
 
 
-   public partial  class Util: Form
+   public partial class Util: Form
     {
 
         private Util utils;

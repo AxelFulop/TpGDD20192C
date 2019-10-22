@@ -12,34 +12,43 @@ namespace FrbaOfertas.AbmProveedor
 {
     public partial class AbmProveedor : Form
     {
-        private List<DataGridViewRow> clientes = new List<DataGridViewRow>();
+        private DataTable clientes;// = new DataTable();
 
         public AbmProveedor()
         {
             InitializeComponent();
             cargarProveedores();
-            actualizarListaClientes();
+            //actualizarListaClientes();
         }
 
         private void actualizarListaClientes()
         {
-            for(int i = 0; i < grid.Rows.Count; i++){
-                clientes.Add(grid.Rows[i]);
-            }
+            clientes = grid.DataSource as DataTable;
         }
 
         private void cargarProveedores()
         {
+            ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+            string[] param = new string[]{"razonSocial","mail","telefono","direccion","codigoPostal",
+                                          "cuit","rubro","contacto"/*, "Editar", "Eliminar"*/};
+
+            clientes = conection.selectReturnMultiplyRows("Proveedores", 8, param);
+
+            BindingSource bs = new BindingSource();
+            bs.DataSource = clientes;
+            grid.DataSource = bs;
+
+            /*
             agregarFila("PLL", "plack@gmail.com", "12368854", "Electrón 123",
                     "1423", "44234234579", "Electrónica", "Marcelo");
-            agregarFila("CPA", "blabla@gmail.com", "12368854", "Calle falsa 123",
-                    "1123", "44234234579", "Gastronomia", "Ignacio");
+            agregarFila("CPA", "blabla@gmail.com", "12368854", "Calle falsa 123", 
+                    "1123", "44234234579", "Gastronomia", "Ignacio"); */
         }
 
         private void agregarFila(string razonSocial, string mail, string telefono, string direccion,
                                 string CP, string cuil, string rubro, string contacto)
         {
-            grid.Rows.Add(razonSocial, mail, telefono, direccion, CP, cuil, rubro, contacto, "Editar", "Eliminar");
+            grid.Rows.Add(razonSocial, mail, telefono, direccion, CP, cuil, rubro, contacto, "Editar", "Eliminar");      
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -75,11 +84,7 @@ namespace FrbaOfertas.AbmProveedor
             cuit.Text = "";
             mail.Text = "";
 
-            grid.Rows.Clear();
-            List<DataGridViewRow> clienesSinLineaFinalVacia = new List<DataGridViewRow>();
-            clienesSinLineaFinalVacia.AddRange(clientes);
-            clienesSinLineaFinalVacia.RemoveAt(clientes.Count-1);
-            grid.Rows.AddRange(clienesSinLineaFinalVacia.ToArray());
+            grid.DataSource = clientes;
         }
 
         private Dictionary<string, string> ajustarDatosRow(DataGridViewCellCollection row)
@@ -110,26 +115,15 @@ namespace FrbaOfertas.AbmProveedor
             string cuit = this.cuit.Text;
             string mail = this.mail.Text;
 
-            List<DataGridViewRow> rowsFiltered = new List<DataGridViewRow>();
+            DataView dataView = new DataView(clientes);
+            dataView.RowFilter = string.Format("Mail LIKE '%{0}%'", mail);
+            grid.DataSource = dataView;
 
-            for(int i = 0; i < this.clientes.Count - 1; i++){
-                DataGridViewRow row = this.clientes[i];
-                String razonCell = row.Cells["RazonColumn"].Value.ToString();
-                String mailCell = row.Cells["MailColumn"].Value.ToString();
-                String cuitCell = row.Cells["CuitColumn"].Value.ToString();
+            /* BindingSource bs = new BindingSource();
+            bs.DataSource = grid.DataSource;
+            bs.Filter = "MailColumn like '%" + mail + "%'";
+            grid.DataSource = bs; */
 
-                bool condicionRazonSocial = string.IsNullOrEmpty(razonSocial) || razonCell.Equals(razonSocial);
-                bool condicionCuit = string.IsNullOrEmpty(cuit) || cuitCell.Equals(cuit);
-                bool condicionMail = string.IsNullOrEmpty(mail) || mailCell.Equals(mail);
-
-                if (condicionCuit && condicionMail && condicionRazonSocial)
-                {
-                    rowsFiltered.Add(row);
-                }
-            }
-
-            grid.Rows.Clear();
-            grid.Rows.AddRange(rowsFiltered.ToArray());
         }
     }
 }
