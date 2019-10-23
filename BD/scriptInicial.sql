@@ -22,6 +22,62 @@ IF OBJECT_ID('GESTION_DE_GATOS.usuarioEstaBloqueado') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.loginValido') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.loginValido
 
+------------ Eliminacion de FK   ------------------
+
+ IF (select object_id from sys.foreign_keys where [name] = 'FC1') IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.FuncionalidadXRol DROP CONSTRAINT FC1
+
+IF (select object_id from sys.foreign_keys where [name] = 'FC2')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.FuncionalidadXRol DROP CONSTRAINT FC2
+
+IF (select object_id from sys.foreign_keys where [name] = 'FC3')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.UsuarioXRol DROP CONSTRAINT FC3
+
+IF (select object_id from sys.foreign_keys where [name] = 'FC4')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.UsuarioXRol DROP CONSTRAINT FC4
+
+IF (select object_id from sys.foreign_keys where [name] = 'FC5')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.Tarjeta  DROP CONSTRAINT FC5
+
+IF (select object_id from sys.foreign_keys where [name] = 'FC6')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.Cliente  DROP CONSTRAINT FC6
+
+IF (select object_id from sys.foreign_keys where [name] = 'FC7')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.Proveedor  DROP CONSTRAINT FC7
+
+IF (select object_id from sys.foreign_keys where [name] = 'FC8')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.Proveedor  DROP CONSTRAINT FC8
+
+IF (select object_id from sys.foreign_keys where [name] = 'FC9')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.Oferta  DROP CONSTRAINT FC9
+
+IF (select object_id from sys.foreign_keys where [name] = 'FC10') IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.Cupon  DROP CONSTRAINT FC10
+
+IF (select object_id from sys.foreign_keys where [name] = 'FC11')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.Compra  DROP CONSTRAINT FC11
+
+IF (select object_id from sys.foreign_keys where [name] = 'FC12')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.Compra  DROP CONSTRAINT FC12
+
+IF (select object_id from sys.foreign_keys where [name] = 'F13')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.DetallePorFactura  DROP CONSTRAINT FC13
+
+IF (select object_id from sys.foreign_keys where [name] = 'F14')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.DetallePorFactura  DROP CONSTRAINT FC14
+
+IF (select object_id from sys.foreign_keys where [name] = 'F15')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.DetallePorFactura  DROP CONSTRAINT FC15
+
+IF (select object_id from sys.foreign_keys where [name] = 'F16') IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.HistorialCliente  DROP CONSTRAINT FC16
+
+IF (select object_id from sys.foreign_keys where [name] = 'FC17')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.HistorialCliente  DROP CONSTRAINT FC17
+
+IF (select object_id from sys.foreign_keys where [name] = 'F18')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.Carga  DROP CONSTRAINT FC18
+
 ------------ Eliminacion de tablas    ------------------
 
 IF OBJECT_ID('GESTION_DE_GATOS.FuncionalidadXRol','U') IS NOT NULL
@@ -30,55 +86,47 @@ IF OBJECT_ID('GESTION_DE_GATOS.FuncionalidadXRol','U') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.UsuarioXRol','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.UsuarioXRol;
 
-
 IF OBJECT_ID('GESTION_DE_GATOS.HistorialCliente','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.HistorialCliente;
-
 
 IF OBJECT_ID('GESTION_DE_GATOS.Rol','U') IS NOT NULL
     DROP TABLE GESTION_DE_GATOS.Rol;
 
-IF OBJECT_ID('GESTION_DE_GATOS.Tarjeta','U') IS NOT NULL
-	DROP TABLE GESTION_DE_GATOS.Tarjeta;
+IF OBJECT_ID('GESTION_DE_GATOS.Funcionalidad','U') IS NOT NULL
+    DROP TABLE GESTION_DE_GATOS.Funcionalidad;
 
 IF OBJECT_ID('GESTION_DE_GATOS.Carga','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.Carga;
 
-IF OBJECT_ID('GESTION_DE_GATOS.Usuario','U') IS NOT NULL
-	DROP TABLE GESTION_DE_GATOS.Usuario;
-
 IF OBJECT_ID('GESTION_DE_GATOS.DetallePorFactura','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.DetallePorFactura;
 
-IF OBJECT_ID('GESTION_DE_GATOS.DetalleFactura','U') IS NOT NULL
-	DROP TABLE GESTION_DE_GATOS.DetalleFactura;
-
-IF OBJECT_ID('GESTION_DE_GATOS.Funcionalidad','U') IS NOT NULL
-    DROP TABLE GESTION_DE_GATOS.Funcionalidad;
-
-IF OBJECT_ID('GESTION_DE_GATOS.FormaPago','U') IS NOT NULL
-	DROP TABLE GESTION_DE_GATOS.FormaPago;
-
-IF OBJECT_ID('GESTION_DE_GATOS.Cuenta','U') IS NOT NULL
-	DROP TABLE GESTION_DE_GATOS.Cuenta;
-
-IF OBJECT_ID('GESTION_DE_GATOS.Compra','U') IS NOT NULL
-	DROP TABLE GESTION_DE_GATOS.Compra;
-
-IF OBJECT_ID('GESTION_DE_GATOS.Factura','U') IS NOT NULL
-	DROP TABLE GESTION_DE_GATOS.Factura;
-
-IF OBJECT_ID('GESTION_DE_GATOS.Oferta','U') IS NOT NULL
-	DROP TABLE GESTION_DE_GATOS.Oferta;
+IF OBJECT_ID('GESTION_DE_GATOS.Tarjeta','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.Tarjeta;
 
 IF OBJECT_ID('GESTION_DE_GATOS.Cupon','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.Cupon;
 
-IF OBJECT_ID('GESTION_DE_GATOS.Cliente','U') IS NOT NULL
-	DROP TABLE GESTION_DE_GATOS.Cliente;
+IF OBJECT_ID('GESTION_DE_GATOS.Oferta','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.Oferta;
 
 IF OBJECT_ID('GESTION_DE_GATOS.Proveedor','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.Proveedor;
+
+IF OBJECT_ID('GESTION_DE_GATOS.Factura','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.Factura;
+
+IF OBJECT_ID('GESTION_DE_GATOS.Compra','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.Compra;
+
+IF OBJECT_ID('GESTION_DE_GATOS.DetalleFactura','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.DetalleFactura;
+
+IF OBJECT_ID('GESTION_DE_GATOS.Cliente','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.Cliente;
+
+IF OBJECT_ID('GESTION_DE_GATOS.Usuario','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.Usuario;
 
 -------Eliminacion del esquema------
 
@@ -134,6 +182,7 @@ cliente_id NUMERIC(18,0) IDENTITY,
 usuario_id NUMERIC(18,0),
 cliente_baja CHAR(1),
 cliente_nombre NVARCHAR(255),
+cliente_ciudad NVARCHAR(255),
 cliente_apellido NVARCHAR(255),
 cliente_tipo_dni NVARCHAR(255),
 cliente_numero_dni NUMERIC(18,0),
@@ -174,6 +223,7 @@ PRIMARY KEY (carga_id)
 CREATE TABLE GESTION_DE_GATOS.Proveedor(
 proveedor_id NUMERIC(18,0) IDENTITY,
 usuario_id NUMERIC(18,0),
+factura_id NUMERIC(18,0),
 proveedor_baja CHAR(1),
 proveedor_razon_social NVARCHAR(100),
 proveedor_cuit  NVARCHAR(20),
@@ -257,30 +307,37 @@ PRIMARY KEY (detalle_id)
 
 CREATE TABLE GESTION_DE_GATOS.HistorialCliente(
 historial_id NUMERIC(18,0) IDENTITY,
-compra_id NUMERIC(18,0),
+oferta_id NUMERIC(18,0),
 cliente_id NUMERIC(18,0)
-PRIMARY KEY (historial_id,compra_id,cliente_id)
+PRIMARY KEY (historial_id,oferta_id,cliente_id)
 );
 
 /* Claves Foraneas*/
-ALTER TABLE GESTION_DE_GATOS.FuncionalidadXRol ADD FOREIGN KEY(rol_id) REFERENCES GESTION_DE_GATOS.Rol(rol_id)
-ALTER TABLE GESTION_DE_GATOS.FuncionalidadXRol ADD FOREIGN KEY(funcionalidad_id) REFERENCES GESTION_DE_GATOS.Funcionalidad(funcionalidad_id)
-ALTER TABLE GESTION_DE_GATOS.UsuarioXRol ADD FOREIGN KEY(usuario_id) REFERENCES GESTION_DE_GATOS.Usuario(usuario_id)
-ALTER TABLE GESTION_DE_GATOS.UsuarioXRol ADD FOREIGN KEY(rol_id) REFERENCES GESTION_DE_GATOS.Rol(rol_id)
-ALTER TABLE GESTION_DE_GATOS.Tarjeta ADD FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
-ALTER TABLE GESTION_DE_GATOS.Carga ADD FOREIGN KEY(tarjeta_id) REFERENCES GESTION_DE_GATOS.Tarjeta(tarjeta_id)
-ALTER TABLE GESTION_DE_GATOS.Cliente ADD FOREIGN KEY(usuario_id) REFERENCES GESTION_DE_GATOS.Cliente(usuario_id)
-ALTER TABLE GESTION_DE_GATOS.Proovedor ADD FOREIGN KEY(usuario_id) REFERENCES GESTION_DE_GATOS.Proveedor(usuario_id)
-ALTER TABLE GESTION_DE_GATOS.Oferta ADD FOREIGN KEY(proveedor_id) REFERENCES GESTION_DE_GATOS.Proveedor(proveedor_id)
-ALTER TABLE GESTION_DE_GATOS.Cupon ADD FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
-ALTER TABLE GESTION_DE_GATOS.Compra ADD FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
-ALTER TABLE GESTION_DE_GATOS.Compra ADD FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
-ALTER TABLE GESTION_DE_GATOS.EstadoPublicacion ADD FOREIGN KEY(publicacion_id) REFERENCES GESTION_DE_GATOS.Publicacion(publicacion_id)
-ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD FOREIGN KEY(detalle_id) REFERENCES GESTION_DE_GATOS.DetalleFactura(detalle_id)
-ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD FOREIGN KEY(factura_id) REFERENCES GESTION_DE_GATOS.Factura(factura_id)
-ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
-ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
-ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
+ALTER TABLE GESTION_DE_GATOS.FuncionalidadXRol ADD CONSTRAINT FC1 FOREIGN KEY(rol_id) REFERENCES GESTION_DE_GATOS.Rol(rol_id)
+ALTER TABLE GESTION_DE_GATOS.FuncionalidadXRol ADD CONSTRAINT FC2  FOREIGN KEY(funcionalidad_id) REFERENCES GESTION_DE_GATOS.Funcionalidad(funcionalidad_id)
+ALTER TABLE GESTION_DE_GATOS.UsuarioXRol ADD CONSTRAINT FC3 FOREIGN KEY(usuario_id) REFERENCES GESTION_DE_GATOS.Usuario(usuario_id)
+ALTER TABLE GESTION_DE_GATOS.UsuarioXRol ADD CONSTRAINT FC4 FOREIGN KEY(rol_id) REFERENCES GESTION_DE_GATOS.Rol(rol_id)
+ALTER TABLE GESTION_DE_GATOS.Tarjeta ADD CONSTRAINT FC5 FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
+ALTER TABLE GESTION_DE_GATOS.Cliente ADD CONSTRAINT FC6 FOREIGN KEY(usuario_id) REFERENCES GESTION_DE_GATOS.Usuario(usuario_id)
+ALTER TABLE GESTION_DE_GATOS.Proveedor ADD CONSTRAINT FC7 FOREIGN KEY(usuario_id) REFERENCES GESTION_DE_GATOS.Usuario(usuario_id)
+ALTER TABLE GESTION_DE_GATOS.Proveedor ADD CONSTRAINT FC8 FOREIGN KEY(factura_id) REFERENCES GESTION_DE_GATOS.Factura(factura_id)
+ALTER TABLE GESTION_DE_GATOS.Oferta ADD CONSTRAINT FC9 FOREIGN KEY(proveedor_id) REFERENCES GESTION_DE_GATOS.Proveedor(proveedor_id)
+ALTER TABLE GESTION_DE_GATOS.Cupon ADD CONSTRAINT FC10 FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
+ALTER TABLE GESTION_DE_GATOS.Compra ADD CONSTRAINT FC11 FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
+ALTER TABLE GESTION_DE_GATOS.Compra ADD CONSTRAINT FC12 FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
+ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD CONSTRAINT FC13 FOREIGN KEY(detalle_id) REFERENCES GESTION_DE_GATOS.DetalleFactura(detalle_id)
+ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD CONSTRAINT FC14 FOREIGN KEY(factura_id) REFERENCES GESTION_DE_GATOS.Factura(factura_id)
+ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD CONSTRAINT FC15 FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
+ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD CONSTRAINT FC16 FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
+ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD CONSTRAINT FC17 FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
+ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC18 FOREIGN KEY(tarjeta_id) REFERENCES GESTION_DE_GATOS.Tarjeta(tarjeta_id)
+
+/* Migracion de la Maestra */
+
+--Cliente
+INSERT  INTO GESTION_DE_GATOS.Cliente (cliente_nombre,cliente_apellido,cliente_email,cliente_numero_dni,cliente_direccion_calle,cliente_fecha_nacimiento,cliente_ciudad,cliente_telefono) 
+SELECT Cli_Nombre,Cli_Apellido,Cli_Mail,Cli_Dni,Cli_Direccion,Cli_Fecha_Nac,Cli_Ciudad,Cli_Telefono  FROM gd_esquema.Maestra
+
 
 /* Creación de procedures */
 GO
@@ -373,3 +430,6 @@ SET @ret = 1
 END
 RETURN @ret
 END
+
+
+
