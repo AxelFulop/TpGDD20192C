@@ -60,22 +60,22 @@ IF (select object_id from sys.foreign_keys where [name] = 'FC11')  IS NOT NULL
 IF (select object_id from sys.foreign_keys where [name] = 'FC12')  IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.Compra  DROP CONSTRAINT FC12
 
-IF (select object_id from sys.foreign_keys where [name] = 'F13')  IS NOT NULL
+IF (select object_id from sys.foreign_keys where [name] = 'FC13')  IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.DetallePorFactura  DROP CONSTRAINT FC13
 
-IF (select object_id from sys.foreign_keys where [name] = 'F14')  IS NOT NULL
+IF (select object_id from sys.foreign_keys where [name] = 'FC14')  IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.DetallePorFactura  DROP CONSTRAINT FC14
 
-IF (select object_id from sys.foreign_keys where [name] = 'F15')  IS NOT NULL
+IF (select object_id from sys.foreign_keys where [name] = 'FC15')  IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.DetallePorFactura  DROP CONSTRAINT FC15
 
-IF (select object_id from sys.foreign_keys where [name] = 'F16') IS NOT NULL
+IF (select object_id from sys.foreign_keys where [name] = 'FC16') IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.HistorialCliente  DROP CONSTRAINT FC16
 
 IF (select object_id from sys.foreign_keys where [name] = 'FC17')  IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.HistorialCliente  DROP CONSTRAINT FC17
 
-IF (select object_id from sys.foreign_keys where [name] = 'F18')  IS NOT NULL
+IF (select object_id from sys.foreign_keys where [name] = 'FC18')  IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.Carga  DROP CONSTRAINT FC18
 
 ------------ Eliminacion de tablas    ------------------
