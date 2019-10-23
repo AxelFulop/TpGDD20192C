@@ -30,6 +30,11 @@ IF OBJECT_ID('GESTION_DE_GATOS.FuncionalidadXRol','U') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.UsuarioXRol','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.UsuarioXRol;
 
+
+IF OBJECT_ID('GESTION_DE_GATOS.HistorialCliente','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.HistorialCliente;
+
+
 IF OBJECT_ID('GESTION_DE_GATOS.Rol','U') IS NOT NULL
     DROP TABLE GESTION_DE_GATOS.Rol;
 
@@ -41,9 +46,6 @@ IF OBJECT_ID('GESTION_DE_GATOS.Carga','U') IS NOT NULL
 
 IF OBJECT_ID('GESTION_DE_GATOS.Usuario','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.Usuario;
-
-IF OBJECT_ID('GESTION_DE_GATOS.EstadoPublicacion','U') IS NOT NULL
-	DROP TABLE GESTION_DE_GATOS.EstadoPublicacion;
 
 IF OBJECT_ID('GESTION_DE_GATOS.DetallePorFactura','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.DetallePorFactura;
@@ -75,9 +77,6 @@ IF OBJECT_ID('GESTION_DE_GATOS.Cupon','U') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.Cliente','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.Cliente;
 
-IF OBJECT_ID('GESTION_DE_GATOS.Publicacion','U') IS NOT NULL
-	DROP TABLE GESTION_DE_GATOS.Publicacion;
-
 IF OBJECT_ID('GESTION_DE_GATOS.Proveedor','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.Proveedor;
 
@@ -88,7 +87,7 @@ IF EXISTS (SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME
 GO
  
 /* Creacion del esquema */
-CREATE SCHEMA GESTION_DE_GATOS AUTHORIZATION gd
+CREATE SCHEMA GESTION_DE_GATOS AUTHORIZATION gdCupon2019
 GO
 
 /* Creacion de las tablas */
@@ -100,8 +99,8 @@ PRIMARY KEY (funcionalidad_id)
 
 CREATE TABLE GESTION_DE_GATOS.Rol(
 rol_id NUMERIC(18,0) IDENTITY,
-rol_nombre VARCHAR(15),
-rol_habilitado BIT,
+rol_nombre NVARCHAR(15),
+rol_habilitado CHAR(1),
 PRIMARY KEY (rol_id)
 );
 
@@ -113,8 +112,6 @@ PRIMARY KEY(rol_id, funcionalidad_id)
 
 CREATE TABLE GESTION_DE_GATOS.Usuario(
 usuario_id NUMERIC(18,0) IDENTITY,
-cliente_id NUMERIC(18,0),
-proveedor_id NUMERIC(18,0),
 usuario_nombre NVARCHAR(255) UNIQUE,
 usuario_password VARBINARY(128),
 usuario_bloqueado NUMERIC(18,0) DEFAULT 0,
@@ -129,25 +126,28 @@ rol_id NUMERIC(18,0) NOT NULL,
 PRIMARY KEY (usuario_id, rol_id)
 );
 
+--Como en la maestra la direccion esta dada como calle + numero en la bd se migra igual y se separa en la app por calle,numero en atributos distintos
+-- Dato inconsistente en un char , puede ser un 1 o 0 o un S o N, con esto sabemos que hay algun dato repetido o erroneo, se debera validar del todo desde la app
+
 CREATE TABLE GESTION_DE_GATOS.Cliente(
 cliente_id NUMERIC(18,0) IDENTITY,
-cliente_baja NUMERIC(18,0),
+usuario_id NUMERIC(18,0),
+cliente_baja CHAR(1),
 cliente_nombre NVARCHAR(255),
 cliente_apellido NVARCHAR(255),
 cliente_tipo_dni NVARCHAR(255),
 cliente_numero_dni NUMERIC(18,0),
-cliente_cuil NUMERIC(18,0),
+cliente_cuil NVARCHAR(20),
 cliente_email NVARCHAR(255),
 cliente_fecha_nacimiento DATETIME,
 cliente_telefono NUMERIC(18,0),
 cliente_direccion_calle NVARCHAR(255),
-cliente_direccion_numero NUMERIC(18,0),
 cliente_direccion_piso NUMERIC(18,0),
 cliente_direccion_depto NUMERIC(18,0),
 cliente_direccion_localidad NVARCHAR(255),
 cliente_direccion_codigo_postal NVARCHAR(255),
-cliente_dato_inconsistente NUMERIC(18,0),
-cliente_nuevo NUMERIC(18,0),
+cliente_dato_inconsistente CHAR(1),
+cliente_nuevo CHAR(1),
 PRIMARY KEY (cliente_id)
 );
 
@@ -155,6 +155,7 @@ CREATE TABLE GESTION_DE_GATOS.Tarjeta(
 tarjeta_id NUMERIC(18,0) IDENTITY,
 cliente_id NUMERIC(18,0),
 tarjeta_numero NUMERIC(18,0),
+tajeta_saldo NUMERIC(18,4),
 tarjeta_tipo CHAR(1),
 tarjeta_banco VARCHAR(15),
 tarjeta_fecha_vencimiento DATETIME,
@@ -172,7 +173,8 @@ PRIMARY KEY (carga_id)
 
 CREATE TABLE GESTION_DE_GATOS.Proveedor(
 proveedor_id NUMERIC(18,0) IDENTITY,
-proveedor_baja NUMERIC(18,0),
+usuario_id NUMERIC(18,0),
+proveedor_baja CHAR(1),
 proveedor_razon_social NVARCHAR(100),
 proveedor_cuit  NVARCHAR(20),
 proveedor_rubro NVARCHAR(100),
@@ -180,14 +182,13 @@ proveedor_email NVARCHAR(255),
 proveedor_fecha_nacimiento DATETIME,
 proveedor_telefono NUMERIC(18,0),
 proveedor_direccion_calle NVARCHAR(255),
-proveedor_direccion_numero NUMERIC(18,0),
 proveedor_direccion_piso NUMERIC(18,0),
 proveedor_direccion_depto NUMERIC(18,0),
 proveedor_direccion_localidad NVARCHAR(255),
 proveedor_ciudad NVARCHAR(255),
 proveedor_direccion_codigo_postal NVARCHAR(255),
-proveedor_dato_inconsistente NUMERIC(18,0),
-proveedor_nuevo NUMERIC(18,0),
+proveedor_dato_inconsistente CHAR(1),
+proveedor_nuevo CHAR(1),
 PRIMARY KEY (proveedor_id)
 );
 
@@ -195,30 +196,37 @@ CREATE TABLE GESTION_DE_GATOS.Oferta(
 oferta_id NUMERIC(18,0) IDENTITY,
 proveedor_id NUMERIC(18,0),
 oferta_descripcion NVARCHAR(255),
+oferta_codigo NVARCHAR(50),
+oferta_fecha_publicacion DATETIME,
+oferta_fecha_vencimiento DATETIME,
+oferta_limite_compra NUMERIC(18,0),
+oferta_stock_disponible NUMERIC(18,0),
+oferta_precio NUMERIC(18,2),
+oferta_precio_lista NUMERIC(18,2),
 oferta_dato_inconsistente NUMERIC(18,0),
 PRIMARY KEY (oferta_id)
 );
 
-CREATE TABLE GESTION_DE_GATOS.Publicacion(
-publicacion_id NUMERIC(18,0) IDENTITY,
-PRIMARY KEY (publicacion_id)
-);
-
-CREATE TABLE GESTION_DE_GATOS.EstadoPublicacion(
-estado_publicacion_id NUMERIC(18,0) IDENTITY,
-estado_publicacion_descripcion NVARCHAR(255),
-estado_publicacion_fecha_consumo DATETIME,
-publicacion_id NUMERIC(18,0),
-PRIMARY KEY (estado_publicacion_id)
-);
 
 CREATE TABLE GESTION_DE_GATOS.Cupon(
 cupon_id NUMERIC(18,0) IDENTITY,
+oferta_id NUMERIC(18,0),
+cupon_codigo NVARCHAR(50),
+cupon_canjeado CHAR(1),
+cupon_fecha_vencimiento DATETIME,
+cupon_fecha_consumo DATETIME,
+cupon_precio NUMERIC(18,0),
+cupon_precio_lista NUMERIC(18,0)
 PRIMARY KEY (cupon_id)
 );
 
 CREATE TABLE GESTION_DE_GATOS.Compra(
 compra_id NUMERIC(18,0) IDENTITY,
+cliente_id NUMERIC(18,0),
+oferta_id NUMERIC(18,0),
+compra_fecha DATETIME,
+dato_inconsistente CHAR(1),
+limite_cliente NUMERIC(18,0)
 PRIMARY KEY (compra_id)
 );
 
@@ -226,16 +234,16 @@ CREATE TABLE GESTION_DE_GATOS.Factura(
 factura_id NUMERIC(18,0) IDENTITY,
 factura_numero NUMERIC(18,0),
 factura_fecha DATETIME,
-factura_dato_inconsistente NUMERIC(18,0),
 factura_monto_total NUMERIC(18,0),
+factura_dato_inconsistente CHAR(1)
 PRIMARY KEY (factura_id)
 );
 
 CREATE TABLE GESTION_DE_GATOS.DetallePorFactura(
 detalle_id NUMERIC(18,0),
 factura_id NUMERIC(18,0),
-publicacion_id NUMERIC(18,0),
-PRIMARY KEY (detalle_id, factura_id, publicacion_id)
+oferta_id NUMERIC(18,0),
+PRIMARY KEY (detalle_id, factura_id, oferta_id)
 );
 
 CREATE TABLE GESTION_DE_GATOS.DetalleFactura(
@@ -243,7 +251,15 @@ detalle_id NUMERIC(18,0) IDENTITY,
 detalle_monto NUMERIC(18,0),
 datalle_cantidad  NUMERIC(18,0),
 detalle_descripcion NUMERIC(18,0),
+detalle_fecha_entregado DATETIME
 PRIMARY KEY (detalle_id)
+);
+
+CREATE TABLE GESTION_DE_GATOS.HistorialCliente(
+historial_id NUMERIC(18,0) IDENTITY,
+compra_id NUMERIC(18,0),
+cliente_id NUMERIC(18,0)
+PRIMARY KEY (historial_id,compra_id,cliente_id)
 );
 
 /* Claves Foraneas*/
@@ -253,14 +269,18 @@ ALTER TABLE GESTION_DE_GATOS.UsuarioXRol ADD FOREIGN KEY(usuario_id) REFERENCES 
 ALTER TABLE GESTION_DE_GATOS.UsuarioXRol ADD FOREIGN KEY(rol_id) REFERENCES GESTION_DE_GATOS.Rol(rol_id)
 ALTER TABLE GESTION_DE_GATOS.Tarjeta ADD FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
 ALTER TABLE GESTION_DE_GATOS.Carga ADD FOREIGN KEY(tarjeta_id) REFERENCES GESTION_DE_GATOS.Tarjeta(tarjeta_id)
-ALTER TABLE GESTION_DE_GATOS.Usuario ADD FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
-ALTER TABLE GESTION_DE_GATOS.Usuario ADD FOREIGN KEY(proveedor_id) REFERENCES GESTION_DE_GATOS.Proveedor(proveedor_id)
+ALTER TABLE GESTION_DE_GATOS.Cliente ADD FOREIGN KEY(usuario_id) REFERENCES GESTION_DE_GATOS.Cliente(usuario_id)
+ALTER TABLE GESTION_DE_GATOS.Proovedor ADD FOREIGN KEY(usuario_id) REFERENCES GESTION_DE_GATOS.Proveedor(usuario_id)
 ALTER TABLE GESTION_DE_GATOS.Oferta ADD FOREIGN KEY(proveedor_id) REFERENCES GESTION_DE_GATOS.Proveedor(proveedor_id)
+ALTER TABLE GESTION_DE_GATOS.Cupon ADD FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
+ALTER TABLE GESTION_DE_GATOS.Compra ADD FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
+ALTER TABLE GESTION_DE_GATOS.Compra ADD FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
 ALTER TABLE GESTION_DE_GATOS.EstadoPublicacion ADD FOREIGN KEY(publicacion_id) REFERENCES GESTION_DE_GATOS.Publicacion(publicacion_id)
 ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD FOREIGN KEY(detalle_id) REFERENCES GESTION_DE_GATOS.DetalleFactura(detalle_id)
 ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD FOREIGN KEY(factura_id) REFERENCES GESTION_DE_GATOS.Factura(factura_id)
-ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD FOREIGN KEY(publicacion_id) REFERENCES GESTION_DE_GATOS.Publicacion(publicacion_id)
-
+ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
+ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
+ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
 
 /* Creación de procedures */
 GO
