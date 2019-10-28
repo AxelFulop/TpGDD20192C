@@ -67,19 +67,22 @@ namespace FrbaOfertas.AbmRol
         {
             if (func_rol.SelectedItem != null && func_rol.SelectedItem.ToString() != "Sin funcionalidades...")
             {
-                DialogResult result = MessageBox.Show(func_rol.SelectedItem.ToString(), "Borrar funcionalidad", 
+                DialogResult result = MessageBox.Show("¿Desea eliminar la funcionalidad '" + 
+                    func_rol.SelectedItem.ToString() + "' para el rol '" + this.rol + "'?", 
+                    "Borrar funcionalidad", 
                     MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warning);
+                    MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    //Borrarla
+                    eliminarFuncionalidad(func_rol.SelectedItem.ToString());
                 }
             }
         }
 
         private void eliminarFuncionalidad(string funcionalidad)
         {
-
+            //Eliminar la funcionalidad para el usuario
+            //Llamar a un stored procedure
         }
     }
 }

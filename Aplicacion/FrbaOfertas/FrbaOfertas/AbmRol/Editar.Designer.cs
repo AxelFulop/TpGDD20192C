@@ -54,6 +54,7 @@
             // func_rol
             // 
             this.func_rol.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.func_rol.ForeColor = System.Drawing.Color.OrangeRed;
             this.func_rol.FormattingEnabled = true;
             this.func_rol.ItemHeight = 29;
             this.func_rol.Items.AddRange(new object[] {
