@@ -19,6 +19,7 @@ namespace FrbaOfertas.AbmRol
             InitializeComponent();
             this.rol = rol;
             cargarRol(rol);
+            cargarFuncionalidadesAAgregar();
         }
 
         private void cargarRol(string rol)
@@ -45,6 +46,23 @@ namespace FrbaOfertas.AbmRol
             {
                 func_rol.Items.Add(f.ToString());
             });
+        }
+
+        private void cargarFuncionalidadesAAgregar()
+        {
+            string query = "select funcionalidad_descripcion from " + Properties.Settings.Default.Schema + ".Funcionalidad";
+
+            ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+            List<Object> funcionalidades = conection.executeAdvancedSelectQuery(query);
+
+            funcionalidades.ForEach(f =>
+            {
+                if (!func_rol.Items.Contains(f.ToString()))
+                    func_a_agregar.Items.Add(f.ToString());
+            });
+
+            if (func_a_agregar.Items.Count == 0)
+                func_a_agregar.Items.Add("...");
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -81,8 +99,21 @@ namespace FrbaOfertas.AbmRol
 
         private void eliminarFuncionalidad(string funcionalidad)
         {
-            //Eliminar la funcionalidad para el usuario
+            //Eliminar la funcionalidad para el rol
             //Llamar a un stored procedure
+        }
+
+        private void func_a_agregar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if(func_a_agregar.SelectedItem != null && func_a_agregar.SelectedItem.ToString() != "..."){
+                //Agregar la funcionalidad para el rol
+                //Llamar a un stored procedure
+            }
         }
     }
 }
