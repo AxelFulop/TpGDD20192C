@@ -12,7 +12,6 @@ C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\Frba
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.pdb
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\bin\Debug\FrbaOfertas.exe
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\bin\Debug\FrbaOfertas.pdb
-C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.csprojResolveAssemblyReference.cache
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Properties.Resources.resources
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.csproj.GenerateResource.Cache
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ListadoEstadistico.Form1.resources
@@ -46,3 +45,5 @@ C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\Frba
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmCliente.Nuevo.resources
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmProveedor.Nuevo.resources
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmRol.AbmRol.resources
+C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmRol.Nuevo.resources
+C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmRol.Editar.resources

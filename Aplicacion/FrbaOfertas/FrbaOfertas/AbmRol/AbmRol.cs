@@ -15,82 +15,38 @@ namespace FrbaOfertas.AbmRol
         public AbmRol()
         {
             InitializeComponent();
-            cargarRol("Administrador");
-            cargarRol("Proveedor");
-            cargarRol("Cliente");
+            cargarRoles();
         }
 
-        private void cargarRol(string nombreRol)
+        private void cargarRoles()
         {
-            string query = "select f.funcionalidad_descripcion from " + Properties.Settings.Default.Schema + ".Rol r " +
-                "inner join " + Properties.Settings.Default.Schema + ".FuncionalidadXRol fxr on fxr.rol_id = r.rol_id " +
-                "inner join " + Properties.Settings.Default.Schema + ".Funcionalidad f on f.funcionalidad_id = fxr.funcionalidad_id " +
-                "where r.rol_nombre = '" + nombreRol + "'";
+            string query = "select rol_nombre from " + Properties.Settings.Default.Schema + ".Rol";
 
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
             List<Object> funcionalidades = conection.executeAdvancedSelectQuery(query);
-            switch (nombreRol)
+
+            if (funcionalidades.Count > 0)
+                roles.Items.Clear();
+
+            funcionalidades.ForEach(f =>
             {
-                case "Administrador":
-                    mostrarFuncionalidadesAdmin(funcionalidades);
-                    break;
-                case "Proveedor":
-                    mostrarFuncionalidadesProveedores(funcionalidades);
-                    break;
-                case "Cliente":
-                    mostrarFuncionalidadesCliente(funcionalidades);
-                    break;
-                default:
-                    throw new Exception("Rol inexistente");
+                roles.Items.Add(f.ToString());
+            });
+        }
+
+        private void listBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (roles.SelectedItem != null && roles.SelectedItem.ToString() != "Sin roles...")
+            {
+                this.Hide();
+                new Editar(roles.SelectedItem.ToString()).Show();
             }
         }
 
-        private void mostrarFuncionalidadesAdmin(List<Object> funcionalidades)
+        private void button3_Click_1(object sender, EventArgs e)
         {
-            if (funcionalidades.Count > 0)
-                func_admin.Items.Clear();
-
-            funcionalidades.ForEach(f =>
-            {
-                func_admin.Items.Add(f.ToString());
-            });
-        }
-
-        private void mostrarFuncionalidadesProveedores(List<Object> funcionalidades)
-        {
-            if (funcionalidades.Count > 0)
-                func_proveedor.Items.Clear();
-
-            funcionalidades.ForEach(f =>
-            {
-                func_proveedor.Items.Add(f.ToString());
-            });
-        }
-
-        private void mostrarFuncionalidadesCliente(List<Object> funcionalidades)
-        {
-            if (funcionalidades.Count > 0)
-                func_cliente.Items.Clear();
-
-            funcionalidades.ForEach(f =>
-            {
-                func_cliente.Items.Add(f.ToString());
-            });
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listBox3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            this.Hide();
+            new Nuevo().Show();
         }
     }
 }

@@ -88,6 +88,18 @@
     <Compile Include="AbmRol\AbmRol.Designer.cs">
       <DependentUpon>AbmRol.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmRol\Editar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\Editar.Designer.cs">
+      <DependentUpon>Editar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\Nuevo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\Nuevo.Designer.cs">
+      <DependentUpon>Nuevo.cs</DependentUpon>
+    </Compile>
     <Compile Include="ComprarOferta\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,6 +170,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\AbmRol.resx">
       <DependentUpon>AbmRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\Editar.resx">
+      <DependentUpon>Editar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\Nuevo.resx">
+      <DependentUpon>Nuevo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComprarOferta\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
