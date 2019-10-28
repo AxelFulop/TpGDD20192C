@@ -83,12 +83,6 @@ IF (select object_id from sys.foreign_keys where [name] = 'FC18')  IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.FuncionalidadXRol','U') IS NOT NULL
     DROP TABLE GESTION_DE_GATOS.FuncionalidadXRol;
 
-IF OBJECT_ID('GESTION_DE_GATOS.EstadoPublicacion','U') IS NOT NULL
-	DROP TABLE GESTION_DE_GATOS.EstadoPublicacion;
-
-IF OBJECT_ID('GESTION_DE_GATOS.Publicacion','U') IS NOT NULL
-	DROP TABLE GESTION_DE_GATOS.Publicacion;
-
 IF OBJECT_ID('GESTION_DE_GATOS.UsuarioXRol','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.UsuarioXRol;
 
@@ -341,7 +335,7 @@ ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC18 FOREIGN KEY(tarjeta_id) R
 
 /* Migracion de la Maestra */
 
---Roles (por ahora sólo los del administrador)
+--Roles (por ahora sÃ³lo los del administrador)
 insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Administrador', '1')
 insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Proveedor', '1')
 insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Cliente', '1')
@@ -359,7 +353,7 @@ INSERT  INTO GESTION_DE_GATOS.Cliente (cliente_nombre,cliente_apellido,cliente_e
 SELECT Cli_Nombre,Cli_Apellido,Cli_Mail,Cli_Dni,Cli_Direccion,Cli_Fecha_Nac,Cli_Ciudad,Cli_Telefono  FROM gd_esquema.Maestra
 
 
-/* Creación de procedures */
+/* CreaciÃ³n de procedures */
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.altaUsuario
 @nombreUsuario NVARCHAR(255),
