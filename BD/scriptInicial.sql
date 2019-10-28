@@ -24,7 +24,7 @@ IF OBJECT_ID('GESTION_DE_GATOS.loginValido') IS NOT NULL
 
 ------------ Eliminacion de FK   ------------------
 
- IF (select object_id from sys.foreign_keys where [name] = 'FC1') IS NOT NULL
+IF (select object_id from sys.foreign_keys where [name] = 'FC1') IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.FuncionalidadXRol DROP CONSTRAINT FC1
 
 IF (select object_id from sys.foreign_keys where [name] = 'FC2')  IS NOT NULL
@@ -83,6 +83,12 @@ IF (select object_id from sys.foreign_keys where [name] = 'FC18')  IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.FuncionalidadXRol','U') IS NOT NULL
     DROP TABLE GESTION_DE_GATOS.FuncionalidadXRol;
 
+IF OBJECT_ID('GESTION_DE_GATOS.EstadoPublicacion','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.EstadoPublicacion;
+
+IF OBJECT_ID('GESTION_DE_GATOS.Publicacion','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.Publicacion;
+
 IF OBJECT_ID('GESTION_DE_GATOS.UsuarioXRol','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.UsuarioXRol;
 
@@ -128,6 +134,7 @@ IF OBJECT_ID('GESTION_DE_GATOS.Cliente','U') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.Usuario','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.Usuario;
 
+
 -------Eliminacion del esquema------
 
 IF EXISTS (SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'GESTION_DE_GATOS')
@@ -135,7 +142,7 @@ IF EXISTS (SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME
 GO
  
 /* Creacion del esquema */
-CREATE SCHEMA GESTION_DE_GATOS AUTHORIZATION gdCupon2019
+CREATE SCHEMA GESTION_DE_GATOS AUTHORIZATION gd --Cupon2019
 GO
 
 /* Creacion de las tablas */
@@ -333,6 +340,19 @@ ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD CONSTRAINT FC17 FOREIGN KEY(cl
 ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC18 FOREIGN KEY(tarjeta_id) REFERENCES GESTION_DE_GATOS.Tarjeta(tarjeta_id)
 
 /* Migracion de la Maestra */
+
+--Roles (por ahora sólo los del administrador)
+insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Administrador', '1')
+insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Proveedor', '1')
+insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Cliente', '1')
+
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Modificar roles')
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Modificar clientes')
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Modificar proveedores')
+
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 1)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 2)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 3)
 
 --Cliente
 INSERT  INTO GESTION_DE_GATOS.Cliente (cliente_nombre,cliente_apellido,cliente_email,cliente_numero_dni,cliente_direccion_calle,cliente_fecha_nacimiento,cliente_ciudad,cliente_telefono) 

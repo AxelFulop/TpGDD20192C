@@ -52,7 +52,7 @@ namespace FrbaOfertas.ConexionBD
         {
             string datasource = @"LAPTOP-JEFKPT5O\SQLSERVER2012";
 
-            string database = "GD2C2019"; // ¿O 'GD2C2019'?
+            string database = "GD2C2019";
             string username = "gd";
             string password = "gd2019";
 
@@ -279,6 +279,36 @@ namespace FrbaOfertas.ConexionBD
             }
             closeConnection(conn);
             return dtResult;
+        }
+
+        public List<Object> executeAdvancedSelectQuery(string query)
+        {
+            List<Object> resultQuery = new List<Object>();
+            SqlConnection conn = Conexion.configDBConnection();
+
+            openConnection(conn);
+            SqlCommand cmd = new SqlCommand(query, conn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            try
+            {
+                while (reader.Read())
+                {
+                    resultQuery.Add(Convert.ToString(reader[0]));
+                }
+            }
+            catch (SqlException ex)
+            {
+                for (int i = 0; i < ex.Errors.Count; i++)
+                {
+                    errorMessages.Append("Index #" + i + "\n" +
+                        "Message: " + ex.Errors[i].Message + "\n" +
+                        "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
+                        "Source: " + ex.Errors[i].Source + "\n");
+                }
+                Console.WriteLine(errorMessages.ToString());
+            }
+            closeConnection(conn);
+            return resultQuery;
         }
 
         public int executeQuery(String query)

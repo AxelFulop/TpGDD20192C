@@ -104,7 +104,7 @@ namespace FrbaOfertas
                 case "Proveedor":
                     new AbmProveedor.AbmProveedor().Show(); break;
                 case "Admin": //?
-                    new AbmRol.Form1().Show(); break;
+                    new AbmRol.AbmRol().Show(); break;
             }
         }
         
