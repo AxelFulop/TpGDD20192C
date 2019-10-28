@@ -46,7 +46,7 @@ IF (select object_id from sys.foreign_keys where [name] = 'FC7')  IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.Proveedor  DROP CONSTRAINT FC7
 
 IF (select object_id from sys.foreign_keys where [name] = 'FC8')  IS NOT NULL
-    ALTER TABLE GESTION_DE_GATOS.Proveedor  DROP CONSTRAINT FC8
+    ALTER TABLE GESTION_DE_GATOS.Factura  DROP CONSTRAINT FC8
 
 IF (select object_id from sys.foreign_keys where [name] = 'FC9')  IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.Oferta  DROP CONSTRAINT FC9
@@ -224,13 +224,12 @@ PRIMARY KEY (carga_id)
 CREATE TABLE GESTION_DE_GATOS.Proveedor(
 proveedor_id NUMERIC(18,0) IDENTITY,
 usuario_id NUMERIC(18,0),
-factura_id NUMERIC(18,0),
 proveedor_baja CHAR(1),
 proveedor_razon_social NVARCHAR(100),
+proveedor_contacto NVARCHAR(30),
 proveedor_cuit  NVARCHAR(20),
 proveedor_rubro NVARCHAR(100),
 proveedor_email NVARCHAR(255),
-proveedor_fecha_nacimiento DATETIME,
 proveedor_telefono NUMERIC(18,0),
 proveedor_direccion_calle NVARCHAR(255),
 proveedor_direccion_piso NUMERIC(18,0),
@@ -283,6 +282,7 @@ PRIMARY KEY (compra_id)
 
 CREATE TABLE GESTION_DE_GATOS.Factura(
 factura_id NUMERIC(18,0) IDENTITY,
+proveedor_id NUMERIC(18,0),
 factura_numero NUMERIC(18,0),
 factura_fecha DATETIME,
 factura_monto_total NUMERIC(18,0),
@@ -321,7 +321,7 @@ ALTER TABLE GESTION_DE_GATOS.UsuarioXRol ADD CONSTRAINT FC4 FOREIGN KEY(rol_id) 
 ALTER TABLE GESTION_DE_GATOS.Tarjeta ADD CONSTRAINT FC5 FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
 ALTER TABLE GESTION_DE_GATOS.Cliente ADD CONSTRAINT FC6 FOREIGN KEY(usuario_id) REFERENCES GESTION_DE_GATOS.Usuario(usuario_id)
 ALTER TABLE GESTION_DE_GATOS.Proveedor ADD CONSTRAINT FC7 FOREIGN KEY(usuario_id) REFERENCES GESTION_DE_GATOS.Usuario(usuario_id)
-ALTER TABLE GESTION_DE_GATOS.Proveedor ADD CONSTRAINT FC8 FOREIGN KEY(factura_id) REFERENCES GESTION_DE_GATOS.Factura(factura_id)
+ALTER TABLE GESTION_DE_GATOS.Factura ADD CONSTRAINT FC8 FOREIGN KEY(proveedor_id) REFERENCES GESTION_DE_GATOS.Proveedor(proveedor_id)
 ALTER TABLE GESTION_DE_GATOS.Oferta ADD CONSTRAINT FC9 FOREIGN KEY(proveedor_id) REFERENCES GESTION_DE_GATOS.Proveedor(proveedor_id)
 ALTER TABLE GESTION_DE_GATOS.Cupon ADD CONSTRAINT FC10 FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
 ALTER TABLE GESTION_DE_GATOS.Compra ADD CONSTRAINT FC11 FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
@@ -444,6 +444,3 @@ SET @ret = 1
 END
 RETURN @ret
 END
-
-
-
