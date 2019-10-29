@@ -87,7 +87,7 @@ namespace FrbaOfertas.AbmRol
             {
                 DialogResult result = MessageBox.Show("¿Desea eliminar la funcionalidad '" + 
                     func_rol.SelectedItem.ToString() + "' para el rol '" + this.rol + "'?", 
-                    "Borrar funcionalidad", 
+                    "Eliminar funcionalidad", 
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
@@ -114,6 +114,34 @@ namespace FrbaOfertas.AbmRol
                 //Agregar la funcionalidad para el rol
                 //Llamar a un stored procedure
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("¿Desea eliminar el rol '" + this.rol + "'?",
+                    "Eliminar rol",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                bool resultadoRol = eliminarRol();
+                if (resultadoRol)
+                {
+                    MessageBox.Show("Rol '" + this.rol + "' eliminado correctamente");
+                    this.buttonVolver.PerformClick();
+                }
+                else
+                {
+                    MessageBox.Show("Error al eliminar el rol '" + this.rol + "'");
+                }
+            }
+        }
+
+        private bool eliminarRol()
+        {
+            //Eliminar el rol
+            //Llamar a un stored procedure
+            return true;
         }
     }
 }

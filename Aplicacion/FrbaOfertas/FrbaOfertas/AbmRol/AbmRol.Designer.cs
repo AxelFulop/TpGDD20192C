@@ -32,11 +32,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.roles = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(943, 24);
+            this.button3.Location = new System.Drawing.Point(480, 573);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(210, 59);
             this.button3.TabIndex = 11;
@@ -62,9 +63,9 @@
             this.roles.ItemHeight = 37;
             this.roles.Items.AddRange(new object[] {
             "Sin roles..."});
-            this.roles.Location = new System.Drawing.Point(280, 140);
+            this.roles.Location = new System.Drawing.Point(278, 130);
             this.roles.Name = "roles";
-            this.roles.Size = new System.Drawing.Size(603, 448);
+            this.roles.Size = new System.Drawing.Size(603, 411);
             this.roles.TabIndex = 19;
             this.roles.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged_1);
             // 
@@ -78,11 +79,21 @@
             this.label2.TabIndex = 20;
             this.label2.Text = "Seleccione el rol para ver sus funcionalidades";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1061, 12);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(93, 43);
+            this.button1.TabIndex = 21;
+            this.button1.Text = "Volver";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // AbmRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 644);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.roles);
             this.Controls.Add(this.label1);
@@ -105,6 +116,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox roles;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button1;
 
     }
 }
