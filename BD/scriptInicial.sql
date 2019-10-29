@@ -75,9 +75,6 @@ IF (select object_id from sys.foreign_keys where [name] = 'FC16') IS NOT NULL
 IF (select object_id from sys.foreign_keys where [name] = 'FC17')  IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.HistorialCliente  DROP CONSTRAINT FC17
 
-IF (select object_id from sys.foreign_keys where [name] = 'FC18')  IS NOT NULL
-    ALTER TABLE GESTION_DE_GATOS.Carga  DROP CONSTRAINT FC18
-
 ------------ Eliminacion de tablas    ------------------
 
 IF OBJECT_ID('GESTION_DE_GATOS.FuncionalidadXRol','U') IS NOT NULL
@@ -94,9 +91,6 @@ IF OBJECT_ID('GESTION_DE_GATOS.Rol','U') IS NOT NULL
 
 IF OBJECT_ID('GESTION_DE_GATOS.Funcionalidad','U') IS NOT NULL
     DROP TABLE GESTION_DE_GATOS.Funcionalidad;
-
-IF OBJECT_ID('GESTION_DE_GATOS.Carga','U') IS NOT NULL
-	DROP TABLE GESTION_DE_GATOS.Carga;
 
 IF OBJECT_ID('GESTION_DE_GATOS.DetallePorFactura','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.DetallePorFactura;
@@ -191,7 +185,7 @@ cliente_cuil NVARCHAR(20),
 cliente_email NVARCHAR(255),
 cliente_fecha_nacimiento DATETIME,
 cliente_telefono NUMERIC(18,0),
-cliente_direccion_calle NVARCHAR(255),
+cliente_direccion NVARCHAR(255),
 cliente_direccion_piso NUMERIC(18,0),
 cliente_direccion_depto NUMERIC(18,0),
 cliente_direccion_localidad NVARCHAR(255),
@@ -210,16 +204,11 @@ tarjeta_tipo CHAR(1),
 tarjeta_banco VARCHAR(15),
 tarjeta_fecha_vencimiento DATETIME,
 tarjeta_cvv NUMERIC(18,0),
+tarjeta_carga_fecha DATETIME,
+tarjeta_carga_monto NUMERIC(18,0),
 PRIMARY KEY (tarjeta_id)
 );
 
-CREATE TABLE GESTION_DE_GATOS.Carga(
-carga_id NUMERIC(18,0) IDENTITY ,
-tarjeta_id NUMERIC(18,0),
-carga_fecha DATETIME,
-carga_monto NUMERIC(18,0),
-PRIMARY KEY (carga_id)
-);
 
 CREATE TABLE GESTION_DE_GATOS.Proveedor(
 proveedor_id NUMERIC(18,0) IDENTITY,
@@ -231,7 +220,7 @@ proveedor_cuit  NVARCHAR(20),
 proveedor_rubro NVARCHAR(100),
 proveedor_email NVARCHAR(255),
 proveedor_telefono NUMERIC(18,0),
-proveedor_direccion_calle NVARCHAR(255),
+proveedor_direccion NVARCHAR(255),
 proveedor_direccion_piso NUMERIC(18,0),
 proveedor_direccion_depto NUMERIC(18,0),
 proveedor_direccion_localidad NVARCHAR(255),
@@ -331,26 +320,105 @@ ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD CONSTRAINT FC14 FOREIGN KEY(f
 ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD CONSTRAINT FC15 FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
 ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD CONSTRAINT FC16 FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
 ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD CONSTRAINT FC17 FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
-ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC18 FOREIGN KEY(tarjeta_id) REFERENCES GESTION_DE_GATOS.Tarjeta(tarjeta_id)
+
+/* Inserccion de datos previos */
+
+
+
+
 
 /* Migracion de la Maestra */
 
---Roles (por ahora sólo los del administrador)
-insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Administrador', '1')
-insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Proveedor', '1')
-insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Cliente', '1')
+--Roles
+insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Administrador', '0')
+insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Cliente', '0')
+insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Proveedor', '0')
 
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Modificar roles')
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Modificar clientes')
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Modificar proveedores')
+
+--Funcionalidades ADM
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Crear  rol') --1
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Crear  cliente') --2
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Crear  proveedor') --3
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Modificar rol') --4
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Modificar cliente') --5
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Modificar proveedor') --6
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Dar de baja rol') --7
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Dar de baja proveedor') --8
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Dar de baja cliente') --9
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Facturar a proveedor') --10
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Listado estadistico') --11
+
 
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 1)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 2)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 3)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 4)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 5)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 6)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 7)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 8)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 9)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 10)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 11)
+
+--Funcionalidades Cliente
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Registrarse') --12,tanto el proveedor como el cliente pueden hacerlo
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Cargar credito') -- 13
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Comprar oferta') -- 14
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Registrar tarjeta') -- 19
+
+
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,12)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,13)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,14)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,19)
+
+
+--Funcionalidades Proveedor
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Armar oferta') -- 15
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('publicar oferta') -- 16  tanto el proveedor como adm pueden hacerlo
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Armar oferta') --17
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Dar de baja oferta') --18
+
+
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,12)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,15)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,16)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,17)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,18)
+
+
+
+
 
 --Cliente
-INSERT  INTO GESTION_DE_GATOS.Cliente (cliente_nombre,cliente_apellido,cliente_email,cliente_numero_dni,cliente_direccion_calle,cliente_fecha_nacimiento,cliente_ciudad,cliente_telefono) 
-SELECT Cli_Nombre,Cli_Apellido,Cli_Mail,Cli_Dni,Cli_Direccion,Cli_Fecha_Nac,Cli_Ciudad,Cli_Telefono  FROM gd_esquema.Maestra
+INSERT  INTO GESTION_DE_GATOS.Cliente (cliente_nombre,cliente_apellido,cliente_email,cliente_numero_dni,cliente_direccion,cliente_fecha_nacimiento,cliente_ciudad,cliente_telefono) 
+SELECT DISTINCT Cli_Nombre,Cli_Apellido,Cli_Mail,Cli_Dni,Cli_Direccion,Cli_Fecha_Nac,Cli_Ciudad,Cli_Telefono  FROM gd_esquema.Maestra
+WHERE Cli_Apellido IS NOT NULL AND Cli_Nombre IS NOT NULL
+
+--Proveedores
+INSERT INTO GESTION_DE_GATOS.Proveedor (proveedor_razon_social,proveedor_cuit,proveedor_rubro,proveedor_telefono,proveedor_ciudad,proveedor_direccion)
+SELECT DISTINCT Provee_RS,Provee_CUIT,Provee_Rubro,Provee_Telefono,Provee_Ciudad,Provee_Dom FROM gd_esquema.Maestra
+WHERE Provee_RS IS NOT NULL AND Provee_CUIT IS NOT NULL
+
+--Oferta
+
+INSERT INTO GESTION_DE_GATOS.Oferta (oferta_stock_disponible,oferta_codigo,oferta_descripcion,oferta_fecha_publicacion,oferta_fecha_vencimiento,oferta_precio,oferta_precio_lista)
+SELECT DISTINCT  Oferta_Cantidad,Oferta_Codigo,Oferta_Descripcion,Oferta_Fecha,Oferta_Fecha_Venc,Oferta_Precio,Oferta_Precio_Ficticio
+FROM gd_esquema.Maestra
+WHERE Oferta_Codigo IS NOT NULL
+
+--Tarjeta
+INSERT INTO GESTION_DE_GATOS.Tarjeta(tarjeta_tipo,tarjeta_carga_monto,tarjeta_carga_fecha)
+SELECT DISTINCT Tipo_Pago_Desc,Carga_Credito,Carga_Fecha
+FROM gd_esquema.Maestra
+
+
+--Factura
+INSERT INTO GESTION_DE_GATOS.Factura (factura_numero,factura_fecha)
+SELECT DISTINCT  Factura_Nro,Factura_Nro
+FROM gd_esquema.Maestra
+
 
 
 /* Creación de procedures */
@@ -443,4 +511,8 @@ BEGIN
 SET @ret = 1
 END
 RETURN @ret
+<<<<<<< Updated upstream
 END
+=======
+END
+>>>>>>> Stashed changes
