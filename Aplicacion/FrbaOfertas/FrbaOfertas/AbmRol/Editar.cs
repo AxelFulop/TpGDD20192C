@@ -111,8 +111,17 @@ namespace FrbaOfertas.AbmRol
         private void button2_Click(object sender, EventArgs e)
         {
             if(func_a_agregar.SelectedItem != null && func_a_agregar.SelectedItem.ToString() != "..."){
-                //Agregar la funcionalidad para el rol
-                //Llamar a un stored procedure
+                bool resultadoRol = agregarFuncionalidad(func_a_agregar.SelectedItem.ToString());
+                if (resultadoRol)
+                {
+                    MessageBox.Show("Funcionalidad '" + func_a_agregar.SelectedItem.ToString() + "' agregada correctamente para el rol '" + this.rol + "'");
+                }
+                else
+                {
+                    MessageBox.Show("Error al agregar la funcionalidad '" + func_a_agregar.SelectedItem.ToString() + "' al rol '" + this.rol + "'");
+                }
+
+                this.Refresh();
             }
         }
 
@@ -140,6 +149,13 @@ namespace FrbaOfertas.AbmRol
         private bool eliminarRol()
         {
             //Eliminar el rol
+            //Llamar a un stored procedure
+            return true;
+        }
+
+        private bool agregarFuncionalidad(string func)
+        {
+            //Agregar funcionalidad al rol
             //Llamar a un stored procedure
             return true;
         }
