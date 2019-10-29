@@ -130,7 +130,7 @@ IF EXISTS (SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME
 GO
  
 /* Creacion del esquema */
-CREATE SCHEMA GESTION_DE_GATOS AUTHORIZATION gd --Cupon2019
+CREATE SCHEMA GESTION_DE_GATOS AUTHORIZATION gdCupon2019
 GO
 
 /* Creacion de las tablas */
@@ -200,12 +200,12 @@ tarjeta_id NUMERIC(18,0) IDENTITY,
 cliente_id NUMERIC(18,0),
 tarjeta_numero NUMERIC(18,0),
 tajeta_saldo NUMERIC(18,4),
-tarjeta_tipo CHAR(1),
+tarjeta_tipo NVARCHAR(100),
 tarjeta_banco VARCHAR(15),
 tarjeta_fecha_vencimiento DATETIME,
 tarjeta_cvv NUMERIC(18,0),
 tarjeta_carga_fecha DATETIME,
-tarjeta_carga_monto NUMERIC(18,0),
+tarjeta_carga_monto NUMERIC(18,2),
 PRIMARY KEY (tarjeta_id)
 );
 
@@ -323,12 +323,6 @@ ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD CONSTRAINT FC17 FOREIGN KEY(cl
 
 /* Inserccion de datos previos */
 
-
-
-
-
-/* Migracion de la Maestra */
-
 --Roles
 insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Administrador', '0')
 insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Cliente', '0')
@@ -347,7 +341,20 @@ insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Da
 insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Dar de baja cliente') --9
 insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Facturar a proveedor') --10
 insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Listado estadistico') --11
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('publicar oferta') --12
 
+--Funcionalidades Cliente
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Registrarse') --13,tanto el proveedor como el cliente pueden hacerlo
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Cargar credito') -- 14
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Comprar oferta') -- 15
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Registrar tarjeta') -- 16
+
+
+--Funcionalidades Proveedor
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Registrarse') --17
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Armar oferta') -- 18
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('publicar oferta') -- 19  tanto el proveedor como adm pueden hacerlo
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Dar de baja oferta') -- 20
 
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 1)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 2)
@@ -360,64 +367,91 @@ insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 9)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 10)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 11)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 12)
 
---Funcionalidades Cliente
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Registrarse') --12,tanto el proveedor como el cliente pueden hacerlo
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Cargar credito') -- 13
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Comprar oferta') -- 14
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Registrar tarjeta') -- 19
-
-
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,12)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,13)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,14)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,19)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,15)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,16)
 
 
---Funcionalidades Proveedor
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Armar oferta') -- 15
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('publicar oferta') -- 16  tanto el proveedor como adm pueden hacerlo
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Armar oferta') --17
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Dar de baja oferta') --18
-
-
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,12)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,15)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,16)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,17)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,18)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,19)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,20)
 
 
+
+/* Migracion de la Maestra */
 
 
 
 --Cliente
+PRINT N'Migrando Clientes'
 INSERT  INTO GESTION_DE_GATOS.Cliente (cliente_nombre,cliente_apellido,cliente_email,cliente_numero_dni,cliente_direccion,cliente_fecha_nacimiento,cliente_ciudad,cliente_telefono) 
 SELECT DISTINCT Cli_Nombre,Cli_Apellido,Cli_Mail,Cli_Dni,Cli_Direccion,Cli_Fecha_Nac,Cli_Ciudad,Cli_Telefono  FROM gd_esquema.Maestra
-WHERE Cli_Apellido IS NOT NULL AND Cli_Nombre IS NOT NULL
+WHERE Cli_Apellido IS NOT NULL AND Cli_Nombre IS NOT NULL AND Cli_Dni IS NOT NULL
 
 --Proveedores
+PRINT N'Migrando Proovedores'
 INSERT INTO GESTION_DE_GATOS.Proveedor (proveedor_razon_social,proveedor_cuit,proveedor_rubro,proveedor_telefono,proveedor_ciudad,proveedor_direccion)
 SELECT DISTINCT Provee_RS,Provee_CUIT,Provee_Rubro,Provee_Telefono,Provee_Ciudad,Provee_Dom FROM gd_esquema.Maestra
 WHERE Provee_RS IS NOT NULL AND Provee_CUIT IS NOT NULL
 
---Oferta
+SET IDENTITY_INSERT  GESTION_DE_GATOS.Factura OFF;
+--Factura
+PRINT N'Migrando Facturas'
+INSERT INTO GESTION_DE_GATOS.Factura (factura_numero,proveedor_id,factura_fecha)
+SELECT DISTINCT  Factura_Nro,proveedor_id,Factura_Nro
+FROM gd_esquema.Maestra
+JOIN GESTION_DE_GATOS.Cliente ON (
+Cli_Nombre = cliente_nombre AND
+Cli_Apellido = cliente_apellido AND
+Cli_Dni = cliente_numero_dni AND
+Cli_Mail = cliente_email)
+JOIN GESTION_DE_GATOS.Proveedor ON (
+Provee_RS = proveedor_razon_social AND
+Provee_CUIT = Provee_CUIT AND
+Provee_Telefono = proveedor_telefono
+)
+WHERE Factura_Nro IS NOT NULL AND Factura_Fecha IS NOT NULL
+SET IDENTITY_INSERT  GESTION_DE_GATOS.Factura  ON;
 
+
+--Oferta
+PRINT N'Migrando Ofertas'
 INSERT INTO GESTION_DE_GATOS.Oferta (oferta_stock_disponible,oferta_codigo,oferta_descripcion,oferta_fecha_publicacion,oferta_fecha_vencimiento,oferta_precio,oferta_precio_lista)
 SELECT DISTINCT  Oferta_Cantidad,Oferta_Codigo,Oferta_Descripcion,Oferta_Fecha,Oferta_Fecha_Venc,Oferta_Precio,Oferta_Precio_Ficticio
 FROM gd_esquema.Maestra
+JOIN GESTION_DE_GATOS.Proveedor ON (
+Provee_RS = proveedor_razon_social AND
+Provee_CUIT = Provee_CUIT AND
+Provee_Telefono = proveedor_telefono
+)
 WHERE Oferta_Codigo IS NOT NULL
 
 --Tarjeta
+PRINT N'Migrando Tarjetas/Cargas'
 INSERT INTO GESTION_DE_GATOS.Tarjeta(tarjeta_tipo,tarjeta_carga_monto,tarjeta_carga_fecha)
 SELECT DISTINCT Tipo_Pago_Desc,Carga_Credito,Carga_Fecha
 FROM gd_esquema.Maestra
+JOIN GESTION_DE_GATOS.Cliente ON (
+Cli_Nombre = cliente_nombre AND
+Cli_Apellido = cliente_apellido AND
+Cli_Dni = cliente_numero_dni AND
+Cli_Mail = cliente_email
+)
 
+--Compra
+PRINT N'Migrando Compras'
+INSERT INTO GESTION_DE_GATOS.Compra (compra_fecha)
+SELECT Oferta_Fecha_Compra FROM  gd_esquema.Maestra
 
---Factura
-INSERT INTO GESTION_DE_GATOS.Factura (factura_numero,factura_fecha)
-SELECT DISTINCT  Factura_Nro,Factura_Nro
-FROM gd_esquema.Maestra
+--DetalleFactura
+PRINT N'Migrando Fechas de entrega'
+INSERT INTO GESTION_DE_GATOS.DetalleFactura (detalle_fecha_entregado)
+SELECT Oferta_Entregado_Fecha FROM gd_esquema.Maestra
+
 
 
 
@@ -511,8 +545,8 @@ BEGIN
 SET @ret = 1
 END
 RETURN @ret
-<<<<<<< Updated upstream
 END
-=======
-END
->>>>>>> Stashed changes
+
+
+
+
