@@ -387,22 +387,23 @@ insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(
 
 
 --Cliente
-PRINT N'Migrando Clientes'
+PRINT 'Migrando Clientes'
 INSERT  INTO GESTION_DE_GATOS.Cliente (cliente_nombre,cliente_apellido,cliente_email,cliente_numero_dni,cliente_direccion,cliente_fecha_nacimiento,cliente_ciudad,cliente_telefono) 
 SELECT DISTINCT Cli_Nombre,Cli_Apellido,Cli_Mail,Cli_Dni,Cli_Direccion,Cli_Fecha_Nac,Cli_Ciudad,Cli_Telefono  FROM gd_esquema.Maestra
 WHERE Cli_Apellido IS NOT NULL AND Cli_Nombre IS NOT NULL AND Cli_Dni IS NOT NULL
 
+
 --Proveedores
-PRINT N'Migrando Proovedores'
+PRINT 'Migrando Proovedores'
 INSERT INTO GESTION_DE_GATOS.Proveedor (proveedor_razon_social,proveedor_cuit,proveedor_rubro,proveedor_telefono,proveedor_ciudad,proveedor_direccion)
 SELECT DISTINCT Provee_RS,Provee_CUIT,Provee_Rubro,Provee_Telefono,Provee_Ciudad,Provee_Dom FROM gd_esquema.Maestra
 WHERE Provee_RS IS NOT NULL AND Provee_CUIT IS NOT NULL
 
-SET IDENTITY_INSERT  GESTION_DE_GATOS.Factura OFF;
+
 --Factura
-PRINT N'Migrando Facturas'
-INSERT INTO GESTION_DE_GATOS.Factura (factura_numero,proveedor_id,factura_fecha)
-SELECT DISTINCT  Factura_Nro,proveedor_id,Factura_Nro
+PRINT 'Migrando Facturas'
+INSERT INTO GESTION_DE_GATOS.Factura (proveedor_id,factura_numero,factura_fecha)
+SELECT DISTINCT  proveedor_id,Factura_Nro,Factura_Nro
 FROM gd_esquema.Maestra
 JOIN GESTION_DE_GATOS.Cliente ON (
 Cli_Nombre = cliente_nombre AND
@@ -415,13 +416,12 @@ Provee_CUIT = Provee_CUIT AND
 Provee_Telefono = proveedor_telefono
 )
 WHERE Factura_Nro IS NOT NULL AND Factura_Fecha IS NOT NULL
-SET IDENTITY_INSERT  GESTION_DE_GATOS.Factura  ON;
 
 
 --Oferta
-PRINT N'Migrando Ofertas'
-INSERT INTO GESTION_DE_GATOS.Oferta (oferta_stock_disponible,oferta_codigo,oferta_descripcion,oferta_fecha_publicacion,oferta_fecha_vencimiento,oferta_precio,oferta_precio_lista)
-SELECT DISTINCT  Oferta_Cantidad,Oferta_Codigo,Oferta_Descripcion,Oferta_Fecha,Oferta_Fecha_Venc,Oferta_Precio,Oferta_Precio_Ficticio
+PRINT 'Migrando Ofertas'
+INSERT INTO GESTION_DE_GATOS.Oferta (proveedor_id,oferta_stock_disponible,oferta_codigo,oferta_descripcion,oferta_fecha_publicacion,oferta_fecha_vencimiento,oferta_precio,oferta_precio_lista)
+SELECT DISTINCT  proveedor_id,Oferta_Cantidad,Oferta_Codigo,Oferta_Descripcion,Oferta_Fecha,Oferta_Fecha_Venc,Oferta_Precio,Oferta_Precio_Ficticio
 FROM gd_esquema.Maestra
 JOIN GESTION_DE_GATOS.Proveedor ON (
 Provee_RS = proveedor_razon_social AND
@@ -430,10 +430,12 @@ Provee_Telefono = proveedor_telefono
 )
 WHERE Oferta_Codigo IS NOT NULL
 
+
+
 --Tarjeta
-PRINT N'Migrando Tarjetas/Cargas'
-INSERT INTO GESTION_DE_GATOS.Tarjeta(tarjeta_tipo,tarjeta_carga_monto,tarjeta_carga_fecha)
-SELECT DISTINCT Tipo_Pago_Desc,Carga_Credito,Carga_Fecha
+PRINT 'Migrando Tarjetas/Cargas'
+INSERT INTO GESTION_DE_GATOS.Tarjeta(cliente_id,tarjeta_tipo,tarjeta_carga_monto,tarjeta_carga_fecha)
+SELECT DISTINCT cliente_id,Tipo_Pago_Desc,Carga_Credito,Carga_Fecha
 FROM gd_esquema.Maestra
 JOIN GESTION_DE_GATOS.Cliente ON (
 Cli_Nombre = cliente_nombre AND
@@ -442,15 +444,27 @@ Cli_Dni = cliente_numero_dni AND
 Cli_Mail = cliente_email
 )
 
+
+
 --Compra
 PRINT N'Migrando Compras'
-INSERT INTO GESTION_DE_GATOS.Compra (compra_fecha)
-SELECT Oferta_Fecha_Compra FROM  gd_esquema.Maestra
+INSERT INTO GESTION_DE_GATOS.Compra (oferta_id,cliente_id,compra_fecha)
+SELECT o.oferta_id,cliente_id,m.Oferta_Fecha_Compra FROM  gd_esquema.Maestra m
+JOIN GESTION_DE_GATOS.Cliente ON (
+Cli_Dni = cliente_numero_dni AND
+Cli_Mail = cliente_email
+)
+JOIN GESTION_DE_GATOS.Oferta o ON (
+m.Oferta_Codigo = o.oferta_codigo AND
+m.Oferta_Fecha = o.oferta_fecha_publicacion
+)
+
 
 --DetalleFactura
 PRINT N'Migrando Fechas de entrega'
 INSERT INTO GESTION_DE_GATOS.DetalleFactura (detalle_fecha_entregado)
 SELECT Oferta_Entregado_Fecha FROM gd_esquema.Maestra
+
 
 
 
@@ -466,6 +480,8 @@ DECLARE @passHash varbinary(128)
 SET @passHash =  HASHBYTES('SHA2_256',@password)
 INSERT INTO GESTION_DE_GATOS.Usuario (usuario_nombre,usuario_password) VALUES (@nombreUsuario,@passHash)
 END
+
+
 
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.actualizaBloqueoUsuario
