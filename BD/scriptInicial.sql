@@ -75,6 +75,9 @@ IF (select object_id from sys.foreign_keys where [name] = 'FC16') IS NOT NULL
 IF (select object_id from sys.foreign_keys where [name] = 'FC17')  IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.HistorialCliente  DROP CONSTRAINT FC17
 
+IF (select object_id from sys.foreign_keys where [name] = 'FC18')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.Carga  DROP CONSTRAINT FC18
+
 ------------ Eliminacion de tablas    ------------------
 
 IF OBJECT_ID('GESTION_DE_GATOS.FuncionalidadXRol','U') IS NOT NULL
@@ -97,6 +100,9 @@ IF OBJECT_ID('GESTION_DE_GATOS.DetallePorFactura','U') IS NOT NULL
 
 IF OBJECT_ID('GESTION_DE_GATOS.Tarjeta','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.Tarjeta;
+
+IF OBJECT_ID('GESTION_DE_GATOS.Carga','U') IS NOT NULL
+	DROP TABLE GESTION_DE_GATOS.Carga;
 
 IF OBJECT_ID('GESTION_DE_GATOS.Cupon','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.Cupon;
@@ -204,11 +210,16 @@ tarjeta_tipo NVARCHAR(100),
 tarjeta_banco VARCHAR(15),
 tarjeta_fecha_vencimiento DATETIME,
 tarjeta_cvv NUMERIC(18,0),
-tarjeta_carga_fecha DATETIME,
-tarjeta_carga_monto NUMERIC(18,2),
 PRIMARY KEY (tarjeta_id)
 );
 
+CREATE TABLE GESTION_DE_GATOS.Carga(
+carga_id NUMERIC(18,0) IDENTITY ,
+tarjeta_id NUMERIC(18,0),
+carga_fecha DATETIME,
+carga_monto NUMERIC(18,2),
+PRIMARY KEY (carga_id)
+);
 
 CREATE TABLE GESTION_DE_GATOS.Proveedor(
 proveedor_id NUMERIC(18,0) IDENTITY,
@@ -320,6 +331,7 @@ ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD CONSTRAINT FC14 FOREIGN KEY(f
 ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD CONSTRAINT FC15 FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
 ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD CONSTRAINT FC16 FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
 ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD CONSTRAINT FC17 FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
+ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC18 FOREIGN KEY(tarjeta_id) REFERENCES GESTION_DE_GATOS.Tarjeta(tarjeta_id)
 
 /* Inserccion de datos previos */
 
@@ -433,9 +445,9 @@ WHERE Oferta_Codigo IS NOT NULL
 
 
 --Tarjeta
-PRINT 'Migrando Tarjetas/Cargas'
-INSERT INTO GESTION_DE_GATOS.Tarjeta(cliente_id,tarjeta_tipo,tarjeta_carga_monto,tarjeta_carga_fecha)
-SELECT DISTINCT cliente_id,Tipo_Pago_Desc,Carga_Credito,Carga_Fecha
+PRINT 'Migrando Tarjetass'
+INSERT INTO GESTION_DE_GATOS.Tarjeta(cliente_id,tarjeta_tipo)
+SELECT DISTINCT cliente_id,Tipo_Pago_Desc
 FROM gd_esquema.Maestra
 JOIN GESTION_DE_GATOS.Cliente ON (
 Cli_Nombre = cliente_nombre AND
@@ -444,27 +456,45 @@ Cli_Dni = cliente_numero_dni AND
 Cli_Mail = cliente_email
 )
 
+--Carga
+PRINT 'Migrando Carga'
+INSERT INTO GESTION_DE_GATOS.Carga(tarjeta_id,carga_monto,carga_fecha)
+SELECT DISTINCT t.tarjeta_id,Carga_Credito,Carga_Fecha
+FROM gd_esquema.Maestra
+JOIN GESTION_DE_GATOS.Cliente c ON (
+Cli_Nombre = c.cliente_nombre AND
+Cli_Apellido = c.cliente_apellido AND
+Cli_Dni = c.cliente_numero_dni AND
+Cli_Mail = c.cliente_email
+)
+JOIN GESTION_DE_GATOS.Tarjeta t ON (
+Tipo_Pago_Desc = t.tarjeta_tipo AND
+t.cliente_id = c.cliente_id AND
+Cli_Dni = c.cliente_numero_dni
+)
+WHERE Carga_Credito IS NOT NULL 
+
 
 
 --Compra
 PRINT N'Migrando Compras'
 INSERT INTO GESTION_DE_GATOS.Compra (oferta_id,cliente_id,compra_fecha)
-SELECT o.oferta_id,cliente_id,m.Oferta_Fecha_Compra FROM  gd_esquema.Maestra m
-JOIN GESTION_DE_GATOS.Cliente ON (
-Cli_Dni = cliente_numero_dni AND
-Cli_Mail = cliente_email
+SELECT o.oferta_id,c.cliente_id,m.Oferta_Fecha_Compra FROM  gd_esquema.Maestra m
+JOIN GESTION_DE_GATOS.Cliente c  ON (
+Cli_Dni = c.cliente_numero_dni AND
+Cli_Mail = c.cliente_email
 )
 JOIN GESTION_DE_GATOS.Oferta o ON (
 m.Oferta_Codigo = o.oferta_codigo AND
 m.Oferta_Fecha = o.oferta_fecha_publicacion
+
 )
 
 
 --DetalleFactura
 PRINT N'Migrando Fechas de entrega'
-INSERT INTO GESTION_DE_GATOS.DetalleFactura (detalle_fecha_entregado)
-SELECT Oferta_Entregado_Fecha FROM gd_esquema.Maestra
-
+INSERT INTO GESTION_DE_GATOS.DetalleFactura  (detalle_fecha_entregado)
+SELECT m.Oferta_Entregado_Fecha FROM gd_esquema.Maestra m
 
 
 
@@ -562,6 +592,8 @@ SET @ret = 1
 END
 RETURN @ret
 END
+
+
 
 
 
