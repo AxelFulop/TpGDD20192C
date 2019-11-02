@@ -461,7 +461,7 @@ WHERE Oferta_Codigo IS NOT NULL
 
 
 --Tarjeta
-PRINT 'Migrando Tarjetass'
+PRINT 'Migrando Tarjetas'
 INSERT INTO GESTION_DE_GATOS.Tarjeta(cliente_id,tarjeta_tipo)
 SELECT DISTINCT cliente_id,Tipo_Pago_Desc
 FROM gd_esquema.Maestra

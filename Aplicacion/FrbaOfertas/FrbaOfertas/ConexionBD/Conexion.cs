@@ -117,8 +117,7 @@ namespace FrbaOfertas.ConexionBD
             {
                 split = parametros.Aggregate((i, j) => '@' + Convert.ToString(i) + ',' + '@' + Convert.ToString(j));
             }
-            String schema = Properties.Settings.Default.Schema;
-            String query = "SELECT dbo." + nomFunct + '(' + Convert.ToString(split) + ')';
+            String query = "SELECT " + Properties.Settings.Default.Schema + "." + nomFunct + '(' + Convert.ToString(split) + ')';
             SqlCommand cmd = new SqlCommand(query, conn);
             Object result = null;
             try
