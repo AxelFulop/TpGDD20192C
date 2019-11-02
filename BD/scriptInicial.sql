@@ -8,6 +8,20 @@ IF OBJECT_ID('GESTION_DE_GATOS.altaUsuario') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.actualizaBloqueoUsuario') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.actualizaBloqueoUsuario
 
+IF OBJECT_ID('GESTION_DE_GATOS.altaTarjeta') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.altaTarjeta
+
+IF OBJECT_ID('GESTION_DE_GATOS.altaCarga') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.altaCarga
+
+IF OBJECT_ID('GESTION_DE_GATOS.altaFuncionalidad') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.altaFuncionalidad
+
+IF OBJECT_ID('GESTION_DE_GATOS.altaRol') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.altaTarjeta
+
+
+
 ----- Eliminacion de funciones ---------
 
 IF OBJECT_ID('GESTION_DE_GATOS.existeUsuario') IS NOT NULL
@@ -530,6 +544,30 @@ UPDATE GESTION_DE_GATOS.Usuario SET usuario_bloqueado = CAST(@bloqueado as NUMER
 END
 END
 
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.altaTarjeta
+@numeroTarjeta NUMERIC(18,0),
+@tipoTarjeta NVARCHAR(100),
+@bancoTarjeta  NVARCHAR(15),
+@vencimientoFechaTarjeta NVARCHAR(20),
+@cvvTarjeta NUMERIC(18,0)
+AS
+BEGIN
+INSERT INTO GESTION_DE_GATOS.Tarjeta (tarjeta_numero,tarjeta_tipo,tarjeta_banco,tarjeta_fecha_vencimiento,tarjeta_cvv)
+VALUES (@numeroTarjeta,@tipoTarjeta,@bancoTarjeta,@vencimientoFechaTarjeta,@cvvTarjeta)
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.altaRol
+@nombreRol NVARCHAR(15),
+@descripcionFuncionalidad NVARCHAR(255)
+AS
+BEGIN
+INSERT INTO  GESTION_DE_GATOS.Rol (rol_nombre)
+VALUES (@nombreRol)
+INSERT INTO GESTION_DE_GATOS.Funcionalidad (funcionalidad_descripcion)
+VALUES (@descripcionFuncionalidad)
+END
 
 /* Creacion de funciones */
 GO
