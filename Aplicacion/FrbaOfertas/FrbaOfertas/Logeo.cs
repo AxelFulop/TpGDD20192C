@@ -76,8 +76,10 @@ namespace FrbaOfertas
                 }
                 else
                 {
-                    contIntentosFallidos = contIntentosFallidos - 1;
-                    if (contIntentosFallidos == 0)
+                    new Conexion().executeProcedure(Properties.Settings.Default.Schema + ".sumarIntentoFallido",
+                        new List<string>() { "@nombreUsuario" }, textBoxUser.Text);
+                    Object cantFallidos = new Conexion().executeScalarFunction("obtenerCantIntentosFallidos", textBoxUser.Text);
+                    if (Convert.ToInt32(cantFallidos) == 3)
                     {
                         MessageBox.Show("Ha agotado el maximo de intentos permitidos, se le bloqueara el usuario por " + this.tiempoBloqueo + " minutos");
                         String localDate = Convert.ToString(DateTime.Now);
@@ -103,7 +105,7 @@ namespace FrbaOfertas
                     new AbmCliente.AbmCliente().Show(); break;
                 case "Proveedor":
                     new AbmProveedor.AbmProveedor().Show(); break;
-                case "Admin": //?
+                case "Administrador":
                     new AbmRol.AbmRol().Show(); break;
             }
         }

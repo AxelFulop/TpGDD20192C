@@ -1,6 +1,11 @@
 USE GD2C2019
 
 ----- Eliminacion de stored procedures ---------
+IF OBJECT_ID('GESTION_DE_GATOS.updateBloqueadoUser') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.updateBloqueadoUser
+
+IF OBJECT_ID('GESTION_DE_GATOS.sumarIntentoFallido') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.sumarIntentoFallido
 
 IF OBJECT_ID('GESTION_DE_GATOS.bajaRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.bajaRol
@@ -185,7 +190,8 @@ usuario_nombre NVARCHAR(255) UNIQUE,
 usuario_password VARBINARY(128),
 usuario_bloqueado NUMERIC(18,0) DEFAULT 0,
 usuario_primer_login NUMERIC(18,0),
-usuario_fecha_bloqueo DATETIME
+usuario_fecha_bloqueo DATETIME,
+usuario_cont_ingresos_fallidos int default 0 --Si llega a 3 se bloquea al usuario (se debe guardar en la DB)
 PRIMARY KEY(usuario_id)
 );
 
@@ -547,7 +553,18 @@ CREATE PROCEDURE GESTION_DE_GATOS.updateBloqueadoUser
 @bloqueado NVARCHAR(18)
 AS
 BEGIN
-	UPDATE GESTION_DE_GATOS.Usuario SET usuario_bloqueado = CAST(@bloqueado as NUMERIC(18,0))
+	UPDATE GESTION_DE_GATOS.Usuario SET usuario_bloqueado = CAST(@bloqueado as NUMERIC(18,0)),
+										usuario_cont_ingresos_fallidos = 0
+		WHERE usuario_nombre = @nombreUsuario
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.sumarIntentoFallido
+@nombreUsuario NVARCHAR(255)
+AS
+BEGIN
+	declare @int_fallidos int
+	UPDATE GESTION_DE_GATOS.Usuario SET usuario_cont_ingresos_fallidos = cast(usuario_cont_ingresos_fallidos as int) + 1
 		WHERE usuario_nombre = @nombreUsuario
 END
 
@@ -644,6 +661,16 @@ IF @nombreUsuario = @userDummy
 SET @ret = 0
 ELSE
 SET @ret = 1
+RETURN @ret
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.obtenerCantIntentosFallidos(@nombreUsuario VARCHAR(50))
+RETURNS int
+AS
+BEGIN
+DECLARE @ret int
+select @ret = usuario_cont_ingresos_fallidos from Usuario where usuario_nombre = @nombreUsuario
 RETURN @ret
 END
 
