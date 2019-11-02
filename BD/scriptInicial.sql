@@ -410,10 +410,7 @@ insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,17)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,18)
 
-
-
 /* Migracion de la Maestra */
-
 --Cliente
 PRINT 'Migrando Clientes'
 INSERT  INTO GESTION_DE_GATOS.Cliente (cliente_nombre,cliente_apellido,cliente_email,cliente_numero_dni,cliente_direccion,cliente_fecha_nacimiento,cliente_ciudad,cliente_telefono) 
@@ -542,6 +539,16 @@ if @bloqueado = 0
 BEGIN
 UPDATE GESTION_DE_GATOS.Usuario SET usuario_bloqueado = CAST(@bloqueado as NUMERIC(18,0)),usuario_fecha_bloqueo = NULL WHERE usuario_nombre = @nombreUsuario
 END
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.updateBloqueadoUser
+@nombreUsuario NVARCHAR(255),
+@bloqueado NVARCHAR(18)
+AS
+BEGIN
+	UPDATE GESTION_DE_GATOS.Usuario SET usuario_bloqueado = CAST(@bloqueado as NUMERIC(18,0))
+		WHERE usuario_nombre = @nombreUsuario
 END
 
 GO
