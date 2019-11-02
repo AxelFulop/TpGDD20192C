@@ -1,8 +1,11 @@
 USE GD2C2019
 
------ Eliminacion de stored procedures ---------
+----- Eliminacion de stored procedures --------- 
 IF OBJECT_ID('GESTION_DE_GATOS.updateBloqueadoUser') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.updateBloqueadoUser
+
+IF OBJECT_ID('GESTION_DE_GATOS.eliminarFuncionalidadARol') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.eliminarFuncionalidadARol
 
 IF OBJECT_ID('GESTION_DE_GATOS.sumarIntentoFallido') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.sumarIntentoFallido
@@ -47,7 +50,10 @@ IF OBJECT_ID('GESTION_DE_GATOS.usuarioEstaBloqueado') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.loginValido') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.loginValido
 
------------- Eliminacion de FK   ------------------
+IF OBJECT_ID('GESTION_DE_GATOS.obtenerCantIntentosFallidos') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.obtenerCantIntentosFallidos
+
+------------ Eliminacion de FK   ------------------ 
 
 IF (select object_id from sys.foreign_keys where [name] = 'FC1') IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.FuncionalidadXRol DROP CONSTRAINT FC1

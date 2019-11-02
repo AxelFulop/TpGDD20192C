@@ -46,8 +46,8 @@ namespace FrbaOfertas
             else
             {
                 Object usr = new Conexion().executeScalarFunction("existeUsuario", this.textBoxUser.Text);
-                Object loginValido = new Conexion().executeScalarFunction("validateLogin", textBoxUser.Text, textBoxPassword.Text);
-                Object bloqueado = new Conexion().executeScalarFunction("userIsBlocked", textBoxUser.Text);
+                Object loginValido = new Conexion().executeScalarFunction("loginValido", textBoxUser.Text, textBoxPassword.Text);
+                Object bloqueado = new Conexion().executeScalarFunction("usuarioEstaBloqueado", textBoxUser.Text);
                 DateTime datetime = DateTime.Now;
                 long unixDateTime = Util.ConvertToUnixTime(datetime);
                 Object auxTime = new Conexion().executeScalarFunction("obtenerFecha", this.textBoxUser.Text, this.tiempoBloqueo);
