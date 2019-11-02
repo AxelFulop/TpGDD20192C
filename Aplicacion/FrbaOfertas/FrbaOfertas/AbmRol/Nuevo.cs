@@ -65,8 +65,9 @@ namespace FrbaOfertas.AbmRol
                 return;
             }
                 
-            bool resultadoRol = CrearRol(this.nombreRol.Text);
-            if (resultadoRol)
+            bool resultadoRol = CrearRol();
+            bool resultadoFuncs = agregarFuncionalidades();
+            if (resultadoRol && resultadoFuncs)
             {
                 MessageBox.Show("Rol '" + this.nombreRol.Text + "' creado correctamente");
                 this.CancelBtn.PerformClick();
@@ -77,13 +78,53 @@ namespace FrbaOfertas.AbmRol
             }
         }
 
-        private bool CrearRol(string rolName)
+        private bool CrearRol()
         {
-            //func_rol.Items; -> funcionalidades a agregar
+            try
+            {
+                ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+                conection.executeProcedure(Properties.Settings.Default.Schema + ".altaRol",
+                    new List<String>()
+                    {
+                        "@nombreRol"
+                    },
+                    new String[1]
+                    {
+                        this.nombreRol.Text
+                    }
+                );
 
-            //Crear rol con las funcionalidades
-            //Llamar a un stored procedure
-            return true;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        private bool agregarFuncionalidades()
+        {
+            try
+            {
+                foreach (string func in func_rol.Items)
+                {
+                    ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+                    conection.executeProcedure(Properties.Settings.Default.Schema + ".agregarFuncionalidadARol",
+                        new List<String>()
+                        {
+                            "@nombreRol", "@descripcionFuncionalidad"
+                        },
+                        new String[2]{
+                            this.nombreRol.Text, func
+                        });
+                }
+                
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

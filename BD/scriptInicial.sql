@@ -523,7 +523,7 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaUsuario
 AS
 BEGIN 
 DECLARE @passHash varbinary(128)
-SET @passHash =  HASHBYTES('SHA2_256',@password)
+SET @passHash =  HASHBYTES('SHA2_256', @password)
 INSERT INTO GESTION_DE_GATOS.Usuario (usuario_nombre,usuario_password) VALUES (@nombreUsuario,@passHash)
 END
 
