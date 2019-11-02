@@ -93,14 +93,32 @@ namespace FrbaOfertas.AbmRol
                 if (result == DialogResult.Yes)
                 {
                     eliminarFuncionalidad(func_rol.SelectedItem.ToString());
+                    this.Hide();
+                    new Editar(this.rol).Show();
                 }
             }
         }
 
         private void eliminarFuncionalidad(string funcionalidad)
         {
-            //Eliminar la funcionalidad para el rol
-            //Llamar a un stored procedure
+            try
+            {
+                ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+                conection.executeProcedure(Properties.Settings.Default.Schema + ".eliminarFuncionalidadARol",
+                    new List<String>()
+                {
+                    "@nombreRol", "@descripcionFuncionalidad"
+                },
+                    new String[2]{
+                    this.rol, funcionalidad
+                });
+
+                MessageBox.Show("Funcionalidad " + funcionalidad + " eliminada correctamente para '" + this.rol + "'");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al eliminar la funcionalidad " + funcionalidad);
+            }
         }
 
         private void func_a_agregar_SelectedIndexChanged(object sender, EventArgs e)
@@ -142,16 +160,25 @@ namespace FrbaOfertas.AbmRol
                 }
                 else
                 {
-                    MessageBox.Show("Error al eliminar el rol '" + this.rol + "'");
+                    MessageBox.Show("Error al eliminar el rol '" + this.rol + "'.\nPor favor intente nuevamente.");
                 }
             }
         }
 
         private bool eliminarRol()
         {
-            //Eliminar el rol
-            //Llamar a un stored procedure
-            return true;
+            try
+            {
+                ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+                conection.executeProcedure(Properties.Settings.Default.Schema + ".bajaRol",
+                    new List<string>() { "@nombreRol" }, new String[1] { this.rol });
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         private bool agregarFuncionalidad(string func)
