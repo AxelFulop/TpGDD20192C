@@ -156,13 +156,13 @@ GO
 /* Creacion de las tablas */
 CREATE TABLE GESTION_DE_GATOS.Funcionalidad(
 funcionalidad_id NUMERIC(18,0) IDENTITY,
-funcionalidad_descripcion NVARCHAR(255)
+funcionalidad_descripcion NVARCHAR(255) unique,
 PRIMARY KEY (funcionalidad_id)
 );
 
 CREATE TABLE GESTION_DE_GATOS.Rol(
 rol_id NUMERIC(18,0) IDENTITY,
-rol_nombre NVARCHAR(15),
+rol_nombre NVARCHAR(15) unique,
 rol_habilitado CHAR(1),
 PRIMARY KEY (rol_id)
 );
@@ -491,7 +491,7 @@ WHERE Carga_Credito IS NOT NULL
 
 
 --Compra
-PRINT N'Migrando Compras'
+PRINT 'Migrando Compras'
 INSERT INTO GESTION_DE_GATOS.Compra (oferta_id,cliente_id,compra_fecha)
 SELECT o.oferta_id,c.cliente_id,m.Oferta_Fecha_Compra FROM  gd_esquema.Maestra m
 JOIN GESTION_DE_GATOS.Cliente c  ON (
@@ -506,7 +506,7 @@ m.Oferta_Fecha = o.oferta_fecha_publicacion
 
 
 --DetalleFactura
-PRINT N'Migrando Fechas de entrega'
+PRINT 'Migrando Fechas de entrega'
 INSERT INTO GESTION_DE_GATOS.DetalleFactura  (detalle_fecha_entregado)
 SELECT m.Oferta_Entregado_Fecha FROM gd_esquema.Maestra m
 
@@ -524,8 +524,6 @@ DECLARE @passHash varbinary(128)
 SET @passHash =  HASHBYTES('SHA2_256',@password)
 INSERT INTO GESTION_DE_GATOS.Usuario (usuario_nombre,usuario_password) VALUES (@nombreUsuario,@passHash)
 END
-
-
 
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.actualizaBloqueoUsuario
@@ -567,6 +565,33 @@ INSERT INTO  GESTION_DE_GATOS.Rol (rol_nombre)
 VALUES (@nombreRol)
 INSERT INTO GESTION_DE_GATOS.Funcionalidad (funcionalidad_descripcion)
 VALUES (@descripcionFuncionalidad)
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.agregarFuncionalidadARol
+@nombreRol NVARCHAR(15),
+@descripcionFuncionalidad NVARCHAR(255)
+AS
+BEGIN
+	declare @id_rol numeric(18, 0)
+	declare @id_func numeric(18, 0)
+
+	select @id_rol = rol_id from GESTION_DE_GATOS.Rol 
+		where rol_nombre = @nombreRol
+	if(@id_rol is null) begin
+		insert into GESTION_DE_GATOS.Rol (rol_nombre)
+			values (@nombreRol)
+		set @id_rol = SCOPE_IDENTITY()
+	end
+	select @id_func = funcionalidad_id from GESTION_DE_GATOS.Funcionalidad 
+		where funcionalidad_descripcion = @descripcionFuncionalidad
+	if(@id_func is null) begin
+		insert into GESTION_DE_GATOS.Funcionalidad (funcionalidad_descripcion)
+			values (@descripcionFuncionalidad)
+		set @id_func = SCOPE_IDENTITY()
+	end
+	INSERT INTO GESTION_DE_GATOS.FuncionalidadXRol(funcionalidad_id, rol_id)
+		VALUES (@id_func, @id_rol)
 END
 
 /* Creacion de funciones */

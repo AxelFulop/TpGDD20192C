@@ -121,7 +121,8 @@ namespace FrbaOfertas.AbmRol
                     MessageBox.Show("Error al agregar la funcionalidad '" + func_a_agregar.SelectedItem.ToString() + "' al rol '" + this.rol + "'");
                 }
 
-                this.Refresh();
+                this.Hide();
+                new Editar(this.rol).Show();
             }
         }
 
@@ -155,9 +156,24 @@ namespace FrbaOfertas.AbmRol
 
         private bool agregarFuncionalidad(string func)
         {
-            //Agregar funcionalidad al rol
-            //Llamar a un stored procedure
-            return true;
+            try
+            {
+                ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+                conection.executeProcedure(Properties.Settings.Default.Schema + ".agregarFuncionalidadARol",
+                    new List<String>()
+                {
+                    "@nombreRol", "@descripcionFuncionalidad"
+                },
+                    new String[2]{
+                    this.rol, func
+                });
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
