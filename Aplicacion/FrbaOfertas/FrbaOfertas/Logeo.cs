@@ -65,7 +65,7 @@ namespace FrbaOfertas
                 }
                 else if ((Convert.ToInt32(bloqueado) == 1) && (unixDateTime >= unixDateUser) && Convert.ToInt32(usr) == 1)
                 {
-                    new Conexion().executeProcedure("updateBloqueadoUser", new List<string>() { "@nombreUsuario", "@bloqueado" }, textBoxUser.Text, "0");
+                    new Conexion().executeProcedure(Properties.Settings.Default.Schema + ".updateBloqueadoUser", new List<string>() { "@nombreUsuario", "@bloqueado" }, textBoxUser.Text, "0");
                     if (Convert.ToInt32(loginValido) == 1)
                     {
                         Object rol_user = new Conexion().executeScalarFunction("obtenerRolUsuario", this.textBoxUser.Text);
@@ -85,8 +85,9 @@ namespace FrbaOfertas
                     {
                         MessageBox.Show("Ha agotado el maximo de intentos permitidos, se le bloqueara el usuario por " + this.tiempoBloqueo + " minutos");
                         String localDate = Convert.ToString(DateTime.Now);
-                        new Conexion().executeProcedure("updateBloqueadoUser", new List<string>() { "@nombreUsuario", "@bloqueado" }, textBoxUser.Text, "1");
+                        new Conexion().executeProcedure(Properties.Settings.Default.Schema + ".updateBloqueadoUser", new List<string>() { "@nombreUsuario", "@bloqueado" }, textBoxUser.Text, "1");
                         new Util().ClearTextBoxes(this.Controls);
+                        error_message.Text = "";
                     }
                     else if (Convert.ToInt32(cantFallidos) == -1)
                     {

@@ -551,7 +551,7 @@ END
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.updateBloqueadoUser
 @nombreUsuario NVARCHAR(255),
-@bloqueado VARCHAR
+@bloqueado NVARCHAR
 AS
 BEGIN
 	UPDATE GESTION_DE_GATOS.Usuario SET usuario_bloqueado = CAST(@bloqueado as NUMERIC(18,0)),
