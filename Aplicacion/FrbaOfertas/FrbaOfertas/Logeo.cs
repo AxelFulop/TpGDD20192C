@@ -87,6 +87,11 @@ namespace FrbaOfertas
                         new Util().ClearTextBoxes(this.Controls);
                         contIntentosFallidos = 3;
                     }
+                    else if (Convert.ToInt32(cantFallidos) == -1)
+                    {
+                        error_message.Text = "Ingreso incorrecto";
+                        error_message.Visible = true;
+                    }
                     else
                     {
                         error_message.Text = "Ingreso incorrecto, le quedan: " + contIntentosFallidos + " intentos";

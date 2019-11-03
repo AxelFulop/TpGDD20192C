@@ -680,7 +680,7 @@ DECLARE @ret int
 select @ret = usuario_cont_ingresos_fallidos from Usuario where usuario_nombre = @nombreUsuario
 IF @ret IS NULL
 BEGIN
-SET @ret = 0
+SET @ret = -1
 END
 RETURN @ret
 END
