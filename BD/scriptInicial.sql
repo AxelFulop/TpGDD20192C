@@ -36,7 +36,10 @@ IF OBJECT_ID('GESTION_DE_GATOS.altaRol') IS NOT NULL
 
 
 
------ Eliminacion de funciones ---------
+----- Eliminacion de funciones --------- 
+
+IF OBJECT_ID('GESTION_DE_GATOS.obtenerRolUsuario') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.obtenerRolUsuario
 
 IF OBJECT_ID('GESTION_DE_GATOS.existeUsuario') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.existeUsuario
@@ -546,30 +549,14 @@ INSERT INTO GESTION_DE_GATOS.Usuario (usuario_nombre,usuario_password) VALUES (@
 END
 
 GO
-CREATE PROCEDURE GESTION_DE_GATOS.actualizaBloqueoUsuario
-@nombreUsuario NVARCHAR(255),
-@bloqueado NVARCHAR(18),
-@fechaBloqueo NVARCHAR(20)
-AS
-BEGIN
-if @bloqueado = 1  
-BEGIN
-UPDATE GESTION_DE_GATOS.Usuario SET usuario_bloqueado = CAST(@bloqueado as NUMERIC(18,0)),usuario_fecha_bloqueo = CAST(@fechaBloqueo as datetime) WHERE usuario_nombre= @nombreUsuario
-END
-if @bloqueado = 0 
-BEGIN
-UPDATE GESTION_DE_GATOS.Usuario SET usuario_bloqueado = CAST(@bloqueado as NUMERIC(18,0)),usuario_fecha_bloqueo = NULL WHERE usuario_nombre = @nombreUsuario
-END
-END
-
-GO
 CREATE PROCEDURE GESTION_DE_GATOS.updateBloqueadoUser
 @nombreUsuario NVARCHAR(255),
-@bloqueado NVARCHAR(18)
+@bloqueado VARCHAR
 AS
 BEGIN
 	UPDATE GESTION_DE_GATOS.Usuario SET usuario_bloqueado = CAST(@bloqueado as NUMERIC(18,0)),
-										usuario_cont_ingresos_fallidos = 0
+										usuario_cont_ingresos_fallidos = 0,
+										usuario_fecha_bloqueo = (case when (@bloqueado = 1) then GETDATE() else null end)
 		WHERE usuario_nombre = @nombreUsuario
 END
 
@@ -578,7 +565,6 @@ CREATE PROCEDURE GESTION_DE_GATOS.sumarIntentoFallido
 @nombreUsuario NVARCHAR(255)
 AS
 BEGIN
-	declare @int_fallidos int
 	UPDATE GESTION_DE_GATOS.Usuario SET usuario_cont_ingresos_fallidos = cast(usuario_cont_ingresos_fallidos as int) + 1
 		WHERE usuario_nombre = @nombreUsuario
 END
@@ -628,6 +614,7 @@ BEGIN
 	declare @id_rol numeric(18, 0)
 	declare @id_func numeric(18, 0)
 
+	BEGIN TRANSACTION
 	select @id_rol = rol_id from GESTION_DE_GATOS.Rol 
 		where rol_nombre = @nombreRol
 	if(@id_rol is null) begin
@@ -644,6 +631,7 @@ BEGIN
 	end
 	INSERT INTO GESTION_DE_GATOS.FuncionalidadXRol(funcionalidad_id, rol_id)
 		VALUES (@id_func, @id_rol)
+	COMMIT
 END
 
 GO
@@ -674,9 +662,9 @@ DECLARE @ret NUMERIC(18,0), @userDummy NVARCHAR(255)
 SELECT @userDummy = usuario_nombre FROM GESTION_DE_GATOS.Usuario 
 	where usuario_nombre = @nombreUsuario
 IF @userDummy is not null
-SET @ret = 0
-ELSE
 SET @ret = 1
+ELSE
+SET @ret = 0
 RETURN @ret
 END
 
@@ -739,22 +727,20 @@ RETURN @ret
 END
 
 GO
-CREATE FUNCTION GESTION_DE_GATOS.loginValido(@nombreUsuario NVARCHAR(255),@password NVARCHAR(128))
-RETURNS NUMERIC(18,0)
+CREATE FUNCTION GESTION_DE_GATOS.loginValido(@nombreUsuario NVARCHAR(255), @password NVARCHAR(128))
+RETURNS int
 AS
 BEGIN
 DECLARE @userDummy NVARCHAR(255),
         @PasswordDummy VARBINARY(128),
-		@ret BIT
-SET @userDummy = (SELECT usuario_nombre from GESTION_DE_GATOS.Usuario  where usuario_nombre = @nombreUsuario)
-SET @PasswordDummy = (SELECT  usuario_password from GESTION_DE_GATOS.Usuario where usuario_password = HASHBYTES('SHA2_256',@password))
-IF  @userDummy IS NOT NULL AND @PasswordDummy IS NOT NULL
-BEGIN
-SET @ret = 0
-END
+		@ret int
+SELECT @userDummy = usuario_nombre, @PasswordDummy = usuario_password
+	from GESTION_DE_GATOS.Usuario
+	where usuario_nombre = @nombreUsuario AND
+		usuario_password = HASHBYTES('SHA2_256', @password)
+IF @userDummy IS NOT NULL AND @PasswordDummy IS NOT NULL
+	SET @ret = 1
 ELSE
-BEGIN
-SET @ret = 1
-END
+	SET @ret = 0
 RETURN @ret
 END

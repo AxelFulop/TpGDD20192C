@@ -58,15 +58,15 @@ namespace FrbaOfertas
                     error_message.Text = "Usuario bloqueado, vuelva a intentar más tarde";
                     error_message.Visible = true;
                 }
-                else if ((Convert.ToInt32(loginValido) == 0) && (Convert.ToInt32(bloqueado) == 0))
+                else if ((Convert.ToInt32(loginValido) == 1) && (Convert.ToInt32(bloqueado) == 0))
                 {
                     Object rol_user = new Conexion().executeScalarFunction("obtenerRolUsuario", this.textBoxUser.Text);
                     redireccionar(rol_user.ToString());
                 }
-                else if ((Convert.ToInt32(bloqueado) == 1) && (unixDateTime >= unixDateUser))
+                else if ((Convert.ToInt32(bloqueado) == 1) && (unixDateTime >= unixDateUser) && Convert.ToInt32(usr) == 1)
                 {
                     new Conexion().executeProcedure("updateBloqueadoUser", new List<string>() { "@nombreUsuario", "@bloqueado" }, textBoxUser.Text, "0");
-                    if (Convert.ToInt32(loginValido) == 0 && Convert.ToInt32(bloqueado) == 0)
+                    if (Convert.ToInt32(loginValido) == 1)
                     {
                         Object rol_user = new Conexion().executeScalarFunction("obtenerRolUsuario", this.textBoxUser.Text);
                         redireccionar(rol_user.ToString());
@@ -74,9 +74,13 @@ namespace FrbaOfertas
                 }
                 else
                 {
-                    new Conexion().executeProcedure(Properties.Settings.Default.Schema + ".sumarIntentoFallido",
-                        new List<string>() { "@nombreUsuario" }, textBoxUser.Text);
-                    Object cantFallidos = new Conexion().executeScalarFunction("obtenerCantIntentosFallidos", textBoxUser.Text);
+                    Object cantFallidos = -1;
+                    if (Convert.ToInt32(usr) == 1)
+                    {
+                        new Conexion().executeProcedure(Properties.Settings.Default.Schema + ".sumarIntentoFallido",
+                                                        new List<string>() { "@nombreUsuario" }, textBoxUser.Text);
+                        cantFallidos = new Conexion().executeScalarFunction("obtenerCantIntentosFallidos", textBoxUser.Text);
+                    }
                     if (Convert.ToInt32(cantFallidos) == 3)
                     {
                         MessageBox.Show("Ha agotado el maximo de intentos permitidos, se le bloqueara el usuario por " + this.tiempoBloqueo + " minutos");
