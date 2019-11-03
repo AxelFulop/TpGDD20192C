@@ -681,6 +681,19 @@ RETURN @ret
 END
 
 GO
+CREATE FUNCTION GESTION_DE_GATOS.obtenerRolUsuario(@nombreUsuario VARCHAR(50))
+RETURNS nvarchar(15)
+AS
+BEGIN
+	DECLARE @ret nvarchar(15)
+	SELECT @ret = r.rol_nombre from GESTION_DE_GATOS.Usuario u 
+		inner join GESTION_DE_GATOS.UsuarioXRol uxr on uxr.usuario_id = u.usuario_id
+		inner join GESTION_DE_GATOS.Rol r on uxr.rol_id = r.rol_id
+		where u.usuario_nombre = @nombreUsuario
+	RETURN @ret
+END
+
+GO
 CREATE FUNCTION GESTION_DE_GATOS.obtenerCantIntentosFallidos(@nombreUsuario VARCHAR(50))
 RETURNS int
 AS

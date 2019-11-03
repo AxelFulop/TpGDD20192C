@@ -60,18 +60,16 @@ namespace FrbaOfertas
                 }
                 else if ((Convert.ToInt32(loginValido) == 0) && (Convert.ToInt32(bloqueado) == 0))
                 {
-                    //Login satisfactiorio
-                    //Redireccionar según rol
-                    redireccionar("Cliente");
+                    Object rol_user = new Conexion().executeScalarFunction("obtenerRolUsuario", this.textBoxUser.Text);
+                    redireccionar(rol_user.ToString());
                 }
                 else if ((Convert.ToInt32(bloqueado) == 1) && (unixDateTime >= unixDateUser))
                 {
-                    new Conexion().executeProcedure("updateBloqueadoUser", values, this.textBoxUser.Text, "0", "NULL");
+                    new Conexion().executeProcedure("updateBloqueadoUser", new List<string>() { "@nombreUsuario", "@bloqueado" }, textBoxUser.Text, "0");
                     if (Convert.ToInt32(loginValido) == 0 && Convert.ToInt32(bloqueado) == 0)
                     {
-                        //Login satisfactiorio
-                        //Redireccionar según rol
-                        redireccionar("Cliente");
+                        Object rol_user = new Conexion().executeScalarFunction("obtenerRolUsuario", this.textBoxUser.Text);
+                        redireccionar(rol_user.ToString());
                     }
                 }
                 else
@@ -83,9 +81,8 @@ namespace FrbaOfertas
                     {
                         MessageBox.Show("Ha agotado el maximo de intentos permitidos, se le bloqueara el usuario por " + this.tiempoBloqueo + " minutos");
                         String localDate = Convert.ToString(DateTime.Now);
-                        new Conexion().executeProcedure("updateBloqueadoUser", values, textBoxUser.Text, "1", localDate);
+                        new Conexion().executeProcedure("updateBloqueadoUser", new List<string>() { "@nombreUsuario", "@bloqueado" }, textBoxUser.Text, "1");
                         new Util().ClearTextBoxes(this.Controls);
-                        contIntentosFallidos = 3;
                     }
                     else if (Convert.ToInt32(cantFallidos) == -1)
                     {
@@ -94,7 +91,7 @@ namespace FrbaOfertas
                     }
                     else
                     {
-                        error_message.Text = "Ingreso incorrecto, le quedan: " + contIntentosFallidos + " intentos";
+                        error_message.Text = "Ingreso incorrecto, le quedan: " + (3-Convert.ToInt32(cantFallidos)) + " intentos";
                         error_message.Visible = true;
                     }
                 }
