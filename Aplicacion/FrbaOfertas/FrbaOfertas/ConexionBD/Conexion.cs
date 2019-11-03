@@ -111,7 +111,10 @@ namespace FrbaOfertas.ConexionBD
             string split = "";
             for (int i = 0; i < parametros.Length; i++)
             {
-                split += "'" + Convert.ToString(parametros[i]) + "'" + ",";
+                if (parametros[i] is string)
+                    split += "'" + Convert.ToString(parametros[i]) + "'" + ",";
+                else
+                    split += Convert.ToString(parametros[i]) + ",";
             }
             split = split.TrimEnd(',');
             String query = "SELECT " + Properties.Settings.Default.Schema + "." + nomFunct + '(' + split + ')';
