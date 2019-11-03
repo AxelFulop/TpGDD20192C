@@ -661,9 +661,10 @@ CREATE FUNCTION GESTION_DE_GATOS.existeUsuario(@nombreUsuario VARCHAR(50))
 RETURNS NUMERIC(18,0)
 AS
 BEGIN
-DECLARE @ret NUMERIC(18,0),@userDummy NVARCHAR(255)
-SET @userDummy = (SELECT usuario_bloqueado FROM GESTION_DE_GATOS.Usuario where usuario_nombre = @nombreUsuario)
-IF @nombreUsuario = @userDummy 
+DECLARE @ret NUMERIC(18,0), @userDummy NVARCHAR(255)
+SELECT @userDummy = usuario_nombre FROM GESTION_DE_GATOS.Usuario 
+	where usuario_nombre = @nombreUsuario
+IF @userDummy is not null
 SET @ret = 0
 ELSE
 SET @ret = 1
@@ -682,18 +683,18 @@ END
 
 GO
 CREATE FUNCTION GESTION_DE_GATOS.obtenerFecha(@nombreUsuario NVARCHAR(255),@increase NUMERIC(18,0))
-RETURNS NUMERIC(18,0)
+RETURNS int
 BEGIN 
-DECLARE @dummyUser NVARCHAR(255),
-        @ret NUMERIC(18,0),
+DECLARE @ret NUMERIC(18,0),
 		@fechaCon15Mins DATETIME
-SET @fechaCon15Mins = (SELECT DATEADD(minute,@increase,usuario_fecha_bloqueo) FROM GESTION_DE_GATOS.Usuario WHERE usuario_nombre = @nombreUsuario)
-SET @ret = (SELECT DATEDIFF(SECOND,{d '1970-01-01'},@fechaCon15Mins) FROM GESTION_DE_GATOS.Usuario WHERE usuario_nombre = @nombreUsuario)
+SELECT @fechaCon15Mins = DATEADD(minute, @increase, usuario_fecha_bloqueo) 
+	FROM GESTION_DE_GATOS.Usuario WHERE usuario_nombre = @nombreUsuario
+SET @ret = DATEDIFF(SECOND,{d '1970-01-01'}, @fechaCon15Mins)
 IF @ret IS NULL
 BEGIN
-SET @ret =-1;
+SET @ret = -1
 END
-RETURN @ret;
+RETURN @ret
 END
 
 GO
@@ -702,7 +703,12 @@ RETURNS NUMERIC(18,0)
 AS
 BEGIN
 DECLARE @ret NUMERIC(18,0)
-SET @ret = (SELECT usuario_bloqueado FROM GESTION_DE_GATOS.Usuario WHERE usuario_nombre = @nombreUsuario)
+SELECT @ret = usuario_bloqueado FROM GESTION_DE_GATOS.Usuario 
+	WHERE usuario_nombre = @nombreUsuario
+IF @ret IS NULL
+BEGIN
+SET @ret = 0
+END
 RETURN @ret
 END
 

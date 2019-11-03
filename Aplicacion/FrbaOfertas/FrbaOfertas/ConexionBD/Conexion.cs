@@ -108,28 +108,19 @@ namespace FrbaOfertas.ConexionBD
         {
             SqlConnection conn = Conexion.configDBConnection();
             openConnection(conn);
-            Object split;
-            if (parametros.Length == 1)
+            string split = "";
+            for (int i = 0; i < parametros.Length; i++)
             {
-                split = '@' + parametros[0].ToString();
+                split += "'" + Convert.ToString(parametros[i]) + "'" + ",";
             }
-            else
-            {
-                split = parametros.Aggregate((i, j) => '@' + Convert.ToString(i) + ',' + '@' + Convert.ToString(j));
-            }
-            String query = "SELECT " + Properties.Settings.Default.Schema + "." + nomFunct + '(' + Convert.ToString(split) + ')';
+            split = split.TrimEnd(',');
+            String query = "SELECT " + Properties.Settings.Default.Schema + "." + nomFunct + '(' + split + ')';
             SqlCommand cmd = new SqlCommand(query, conn);
             Object result = null;
             try
             {
                 cmd.CommandType = System.Data.CommandType.Text;
-                String[] splitAux = Convert.ToString(split).Split(',');
-                for (int i = 0; i < parametros.Length; i++)
-                {
-                    cmd.Parameters.AddWithValue(splitAux[i], parametros[i]);
-                }
                 result = cmd.ExecuteScalar();
-                return result;
             }
             catch (SqlException ex)
             {
@@ -142,11 +133,10 @@ namespace FrbaOfertas.ConexionBD
                 }
                 Console.WriteLine(errorMessages.ToString());
             }
+
             closeConnection(conn);
-            return result;
+            return result; 
         }
-
-
 
         public void executeProcedure(String nomProcedure, List<String> values, params Object[] parametros)
         {
