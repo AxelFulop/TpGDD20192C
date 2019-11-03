@@ -429,13 +429,22 @@ INSERT  INTO GESTION_DE_GATOS.Cliente (cliente_nombre,cliente_apellido,cliente_e
 SELECT DISTINCT Cli_Nombre,Cli_Apellido,Cli_Mail,Cli_Dni,Cli_Direccion,Cli_Fecha_Nac,Cli_Ciudad,Cli_Telefono  FROM gd_esquema.Maestra
 WHERE Cli_Apellido IS NOT NULL AND Cli_Nombre IS NOT NULL AND Cli_Dni IS NOT NULL
 
-
 --Proveedores
 PRINT 'Migrando Proovedores'
 INSERT INTO GESTION_DE_GATOS.Proveedor (proveedor_razon_social,proveedor_cuit,proveedor_rubro,proveedor_telefono,proveedor_ciudad,proveedor_direccion)
 SELECT DISTINCT Provee_RS,Provee_CUIT,Provee_Rubro,Provee_Telefono,Provee_Ciudad,Provee_Dom FROM gd_esquema.Maestra
 WHERE Provee_RS IS NOT NULL AND Provee_CUIT IS NOT NULL
 
+--Usuarios
+PRINT 'Migrando Usuarios - Clientes'
+INSERT INTO GESTION_DE_GATOS.Usuario(usuario_nombre, usuario_password,
+									 usuario_bloqueado, usuario_primer_login)
+SELECT LOWER(CONCAT(cliente_nombre, '_', cliente_apellido)), HASHBYTES('SHA2_256', cast(cliente_numero_dni as varchar)), 0, 0 from GESTION_DE_GATOS.Cliente
+
+PRINT 'Migrando Usuarios - Proveedores'
+INSERT INTO GESTION_DE_GATOS.Usuario(usuario_nombre, usuario_password,
+									 usuario_bloqueado, usuario_primer_login)
+SELECT proveedor_cuit, HASHBYTES('SHA2_256', LOWER(proveedor_razon_social)), 0, 0 from GESTION_DE_GATOS.Proveedor
 
 --Factura
 PRINT 'Migrando Facturas'
