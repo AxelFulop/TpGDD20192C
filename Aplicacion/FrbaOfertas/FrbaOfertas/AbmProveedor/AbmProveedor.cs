@@ -95,8 +95,12 @@ namespace FrbaOfertas.AbmProveedor
             string mail = this.mail.Text;
 
             DataView dataView = new DataView(proveedores);
-            dataView.RowFilter = string.Format("proveedor_email LIKE '%{0}%' AND proveedor_razon_social LIKE '%{1}%' AND proveedor_cuit LIKE '%{2}%'", mail, razonSocial, cuit);
-            grid.DataSource = dataView;
+            dataView.RowFilter = string.Format("proveedor_email LIKE '%{0}%' AND " +
+                                               "proveedor_razon_social LIKE '%{1}%'",
+                                                mail, razonSocial);
+            if (cuit != "")
+                dataView.RowFilter += string.Format(" AND proveedor_cuit = '%{0}%'", cuit);
+            grid.DataSource = dataView; 
         }
     }
 }

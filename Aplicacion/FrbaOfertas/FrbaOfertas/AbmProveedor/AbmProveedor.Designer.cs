@@ -47,10 +47,13 @@
             // 
             // grid
             // 
+            this.grid.AllowUserToAddRows = false;
+            this.grid.AllowUserToDeleteRows = false;
             this.grid.AllowUserToOrderColumns = true;
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grid.Location = new System.Drawing.Point(12, 163);
             this.grid.Name = "grid";
+            this.grid.ReadOnly = true;
             this.grid.RowTemplate.Height = 28;
             this.grid.Size = new System.Drawing.Size(1162, 481);
             this.grid.TabIndex = 3;
