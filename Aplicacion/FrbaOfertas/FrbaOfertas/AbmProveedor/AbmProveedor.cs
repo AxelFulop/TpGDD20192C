@@ -12,7 +12,7 @@ namespace FrbaOfertas.AbmProveedor
 {
     public partial class AbmProveedor : Form
     {
-        private DataTable proveedores;// = new DataTable();
+        private DataTable proveedores;
 
         public AbmProveedor()
         {
@@ -23,10 +23,10 @@ namespace FrbaOfertas.AbmProveedor
         private void cargarProveedores()
         {
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
-            string[] param = new string[]{"proveedor_razon_social","proveedor_email","proveedor_telefono","proveedor_direccion_calle","proveedor_direccion_codigo_postal",
+            string[] param = new string[]{"proveedor_razon_social","proveedor_email","proveedor_telefono","proveedor_direccion","proveedor_direccion_codigo_postal",
                                           "proveedor_cuit","proveedor_rubro"};
 
-            proveedores = conection.selectReturnMultiplyRows("Proveedor", 7, param);
+            proveedores = conection.selectReturnMultiplyRows("Proveedor", param);
             grid.DataSource = proveedores;
         }
 

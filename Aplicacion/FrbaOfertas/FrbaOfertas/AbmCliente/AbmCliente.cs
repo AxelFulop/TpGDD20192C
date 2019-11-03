@@ -23,9 +23,9 @@ namespace FrbaOfertas.AbmCliente
         private void cargarClientes(){
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
             string[] param = new string[]{"cliente_nombre","cliente_apellido","cliente_numero_dni","cliente_email","cliente_telefono",
-                                          "cliente_direccion_calle","cliente_direccion_codigo_postal", "cliente_fecha_nacimiento"};
+                                          "cliente_direccion","cliente_direccion_codigo_postal", "cliente_fecha_nacimiento"};
 
-            clientes = conection.selectReturnMultiplyRows("Cliente", 8, param);
+            clientes = conection.selectReturnMultiplyRows("Cliente", param);
             grid.DataSource = clientes;
         }
 

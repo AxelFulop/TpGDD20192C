@@ -240,12 +240,12 @@ namespace FrbaOfertas.ConexionBD
             return result;
         }
 
-        public DataTable selectReturnMultiplyRows(String nomTabla, int numParametros, params Object[] parametros)
+        public DataTable selectReturnMultiplyRows(String nomTabla, params Object[] parametros)
         {
             string query = "SELECT ";
             SqlConnection conn = Conexion.configDBConnection();
             DataTable dtResult = null;
-            for (int i = 0; i < numParametros; i++)
+            for (int i = 0; i < parametros.Length; i++)
             {
                 query = query + parametros[i] + ",";
             }
