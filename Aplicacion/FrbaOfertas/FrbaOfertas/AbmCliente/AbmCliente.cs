@@ -105,9 +105,14 @@ namespace FrbaOfertas.AbmCliente
             string mail = this.mail.Text;
             string dni = this.dni.Text;
 
-            DataView dataView = new DataView(clientes); 
-            dataView.RowFilter = string.Format("cliente_nombre LIKE '%{0}%' AND cliente_apellido LIKE '%{1}%' AND cliente_email LIKE '%{2}%'", nombre, apellido, mail);
-            //FALTA FILTRAR POR EL DNI
+            DataView dataView = new DataView(clientes);
+            dataView.RowFilter = string.Format("cliente_nombre LIKE '%{0}%' AND " +
+                                               "cliente_apellido LIKE '%{1}%' AND " +
+                                               "cliente_email LIKE '%{2}%'",
+                                                nombre, apellido, mail);
+            if(dni != "")
+                dataView.RowFilter += string.Format(" AND cliente_numero_dni={0}", dni);
+
             grid.DataSource = dataView;
         }
     }
