@@ -442,7 +442,7 @@ WHERE Provee_RS IS NOT NULL AND Provee_CUIT IS NOT NULL
 PRINT 'Migrando Usuarios - Clientes'
 INSERT INTO GESTION_DE_GATOS.Usuario(usuario_nombre, usuario_password,
 									 usuario_bloqueado, usuario_primer_login)
-SELECT LOWER(CONCAT(cliente_nombre, '_', cliente_apellido)), HASHBYTES('SHA2_256', cast(cliente_numero_dni as varchar)), 0, 0 from GESTION_DE_GATOS.Cliente
+SELECT LOWER(CONCAT(cliente_nombre, '_', cliente_apellido)), HASHBYTES('SHA2_256', convert(nvarchar(128), cliente_numero_dni)), 0, 0 from GESTION_DE_GATOS.Cliente
 
 UPDATE GESTION_DE_GATOS.Cliente SET 
 usuario_id = (SELECT usuario_id FROM GESTION_DE_GATOS.Usuario 
@@ -451,7 +451,7 @@ usuario_id = (SELECT usuario_id FROM GESTION_DE_GATOS.Usuario
 PRINT 'Migrando Usuarios - Proveedores'
 INSERT INTO GESTION_DE_GATOS.Usuario(usuario_nombre, usuario_password,
 									 usuario_bloqueado, usuario_primer_login)
-SELECT proveedor_cuit, HASHBYTES('SHA2_256', LOWER(proveedor_razon_social)), 0, 0 from GESTION_DE_GATOS.Proveedor
+SELECT proveedor_cuit, HASHBYTES('SHA2_256', CONVERT(nvarchar(128), LOWER(proveedor_razon_social))), 0, 0 from GESTION_DE_GATOS.Proveedor
 
 UPDATE GESTION_DE_GATOS.Proveedor SET
 usuario_id = (SELECT usuario_id FROM GESTION_DE_GATOS.Usuario where usuario_nombre = proveedor_cuit)
@@ -494,7 +494,6 @@ Provee_CUIT = Provee_CUIT AND
 Provee_Telefono = proveedor_telefono
 )
 WHERE Oferta_Codigo IS NOT NULL
-
 
 
 --Tarjeta
@@ -560,7 +559,7 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaUsuario
 AS
 BEGIN 
 DECLARE @passHash varbinary(128)
-SET @passHash =  HASHBYTES('SHA2_256', @password)
+SET @passHash =  HASHBYTES('SHA2_256', convert(nvarchar(128), @password))
 INSERT INTO GESTION_DE_GATOS.Usuario (usuario_nombre,usuario_password) VALUES (@nombreUsuario,@passHash)
 END
 
@@ -749,13 +748,12 @@ CREATE FUNCTION GESTION_DE_GATOS.loginValido(@nombreUsuario NVARCHAR(255), @pass
 RETURNS BIT
 AS
 BEGIN
-
 DECLARE @userDummy NVARCHAR(255),
-        @PasswordDummy VARBINARY(128),
 		@ret BIT
-SET  @userDummy = (SELECT 1 FROM GESTION_DE_GATOS.Usuario where RTRIM(usuario_nombre) = RTRIM(@nombreUsuario))
-SET @PasswordDummy =(SELECT 1 FROM GESTION_DE_GATOS.Usuario where RTRIM(usuario_password) = HASHBYTES('SHA2_256', RTRIM(@password)))
-IF  (@userDummy IS NOT  NULL AND  @PasswordDummy IS  NULL)
+SELECT @userDummy = usuario_nombre FROM GESTION_DE_GATOS.Usuario 
+where usuario_password = HASHBYTES('SHA2_256', convert(nvarchar(128), @password)) AND
+	  usuario_nombre = @nombreUsuario
+IF  (@userDummy IS NOT NULL)
 BEGIN
 	SET @ret = 1
 END
