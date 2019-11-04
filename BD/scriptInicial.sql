@@ -564,6 +564,65 @@ INSERT INTO GESTION_DE_GATOS.Usuario (usuario_nombre,usuario_password) VALUES (@
 END
 
 GO
+CREATE PROCEDURE GESTION_DE_GATOS.altaTarjeta
+@numeroTarjeta NUMERIC(18,0),
+@tipoTarjeta NVARCHAR(100),
+@bancoTarjeta  NVARCHAR(15),
+@vencimientoFechaTarjeta NVARCHAR(20),
+@cvvTarjeta NUMERIC(18,0)
+AS
+BEGIN
+INSERT INTO GESTION_DE_GATOS.Tarjeta (tarjeta_numero,tarjeta_tipo,tarjeta_banco,tarjeta_fecha_vencimiento,tarjeta_cvv)
+VALUES (@numeroTarjeta,@tipoTarjeta,@bancoTarjeta,@vencimientoFechaTarjeta,@cvvTarjeta)
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.altaCarga
+@fechaCarga DATETIME,
+@montoCarga NUMERIC(18,2),
+@numeroTarjeta NUMERIC(18,0),
+@tipoTarjeta NVARCHAR(100),
+@bancoTarjeta  NVARCHAR(15),
+@vencimientoFechaTarjeta NVARCHAR(20),
+@cvvTarjeta NUMERIC(18,0),
+@idTarjeta INT
+AS
+BEGIN
+EXEC GESTION_DE_GATOS.altaTarjeta @numeroTarjeta,@tipoTarjeta,@bancoTarjeta,@vencimientoFechaTarjeta,@cvvTarjeta
+set @idTarjeta = SCOPE_IDENTITY()
+INSERT INTO GESTION_DE_GATOS.Carga(tarjeta_id,carga_fecha,carga_monto)
+VALUES(@idTarjeta,@fechaCarga,@montoCarga)
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.altaRol
+@nombreRol NVARCHAR(15)
+AS
+BEGIN
+	INSERT INTO  GESTION_DE_GATOS.Rol (rol_nombre)
+		VALUES (@nombreRol)
+END
+
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.altaOferta
+@descripcionOferta NVARCHAR(255), 
+@codigoOferta NVARCHAR(50),
+@fechaPublicacionOferta DATETIME,
+@fechaVencimientoOferta DATETIME,
+@limiteCompraOferta NUMERIC(18,0),
+@stockDisponibleOferta NUMERIC(18,0),
+@precioOferta NUMERIC(18,2),
+@precioListaOferta NUMERIC(18,2),
+@proovedorCuit NUMERIC(18,0)
+AS
+BEGIN
+INSERT INTO GESTION_DE_GATOS.Oferta (proveedor_id,oferta_codigo,oferta_fecha_publicacion,oferta_fecha_vencimiento,oferta_limite_compra,oferta_stock_disponible,oferta_precio,oferta_precio_lista)
+VALUES(@proovedorCuit,@descripcionOferta,@codigoOferta,@fechaPublicacionOferta,@fechaVencimientoOferta,@limiteCompraOferta,@stockDisponibleOferta,@precioOferta,@precioListaOferta)
+SELECT @proovedorCuit = proveedor_cuit FROM GESTION_DE_GATOS.Proveedor WHERE proveedor_cuit = @proovedorCuit
+END
+
+GO
 CREATE PROCEDURE GESTION_DE_GATOS.updateBloqueadoUser
 @nombreUsuario NVARCHAR(255),
 @bloqueado NVARCHAR
@@ -584,27 +643,9 @@ BEGIN
 		WHERE usuario_nombre = @nombreUsuario
 END
 
-GO
-CREATE PROCEDURE GESTION_DE_GATOS.altaTarjeta
-@numeroTarjeta NUMERIC(18,0),
-@tipoTarjeta NVARCHAR(100),
-@bancoTarjeta  NVARCHAR(15),
-@vencimientoFechaTarjeta NVARCHAR(20),
-@cvvTarjeta NUMERIC(18,0)
-AS
-BEGIN
-INSERT INTO GESTION_DE_GATOS.Tarjeta (tarjeta_numero,tarjeta_tipo,tarjeta_banco,tarjeta_fecha_vencimiento,tarjeta_cvv)
-VALUES (@numeroTarjeta,@tipoTarjeta,@bancoTarjeta,@vencimientoFechaTarjeta,@cvvTarjeta)
-END
 
-GO
-CREATE PROCEDURE GESTION_DE_GATOS.altaRol
-@nombreRol NVARCHAR(15)
-AS
-BEGIN
-	INSERT INTO  GESTION_DE_GATOS.Rol (rol_nombre)
-		VALUES (@nombreRol)
-END
+
+
 
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.bajaRol
@@ -763,4 +804,7 @@ BEGIN
 END
 RETURN @ret
 END
+
+
+SELECT * FROM gd_esquema.Maestra
 
