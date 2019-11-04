@@ -444,10 +444,17 @@ INSERT INTO GESTION_DE_GATOS.Usuario(usuario_nombre, usuario_password,
 									 usuario_bloqueado, usuario_primer_login)
 SELECT LOWER(CONCAT(cliente_nombre, '_', cliente_apellido)), HASHBYTES('SHA2_256', cast(cliente_numero_dni as varchar)), 0, 0 from GESTION_DE_GATOS.Cliente
 
+UPDATE GESTION_DE_GATOS.Cliente SET 
+usuario_id = (SELECT usuario_id FROM GESTION_DE_GATOS.Usuario 
+	where usuario_nombre = LOWER(CONCAT(cliente_nombre, '_', cliente_apellido)))
+
 PRINT 'Migrando Usuarios - Proveedores'
 INSERT INTO GESTION_DE_GATOS.Usuario(usuario_nombre, usuario_password,
 									 usuario_bloqueado, usuario_primer_login)
 SELECT proveedor_cuit, HASHBYTES('SHA2_256', LOWER(proveedor_razon_social)), 0, 0 from GESTION_DE_GATOS.Proveedor
+
+UPDATE GESTION_DE_GATOS.Proveedor SET
+usuario_id = (SELECT usuario_id FROM GESTION_DE_GATOS.Usuario where usuario_nombre = proveedor_cuit)
 
 --Factura
 PRINT 'Migrando Facturas'
