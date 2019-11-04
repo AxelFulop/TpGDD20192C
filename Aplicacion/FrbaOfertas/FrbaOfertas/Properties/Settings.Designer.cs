@@ -43,5 +43,16 @@ namespace FrbaOfertas.Properties {
                 this["fecha"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-55L9M7K\\SQLSERVER2012;Initial Catalog=GD2C2019;User ID=gdCupo" +
+            "n2019;Password=gd2019")]
+        public string GD2C2019ConnectionString {
+            get {
+                return ((string)(this["GD2C2019ConnectionString"]));
+            }
+        }
     }
 }

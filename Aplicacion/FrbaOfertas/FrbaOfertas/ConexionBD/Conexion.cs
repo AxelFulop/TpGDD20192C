@@ -50,10 +50,10 @@ namespace FrbaOfertas.ConexionBD
 
         public static SqlConnection configDBConnection()
         {
-            string datasource = @"LAPTOP-JEFKPT5O\SQLSERVER2012";
+            string datasource = @"localhost\SQLSERVER2012";
 
             string database = "GD2C2019";
-            string username = "gd";
+            string username = "gdCupon2019";
             string password = "gd2019";
 
             return GetDBConnection(datasource, database, username, password);

@@ -105,7 +105,7 @@ namespace FrbaOfertas
 
         private void redireccionar(string rol)
         {
-            this.Hide();
+            //this.Hide();
             switch (rol)
             {
                 case "Cliente":

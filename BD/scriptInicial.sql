@@ -726,21 +726,27 @@ END
 RETURN @ret
 END
 
+
+
 GO
 CREATE FUNCTION GESTION_DE_GATOS.loginValido(@nombreUsuario NVARCHAR(255), @password NVARCHAR(128))
-RETURNS int
+RETURNS BIT
 AS
 BEGIN
+
 DECLARE @userDummy NVARCHAR(255),
         @PasswordDummy VARBINARY(128),
-		@ret int
-SELECT @userDummy = usuario_nombre, @PasswordDummy = usuario_password
-	from GESTION_DE_GATOS.Usuario
-	where usuario_nombre = @nombreUsuario AND
-		usuario_password = HASHBYTES('SHA2_256', @password)
-IF @userDummy IS NOT NULL AND @PasswordDummy IS NOT NULL
+		@ret BIT
+SET  @userDummy = (SELECT 1from GESTION_DE_GATOS.Usuario where RTRIM(usuario_nombre) = RTRIM(@nombreUsuario))
+SET @PasswordDummy =(SELECT 1 FROM GESTION_DE_GATOS.Usuario where RTRIM(usuario_password) = HASHBYTES('SHA2_256', RTRIM(@password)))
+IF  (@userDummy IS NOT  NULL AND  @PasswordDummy IS  NULL)
+BEGIN
 	SET @ret = 1
+END
 ELSE
+BEGIN
 	SET @ret = 0
+END
 RETURN @ret
 END
+
