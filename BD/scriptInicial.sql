@@ -456,6 +456,15 @@ SELECT proveedor_cuit, HASHBYTES('SHA2_256', LOWER(proveedor_razon_social)), 0, 
 UPDATE GESTION_DE_GATOS.Proveedor SET
 usuario_id = (SELECT usuario_id FROM GESTION_DE_GATOS.Usuario where usuario_nombre = proveedor_cuit)
 
+--Roles
+PRINT 'Asignando roles a clientes'
+INSERT INTO GESTION_DE_GATOS.UsuarioXRol(usuario_id, rol_id)
+SELECT usuario_id, 2 from GESTION_DE_GATOS.Cliente
+
+PRINT 'Asignando roles a proveedores'
+INSERT INTO GESTION_DE_GATOS.UsuarioXRol(usuario_id, rol_id)
+SELECT usuario_id, 3 from GESTION_DE_GATOS.Proveedor
+
 --Factura
 PRINT 'Migrando Facturas'
 INSERT INTO GESTION_DE_GATOS.Factura (proveedor_id,factura_numero,factura_fecha)
