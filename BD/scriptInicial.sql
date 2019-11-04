@@ -737,7 +737,7 @@ BEGIN
 DECLARE @userDummy NVARCHAR(255),
         @PasswordDummy VARBINARY(128),
 		@ret BIT
-SET  @userDummy = (SELECT 1from GESTION_DE_GATOS.Usuario where RTRIM(usuario_nombre) = RTRIM(@nombreUsuario))
+SET  @userDummy = (SELECT 1 FROM GESTION_DE_GATOS.Usuario where RTRIM(usuario_nombre) = RTRIM(@nombreUsuario))
 SET @PasswordDummy =(SELECT 1 FROM GESTION_DE_GATOS.Usuario where RTRIM(usuario_password) = HASHBYTES('SHA2_256', RTRIM(@password)))
 IF  (@userDummy IS NOT  NULL AND  @PasswordDummy IS  NULL)
 BEGIN
