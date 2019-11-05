@@ -34,6 +34,11 @@ IF OBJECT_ID('GESTION_DE_GATOS.altaFuncionalidad') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.altaRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.altaRol
 
+IF OBJECT_ID('GESTION_DE_GATOS.altaProveedor') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.altaProveedor
+
+IF OBJECT_ID('GESTION_DE_GATOS.altaOferta') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.altaOferta
 
 
 ----- Eliminacion de funciones --------- 
@@ -373,7 +378,6 @@ ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC18 FOREIGN KEY(tarjeta_id) R
 
 INSERT INTO GESTION_DE_GATOS.Usuario (usuario_nombre,usuario_password)
 VALUES('admin',HASHBYTES('SHA2_256','admin'))
-
 
 
 /*INSERT INTO GESTION_DE_GATOS.UsuarioXRol (rol_id,usuario_id)
@@ -855,7 +859,4 @@ BEGIN
 END
 RETURN @ret
 END
-
-
-SELECT * FROM gd_esquema.Maestra
 
