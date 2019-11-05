@@ -268,7 +268,7 @@ proveedor_email NVARCHAR(255),
 proveedor_telefono NUMERIC(18,0),
 proveedor_direccion NVARCHAR(255),
 proveedor_direccion_piso NUMERIC(18,0),
-proveedor_direccion_depto NUMERIC(18,0),
+proveedor_direccion_depto NVARCHAR(10),
 proveedor_direccion_localidad NVARCHAR(255),
 proveedor_ciudad NVARCHAR(255),
 proveedor_direccion_codigo_postal NVARCHAR(255),
@@ -369,6 +369,17 @@ ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD CONSTRAINT FC17 FOREIGN KEY(cl
 ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC18 FOREIGN KEY(tarjeta_id) REFERENCES GESTION_DE_GATOS.Tarjeta(tarjeta_id)
 
 /* Inserccion de datos previos */
+--Usuario Admin
+
+INSERT INTO GESTION_DE_GATOS.Usuario (usuario_nombre,usuario_password)
+VALUES('admin',HASHBYTES('SHA2_256','admin'))
+
+
+
+/*INSERT INTO GESTION_DE_GATOS.UsuarioXRol (rol_id,usuario_id)
+SELECT 1,usuario_id FROM GESTION_DE_GATOS.Usuario WHERE usuario_nombre = 'admin'*/
+
+
 
 --Roles
 insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Administrador', '0')
@@ -596,11 +607,27 @@ END
 
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.altaRol
-@nombreRol NVARCHAR(15)
+@nombreRol NVARCHAR(15),
+@descripcionFuncionalidad NVARCHAR(255)
 AS
 BEGIN
+DECLARE @idRol NUMERIC(18,0),@idFuncionalidad NUMERIC(18,0)
 	INSERT INTO  GESTION_DE_GATOS.Rol (rol_nombre)
 		VALUES (@nombreRol)
+	INSERT INTO GESTION_DE_GATOS.Funcionalidad (funcionalidad_descripcion)
+	VALUES (@descripcionFuncionalidad)
+	SET @idRol = (SELECT rol_id FROM GESTION_DE_GATOS.Rol WHERE rol_nombre = @nombreRol)
+	IF @idRol IS NULL
+	BEGIN
+	SET @idRol = SCOPE_IDENTITY()
+	END
+	SET @idFuncionalidad = (SELECT funcionalidad_id FROM GESTION_DE_GATOS.Funcionalidad WHERE funcionalidad_descripcion = @descripcionFuncionalidad)
+	IF @idFuncionalidad IS NULL
+	BEGIN
+	SET @idFuncionalidad = SCOPE_IDENTITY()
+	END
+	INSERT INTO GESTION_DE_GATOS.FuncionalidadXRol (rol_id,funcionalidad_id)
+	VALUES(@idRol,@idFuncionalidad)
 END
 
 
@@ -614,13 +641,37 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaOferta
 @stockDisponibleOferta NUMERIC(18,0),
 @precioOferta NUMERIC(18,2),
 @precioListaOferta NUMERIC(18,2),
-@proovedorCuit NUMERIC(18,0)
+@proveedorCuit NUMERIC(18,0)
 AS
 BEGIN
-INSERT INTO GESTION_DE_GATOS.Oferta (proveedor_id,oferta_codigo,oferta_fecha_publicacion,oferta_fecha_vencimiento,oferta_limite_compra,oferta_stock_disponible,oferta_precio,oferta_precio_lista)
-VALUES(@proovedorCuit,@descripcionOferta,@codigoOferta,@fechaPublicacionOferta,@fechaVencimientoOferta,@limiteCompraOferta,@stockDisponibleOferta,@precioOferta,@precioListaOferta)
-SELECT @proovedorCuit = proveedor_cuit FROM GESTION_DE_GATOS.Proveedor WHERE proveedor_cuit = @proovedorCuit
+DECLARE @proveedorId NUMERIC(18,0)
+SET @proveedorId = (SELECT proveedor_id FROM GESTION_DE_GATOS.Proveedor WHERE proveedor_cuit = @proveedorCuit)
+INSERT INTO GESTION_DE_GATOS.Oferta (proveedor_id,oferta_descripcion,oferta_codigo,oferta_fecha_publicacion,oferta_fecha_vencimiento,oferta_limite_compra,oferta_stock_disponible,oferta_precio,oferta_precio_lista)
+VALUES(@proveedorId,@descripcionOferta,@codigoOferta,@fechaPublicacionOferta,@fechaVencimientoOferta,@limiteCompraOferta,@stockDisponibleOferta,@precioOferta,@precioListaOferta)
 END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.altaProveedor
+@razonSocialProveedor NVARCHAR(100),
+@mailProveedor NVARCHAR(255),
+@teléfonoProveedor NUMERIC(18,0),
+@direccionProveedor NVARCHAR(255),
+@numeroProveedor NUMERIC(18,0),
+@pisoProveedor NUMERIC(18,0),
+@departamentoProveedor NVARCHAR(10),
+@localidadProveedor NVARCHAR(255),
+@codigoPostalProveedor NUMERIC(18,0),
+@ciudadProveedor NVARCHAR(255),
+@cuitProveedor NUMERIC(18,0),
+@rubroProveedor NVARCHAR(100),
+@nombreDeContactoProveedor NVARCHAR(30)
+AS
+BEGIN
+INSERT INTO GESTION_DE_GATOS.Proveedor (proveedor_razon_social,proveedor_email,proveedor_telefono,proveedor_direccion,proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad,proveedor_direccion_codigo_postal,proveedor_ciudad,proveedor_cuit,proveedor_rubro,proveedor_contacto)
+VALUES (@razonSocialProveedor,@mailProveedor,@teléfonoProveedor,CONCAT(@direccionProveedor,@numeroProveedor),@pisoProveedor,
+@departamentoProveedor,@localidadProveedor,@codigoPostalProveedor,@ciudadProveedor,@cuitProveedor,@rubroProveedor,@nombreDeContactoProveedor)
+END
+
 
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.updateBloqueadoUser
