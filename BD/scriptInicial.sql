@@ -40,6 +40,8 @@ IF OBJECT_ID('GESTION_DE_GATOS.altaProveedor') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.altaOferta') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.altaOferta
 
+IF OBJECT_ID('GESTION_DE_GATOS.altaCliente') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.altaOferta
 
 ----- Eliminacion de funciones --------- 
 
@@ -671,11 +673,36 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaProveedor
 @nombreDeContactoProveedor NVARCHAR(30)
 AS
 BEGIN
-INSERT INTO GESTION_DE_GATOS.Proveedor (proveedor_razon_social,proveedor_email,proveedor_telefono,proveedor_direccion,proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad,proveedor_direccion_codigo_postal,proveedor_ciudad,proveedor_cuit,proveedor_rubro,proveedor_contacto)
-VALUES (@razonSocialProveedor,@mailProveedor,@teléfonoProveedor,CONCAT(@direccionProveedor,@numeroProveedor),@pisoProveedor,
+INSERT INTO GESTION_DE_GATOS.Proveedor (usuario_id,proveedor_razon_social,proveedor_email,proveedor_telefono,proveedor_direccion,proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad,proveedor_direccion_codigo_postal,proveedor_ciudad,proveedor_cuit,proveedor_rubro,proveedor_contacto)
+VALUES (3,@razonSocialProveedor,@mailProveedor,@teléfonoProveedor,CONCAT(@direccionProveedor,@numeroProveedor),@pisoProveedor,
 @departamentoProveedor,@localidadProveedor,@codigoPostalProveedor,@ciudadProveedor,@cuitProveedor,@rubroProveedor,@nombreDeContactoProveedor)
 END
 
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.altaCliente
+@nombreCliente NVARCHAR(255),
+@apellidoCliente NVARCHAR(255),
+@dniCliente NUMERIC(18,0),
+@mailCliente NVARCHAR(255),
+@telefonoCliente NUMERIC(18,0),
+@direccionCliente NVARCHAR(255),
+@numeroCliente NUMERIC(18,0),
+@pisoCliente NUMERIC(18,0),
+@departamentoCliente NVARCHAR(10),
+@localidadCliente NVARCHAR(255),
+@codigoPostalCliente NUMERIC(18,0),
+@ciudadCliente NVARCHAR(255)
+AS
+BEGIN
+INSERT INTO GESTION_DE_GATOS.Cliente (usuario_id,
+cliente_nombre,cliente_apellido,cliente_numero_dni,cliente_email,cliente_telefono,
+cliente_direccion,cliente_direccion_piso,cliente_direccion_depto,cliente_direccion_localidad,
+cliente_direccion_codigo_postal,cliente_ciudad)
+VALUES(2,@nombreCliente,@apellidoCliente,@dniCliente ,
+@mailCliente,@telefonoCliente ,CONCAT(@direccionCliente,@numeroCliente) ,
+@pisoCliente ,@departamentoCliente,@localidadCliente,
+@codigoPostalCliente ,@ciudadCliente)
+END
 
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.updateBloqueadoUser
