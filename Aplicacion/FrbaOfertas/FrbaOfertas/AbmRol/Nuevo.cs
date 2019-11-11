@@ -70,7 +70,8 @@ namespace FrbaOfertas.AbmRol
             if (resultadoRol && resultadoFuncs)
             {
                 MessageBox.Show("Rol '" + this.nombreRol.Text + "' creado correctamente");
-                this.CancelBtn.PerformClick();
+                this.Hide();
+                new AbmRol().Show();
             }
             else
             {

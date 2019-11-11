@@ -78,7 +78,7 @@ namespace FrbaOfertas.AbmRol
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new AbmRol(new List<string>()).Show();
+            new AbmRol().Show();
         }
 
         private void func_rol_SelectedIndexChanged(object sender, EventArgs e)

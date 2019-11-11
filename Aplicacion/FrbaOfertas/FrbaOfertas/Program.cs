@@ -21,7 +21,7 @@ namespace FrbaOfertas
             //For testing
             //Application.Run(new AbmProveedor.AbmProveedor());
             //Application.Run(new AbmCliente.AbmCliente());
-            Application.Run(new AbmRol.AbmRol(new List<string>()));
+            Application.Run(new AbmRol.AbmRol());
         }
     }
 }

@@ -13,6 +13,13 @@ namespace FrbaOfertas.AbmRol
     public partial class AbmRol : Form
     {
         private static List<string> rolesBorradosLogicamente = new List<string>();
+
+        public AbmRol()
+        {
+            InitializeComponent();
+            cargarRoles();
+        }
+
         public AbmRol(List<string> roles)
         {
             InitializeComponent();

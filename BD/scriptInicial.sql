@@ -41,7 +41,7 @@ IF OBJECT_ID('GESTION_DE_GATOS.altaOferta') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.altaOferta
 
 IF OBJECT_ID('GESTION_DE_GATOS.altaCliente') IS NOT NULL
-    DROP PROCEDURE GESTION_DE_GATOS.altaOferta
+    DROP PROCEDURE GESTION_DE_GATOS.altaCliente
 
 ----- Eliminacion de funciones --------- 
 
@@ -381,66 +381,39 @@ ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC18 FOREIGN KEY(tarjeta_id) R
 INSERT INTO GESTION_DE_GATOS.Usuario (usuario_nombre,usuario_password)
 VALUES('admin',HASHBYTES('SHA2_256','admin'))
 
-
-/*INSERT INTO GESTION_DE_GATOS.UsuarioXRol (rol_id,usuario_id)
-SELECT 1,usuario_id FROM GESTION_DE_GATOS.Usuario WHERE usuario_nombre = 'admin'*/
-
-
-
 --Roles
 insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Administrador', '0')
 insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Cliente', '0')
 insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Proveedor', '0')
 
+--Funcionalidades
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('ABM rol') --1 ADM
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('ABM cliente') --2 ADM
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('ABM proveedor') --3 ADM
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Facturar a proveedor') --4 ADM
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Listado estadistico') --5 ADM
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Registrarse') --6 cliente, prov
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Cargar credito') --7 cliente
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Comprar oferta') --8 cliente
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Registrar tarjeta') --9 cliente
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('ABM oferta') --10 prov
 
---Funcionalidades ADM
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Crear  rol') --1
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Crear  cliente') --2
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Crear  proveedor') --3
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Modificar rol') --4
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Modificar cliente') --5
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Modificar proveedor') --6
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Dar de baja rol') --7
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Dar de baja proveedor') --8
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Dar de baja cliente') --9
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Facturar a proveedor') --10
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Listado estadistico') --11
-
---Funcionalidades Cliente
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Registrarse') --12, tanto el proveedor como el cliente pueden hacerlo
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Cargar credito') -- 13
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Comprar oferta') -- 14
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Registrar tarjeta') -- 15
-
-
---Funcionalidades Proveedor
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Armar oferta') -- 16
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('publicar oferta') -- 17, tanto el proveedor como adm pueden hacerlo
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Dar de baja oferta') -- 18
-
+--Funcionalidades Admin
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 1)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 2)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 3)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 4)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 5)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 6)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 7)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 8)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 9)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 10)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 11)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 17)
 
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,12)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,13)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,14)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,15)
+--Funcionalidades Cliente
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,6)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,7)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,8)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,9)
 
-
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,12)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,16)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,17)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,18)
+--Funcionalidades Proveedor
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,6)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,10)
 
 /* Migracion de la Maestra */
 --Cliente
@@ -613,29 +586,12 @@ END
 
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.altaRol
-@nombreRol NVARCHAR(15),
-@descripcionFuncionalidad NVARCHAR(255)
+@nombreRol NVARCHAR(15)
 AS
 BEGIN
-DECLARE @idRol NUMERIC(18,0),@idFuncionalidad NUMERIC(18,0)
-	INSERT INTO  GESTION_DE_GATOS.Rol (rol_nombre)
-		VALUES (@nombreRol)
-	INSERT INTO GESTION_DE_GATOS.Funcionalidad (funcionalidad_descripcion)
-	VALUES (@descripcionFuncionalidad)
-	SET @idRol = (SELECT rol_id FROM GESTION_DE_GATOS.Rol WHERE rol_nombre = @nombreRol)
-	IF @idRol IS NULL
-	BEGIN
-	SET @idRol = SCOPE_IDENTITY()
-	END
-	SET @idFuncionalidad = (SELECT funcionalidad_id FROM GESTION_DE_GATOS.Funcionalidad WHERE funcionalidad_descripcion = @descripcionFuncionalidad)
-	IF @idFuncionalidad IS NULL
-	BEGIN
-	SET @idFuncionalidad = SCOPE_IDENTITY()
-	END
-	INSERT INTO GESTION_DE_GATOS.FuncionalidadXRol (rol_id,funcionalidad_id)
-	VALUES(@idRol,@idFuncionalidad)
+	INSERT INTO GESTION_DE_GATOS.Rol (rol_nombre, rol_habilitado)
+		VALUES (@nombreRol, 0)
 END
-
 
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.altaOferta
@@ -724,10 +680,6 @@ BEGIN
 	UPDATE GESTION_DE_GATOS.Usuario SET usuario_cont_ingresos_fallidos = cast(usuario_cont_ingresos_fallidos as int) + 1
 		WHERE usuario_nombre = @nombreUsuario
 END
-
-
-
-
 
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.bajaRol

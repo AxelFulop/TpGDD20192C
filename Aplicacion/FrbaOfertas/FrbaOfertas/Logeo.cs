@@ -106,15 +106,7 @@ namespace FrbaOfertas
         private void redireccionar(string rol)
         {
             this.Hide();
-            switch (rol)
-            {
-                case "Cliente":
-                    new AbmCliente.AbmCliente().Show(); break;
-                case "Proveedor":
-                    new AbmProveedor.AbmProveedor().Show(); break;
-                case "Administrador":
-                    new AbmRol.AbmRol(new List<string>()).Show(); break;
-            }
+            new MenuPrincipal(rol).Show();
         }
         
         private void panel1_Paint(object sender, PaintEventArgs e)
