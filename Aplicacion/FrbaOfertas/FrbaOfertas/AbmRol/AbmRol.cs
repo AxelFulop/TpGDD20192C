@@ -12,15 +12,25 @@ namespace FrbaOfertas.AbmRol
 {
     public partial class AbmRol : Form
     {
-        public AbmRol()
+        private static List<string> rolesBorradosLogicamente = new List<string>();
+        public AbmRol(List<string> roles)
         {
             InitializeComponent();
+            rolesBorradosLogicamente.AddRange(roles);
             cargarRoles();
         }
 
         private void cargarRoles()
         {
-            string query = "select rol_nombre from " + Properties.Settings.Default.Schema + ".Rol";
+            string query = "select rol_nombre from " + Properties.Settings.Default.Schema + ".Rol ";
+
+            for (int i = 0; i < rolesBorradosLogicamente.Count; i++)
+            {
+                if(i == 0)
+                    query += "where rol_nombre <> '" + rolesBorradosLogicamente.ElementAt(i) + "'";
+                else
+                    query += " and rol_nombre <> '" + rolesBorradosLogicamente.ElementAt(i) + "'";
+            }
 
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
             List<Object> funcionalidades = conection.executeAdvancedSelectQuery(query);

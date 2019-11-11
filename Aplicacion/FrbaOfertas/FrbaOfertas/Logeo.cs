@@ -113,7 +113,7 @@ namespace FrbaOfertas
                 case "Proveedor":
                     new AbmProveedor.AbmProveedor().Show(); break;
                 case "Administrador":
-                    new AbmRol.AbmRol().Show(); break;
+                    new AbmRol.AbmRol(new List<string>()).Show(); break;
             }
         }
         

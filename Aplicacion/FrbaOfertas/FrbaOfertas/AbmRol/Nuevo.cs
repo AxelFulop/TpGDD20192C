@@ -21,7 +21,7 @@ namespace FrbaOfertas.AbmRol
         private void button2_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new AbmRol().Show();
+            new AbmRol(new List<string>()).Show();
         }
 
         private void cargarFuncionalidadesAAgregar()

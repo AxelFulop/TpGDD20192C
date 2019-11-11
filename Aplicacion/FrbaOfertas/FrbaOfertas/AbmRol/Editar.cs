@@ -78,7 +78,7 @@ namespace FrbaOfertas.AbmRol
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new AbmRol().Show();
+            new AbmRol(new List<string>()).Show();
         }
 
         private void func_rol_SelectedIndexChanged(object sender, EventArgs e)
@@ -152,32 +152,9 @@ namespace FrbaOfertas.AbmRol
                     MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                bool resultadoRol = eliminarRol();
-                if (resultadoRol)
-                {
-                    MessageBox.Show("Rol '" + this.rol + "' eliminado correctamente");
-                    this.buttonVolver.PerformClick();
-                }
-                else
-                {
-                    MessageBox.Show("Error al eliminar el rol '" + this.rol + "'.\nPor favor intente nuevamente.");
-                }
-            }
-        }
-
-        private bool eliminarRol()
-        {
-            try
-            {
-                ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
-                conection.executeProcedure(Properties.Settings.Default.Schema + ".bajaRol",
-                    new List<string>() { "@nombreRol" }, new String[1] { this.rol });
-
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
+                MessageBox.Show("Rol '" + this.rol + "' eliminado correctamente");
+                this.Hide();
+                new AbmRol(new List<string>() { this.rol }).Show();
             }
         }
 
