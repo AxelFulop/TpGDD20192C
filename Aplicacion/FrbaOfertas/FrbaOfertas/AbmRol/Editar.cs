@@ -18,8 +18,24 @@ namespace FrbaOfertas.AbmRol
         {
             InitializeComponent();
             this.rol = rol;
+            seleccionarBotonHabilitacion();
             cargarRol(rol);
             cargarFuncionalidadesAAgregar();
+        }
+
+        private void seleccionarBotonHabilitacion()
+        {
+            ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+            Object habilitado = conection.executeScalarFunction("rolEstaHabilitado", this.rol);
+
+            if (Convert.ToInt32(habilitado) == 1)
+            {
+                this.btn_inhabilitar.Visible = true;
+            }
+            else
+            {
+                this.btn_habilitar.Visible = true;
+            }
         }
 
         private void cargarRol(string rol)
@@ -177,6 +193,56 @@ namespace FrbaOfertas.AbmRol
             catch (Exception)
             {
                 return false;
+            }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+                conection.executeProcedure(Properties.Settings.Default.Schema + ".inhabilitarRol",
+                    new List<String>()
+                    {
+                        "@nombreRol"
+                    },
+                    new String[]{
+                        this.rol
+                    }
+                );
+
+                MessageBox.Show("Rol '" + this.rol + "' inhabilitado correctamente");
+                this.Hide();
+                new Editar(this.rol).Show();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al inhabilitar el rol '" + this.rol + "'");
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+                conection.executeProcedure(Properties.Settings.Default.Schema + ".habilitarRol",
+                    new List<String>()
+                    {
+                        "@nombreRol"
+                    },
+                    new String[]{
+                        this.rol
+                    }
+                );
+
+                MessageBox.Show("Rol '" + this.rol + "' habilitado correctamente");
+                this.Hide();
+                new Editar(this.rol).Show();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al habilitar el rol '" + this.rol + "'");
             }
         }
     }

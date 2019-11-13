@@ -1,6 +1,12 @@
 USE GD2C2019
 
 ----- Eliminacion de stored procedures --------- 
+IF OBJECT_ID('GESTION_DE_GATOS.habilitarRol') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.habilitarRol
+
+IF OBJECT_ID('GESTION_DE_GATOS.inhabilitarRol') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.inhabilitarRol
+
 IF OBJECT_ID('GESTION_DE_GATOS.updateBloqueadoUser') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.updateBloqueadoUser
 
@@ -9,9 +15,6 @@ IF OBJECT_ID('GESTION_DE_GATOS.eliminarFuncionalidadARol') IS NOT NULL
 
 IF OBJECT_ID('GESTION_DE_GATOS.sumarIntentoFallido') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.sumarIntentoFallido
-
-IF OBJECT_ID('GESTION_DE_GATOS.bajaRol') IS NOT NULL
-    DROP PROCEDURE GESTION_DE_GATOS.bajaRol
 
 IF OBJECT_ID('GESTION_DE_GATOS.agregarFuncionalidadARol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.agregarFuncionalidadARol
@@ -61,7 +64,10 @@ IF OBJECT_ID('GESTION_DE_GATOS.loginValido') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.loginValido
 
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerCantIntentosFallidos') IS NOT NULL
-    DROP FUNCTION  GESTION_DE_GATOS.obtenerCantIntentosFallidos
+    DROP FUNCTION  GESTION_DE_GATOS.obtenerCantIntentosFallidos 
+
+IF OBJECT_ID('GESTION_DE_GATOS.rolEstaHabilitado') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.rolEstaHabilitado
 
 ------------ Eliminacion de FK   ------------------ 
 
@@ -682,20 +688,6 @@ BEGIN
 END
 
 GO
-CREATE PROCEDURE GESTION_DE_GATOS.bajaRol
-@nombreRol NVARCHAR(15)
-AS
-BEGIN
-	declare @id_rol numeric(18, 0)
-	select @id_rol = rol_id from GESTION_DE_GATOS.Rol
-		where rol_nombre = @nombreRol
-	delete from GESTION_DE_GATOS.Rol
-		where rol_nombre = @nombreRol
-	delete from GESTION_DE_GATOS.FuncionalidadXRol
-		where rol_id = @id_rol
-END
-
-GO
 CREATE PROCEDURE GESTION_DE_GATOS.agregarFuncionalidadARol
 @nombreRol NVARCHAR(15), --Rol ya existente
 @descripcionFuncionalidad NVARCHAR(255)
@@ -740,6 +732,24 @@ BEGIN
 
 	delete from GESTION_DE_GATOS.FuncionalidadXRol
 		where rol_id = @id_rol and funcionalidad_id = @id_func
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.inhabilitarRol
+@nombreRol NVARCHAR(15)
+AS
+BEGIN 
+	update Rol set rol_habilitado = '1'
+		where rol_nombre = @nombreRol
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.habilitarRol
+@nombreRol NVARCHAR(15)
+AS
+BEGIN 
+	update Rol set rol_habilitado = '0'
+		where rol_nombre = @nombreRol
 END
 
 /* Creacion de funciones */
@@ -817,7 +827,6 @@ RETURN @ret
 END
 
 
-
 GO
 CREATE FUNCTION GESTION_DE_GATOS.loginValido(@nombreUsuario NVARCHAR(255), @password NVARCHAR(128))
 RETURNS BIT
@@ -839,3 +848,13 @@ END
 RETURN @ret
 END
 
+GO
+CREATE FUNCTION GESTION_DE_GATOS.rolEstaHabilitado(@nombreRol NVARCHAR(15))
+RETURNS BIT
+AS
+BEGIN
+	declare @ret bit
+	select @ret = case when rol_habilitado = '0' then 1 else 0 end from Rol 
+		where rol_nombre = @nombreRol
+	return @ret
+END

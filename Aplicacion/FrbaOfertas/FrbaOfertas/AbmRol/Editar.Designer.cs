@@ -40,6 +40,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
+            this.btn_inhabilitar = new System.Windows.Forms.Button();
+            this.btn_habilitar = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -152,9 +154,9 @@
             // button3
             // 
             this.button3.BackColor = System.Drawing.Color.LightCoral;
-            this.button3.Location = new System.Drawing.Point(784, 382);
+            this.button3.Location = new System.Drawing.Point(745, 505);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(153, 40);
+            this.button3.Size = new System.Drawing.Size(233, 58);
             this.button3.TabIndex = 8;
             this.button3.Text = "Eliminar rol";
             this.button3.UseVisualStyleBackColor = false;
@@ -170,11 +172,37 @@
             this.label5.TabIndex = 9;
             this.label5.Text = "Presione una funcionalidad para eliminarla del rol";
             // 
+            // btn_inhabilitar
+            // 
+            this.btn_inhabilitar.BackColor = System.Drawing.Color.LightSalmon;
+            this.btn_inhabilitar.Location = new System.Drawing.Point(775, 340);
+            this.btn_inhabilitar.Name = "btn_inhabilitar";
+            this.btn_inhabilitar.Size = new System.Drawing.Size(162, 39);
+            this.btn_inhabilitar.TabIndex = 10;
+            this.btn_inhabilitar.Text = "Inhabilitar rol";
+            this.btn_inhabilitar.UseVisualStyleBackColor = false;
+            this.btn_inhabilitar.Visible = false;
+            this.btn_inhabilitar.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // btn_habilitar
+            // 
+            this.btn_habilitar.BackColor = System.Drawing.Color.LightSalmon;
+            this.btn_habilitar.Location = new System.Drawing.Point(775, 340);
+            this.btn_habilitar.Name = "btn_habilitar";
+            this.btn_habilitar.Size = new System.Drawing.Size(162, 39);
+            this.btn_habilitar.TabIndex = 11;
+            this.btn_habilitar.Text = "Habilitar rol";
+            this.btn_habilitar.UseVisualStyleBackColor = false;
+            this.btn_habilitar.Visible = false;
+            this.btn_habilitar.Click += new System.EventHandler(this.button4_Click);
+            // 
             // Editar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 644);
+            this.Controls.Add(this.btn_habilitar);
+            this.Controls.Add(this.btn_inhabilitar);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label3);
@@ -213,5 +241,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btn_inhabilitar;
+        private System.Windows.Forms.Button btn_habilitar;
     }
 }
