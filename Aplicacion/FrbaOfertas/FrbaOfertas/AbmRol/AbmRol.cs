@@ -65,5 +65,11 @@ namespace FrbaOfertas.AbmRol
             this.Hide();
             new Nuevo().Show();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new MenuPrincipal().Show();
+        }
     }
 }

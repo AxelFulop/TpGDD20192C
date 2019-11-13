@@ -59,17 +59,15 @@ namespace FrbaOfertas
                     error_message.Visible = true;
                 }
                 else if ((Convert.ToInt32(loginValido) == 1) && (Convert.ToInt32(bloqueado) == 0))
-                {
-                    Object rol_user = new Conexion().executeScalarFunction("obtenerRolUsuario", this.textBoxUser.Text);
-                    redireccionar(rol_user.ToString());
+                {  
+                    redireccionar(this.textBoxUser.Text);
                 }
                 else if ((Convert.ToInt32(bloqueado) == 1) && (unixDateTime >= unixDateUser) && Convert.ToInt32(usr) == 1)
                 {
                     new Conexion().executeProcedure(Properties.Settings.Default.Schema + ".updateBloqueadoUser", new List<string>() { "@nombreUsuario", "@bloqueado" }, textBoxUser.Text, "0");
                     if (Convert.ToInt32(loginValido) == 1)
-                    {
-                        Object rol_user = new Conexion().executeScalarFunction("obtenerRolUsuario", this.textBoxUser.Text);
-                        redireccionar(rol_user.ToString());
+                    {         
+                        redireccionar(this.textBoxUser.Text);
                     }
                 }
                 else
@@ -103,10 +101,10 @@ namespace FrbaOfertas
             }
         }
 
-        private void redireccionar(string rol)
+        private void redireccionar(string username)
         {
             this.Hide();
-            new MenuPrincipal(rol).Show();
+            new MenuPrincipal(username).Show();
         }
         
         private void panel1_Paint(object sender, PaintEventArgs e)

@@ -390,7 +390,7 @@ ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC18 FOREIGN KEY(tarjeta_id) R
 /* Inserccion de datos previos */
 --Usuario Admin
 INSERT INTO GESTION_DE_GATOS.Usuario (usuario_nombre,usuario_password)
-VALUES('admin',HASHBYTES('SHA2_256','admin'))
+VALUES('admin',HASHBYTES('SHA2_256',convert(nvarchar(128), 'admin'))) 
 
 --Roles
 insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Administrador', '0')
@@ -403,11 +403,10 @@ insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('AB
 insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('ABM proveedor') --3 ADM
 insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Facturar a proveedor') --4 ADM
 insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Listado estadistico') --5 ADM
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Registrarse') --6 cliente, prov
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Cargar credito') --7 cliente
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Comprar oferta') --8 cliente
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Registrar tarjeta') --9 cliente
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('ABM oferta') --10 prov
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Cargar credito') --6 cliente
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Comprar oferta') --7 cliente
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Registrar tarjeta') --8 cliente
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('ABM oferta') --9 prov
 
 --Funcionalidades Admin
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 1)
@@ -420,11 +419,9 @@ insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,6)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,7)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,8)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,9)
 
 --Funcionalidades Proveedor
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,6)
-insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,10)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,9)
 
 /* Migracion de la Maestra */
 --Cliente
@@ -544,7 +541,6 @@ Cli_Mail = c.cliente_email
 JOIN GESTION_DE_GATOS.Oferta o ON (
 m.Oferta_Codigo = o.oferta_codigo AND
 m.Oferta_Fecha = o.oferta_fecha_publicacion
-
 )
 
 --DetalleFactura

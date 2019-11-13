@@ -115,5 +115,11 @@ namespace FrbaOfertas.AbmCliente
 
             grid.DataSource = dataView;
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new MenuPrincipal().Show();
+        }
     }
 }

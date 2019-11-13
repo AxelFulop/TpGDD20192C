@@ -102,5 +102,11 @@ namespace FrbaOfertas.AbmProveedor
                 dataView.RowFilter += string.Format(" AND proveedor_cuit = '%{0}%'", cuit);
             grid.DataSource = dataView; 
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new MenuPrincipal().Show();
+        }
     }
 }

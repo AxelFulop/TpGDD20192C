@@ -43,6 +43,7 @@
             this.nombre = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.grid = new System.Windows.Forms.DataGridView();
+            this.button4 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.SuspendLayout();
@@ -52,6 +53,7 @@
             this.panel1.AccessibleDescription = "";
             this.panel1.AccessibleName = "";
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.button2);
@@ -73,7 +75,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(870, 45);
+            this.button3.Location = new System.Drawing.Point(787, 45);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(210, 59);
             this.button3.TabIndex = 11;
@@ -201,6 +203,16 @@
             this.grid.Tag = "grid";
             this.grid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(1047, 9);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(107, 37);
+            this.button4.TabIndex = 12;
+            this.button4.Text = "Volver";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // AbmCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -241,5 +253,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.DataGridView grid;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
     }
 }
