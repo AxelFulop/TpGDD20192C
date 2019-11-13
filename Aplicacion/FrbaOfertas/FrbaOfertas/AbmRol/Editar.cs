@@ -198,27 +198,34 @@ namespace FrbaOfertas.AbmRol
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            try
+            DialogResult result = MessageBox.Show("¿Desea inhabilitar el rol '" + this.rol + "'?",
+                    "Inhabilitar rol",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
             {
-                ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
-                conection.executeProcedure(Properties.Settings.Default.Schema + ".inhabilitarRol",
-                    new List<String>()
+                try
+                {
+                    ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+                    conection.executeProcedure(Properties.Settings.Default.Schema + ".inhabilitarRol",
+                        new List<String>()
                     {
                         "@nombreRol"
                     },
-                    new String[]{
+                        new String[]{
                         this.rol
                     }
-                );
+                    );
 
-                MessageBox.Show("Rol '" + this.rol + "' inhabilitado correctamente");
-                this.Hide();
-                new Editar(this.rol).Show();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Error al inhabilitar el rol '" + this.rol + "'");
-            }
+                    MessageBox.Show("Rol '" + this.rol + "' inhabilitado correctamente");
+                    this.Hide();
+                    new Editar(this.rol).Show();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error al inhabilitar el rol '" + this.rol + "'");
+                }
+            }    
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -242,7 +249,39 @@ namespace FrbaOfertas.AbmRol
             }
             catch (Exception)
             {
-                MessageBox.Show("Error al habilitar el rol '" + this.rol + "'");
+                MessageBox.Show("Error al habilitar el rol '" + this.rol + "'", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void button1_Click_2(object sender, EventArgs e)
+        {
+            if (this.nombreRol.Text == "")
+            {
+                MessageBox.Show("Nombre de rol no permitido");
+                return;
+            }
+                   
+            try
+            {
+                ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+                conection.executeProcedure(Properties.Settings.Default.Schema + ".cambiarNombreRol",
+                    new List<String>()
+                    {
+                        "@nombreRol", "@nuevoNombre"
+                    },
+                    new String[]{
+                        this.rol, this.nombreRol.Text
+                    }
+                );
+
+                MessageBox.Show("Rol '" + this.rol + "' ahora se llama '" + this.nombreRol.Text + "'");
+                this.Hide();
+                new Editar(this.nombreRol.Text).Show();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al cambiar de nombre de rol '" + this.rol + "'" + " a '" + this.nombreRol.Text + "'. " +
+                                "Podría ya existir un rol con ese nombre.","", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

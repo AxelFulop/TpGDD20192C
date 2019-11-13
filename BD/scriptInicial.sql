@@ -1,8 +1,11 @@
 USE GD2C2019
 
------ Eliminacion de stored procedures --------- 
+----- Eliminacion de stored procedures ---------  
 IF OBJECT_ID('GESTION_DE_GATOS.habilitarRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.habilitarRol
+
+IF OBJECT_ID('GESTION_DE_GATOS.cambiarNombreRol') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.cambiarNombreRol
 
 IF OBJECT_ID('GESTION_DE_GATOS.inhabilitarRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.inhabilitarRol
@@ -760,6 +763,15 @@ BEGIN
 		where rol_nombre = @nombreRol
 END
 
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.cambiarNombreRol
+@nombreRol NVARCHAR(15),
+@nuevoNombre NVARCHAR(15)
+AS
+BEGIN 
+	update Rol set rol_nombre = @nuevoNombre
+		where rol_nombre = @nombreRol
+END
 /* Creacion de funciones */
 GO
 CREATE FUNCTION GESTION_DE_GATOS.existeUsuario(@nombreUsuario VARCHAR(50))
