@@ -64,10 +64,10 @@ namespace FrbaOfertas.AbmRol
                 MessageBox.Show("Complete todos los campos por favor");
                 return;
             }
-                
-            bool resultadoRol = CrearRol();
-            bool resultadoFuncs = agregarFuncionalidades();
-            if (resultadoRol && resultadoFuncs)
+
+            bool result = ejecutarTransaccion();
+            
+            if (result)
             {
                 MessageBox.Show("Rol '" + this.nombreRol.Text + "' creado correctamente");
                 this.Hide();
@@ -79,53 +79,62 @@ namespace FrbaOfertas.AbmRol
             }
         }
 
-        private bool CrearRol()
+        private bool ejecutarTransaccion()
         {
+            ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+
+            Tuple<string, List<string>, Object[]> procAltaRol = obtenerProcAltaRol();
+            Tuple<string, List<string>, Object[]>[] procFuncs = obtenerProcAgregarFuncionalidades();
+            procFuncs[0] = procAltaRol;
+
             try
             {
-                ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
-                conection.executeProcedure(Properties.Settings.Default.Schema + ".altaRol",
-                    new List<String>()
-                    {
-                        "@nombreRol"
-                    },
-                    new String[1]
-                    {
-                        this.nombreRol.Text
-                    }
-                );
-
-                return true;
+                conection.executeStoredTransaction(procFuncs);
             }
-            catch (Exception)
+            catch (System.Data.SqlClient.SqlException)
             {
                 return false;
             }
+
+            return true;
         }
 
-        private bool agregarFuncionalidades()
+        private Tuple<string, List<string>, Object[]> obtenerProcAltaRol()
         {
-            try
-            {
-                foreach (string func in func_rol.Items)
-                {
-                    ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
-                    conection.executeProcedure(Properties.Settings.Default.Schema + ".agregarFuncionalidadARol",
-                        new List<String>()
+            return new Tuple<string, List<string>, Object[]>(
+                        Properties.Settings.Default.Schema + ".altaRol",
+                         new List<String>()
                         {
-                            "@nombreRol", "@descripcionFuncionalidad"
+                            "@nombreRol"
                         },
-                        new String[2]{
-                            this.nombreRol.Text, func
-                        });
-                }
-                
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+                        new String[1]
+                        {
+                            this.nombreRol.Text
+                        }
+                    );
         }
+
+        private Tuple<string, List<string>, Object[]>[] obtenerProcAgregarFuncionalidades()
+        {
+            Tuple<string, List<string>, Object[]>[] procs = new Tuple<string, List<string>, Object[]>[func_rol.Items.Count + 1];
+
+            int cont = 1;
+            foreach (string func in func_rol.Items)
+            {
+                procs[cont] = new Tuple<string, List<string>, Object[]>(
+                                Properties.Settings.Default.Schema + ".agregarFuncionalidadARol",
+                                new List<String>()
+                                {
+                                    "@nombreRol", "@descripcionFuncionalidad"
+                                },
+                                new String[2]{
+                                    this.nombreRol.Text, func
+                                }
+                            );
+                cont++;
+            }
+
+            return procs;
+        }   
     }
 }

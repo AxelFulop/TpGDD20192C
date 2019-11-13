@@ -330,35 +330,43 @@ namespace FrbaOfertas.ConexionBD
             
         }
 
-
-        /*SqlConnection conn = ConexionBD.configDBConnection();
-        SqlCommand cmd = new SqlCommand(nomProcedure, conn);
-        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-        try
+        public void executeStoredTransaction(Tuple<string, List<string>, Object[]>[] procedures)
         {
-            Object split = parametros.Aggregate((i, j) => '@' + Convert.ToString(i) + ',' + '@' + Convert.ToString(j));
-            String[] splitAux = Convert.ToString(split).Split(',');
-            for (int i = 0; i < parametros.Length; i++)
-            {
-          
-                cmd.Parameters.AddWithValue(splitAux[i], parametros[i]);
-            }
-            openConnection(conn);
-            cmd.ExecuteNonQuery();
-        }
+            SqlConnection cnn = Conexion.configDBConnection();
+            openConnection(cnn);
+            SqlTransaction transaction = cnn.BeginTransaction();
 
-        catch (SqlException ex)
-        {
-            for (int i = 0; i < ex.Errors.Count; i++)
+            try
             {
-                errorMessages.Append("Index #" + i + "\n" +
-                    "Message: " + ex.Errors[i].Message + "\n" +
-                    "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
-                    "Source: " + ex.Errors[i].Source + "\n");
+                foreach (Tuple<string, List<string>, Object[]> proc in procedures)
+                {
+                    using (SqlCommand cmd = new SqlCommand(proc.Item1, cnn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandTimeout = 0;
+                        for (int i = 0; i < proc.Item3.Length; i++)
+                        {
+                            cmd.Parameters.AddWithValue(proc.Item2[i], proc.Item3[i]);
+                        }
+
+                        cmd.Connection = cnn;
+                        cmd.Transaction = transaction;
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                transaction.Commit();
             }
-            Console.WriteLine(errorMessages.ToString());
+            catch (SqlException)
+            {
+                transaction.Rollback();
+            }
+            finally
+            {
+                closeConnection(cnn);
+                //cnn.Dispose();
+            }
         }
-        closeConnection(conn);*/
     }
 }
 
