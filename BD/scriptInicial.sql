@@ -245,11 +245,8 @@ cliente_cuil NVARCHAR(20),
 cliente_email NVARCHAR(255),
 cliente_fecha_nacimiento DATETIME,
 cliente_telefono NUMERIC(18,0),
-cliente_direccion NVARCHAR(255),
-cliente_direccion_piso NUMERIC(18,0),
-cliente_direccion_depto NUMERIC(18,0),
-cliente_direccion_localidad NVARCHAR(255),
-cliente_direccion_codigo_postal NVARCHAR(255),
+cliente_direccion NVARCHAR(255), --Formato direccion: "calle numero piso depto localidad"
+cliente_codigo_postal NVARCHAR(255),
 cliente_dato_inconsistente CHAR(1),
 cliente_nuevo CHAR(1),
 PRIMARY KEY (cliente_id)
@@ -285,12 +282,9 @@ proveedor_cuit  NVARCHAR(20),
 proveedor_rubro NVARCHAR(100),
 proveedor_email NVARCHAR(255),
 proveedor_telefono NUMERIC(18,0),
-proveedor_direccion NVARCHAR(255),
-proveedor_direccion_piso NUMERIC(18,0),
-proveedor_direccion_depto NVARCHAR(10),
-proveedor_direccion_localidad NVARCHAR(255),
+proveedor_direccion NVARCHAR(255), --Formato direccion: "calle numero piso depto localidad"
 proveedor_ciudad NVARCHAR(255),
-proveedor_direccion_codigo_postal NVARCHAR(255),
+proveedor_codigo_postal NVARCHAR(255),
 proveedor_dato_inconsistente CHAR(1),
 proveedor_nuevo CHAR(1),
 PRIMARY KEY (proveedor_id)
@@ -625,10 +619,6 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaProveedor
 @mailProveedor NVARCHAR(255),
 @teléfonoProveedor NUMERIC(18,0),
 @direccionProveedor NVARCHAR(255),
-@numeroProveedor NUMERIC(18,0),
-@pisoProveedor NUMERIC(18,0),
-@departamentoProveedor NVARCHAR(10),
-@localidadProveedor NVARCHAR(255),
 @codigoPostalProveedor NUMERIC(18,0),
 @ciudadProveedor NVARCHAR(255),
 @cuitProveedor NUMERIC(18,0),
@@ -636,9 +626,8 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaProveedor
 @nombreDeContactoProveedor NVARCHAR(30)
 AS
 BEGIN
-INSERT INTO GESTION_DE_GATOS.Proveedor (usuario_id,proveedor_razon_social,proveedor_email,proveedor_telefono,proveedor_direccion,proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad,proveedor_direccion_codigo_postal,proveedor_ciudad,proveedor_cuit,proveedor_rubro,proveedor_contacto)
-VALUES (3,@razonSocialProveedor,@mailProveedor,@teléfonoProveedor,CONCAT(@direccionProveedor,@numeroProveedor),@pisoProveedor,
-@departamentoProveedor,@localidadProveedor,@codigoPostalProveedor,@ciudadProveedor,@cuitProveedor,@rubroProveedor,@nombreDeContactoProveedor)
+INSERT INTO GESTION_DE_GATOS.Proveedor (usuario_id,proveedor_razon_social,proveedor_email,proveedor_telefono,proveedor_direccion,proveedor_codigo_postal,proveedor_ciudad,proveedor_cuit,proveedor_rubro,proveedor_contacto)
+VALUES (3,@razonSocialProveedor,@mailProveedor,@teléfonoProveedor,@direccionProveedor,@codigoPostalProveedor,@ciudadProveedor,@cuitProveedor,@rubroProveedor,@nombreDeContactoProveedor)
 END
 
 GO
@@ -649,21 +638,16 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaCliente
 @mailCliente NVARCHAR(255),
 @telefonoCliente NUMERIC(18,0),
 @direccionCliente NVARCHAR(255),
-@numeroCliente NUMERIC(18,0),
-@pisoCliente NUMERIC(18,0),
-@departamentoCliente NVARCHAR(10),
-@localidadCliente NVARCHAR(255),
 @codigoPostalCliente NUMERIC(18,0),
 @ciudadCliente NVARCHAR(255)
 AS
 BEGIN
 INSERT INTO GESTION_DE_GATOS.Cliente (usuario_id,
 cliente_nombre,cliente_apellido,cliente_numero_dni,cliente_email,cliente_telefono,
-cliente_direccion,cliente_direccion_piso,cliente_direccion_depto,cliente_direccion_localidad,
-cliente_direccion_codigo_postal,cliente_ciudad)
+cliente_direccion,
+cliente_codigo_postal,cliente_ciudad)
 VALUES(2,@nombreCliente,@apellidoCliente,@dniCliente ,
-@mailCliente,@telefonoCliente ,CONCAT(@direccionCliente,@numeroCliente) ,
-@pisoCliente ,@departamentoCliente,@localidadCliente,
+@mailCliente,@telefonoCliente,@direccionCliente,
 @codigoPostalCliente ,@ciudadCliente)
 END
 
