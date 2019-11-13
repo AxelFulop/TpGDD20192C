@@ -383,7 +383,6 @@ ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC18 FOREIGN KEY(tarjeta_id) R
 
 /* Inserccion de datos previos */
 --Usuario Admin
-
 INSERT INTO GESTION_DE_GATOS.Usuario (usuario_nombre,usuario_password)
 VALUES('admin',HASHBYTES('SHA2_256','admin'))
 
@@ -460,6 +459,10 @@ SELECT usuario_id, 2 from GESTION_DE_GATOS.Cliente
 PRINT 'Asignando roles a proveedores'
 INSERT INTO GESTION_DE_GATOS.UsuarioXRol(usuario_id, rol_id)
 SELECT usuario_id, 3 from GESTION_DE_GATOS.Proveedor
+
+--Asignacion rol a administrador
+INSERT INTO GESTION_DE_GATOS.UsuarioXRol(usuario_id, rol_id)
+	VALUES(1, 1)
 
 --Factura
 PRINT 'Migrando Facturas'
@@ -538,14 +541,10 @@ m.Oferta_Fecha = o.oferta_fecha_publicacion
 
 )
 
-
 --DetalleFactura
 PRINT 'Migrando Fechas de entrega'
 INSERT INTO GESTION_DE_GATOS.DetalleFactura  (detalle_fecha_entregado)
 SELECT m.Oferta_Entregado_Fecha FROM gd_esquema.Maestra m
-
-
-
 
 /* Creación de procedures */
 GO
@@ -739,8 +738,17 @@ CREATE PROCEDURE GESTION_DE_GATOS.inhabilitarRol
 @nombreRol NVARCHAR(15)
 AS
 BEGIN 
-	update Rol set rol_habilitado = '1'
-		where rol_nombre = @nombreRol
+	begin transaction
+	begin try
+		update Rol set rol_habilitado = '1'
+			where rol_nombre = @nombreRol
+		delete UsuarioXRol where
+			rol_id = (select rol_id from Rol where rol_nombre = @nombreRol)
+		commit transaction
+	end try
+	begin catch
+		rollback transaction
+	end catch
 END
 
 GO
