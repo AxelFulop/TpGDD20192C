@@ -4,6 +4,9 @@ USE GD2C2019
 IF OBJECT_ID('GESTION_DE_GATOS.habilitarRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.habilitarRol
 
+IF OBJECT_ID('GESTION_DE_GATOS.agregarRolAUsuario') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.agregarRolAUsuario
+
 IF OBJECT_ID('GESTION_DE_GATOS.cambiarNombreRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.cambiarNombreRol
 
@@ -772,6 +775,29 @@ BEGIN
 	update Rol set rol_nombre = @nuevoNombre
 		where rol_nombre = @nombreRol
 END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.agregarRolAUsuario
+@nombreUsuario NVARCHAR(255),
+@nombreRol NVARCHAR(15)
+AS
+BEGIN
+	declare @esta_habilitado char
+	select @esta_habilitado = rol_habilitado from Rol
+		where rol_nombre = @nombreRol
+
+	if(@esta_habilitado = '1') begin
+		raiserror('Rol inhabilitado no puede ser asignado a un usuario', 1, 1)
+	end
+	else begin
+		insert UsuarioXRol(usuario_id, rol_id)
+			values(
+				(select usuario_id from Usuario where usuario_nombre = @nombreUsuario),
+				(select rol_id from Rol where rol_nombre = @nombreRol)
+			)
+	end
+END
+
 /* Creacion de funciones */
 GO
 CREATE FUNCTION GESTION_DE_GATOS.existeUsuario(@nombreUsuario VARCHAR(50))
