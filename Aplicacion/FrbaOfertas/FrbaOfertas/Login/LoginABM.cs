@@ -116,10 +116,10 @@ namespace FrbaOfertas.Login
                         "@telefonoCliente", "@direccionCliente", "@codigoPostalCliente", 
                         "@ciudadCliente","@fecha_nac", "@usuario"
                     },
-                    new String[]{
+                    new Object[]{
                          cli_nombre.Text, cli_apellido.Text, cli_dni.Text, cli_mail.Text, cli_telefono.Text,
                         dir_calle.Text + "-" + dir_numero.Text + "-" + dir_piso.Text + "-" + dir_depto.Text + "-" + dir_localidad.Text, 
-                        cli_cp.Text, cli_ciudad.Text, cli_fechaNacimiento.Text, usuario.Text
+                        cli_cp.Text, cli_ciudad.Text, cli_fechaNacimiento.Value, usuario.Text
                     }
             );
         }

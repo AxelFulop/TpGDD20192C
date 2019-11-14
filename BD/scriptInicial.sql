@@ -647,7 +647,7 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaCliente
 @direccionCliente NVARCHAR(255),
 @codigoPostalCliente NUMERIC(18,0),
 @ciudadCliente NVARCHAR(255),
-@fecha_nac NVARCHAR(255),
+@fecha_nac datetime,
 @usuario NVARCHAR(255)
 AS
 BEGIN
