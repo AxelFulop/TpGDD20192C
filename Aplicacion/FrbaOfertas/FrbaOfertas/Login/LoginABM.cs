@@ -20,6 +20,8 @@ namespace FrbaOfertas.Login
         public LoginABM()
         {
             InitializeComponent();
+            cli_fechaNacimiento.Format = DateTimePickerFormat.Custom;
+            cli_fechaNacimiento.CustomFormat = "yyyy-MM-dd, 00:00:00.00";
         }
 
         private void LoginABM_Load(object sender, EventArgs e)
@@ -39,21 +41,28 @@ namespace FrbaOfertas.Login
                 MessageBox.Show("Las contraseñas no coinciden", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            Tuple<string, List<string>, Object[]>[] procs = new Tuple<string,List<string>,object[]>[2];
+            procs[0] = altaUsuarioProc();
+
+            if (rol.SelectedItem.ToString() == "Proveedor")
+            {
+                procs[1] = altaProveedorProc();
+            }
+            else if (rol.SelectedItem.ToString() == "Cliente")
+            {
+                procs[1] = altaClienteProc();
+            }
+            else
+            {
+                MessageBox.Show("Rol incorrecto", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             try
             {
-                if (rol.SelectedText == "Proveedor")
-                {
-                    altaProveedor();
-                }
-                else if (rol.SelectedText == "Cliente")
-                {
-                    altaCliente();
-                }
-                else
-                {
-                    MessageBox.Show("Rol incorrecto", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+                conection.executeStoredTransaction(procs);
 
                 MessageBox.Show("Usuario creado correctamente", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
@@ -62,31 +71,57 @@ namespace FrbaOfertas.Login
             catch (System.Data.SqlClient.SqlException)
             {
                 MessageBox.Show("Error al crear usuario", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            
+            }            
         }
 
-        private void altaProveedor()
+        private Tuple<string, List<string>, Object[]> altaUsuarioProc()
         {
-
+            return new Tuple<string, List<string>, Object[]>(
+                    Properties.Settings.Default.Schema + ".altaUsuario",
+                    new List<String>()
+                    {
+                        "@nombreUsuario", "@password"
+                    },
+                    new String[]{
+                        usuario.Text, password1.Text,
+                    }
+                );
         }
 
-        private void altaCliente()
+        private Tuple<string, List<string>, Object[]> altaProveedorProc()
+        {            
+            return new Tuple<string, List<string>, Object[]>(
+                    Properties.Settings.Default.Schema + ".altaProveedor",
+                    new List<String>()
+                    {
+                        "@razonSocialProveedor", "@mailProveedor", "@teléfonoProveedor", "@direccionProveedor", 
+                        "@codigoPostalProveedor", "@ciudadProveedor", "@cuitProveedor", "@rubroProveedor", 
+                        "@nombreDeContactoProveedor", "@usuario"
+                    },
+                    new String[]{
+                        prov_razonSocial.Text, prov_mail.Text, prov_telefono.Text,
+                        dir_calle.Text + "-" + dir_numero.Text + "-" + dir_piso.Text + "-" + dir_depto.Text + "-" + dir_localidad.Text, 
+                        prov_cp.Text, prov_ciudad.Text, prov_cuit.Text, prov_rubro.Text, prov_contacto.Text, usuario.Text
+                    }
+                );
+        }
+
+        private Tuple<string, List<string>, Object[]> altaClienteProc()
         {
-            ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
-            conection.executeProcedure(Properties.Settings.Default.Schema + ".altaCliente",
-                new List<String>()
-                {
-                    "@nombreCliente", "@apellidoCliente", "@dniCliente", "@mailCliente", "@telefonoCliente", 
-                    "@direccionCliente", "@codigoPostalCliente", "@ciudadCliente"
-                },
-                new String[]{
-                    cli_nombre.Text, cli_apellido.Text, cli_dni.Text, cli_mail.Text, cli_telefono.Text, 
-                    cli_direccion.Text, cli_cp.Text, cli_ciudad.Text
-                }
+            return new Tuple<string, List<string>, Object[]>(
+                    Properties.Settings.Default.Schema + ".altaCliente",
+                    new List<String>()
+                    {
+                        "@nombreCliente", "@apellidoCliente", "@dniCliente", "@mailCliente", 
+                        "@telefonoCliente", "@direccionCliente", "@codigoPostalCliente", 
+                        "@ciudadCliente","@fecha_nac", "@usuario"
+                    },
+                    new String[]{
+                         cli_nombre.Text, cli_apellido.Text, cli_dni.Text, cli_mail.Text, cli_telefono.Text,
+                        dir_calle.Text + "-" + dir_numero.Text + "-" + dir_piso.Text + "-" + dir_depto.Text + "-" + dir_localidad.Text, 
+                        cli_cp.Text, cli_ciudad.Text, cli_fechaNacimiento.Text, usuario.Text
+                    }
             );
-
-            MessageBox.Show("Rol '" + this.rol + "' habilitado correctamente");
         }
 
         private void button2_Click(object sender, EventArgs e)

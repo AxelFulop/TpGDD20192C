@@ -239,13 +239,11 @@ cliente_baja CHAR(1),
 cliente_nombre NVARCHAR(255),
 cliente_ciudad NVARCHAR(255),
 cliente_apellido NVARCHAR(255),
-cliente_tipo_dni NVARCHAR(255),
 cliente_numero_dni NUMERIC(18,0),
-cliente_cuil NVARCHAR(20),
 cliente_email NVARCHAR(255),
 cliente_fecha_nacimiento DATETIME,
 cliente_telefono NUMERIC(18,0),
-cliente_direccion NVARCHAR(255), --Formato direccion: "calle numero piso depto localidad"
+cliente_direccion NVARCHAR(255), --Formato direccion: "calle-numero-piso-depto-localidad"
 cliente_codigo_postal NVARCHAR(255),
 cliente_dato_inconsistente CHAR(1),
 cliente_nuevo CHAR(1),
@@ -282,7 +280,7 @@ proveedor_cuit  NVARCHAR(20),
 proveedor_rubro NVARCHAR(100),
 proveedor_email NVARCHAR(255),
 proveedor_telefono NUMERIC(18,0),
-proveedor_direccion NVARCHAR(255), --Formato direccion: "calle numero piso depto localidad"
+proveedor_direccion NVARCHAR(255), --Formato direccion: "calle-numero-piso-depto-localidad"
 proveedor_ciudad NVARCHAR(255),
 proveedor_codigo_postal NVARCHAR(255),
 proveedor_dato_inconsistente CHAR(1),
@@ -548,7 +546,7 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaUsuario
 @nombreUsuario NVARCHAR(255),
 @password VARCHAR(128)
 AS
-BEGIN 
+BEGIN
 DECLARE @passHash varbinary(128)
 SET @passHash =  HASHBYTES('SHA2_256', convert(nvarchar(128), @password))
 INSERT INTO GESTION_DE_GATOS.Usuario (usuario_nombre,usuario_password) VALUES (@nombreUsuario,@passHash)
@@ -623,11 +621,20 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaProveedor
 @ciudadProveedor NVARCHAR(255),
 @cuitProveedor NUMERIC(18,0),
 @rubroProveedor NVARCHAR(100),
-@nombreDeContactoProveedor NVARCHAR(30)
+@nombreDeContactoProveedor NVARCHAR(30),
+@usuario NVARCHAR(255)
 AS
 BEGIN
-INSERT INTO GESTION_DE_GATOS.Proveedor (usuario_id,proveedor_razon_social,proveedor_email,proveedor_telefono,proveedor_direccion,proveedor_codigo_postal,proveedor_ciudad,proveedor_cuit,proveedor_rubro,proveedor_contacto)
-VALUES (3,@razonSocialProveedor,@mailProveedor,@teléfonoProveedor,@direccionProveedor,@codigoPostalProveedor,@ciudadProveedor,@cuitProveedor,@rubroProveedor,@nombreDeContactoProveedor)
+	declare @id_usuario numeric(18)
+	select @id_usuario = usuario_id from Usuario where usuario_nombre = @usuario
+	INSERT INTO GESTION_DE_GATOS.Proveedor (proveedor_razon_social,proveedor_email,proveedor_telefono,
+			proveedor_direccion,proveedor_codigo_postal,proveedor_ciudad,
+			proveedor_cuit,proveedor_rubro,proveedor_contacto, usuario_id)
+		VALUES (@razonSocialProveedor,@mailProveedor,@teléfonoProveedor,@direccionProveedor,
+			@codigoPostalProveedor,@ciudadProveedor,@cuitProveedor,@rubroProveedor,
+			@nombreDeContactoProveedor, @id_usuario)
+	insert into UsuarioXRol(usuario_id, rol_id)
+		values(@id_usuario, (select rol_id from Rol where rol_nombre = 'Proveedor'))
 END
 
 GO
@@ -639,16 +646,22 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaCliente
 @telefonoCliente NUMERIC(18,0),
 @direccionCliente NVARCHAR(255),
 @codigoPostalCliente NUMERIC(18,0),
-@ciudadCliente NVARCHAR(255)
+@ciudadCliente NVARCHAR(255),
+@fecha_nac NVARCHAR(255),
+@usuario NVARCHAR(255)
 AS
 BEGIN
-INSERT INTO GESTION_DE_GATOS.Cliente (usuario_id,
-cliente_nombre,cliente_apellido,cliente_numero_dni,cliente_email,cliente_telefono,
-cliente_direccion,
-cliente_codigo_postal,cliente_ciudad)
-VALUES(2,@nombreCliente,@apellidoCliente,@dniCliente ,
-@mailCliente,@telefonoCliente,@direccionCliente,
-@codigoPostalCliente ,@ciudadCliente)
+	declare @id_usuario numeric(18)
+	select @id_usuario = usuario_id from Usuario where usuario_nombre = @usuario
+	INSERT INTO GESTION_DE_GATOS.Cliente (cliente_fecha_nacimiento,
+		cliente_nombre,cliente_apellido,cliente_numero_dni,cliente_email,cliente_telefono,
+		cliente_direccion,
+		cliente_codigo_postal,cliente_ciudad, usuario_id)
+		VALUES(convert(datetime, @fecha_nac),@nombreCliente,@apellidoCliente,@dniCliente,
+		@mailCliente,@telefonoCliente,@direccionCliente,
+		@codigoPostalCliente ,@ciudadCliente,@id_usuario)
+	insert into UsuarioXRol(usuario_id, rol_id)
+		values(@id_usuario, (select rol_id from Rol where rol_nombre = 'Cliente'))
 END
 
 GO
