@@ -43,6 +43,13 @@ namespace FrbaOfertas.Login
                 return;
             }
 
+            if (dir_calle.Text.Contains("-") || dir_depto.Text.Contains("-") || dir_localidad.Text.Contains("-") ||
+                dir_numero.Text.Contains("-") || dir_piso.Text.Contains("-"))
+            {
+                MessageBox.Show("Valores incorrectos de la dirección", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             Tuple<string, List<string>, Object[]>[] procs = new Tuple<string,List<string>,object[]>[2];
             procs[0] = altaUsuarioProc();
 
