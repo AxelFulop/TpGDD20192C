@@ -273,6 +273,33 @@ namespace FrbaOfertas.ConexionBD
             return dtResult;
         }
 
+        public DataTable selectReturnMultiplyRowsByQuery(String query)
+        {
+            SqlConnection conn = Conexion.configDBConnection();
+            DataTable dtResult = null;
+            
+            openConnection(conn);
+            try
+            {
+                SqlDataAdapter myDataAdapter = new SqlDataAdapter(query, conn);
+                dtResult = new DataTable();
+                myDataAdapter.Fill(dtResult);
+            }
+            catch (SqlException ex)
+            {
+                for (int i = 0; i < ex.Errors.Count; i++)
+                {
+                    errorMessages.Append("Index #" + i + "\n" +
+                        "Message: " + ex.Errors[i].Message + "\n" +
+                        "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
+                        "Source: " + ex.Errors[i].Source + "\n");
+                }
+                Console.WriteLine(errorMessages.ToString());
+            }
+            closeConnection(conn);
+            return dtResult;
+        }
+
         public List<Object> executeAdvancedSelectQuery(string query)
         {
             List<Object> resultQuery = new List<Object>();

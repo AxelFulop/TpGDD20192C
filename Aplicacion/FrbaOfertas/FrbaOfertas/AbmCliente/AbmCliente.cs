@@ -21,12 +21,13 @@ namespace FrbaOfertas.AbmCliente
         }
 
         private void cargarClientes(){
-            ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
-            string[] param = new string[]{"cliente_nombre","cliente_apellido","cliente_numero_dni","cliente_email","cliente_telefono",
-                                          "cliente_direccion","cliente_direccion_codigo_postal", "cliente_fecha_nacimiento"};
+            string query = "SELECT cliente_nombre, cliente_apellido, cliente_numero_dni, cliente_email, cliente_telefono, " +
+                                  "cliente_direccion, cliente_codigo_postal, cliente_fecha_nacimiento" +
+                           " FROM " + Properties.Settings.Default.Schema + ".Cliente";
 
-            clientes = conection.selectReturnMultiplyRows("Cliente", param);
-            grid.DataSource = clientes;
+            ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+            clientes = conection.selectReturnMultiplyRowsByQuery(query);
+            grid.DataSource = clientes; 
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -73,6 +74,12 @@ namespace FrbaOfertas.AbmCliente
             dni.Text = "";
             mail.Text = "";
 
+            string query = "SELECT cliente_nombre, cliente_apellido,cliente_numero_dni,cliente_email,cliente_telefono," +
+                                  "cliente_direccion,cliente_codigo_postal,cliente_fecha_nacimiento" +
+                           " FROM " + Properties.Settings.Default.Schema + ".Cliente";
+
+            ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+            clientes = conection.selectReturnMultiplyRowsByQuery(query);
             grid.DataSource = clientes;
         }
 
@@ -105,15 +112,17 @@ namespace FrbaOfertas.AbmCliente
             string mail = this.mail.Text;
             string dni = this.dni.Text;
 
-            DataView dataView = new DataView(clientes);
-            dataView.RowFilter = string.Format("cliente_nombre LIKE '%{0}%' AND " +
-                                               "cliente_apellido LIKE '%{1}%' AND " +
-                                               "cliente_email LIKE '%{2}%'",
-                                                nombre, apellido, mail);
-            if(dni != "")
-                dataView.RowFilter += string.Format(" AND cliente_numero_dni={0}", dni);
+            string query = "SELECT cliente_nombre, cliente_apellido,cliente_numero_dni,cliente_email,cliente_telefono," + 
+                                  "cliente_direccion,cliente_codigo_postal,cliente_fecha_nacimiento" +
+                           " FROM " + Properties.Settings.Default.Schema + ".Cliente WHERE " + 
+                           "cliente_nombre LIKE '%" + nombre + "%' AND cliente_apellido LIKE '%" + apellido + "%' AND " + 
+                           "cliente_email LIKE '%" + mail + "%'";
+            if (dni != "")
+                query += " AND cliente_numero_dni=" + dni;
 
-            grid.DataSource = dataView;
+            ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+            clientes = conection.selectReturnMultiplyRowsByQuery(query);
+            grid.DataSource = clientes;
         }
 
         private void button4_Click(object sender, EventArgs e)
