@@ -53,12 +53,6 @@ IF OBJECT_ID('GESTION_DE_GATOS.altaCliente') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.altaCliente
 
 ----- Eliminacion de funciones ---------  
-IF OBJECT_ID('GESTION_DE_GATOS.split') IS NOT NULL
-    DROP FUNCTION  GESTION_DE_GATOS.split
-
-IF OBJECT_ID('GESTION_DE_GATOS.formatearDireccion') IS NOT NULL
-    DROP FUNCTION  GESTION_DE_GATOS.formatearDireccion
-
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerRolUsuario') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.obtenerRolUsuario
 
@@ -248,7 +242,10 @@ cliente_numero_dni NUMERIC(18,0),
 cliente_email NVARCHAR(255),
 cliente_fecha_nacimiento DATETIME,
 cliente_telefono NUMERIC(18,0),
-cliente_direccion NVARCHAR(255), --Formato direccion: "calle-numero-piso-depto-localidad"
+cliente_direccion NVARCHAR(255), --Formato direccion: "calle numero"
+cliente_direccion_piso int,
+cliente_direccion_depto nvarchar(5),
+cliente_direccion_localidad nvarchar(50),
 cliente_codigo_postal NVARCHAR(255),
 cliente_dato_inconsistente CHAR(1),
 cliente_nuevo CHAR(1),
@@ -285,7 +282,10 @@ proveedor_cuit  NVARCHAR(20),
 proveedor_rubro NVARCHAR(100),
 proveedor_email NVARCHAR(255),
 proveedor_telefono NUMERIC(18,0),
-proveedor_direccion NVARCHAR(255), --Formato direccion: "calle-numero-piso-depto-localidad"
+proveedor_direccion NVARCHAR(255), --Formato direccion: "calle numero"
+proveedor_direccion_piso int,
+proveedor_direccion_depto nvarchar(5),
+proveedor_direccion_localidad nvarchar(50),
 proveedor_ciudad NVARCHAR(255),
 proveedor_codigo_postal NVARCHAR(255),
 proveedor_dato_inconsistente CHAR(1),
@@ -421,64 +421,16 @@ insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,9)
 
 /* Migracion de la Maestra */
-go
-Create FUNCTION GESTION_DE_GATOS.split
-(
-    @string    nvarchar(max),
-    @delimiter nvarchar(max)
-)
-RETURNS TABLE AS RETURN
-(
-    SELECT 
-           ROW_NUMBER ( ) over(order by (select 0))  id
-         , Split.a.value('.', 'NVARCHAR(MAX)')       value
-    FROM
-    (
-        SELECT CAST('<X>'+REPLACE(@string, @delimiter, '</X><X>')+'</X>' AS XML) AS String
-    ) AS a
-    CROSS APPLY String.nodes('/X') AS Split(a)
-)
-
-go
-create function GESTION_DE_GATOS.formatearDireccion(@direccion nvarchar(255))
-returns nvarchar(255)
-as begin
-	declare @aux nvarchar(max), @dirFormateada nvarchar(255) = ''
-	declare m_cursor cursor for 
-		(select value from GESTION_DE_GATOS.split(@direccion, ' ')
-			where value not like '%[1234567890]%')
-	open m_cursor
-	fetch m_cursor into @aux
-	while(@@FETCH_STATUS = 0) begin
-		set @dirFormateada = concat(@dirFormateada, ' ', @aux)
-		fetch m_cursor into @aux
-	end
-	close m_cursor
-	deallocate m_cursor
-
-	set @dirFormateada = concat(@dirFormateada, '-', 
-		(select value from GESTION_DE_GATOS.split(@direccion, ' ')
-			where value like '%[1234567890]%'))
-
-	return @dirFormateada
-end
-go
-
 --Cliente
 PRINT 'Migrando Clientes'
 INSERT  INTO GESTION_DE_GATOS.Cliente (cliente_nombre,cliente_apellido,cliente_email,
 								cliente_numero_dni,cliente_direccion,cliente_fecha_nacimiento,
 								cliente_ciudad,cliente_telefono) 
 SELECT DISTINCT Cli_Nombre,Cli_Apellido,Cli_Mail,Cli_Dni,Cli_Direccion,
-		Cli_Fecha_Nac,Cli_Ciudad,Cli_Telefono 
+		Cli_Fecha_Nac,Cli_Ciudad,Cli_Telefono
 FROM gd_esquema.Maestra
 WHERE Cli_Apellido IS NOT NULL AND Cli_Nombre IS NOT NULL AND Cli_Dni IS NOT NULL
-
-/*update GESTION_DE_GATOS.Cliente set
-	cliente_direccion = 
-	(select top 1 GESTION_DE_GATOS.formatearDireccion(cliente_direccion) as value) */
 	
-
 --Proveedores
 PRINT 'Migrando Proovedores'
 INSERT INTO GESTION_DE_GATOS.Proveedor (proveedor_razon_social,proveedor_cuit,proveedor_rubro,proveedor_telefono,proveedor_ciudad,proveedor_direccion)
@@ -577,8 +529,6 @@ Cli_Dni = c.cliente_numero_dni
 )
 WHERE Carga_Credito IS NOT NULL 
 
-
-
 --Compra
 PRINT 'Migrando Compras'
 INSERT INTO GESTION_DE_GATOS.Compra (oferta_id,cliente_id,compra_fecha)
@@ -674,6 +624,9 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaProveedor
 @mailProveedor NVARCHAR(255),
 @teléfonoProveedor NUMERIC(18,0),
 @direccionProveedor NVARCHAR(255),
+@pisoProveedor int,
+@deptoProveedor nvarchar(5),
+@localidadProveedor nvarchar(50),
 @codigoPostalProveedor NUMERIC(18,0),
 @ciudadProveedor NVARCHAR(255),
 @cuitProveedor NUMERIC(18,0),
@@ -686,10 +639,11 @@ BEGIN
 	select @id_usuario = usuario_id from Usuario where usuario_nombre = @usuario
 	INSERT INTO GESTION_DE_GATOS.Proveedor (proveedor_razon_social,proveedor_email,proveedor_telefono,
 			proveedor_direccion,proveedor_codigo_postal,proveedor_ciudad,
-			proveedor_cuit,proveedor_rubro,proveedor_contacto, usuario_id)
+			proveedor_cuit,proveedor_rubro,proveedor_contacto, usuario_id,
+			proveedor_direccion_depto, proveedor_direccion_localidad, proveedor_direccion_piso)
 		VALUES (@razonSocialProveedor,@mailProveedor,@teléfonoProveedor,@direccionProveedor,
 			@codigoPostalProveedor,@ciudadProveedor,@cuitProveedor,@rubroProveedor,
-			@nombreDeContactoProveedor, @id_usuario)
+			@nombreDeContactoProveedor, @id_usuario, @deptoProveedor, @localidadProveedor, @pisoProveedor)
 	insert into UsuarioXRol(usuario_id, rol_id)
 		values(@id_usuario, (select rol_id from Rol where rol_nombre = 'Proveedor'))
 END
@@ -702,6 +656,9 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaCliente
 @mailCliente NVARCHAR(255),
 @telefonoCliente NUMERIC(18,0),
 @direccionCliente NVARCHAR(255),
+@pisoCliente int,
+@deptoCliente nvarchar(5),
+@localidadCliente nvarchar(50),
 @codigoPostalCliente NUMERIC(18,0),
 @ciudadCliente NVARCHAR(255),
 @fecha_nac datetime,
@@ -712,11 +669,11 @@ BEGIN
 	select @id_usuario = usuario_id from Usuario where usuario_nombre = @usuario
 	INSERT INTO GESTION_DE_GATOS.Cliente (cliente_fecha_nacimiento,
 		cliente_nombre,cliente_apellido,cliente_numero_dni,cliente_email,cliente_telefono,
-		cliente_direccion,
-		cliente_codigo_postal,cliente_ciudad, usuario_id)
+		cliente_direccion,cliente_codigo_postal,cliente_ciudad, usuario_id,
+		cliente_direccion_depto, cliente_direccion_localidad, cliente_direccion_piso)
 		VALUES(convert(datetime, @fecha_nac),@nombreCliente,@apellidoCliente,@dniCliente,
 		@mailCliente,@telefonoCliente,@direccionCliente,
-		@codigoPostalCliente ,@ciudadCliente,@id_usuario)
+		@codigoPostalCliente ,@ciudadCliente,@id_usuario, @deptoCliente, @localidadCliente, @pisoCliente)
 	insert into UsuarioXRol(usuario_id, rol_id)
 		values(@id_usuario, (select rol_id from Rol where rol_nombre = 'Cliente'))
 END
