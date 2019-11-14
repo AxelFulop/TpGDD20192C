@@ -52,7 +52,12 @@ IF OBJECT_ID('GESTION_DE_GATOS.altaOferta') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.altaCliente') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.altaCliente
 
------ Eliminacion de funciones --------- 
+----- Eliminacion de funciones ---------  
+IF OBJECT_ID('GESTION_DE_GATOS.split') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.split
+
+IF OBJECT_ID('GESTION_DE_GATOS.formatearDireccion') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.formatearDireccion
 
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerRolUsuario') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.obtenerRolUsuario
@@ -416,11 +421,63 @@ insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,9)
 
 /* Migracion de la Maestra */
+go
+Create FUNCTION GESTION_DE_GATOS.split
+(
+    @string    nvarchar(max),
+    @delimiter nvarchar(max)
+)
+RETURNS TABLE AS RETURN
+(
+    SELECT 
+           ROW_NUMBER ( ) over(order by (select 0))  id
+         , Split.a.value('.', 'NVARCHAR(MAX)')       value
+    FROM
+    (
+        SELECT CAST('<X>'+REPLACE(@string, @delimiter, '</X><X>')+'</X>' AS XML) AS String
+    ) AS a
+    CROSS APPLY String.nodes('/X') AS Split(a)
+)
+
+go
+create function GESTION_DE_GATOS.formatearDireccion(@direccion nvarchar(255))
+returns nvarchar(255)
+as begin
+	declare @aux nvarchar(max), @dirFormateada nvarchar(255) = ''
+	declare m_cursor cursor for 
+		(select value from GESTION_DE_GATOS.split(@direccion, ' ')
+			where value not like '%[1234567890]%')
+	open m_cursor
+	fetch m_cursor into @aux
+	while(@@FETCH_STATUS = 0) begin
+		set @dirFormateada = concat(@dirFormateada, ' ', @aux)
+		fetch m_cursor into @aux
+	end
+	close m_cursor
+	deallocate m_cursor
+
+	set @dirFormateada = concat(@dirFormateada, '-', 
+		(select value from GESTION_DE_GATOS.split(@direccion, ' ')
+			where value like '%[1234567890]%'))
+
+	return @dirFormateada
+end
+go
+
 --Cliente
 PRINT 'Migrando Clientes'
-INSERT  INTO GESTION_DE_GATOS.Cliente (cliente_nombre,cliente_apellido,cliente_email,cliente_numero_dni,cliente_direccion,cliente_fecha_nacimiento,cliente_ciudad,cliente_telefono) 
-SELECT DISTINCT Cli_Nombre,Cli_Apellido,Cli_Mail,Cli_Dni,Cli_Direccion,Cli_Fecha_Nac,Cli_Ciudad,Cli_Telefono  FROM gd_esquema.Maestra
+INSERT  INTO GESTION_DE_GATOS.Cliente (cliente_nombre,cliente_apellido,cliente_email,
+								cliente_numero_dni,cliente_direccion,cliente_fecha_nacimiento,
+								cliente_ciudad,cliente_telefono) 
+SELECT DISTINCT Cli_Nombre,Cli_Apellido,Cli_Mail,Cli_Dni,Cli_Direccion,
+		Cli_Fecha_Nac,Cli_Ciudad,Cli_Telefono 
+FROM gd_esquema.Maestra
 WHERE Cli_Apellido IS NOT NULL AND Cli_Nombre IS NOT NULL AND Cli_Dni IS NOT NULL
+
+/*update GESTION_DE_GATOS.Cliente set
+	cliente_direccion = 
+	(select top 1 GESTION_DE_GATOS.formatearDireccion(cliente_direccion) as value) */
+	
 
 --Proveedores
 PRINT 'Migrando Proovedores'
@@ -893,7 +950,8 @@ RETURNS BIT
 AS
 BEGIN
 	declare @ret bit
-	select @ret = case when rol_habilitado = '0' then 1 else 0 end from Rol 
+	select @ret = case when rol_habilitado = '0' then 1 else 0 end from GESTION_DE_GATOS.Rol 
 		where rol_nombre = @nombreRol
 	return @ret
 END
+go
