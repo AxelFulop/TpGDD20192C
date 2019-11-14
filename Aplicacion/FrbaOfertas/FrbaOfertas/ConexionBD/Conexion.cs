@@ -336,8 +336,6 @@ namespace FrbaOfertas.ConexionBD
             openConnection(cnn);
             SqlTransaction transaction = cnn.BeginTransaction();
 
-            try
-            {
                 foreach (Tuple<string, List<string>, Object[]> proc in procedures)
                 {
                     using (SqlCommand cmd = new SqlCommand(proc.Item1, cnn))
@@ -355,17 +353,9 @@ namespace FrbaOfertas.ConexionBD
                     }
                 }
 
-                transaction.Commit();
-            }
-            catch (SqlException)
-            {
-                transaction.Rollback();
-            }
-            finally
-            {
-                closeConnection(cnn);
-                //cnn.Dispose();
-            }
+               transaction.Commit();
+            
+               closeConnection(cnn);
         }
     }
 }

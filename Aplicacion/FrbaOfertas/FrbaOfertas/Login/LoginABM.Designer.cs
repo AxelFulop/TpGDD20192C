@@ -485,6 +485,7 @@
             this.cli_telefono.Name = "cli_telefono";
             this.cli_telefono.Size = new System.Drawing.Size(403, 30);
             this.cli_telefono.TabIndex = 46;
+            this.cli_telefono.TextChanged += new System.EventHandler(this.cli_telefono_TextChanged);
             // 
             // label19
             // 
@@ -589,6 +590,7 @@
             this.dir_numero.Name = "dir_numero";
             this.dir_numero.Size = new System.Drawing.Size(179, 30);
             this.dir_numero.TabIndex = 28;
+            this.dir_numero.TextChanged += new System.EventHandler(this.dir_numero_TextChanged);
             // 
             // label26
             // 

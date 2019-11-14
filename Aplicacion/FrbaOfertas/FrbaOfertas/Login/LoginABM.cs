@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrbaOfertas.ConexionBD;
 using FrbaOfertas.Utils;
+using System.Text.RegularExpressions;
 
 
 namespace FrbaOfertas.Login
@@ -45,6 +46,11 @@ namespace FrbaOfertas.Login
             Tuple<string, List<string>, Object[]>[] procs = new Tuple<string,List<string>,object[]>[2];
             procs[0] = altaUsuarioProc();
 
+            if (rol.SelectedItem == null)
+            {
+                MessageBox.Show("Complete rol", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (rol.SelectedItem.ToString() == "Proveedor")
             {
                 procs[1] = altaProveedorProc();
@@ -264,6 +270,16 @@ namespace FrbaOfertas.Login
         {
 
         }
+
+        private void cli_telefono_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dir_numero_TextChanged(object sender, EventArgs e)
+        {
+            
+        }               
     }
 
  }
