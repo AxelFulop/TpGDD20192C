@@ -15,14 +15,19 @@ namespace FrbaOfertas.AbmCliente
         public Editar(Dictionary<string, string> row)
         {
             InitializeComponent();
-            string[] dir = row["direccion"].Split(new string[]{"-"}, 5, StringSplitOptions.None);
+            string[] dir = row["direccion"].Split(' ');
 
-            this.dir_calle.Text = dir[0];
-            this.dir_numero.Text = dir[1];
-            this.dir_piso.Text = dir[2];
-            this.dir_depto.Text = dir[3];
-            this.dir_localidad.Text = dir[4];
+            this.dir_calle.Text = "";
+            for (int i = 0; i < dir.Length - 1; i++)
+            {
+                this.dir_calle.Text += dir[i] + " ";
+            }
+            this.dir_calle.Text = this.dir_calle.Text.TrimEnd(' ');
+            this.dir_numero.Text = dir.Last();
 
+            this.dir_piso.Text = row["direccion_piso"];
+            this.dir_depto.Text = row["direccion_depto"];
+            this.dir_localidad.Text = row["direccion_localidad"];
             this.nombre.Text = row["nombre"];
             this.apellido.Text = row["apellido"];
             this.mail.Text = row["mail"];

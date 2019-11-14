@@ -15,10 +15,23 @@ namespace FrbaOfertas.AbmProveedor
         public Editar(Dictionary<string, string> row)
         {
             InitializeComponent();
+            string[] dir = row["direccion"].Split(' ');
+
+            this.dir_calle.Text = "";
+            for (int i = 0; i < dir.Length - 1; i++)
+            {
+                this.dir_calle.Text += dir[i] + " ";
+            }
+            this.dir_calle.Text = this.dir_calle.Text.TrimEnd(' ');
+            this.dir_numero.Text = dir.Last();
+
+            this.dir_piso.Text = row["direccion_piso"];
+            this.dir_depto.Text = row["direccion_depto"];
+            this.dir_localidad.Text = row["direccion_localidad"];
+
             this.razonSocial.Text = row["razonSocial"];
             this.mail.Text = row["mail"];
             this.telefono.Text = row["telefono"];
-            this.direccion.Text = row["direccion"];
             this.codigoPostal.Text = row["codigoPostal"];
             this.cuit.Text = row["cuit"];
             this.rubro.Text = row["rubro"];

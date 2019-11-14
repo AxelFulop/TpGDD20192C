@@ -22,8 +22,9 @@ namespace FrbaOfertas.AbmProveedor
 
         private void cargarProveedores()
         {
-            string query = "SELECT proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion, proveedor_codigo_postal, " +
-                                  "proveedor_cuit, proveedor_rubro" +
+            string query = "SELECT proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion," +
+                                   "proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad," +
+                                  "proveedor_codigo_postal,proveedor_cuit, proveedor_rubro, proveedor_contacto" +
                            " FROM " + Properties.Settings.Default.Schema + ".Proveedor";
 
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
@@ -97,8 +98,9 @@ namespace FrbaOfertas.AbmProveedor
             cuit.Text = "";
             mail.Text = "";
 
-            string query = "SELECT proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion, proveedor_codigo_postal, " +
-                                  "proveedor_cuit, proveedor_rubro" +
+            string query = "SELECT proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion," +
+                                   "proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad," + 
+                                  "proveedor_codigo_postal,proveedor_cuit, proveedor_rubro, proveedor_contacto" +
                            " FROM " + Properties.Settings.Default.Schema + ".Proveedor";
 
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
@@ -114,10 +116,13 @@ namespace FrbaOfertas.AbmProveedor
             datosRow["mail"] = row.ItemArray[1].ToString();
             datosRow["telefono"] = row.ItemArray[2].ToString();
             datosRow["direccion"] = row.ItemArray[3].ToString();
-            datosRow["codigoPostal"] = row.ItemArray[4].ToString();
-            datosRow["cuit"] = row.ItemArray[5].ToString();
-            datosRow["rubro"] = row.ItemArray[6].ToString();
-            datosRow["contacto"] = "";//row.ItemArray[7].ToString();
+            datosRow["direccion_piso"] = row.ItemArray[4].ToString();
+            datosRow["direccion_depto"] = row.ItemArray[5].ToString();
+            datosRow["direccion_localidad"] = row.ItemArray[6].ToString();
+            datosRow["codigoPostal"] = row.ItemArray[7].ToString();
+            datosRow["cuit"] = row.ItemArray[8].ToString();
+            datosRow["rubro"] = row.ItemArray[9].ToString();
+            datosRow["contacto"] = row.ItemArray[10].ToString();
 
             return datosRow;
         }
@@ -134,8 +139,8 @@ namespace FrbaOfertas.AbmProveedor
             string cuit = this.cuit.Text;
             string mail = this.mail.Text;
 
-            string query = "SELECT proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion, proveedor_codigo_postal, " +
-                                  "proveedor_cuit, proveedor_rubro" +
+            string query = "SELECT proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion,proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad, proveedor_codigo_postal, " +
+                                  "proveedor_cuit, proveedor_rubro, proveedor_contacto" +
                            " FROM " + Properties.Settings.Default.Schema + ".Proveedor WHERE " +
                            "isnull(proveedor_email, '') LIKE '%" + mail + "%' AND proveedor_razon_social LIKE '%" + razonSocial + "%'";
             if (cuit != "")

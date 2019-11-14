@@ -22,7 +22,7 @@ namespace FrbaOfertas.AbmCliente
 
         private void cargarClientes(){
             string query = "SELECT cliente_nombre, cliente_apellido, cliente_numero_dni, cliente_email, cliente_telefono, " +
-                                  "cliente_direccion, cliente_codigo_postal, cliente_fecha_nacimiento" +
+                                  "cliente_direccion,cliente_direccion_piso,cliente_direccion_depto,cliente_direccion_localidad, cliente_codigo_postal, cliente_fecha_nacimiento" +
                            " FROM " + Properties.Settings.Default.Schema + ".Cliente";
 
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
@@ -109,7 +109,7 @@ namespace FrbaOfertas.AbmCliente
             mail.Text = "";
 
             string query = "SELECT cliente_nombre, cliente_apellido,cliente_numero_dni,cliente_email,cliente_telefono," +
-                                  "cliente_direccion,cliente_codigo_postal,cliente_fecha_nacimiento" +
+                                  "cliente_direccion,cliente_direccion_piso,cliente_direccion_depto,cliente_direccion_localidad,cliente_codigo_postal,cliente_fecha_nacimiento" +
                            " FROM " + Properties.Settings.Default.Schema + ".Cliente";
 
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
@@ -127,8 +127,11 @@ namespace FrbaOfertas.AbmCliente
             datosRow["mail"] = row.ItemArray[3].ToString();
             datosRow["telefono"] = row.ItemArray[4].ToString();
             datosRow["direccion"] = row.ItemArray[5].ToString();
-            datosRow["codigoPostal"] = row.ItemArray[6].ToString();
-            datosRow["fechaNacimiento"] = row.ItemArray[7].ToString();
+            datosRow["direccion_piso"] = row.ItemArray[6].ToString();
+            datosRow["direccion_depto"] = row.ItemArray[7].ToString();
+            datosRow["direccion_localidad"] = row.ItemArray[8].ToString();
+            datosRow["codigoPostal"] = row.ItemArray[9].ToString();
+            datosRow["fechaNacimiento"] = row.ItemArray[10].ToString();
 
             return datosRow;
         }
@@ -146,8 +149,8 @@ namespace FrbaOfertas.AbmCliente
             string mail = this.mail.Text;
             string dni = this.dni.Text;
 
-            string query = "SELECT cliente_nombre, cliente_apellido,cliente_numero_dni,cliente_email,cliente_telefono," + 
-                                  "cliente_direccion,cliente_codigo_postal,cliente_fecha_nacimiento" +
+            string query = "SELECT cliente_nombre, cliente_apellido,cliente_numero_dni,cliente_email,cliente_telefono," +
+                                  "cliente_direccion,cliente_direccion_piso,cliente_direccion_depto,cliente_direccion_localidad,cliente_codigo_postal,cliente_fecha_nacimiento" +
                            " FROM " + Properties.Settings.Default.Schema + ".Cliente WHERE " + 
                            "cliente_nombre LIKE '%" + nombre + "%' AND cliente_apellido LIKE '%" + apellido + "%' AND " + 
                            "cliente_email LIKE '%" + mail + "%'";
