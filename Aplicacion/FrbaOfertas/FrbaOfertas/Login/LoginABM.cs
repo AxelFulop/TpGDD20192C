@@ -113,13 +113,13 @@ namespace FrbaOfertas.Login
                     Properties.Settings.Default.Schema + ".altaProveedor",
                     new List<String>()
                     {
-                        "@razonSocialProveedor", "@mailProveedor", "@teléfonoProveedor", "@direccionProveedor", 
-                        "@codigoPostalProveedor", "@ciudadProveedor", "@cuitProveedor", "@rubroProveedor", 
+                        "@razonSocialProveedor", "@mailProveedor", "@teléfonoProveedor", "@direccionProveedor","@pisoProveedor", 
+                        "@deptoProveedor", "@localidadProveedor", "@codigoPostalProveedor", "@ciudadProveedor", "@cuitProveedor", "@rubroProveedor", 
                         "@nombreDeContactoProveedor", "@usuario"
                     },
                     new String[]{
                         prov_razonSocial.Text, prov_mail.Text, prov_telefono.Text,
-                        dir_calle.Text + "-" + dir_numero.Text + "-" + dir_piso.Text + "-" + dir_depto.Text + "-" + dir_localidad.Text, 
+                        dir_calle.Text + " " + dir_numero.Text, dir_piso.Text, dir_depto.Text, dir_localidad.Text, 
                         prov_cp.Text, prov_ciudad.Text, prov_cuit.Text, prov_rubro.Text, prov_contacto.Text, usuario.Text
                     }
                 );
@@ -132,12 +132,12 @@ namespace FrbaOfertas.Login
                     new List<String>()
                     {
                         "@nombreCliente", "@apellidoCliente", "@dniCliente", "@mailCliente", 
-                        "@telefonoCliente", "@direccionCliente", "@codigoPostalCliente", 
-                        "@ciudadCliente","@fecha_nac", "@usuario"
+                        "@telefonoCliente", "@direccionCliente", "@pisoCliente", "@deptoCliente", "@localidadCliente", 
+                        "@codigoPostalCliente", "@ciudadCliente","@fecha_nac", "@usuario"
                     },
                     new Object[]{
                          cli_nombre.Text, cli_apellido.Text, cli_dni.Text, cli_mail.Text, cli_telefono.Text,
-                        dir_calle.Text + "-" + dir_numero.Text + "-" + dir_piso.Text + "-" + dir_depto.Text + "-" + dir_localidad.Text, 
+                        dir_calle.Text + " " + dir_numero.Text, dir_piso.Text, dir_depto.Text, dir_localidad.Text, 
                         cli_cp.Text, cli_ciudad.Text, cli_fechaNacimiento.Value, usuario.Text
                     }
             );
