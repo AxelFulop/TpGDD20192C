@@ -37,6 +37,12 @@ namespace FrbaOfertas.Login
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (password1.Text == "" || password2.Text == "")
+            {
+                MessageBox.Show("Complete las contraseñas", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (password1.Text != password2.Text)
             {
                 MessageBox.Show("Las contraseñas no coinciden", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);

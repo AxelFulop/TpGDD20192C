@@ -46,22 +46,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbmProveedor\AbmCliente\AbmCliente.cs">
+    <Compile Include="AbmCliente\AbmCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmProveedor\AbmCliente\AbmCliente.Designer.cs">
+    <Compile Include="AbmCliente\AbmCliente.Designer.cs">
       <DependentUpon>AbmCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmProveedor\AbmCliente\Editar.cs">
+    <Compile Include="AbmCliente\Editar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmProveedor\AbmCliente\Editar.Designer.cs">
+    <Compile Include="AbmCliente\Editar.Designer.cs">
       <DependentUpon>Editar.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmProveedor\AbmCliente\Nuevo.cs">
+    <Compile Include="AbmCliente\Nuevo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmProveedor\AbmCliente\Nuevo.Designer.cs">
+    <Compile Include="AbmCliente\Nuevo.Designer.cs">
       <DependentUpon>Nuevo.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmProveedor\AbmProveedor.cs">
@@ -173,13 +173,13 @@
     <Compile Include="Utils\Util.cs">
       <SubType>Form</SubType>
     </Compile>
-    <EmbeddedResource Include="AbmProveedor\AbmCliente\AbmCliente.resx">
+    <EmbeddedResource Include="AbmCliente\AbmCliente.resx">
       <DependentUpon>AbmCliente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AbmProveedor\AbmCliente\Editar.resx">
+    <EmbeddedResource Include="AbmCliente\Editar.resx">
       <DependentUpon>Editar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AbmProveedor\AbmCliente\Nuevo.resx">
+    <EmbeddedResource Include="AbmCliente\Nuevo.resx">
       <DependentUpon>Nuevo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmProveedor\AbmProveedor.resx">
