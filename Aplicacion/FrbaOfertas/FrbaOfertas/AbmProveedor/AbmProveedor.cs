@@ -22,12 +22,13 @@ namespace FrbaOfertas.AbmProveedor
 
         private void cargarProveedores()
         {
-            ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
-            string[] param = new string[]{"proveedor_razon_social","proveedor_email","proveedor_telefono","proveedor_direccion","proveedor_direccion_codigo_postal",
-                                          "proveedor_cuit","proveedor_rubro"};
+            string query = "SELECT proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion, proveedor_codigo_postal, " +
+                                  "proveedor_cuit, proveedor_rubro" +
+                           " FROM " + Properties.Settings.Default.Schema + ".Proveedor";
 
-            proveedores = conection.selectReturnMultiplyRows("Proveedor", param);
-            grid.DataSource = proveedores;
+            ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+            proveedores = conection.selectReturnMultiplyRowsByQuery(query);
+            grid.DataSource = proveedores; 
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -63,6 +64,12 @@ namespace FrbaOfertas.AbmProveedor
             cuit.Text = "";
             mail.Text = "";
 
+            string query = "SELECT proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion, proveedor_codigo_postal, " +
+                                  "proveedor_cuit, proveedor_rubro" +
+                           " FROM " + Properties.Settings.Default.Schema + ".Proveedor";
+
+            ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+            proveedores = conection.selectReturnMultiplyRowsByQuery(query);
             grid.DataSource = proveedores;
         }
 
@@ -94,13 +101,16 @@ namespace FrbaOfertas.AbmProveedor
             string cuit = this.cuit.Text;
             string mail = this.mail.Text;
 
-            DataView dataView = new DataView(proveedores);
-            dataView.RowFilter = string.Format("proveedor_email LIKE '%{0}%' AND " +
-                                               "proveedor_razon_social LIKE '%{1}%'",
-                                                mail, razonSocial);
+            string query = "SELECT proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion, proveedor_codigo_postal, " +
+                                  "proveedor_cuit, proveedor_rubro" +
+                           " FROM " + Properties.Settings.Default.Schema + ".Proveedor WHERE " +
+                           "isnull(proveedor_email, '') LIKE '%" + mail + "%' AND proveedor_razon_social LIKE '%" + razonSocial + "%'";
             if (cuit != "")
-                dataView.RowFilter += string.Format(" AND proveedor_cuit = '%{0}%'", cuit);
-            grid.DataSource = dataView; 
+                query += " AND proveedor_cuit='" + cuit + "'";
+
+            ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+            proveedores = conection.selectReturnMultiplyRowsByQuery(query);
+            grid.DataSource = proveedores;
         }
 
         private void button4_Click(object sender, EventArgs e)
