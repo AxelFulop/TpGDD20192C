@@ -130,6 +130,9 @@ IF (select object_id from sys.foreign_keys where [name] = 'FC17')  IS NOT NULL
 IF (select object_id from sys.foreign_keys where [name] = 'FC18')  IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.Carga  DROP CONSTRAINT FC18
 
+IF (select object_id from sys.foreign_keys where [name] = 'FC19')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.Carga  DROP CONSTRAINT FC19
+
 ------------ Eliminacion de tablas    ------------------
 
 IF OBJECT_ID('GESTION_DE_GATOS.FuncionalidadXRol','U') IS NOT NULL
@@ -256,7 +259,7 @@ PRIMARY KEY (cliente_id)
 CREATE TABLE GESTION_DE_GATOS.Tarjeta(
 tarjeta_id NUMERIC(18,0) IDENTITY,
 cliente_id NUMERIC(18,0),
-tarjeta_numero NUMERIC(18,0),
+tarjeta_numero NUMERIC(18,0) unique,
 tajeta_saldo NUMERIC(18,4),
 tarjeta_tipo NVARCHAR(100),
 tarjeta_banco VARCHAR(15),
@@ -268,6 +271,8 @@ PRIMARY KEY (tarjeta_id)
 CREATE TABLE GESTION_DE_GATOS.Carga(
 carga_id NUMERIC(18,0) IDENTITY ,
 tarjeta_id NUMERIC(18,0),
+cliente_id NUMERIC(18, 0), --Para saber de qué cliente son las cargas que ya están en la tabla maestra.
+--Ya que no se puede referenciar en la migracion a qué tarjeta pertenece
 carga_fecha DATETIME,
 carga_monto NUMERIC(18,2),
 PRIMARY KEY (carga_id)
@@ -385,6 +390,7 @@ ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD CONSTRAINT FC15 FOREIGN KEY(o
 ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD CONSTRAINT FC16 FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
 ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD CONSTRAINT FC17 FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
 ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC18 FOREIGN KEY(tarjeta_id) REFERENCES GESTION_DE_GATOS.Tarjeta(tarjeta_id)
+ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC19 FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
 
 /* Inserccion de datos previos */
 --Usuario Admin
@@ -500,7 +506,7 @@ Provee_Telefono = proveedor_telefono
 WHERE Oferta_Codigo IS NOT NULL
 
 --Tarjeta
-PRINT 'Migrando Tarjetas'
+/*PRINT 'Migrando Tarjetas'
 INSERT INTO GESTION_DE_GATOS.Tarjeta(cliente_id,tarjeta_tipo)
 SELECT DISTINCT cliente_id,Tipo_Pago_Desc
 FROM gd_esquema.Maestra
@@ -509,23 +515,22 @@ Cli_Nombre = cliente_nombre AND
 Cli_Apellido = cliente_apellido AND
 Cli_Dni = cliente_numero_dni AND
 Cli_Mail = cliente_email
-)
+)*/
+--Inicialmente un cliente no tiene tarjetas, ya que en la 
+--tabla Maestra no hay datos de las tarjetas y no podemos mandar fruta. Las cargas de la tabla maestra
+--quedarán referenciadas sin una tarjeta. Las nuevas tendrán datos de la tarjeta
+--con la que se efectuó la carga
 
 --Carga
 PRINT 'Migrando Carga'
-INSERT INTO GESTION_DE_GATOS.Carga(tarjeta_id,carga_monto,carga_fecha)
-SELECT DISTINCT t.tarjeta_id,Carga_Credito,Carga_Fecha
+INSERT INTO GESTION_DE_GATOS.Carga(tarjeta_id,carga_monto,carga_fecha, cliente_id)
+SELECT DISTINCT null, Carga_Credito, Carga_Fecha, c.cliente_id
 FROM gd_esquema.Maestra
 JOIN GESTION_DE_GATOS.Cliente c ON (
 Cli_Nombre = c.cliente_nombre AND
 Cli_Apellido = c.cliente_apellido AND
 Cli_Dni = c.cliente_numero_dni AND
 Cli_Mail = c.cliente_email
-)
-JOIN GESTION_DE_GATOS.Tarjeta t ON (
-Tipo_Pago_Desc = t.tarjeta_tipo AND
-t.cliente_id = c.cliente_id AND
-Cli_Dni = c.cliente_numero_dni
 )
 WHERE Carga_Credito IS NOT NULL 
 
