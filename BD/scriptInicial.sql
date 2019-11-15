@@ -249,6 +249,7 @@ cliente_direccion_localidad nvarchar(50),
 cliente_codigo_postal NVARCHAR(255),
 cliente_dato_inconsistente CHAR(1),
 cliente_nuevo CHAR(1),
+cliente_habilitado char,
 PRIMARY KEY (cliente_id)
 );
 
@@ -290,6 +291,7 @@ proveedor_ciudad NVARCHAR(255),
 proveedor_codigo_postal NVARCHAR(255),
 proveedor_dato_inconsistente CHAR(1),
 proveedor_nuevo CHAR(1),
+proveedor_habilitado char,
 PRIMARY KEY (proveedor_id)
 );
 
@@ -425,16 +427,16 @@ insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(
 PRINT 'Migrando Clientes'
 INSERT  INTO GESTION_DE_GATOS.Cliente (cliente_nombre,cliente_apellido,cliente_email,
 								cliente_numero_dni,cliente_direccion,cliente_fecha_nacimiento,
-								cliente_ciudad,cliente_telefono) 
+								cliente_ciudad,cliente_telefono, cliente_habilitado) 
 SELECT DISTINCT Cli_Nombre,Cli_Apellido,Cli_Mail,Cli_Dni,Cli_Direccion,
-		Cli_Fecha_Nac,Cli_Ciudad,Cli_Telefono
+		Cli_Fecha_Nac,Cli_Ciudad,Cli_Telefono, '0'
 FROM gd_esquema.Maestra
 WHERE Cli_Apellido IS NOT NULL AND Cli_Nombre IS NOT NULL AND Cli_Dni IS NOT NULL
 	
 --Proveedores
 PRINT 'Migrando Proovedores'
-INSERT INTO GESTION_DE_GATOS.Proveedor (proveedor_razon_social,proveedor_cuit,proveedor_rubro,proveedor_telefono,proveedor_ciudad,proveedor_direccion)
-SELECT DISTINCT Provee_RS,Provee_CUIT,Provee_Rubro,Provee_Telefono,Provee_Ciudad,Provee_Dom FROM gd_esquema.Maestra
+INSERT INTO GESTION_DE_GATOS.Proveedor (proveedor_razon_social,proveedor_cuit,proveedor_rubro,proveedor_telefono,proveedor_ciudad,proveedor_direccion, proveedor_habilitado)
+SELECT DISTINCT Provee_RS,Provee_CUIT,Provee_Rubro,Provee_Telefono,Provee_Ciudad,Provee_Dom,'0' FROM gd_esquema.Maestra
 WHERE Provee_RS IS NOT NULL AND Provee_CUIT IS NOT NULL
 
 --Usuarios
@@ -470,26 +472,25 @@ INSERT INTO GESTION_DE_GATOS.UsuarioXRol(usuario_id, rol_id)
 
 --Factura
 PRINT 'Migrando Facturas'
-INSERT INTO GESTION_DE_GATOS.Factura (proveedor_id,factura_numero,factura_fecha)
-SELECT DISTINCT  proveedor_id,Factura_Nro,Factura_Nro
+INSERT INTO GESTION_DE_GATOS.Factura (proveedor_id,factura_numero,factura_fecha, factura_monto_total)
+SELECT proveedor_id, Factura_Nro, Factura_Fecha, sum(Oferta_Cantidad * Oferta_Precio_Ficticio)
 FROM gd_esquema.Maestra
-JOIN GESTION_DE_GATOS.Cliente ON (
-Cli_Nombre = cliente_nombre AND
-Cli_Apellido = cliente_apellido AND
-Cli_Dni = cliente_numero_dni AND
-Cli_Mail = cliente_email)
 JOIN GESTION_DE_GATOS.Proveedor ON (
 Provee_RS = proveedor_razon_social AND
 Provee_CUIT = Provee_CUIT AND
 Provee_Telefono = proveedor_telefono
 )
 WHERE Factura_Nro IS NOT NULL AND Factura_Fecha IS NOT NULL
+group by Factura_Nro, Factura_Fecha, proveedor_id
 
 
 --Oferta
 PRINT 'Migrando Ofertas'
-INSERT INTO GESTION_DE_GATOS.Oferta (proveedor_id,oferta_stock_disponible,oferta_codigo,oferta_descripcion,oferta_fecha_publicacion,oferta_fecha_vencimiento,oferta_precio,oferta_precio_lista)
-SELECT DISTINCT  proveedor_id,Oferta_Cantidad,Oferta_Codigo,Oferta_Descripcion,Oferta_Fecha,Oferta_Fecha_Venc,Oferta_Precio,Oferta_Precio_Ficticio
+INSERT INTO GESTION_DE_GATOS.Oferta (proveedor_id,oferta_stock_disponible,oferta_codigo,
+	oferta_descripcion,oferta_fecha_publicacion,oferta_fecha_vencimiento,oferta_precio,
+	oferta_precio_lista, oferta_limite_compra)
+SELECT DISTINCT proveedor_id,Oferta_Cantidad,Oferta_Codigo,Oferta_Descripcion,Oferta_Fecha,
+	Oferta_Fecha_Venc,Oferta_Precio,Oferta_Precio_Ficticio, Oferta_Cantidad --Inicialmente un cliente podria comprar todo el stock
 FROM gd_esquema.Maestra
 JOIN GESTION_DE_GATOS.Proveedor ON (
 Provee_RS = proveedor_razon_social AND
@@ -497,7 +498,6 @@ Provee_CUIT = Provee_CUIT AND
 Provee_Telefono = proveedor_telefono
 )
 WHERE Oferta_Codigo IS NOT NULL
-
 
 --Tarjeta
 PRINT 'Migrando Tarjetas'
