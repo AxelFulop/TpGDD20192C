@@ -62,5 +62,11 @@ namespace FrbaOfertas.CragaCredito
         {
 
         }
+
+        private void buttonAgregarTarjeta_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new RegistrarTarjeta().Show();
+        }
     }
 }
