@@ -243,7 +243,7 @@ cliente_email NVARCHAR(255),
 cliente_fecha_nacimiento DATETIME,
 cliente_telefono NUMERIC(18,0),
 cliente_direccion NVARCHAR(255), --Formato direccion: "calle numero"
-cliente_direccion_piso int,
+cliente_direccion_piso NVARCHAR(10),
 cliente_direccion_depto nvarchar(5),
 cliente_direccion_localidad nvarchar(50),
 cliente_codigo_postal NVARCHAR(255),
@@ -551,7 +551,7 @@ SELECT m.Oferta_Entregado_Fecha FROM gd_esquema.Maestra m
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.altaUsuario
 @nombreUsuario NVARCHAR(255),
-@password VARCHAR(128)
+@password NVARCHAR(128)
 AS
 BEGIN
 DECLARE @passHash varbinary(128)
@@ -650,18 +650,18 @@ END
 
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.altaCliente
+@fecha_nac NVARCHAR(25),
 @nombreCliente NVARCHAR(255),
 @apellidoCliente NVARCHAR(255),
-@dniCliente NUMERIC(18,0),
+@dniCliente NVARCHAR(255),
 @mailCliente NVARCHAR(255),
-@telefonoCliente NUMERIC(18,0),
+@telefonoCliente NVARCHAR(255),
 @direccionCliente NVARCHAR(255),
-@pisoCliente int,
+@pisoCliente nvarchar(10),
 @deptoCliente nvarchar(5),
 @localidadCliente nvarchar(50),
-@codigoPostalCliente NUMERIC(18,0),
+@codigoPostalCliente NVARCHAR(15),
 @ciudadCliente NVARCHAR(255),
-@fecha_nac datetime,
 @usuario NVARCHAR(255)
 AS
 BEGIN
@@ -671,9 +671,9 @@ BEGIN
 		cliente_nombre,cliente_apellido,cliente_numero_dni,cliente_email,cliente_telefono,
 		cliente_direccion,cliente_codigo_postal,cliente_ciudad, usuario_id,
 		cliente_direccion_depto, cliente_direccion_localidad, cliente_direccion_piso)
-		VALUES(convert(datetime, @fecha_nac),@nombreCliente,@apellidoCliente,@dniCliente,
-		@mailCliente,@telefonoCliente,@direccionCliente,
-		@codigoPostalCliente ,@ciudadCliente,@id_usuario, @deptoCliente, @localidadCliente, @pisoCliente)
+		VALUES(convert(datetime, @fecha_nac),@nombreCliente,@apellidoCliente,CAST(@dniCliente AS NUMERIC(18,0)),
+		@mailCliente,CAST(@telefonoCliente AS numeric(18,0)),@direccionCliente,
+		CAST(@codigoPostalCliente AS NUMERIC(18,0)) ,@ciudadCliente,@id_usuario, @deptoCliente, @localidadCliente,@pisoCliente)
 	insert into UsuarioXRol(usuario_id, rol_id)
 		values(@id_usuario, (select rol_id from Rol where rol_nombre = 'Cliente'))
 END

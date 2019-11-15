@@ -147,7 +147,7 @@ namespace FrbaOfertas
                         new AbmRol.AbmRol().Show();
                         break;
                     case "Cargar crédito":
-                        new CragaCredito.Form1().Show();
+                        new CragaCredito.CargaCreditoABM().Show();
                         break;
                     case "Comprar ofertas":
                         new ComprarOferta.Form1().Show();
@@ -164,6 +164,11 @@ namespace FrbaOfertas
                     default: break;
                 }
             }
+        }
+
+        private void MenuPrincipal_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -22,7 +22,7 @@ namespace FrbaOfertas.Login
         {
             InitializeComponent();
             cli_fechaNacimiento.Format = DateTimePickerFormat.Custom;
-            cli_fechaNacimiento.CustomFormat = "yyyy-MM-dd, 00:00:00.00";
+            cli_fechaNacimiento.CustomFormat = "yyyy-MM-dd";
         }
 
         private void LoginABM_Load(object sender, EventArgs e)
@@ -87,9 +87,9 @@ namespace FrbaOfertas.Login
                 this.Hide();
                 new MenuPrincipal(usuario.Text).Show();
             }
-            catch (System.Data.SqlClient.SqlException)
+            catch (System.Data.SqlClient.SqlException exec)
             {
-                MessageBox.Show("Error al crear usuario", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(exec.ToString());
             }            
         }
 
@@ -131,14 +131,20 @@ namespace FrbaOfertas.Login
                     Properties.Settings.Default.Schema + ".altaCliente",
                     new List<String>()
                     {
-                        "@nombreCliente", "@apellidoCliente", "@dniCliente", "@mailCliente", 
-                        "@telefonoCliente", "@direccionCliente", "@pisoCliente", "@deptoCliente", "@localidadCliente", 
-                        "@codigoPostalCliente", "@ciudadCliente","@fecha_nac", "@usuario"
+                         "@fecha_nac","@nombreCliente","@apellidoCliente","@dniCliente",
+		                 "@mailCliente","@telefonoCliente","@direccionCliente", "@pisoCliente",
+                         "@deptoCliente", "@localidadCliente",
+		                 "@codigoPostalCliente" ,"@ciudadCliente","@usuario"
+                         
                     },
                     new Object[]{
-                         cli_nombre.Text, cli_apellido.Text, cli_dni.Text, cli_mail.Text, cli_telefono.Text,
-                        dir_calle.Text + " " + dir_numero.Text, dir_piso.Text, dir_depto.Text, dir_localidad.Text, 
-                        cli_cp.Text, cli_ciudad.Text, cli_fechaNacimiento.Value, usuario.Text
+
+                         cli_fechaNacimiento.Value.ToString(),cli_nombre.Text,cli_apellido.TextAlign,cli_dni.Text,
+                         cli_mail.Text,cli_telefono.Text,dir_calle.Text + " " + dir_numero.Text,dir_piso.Text,
+                         dir_depto.Text, dir_localidad.Text, 
+                         cli_cp.Text, cli_ciudad.Text, usuario.Text
+                         
+                       
                     }
             );
         }
@@ -292,6 +298,11 @@ namespace FrbaOfertas.Login
         private void dir_numero_TextChanged(object sender, EventArgs e)
         {
             
+        }
+
+        private void cli_cp_TextChanged(object sender, EventArgs e)
+        {
+
         }               
     }
 

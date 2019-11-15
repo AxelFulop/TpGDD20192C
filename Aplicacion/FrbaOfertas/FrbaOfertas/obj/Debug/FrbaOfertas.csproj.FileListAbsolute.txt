@@ -63,7 +63,6 @@ C:\Users\axelf\Documents\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debu
 C:\Users\axelf\Documents\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmRol.Editar.resources
 C:\Users\axelf\Documents\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.AbmRol.Nuevo.resources
 C:\Users\axelf\Documents\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ComprarOferta.Form1.resources
-C:\Users\axelf\Documents\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.CragaCredito.Form1.resources
 C:\Users\axelf\Documents\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.CrearOferta.Form1.resources
 C:\Users\axelf\Documents\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Facturar.Form1.resources
 C:\Users\axelf\Documents\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Logeo.resources
@@ -75,3 +74,7 @@ C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\Frba
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Perfil.resources
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.RegistrarTarjeta.resources
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.csprojResolveAssemblyReference.cache
+C:\Users\axelf\Documents\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.MenuPrincipal.resources
+C:\Users\axelf\Documents\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Perfil.resources
+C:\Users\axelf\Documents\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.RegistrarTarjeta.resources
+C:\Users\axelf\Documents\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.CragaCredito.CargaCreditoABM.resources
