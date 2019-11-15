@@ -334,7 +334,7 @@ cliente_id NUMERIC(18,0),
 oferta_id NUMERIC(18,0),
 compra_fecha DATETIME,
 dato_inconsistente CHAR(1),
-limite_cliente NUMERIC(18,0)
+--limite_cliente NUMERIC(18,0)
 PRIMARY KEY (compra_id)
 );
 
@@ -537,7 +537,7 @@ WHERE Carga_Credito IS NOT NULL
 --Compra
 PRINT 'Migrando Compras'
 INSERT INTO GESTION_DE_GATOS.Compra (oferta_id,cliente_id,compra_fecha)
-SELECT o.oferta_id,c.cliente_id,m.Oferta_Fecha_Compra FROM  gd_esquema.Maestra m
+SELECT o.oferta_id, c.cliente_id, m.Oferta_Fecha_Compra FROM  gd_esquema.Maestra m
 JOIN GESTION_DE_GATOS.Cliente c  ON (
 Cli_Dni = c.cliente_numero_dni AND
 Cli_Mail = c.cliente_email
@@ -546,10 +546,11 @@ JOIN GESTION_DE_GATOS.Oferta o ON (
 m.Oferta_Codigo = o.oferta_codigo AND
 m.Oferta_Fecha = o.oferta_fecha_publicacion
 )
+where Oferta_Fecha_Compra is not null
 
 --DetalleFactura
 PRINT 'Migrando Fechas de entrega'
-INSERT INTO GESTION_DE_GATOS.DetalleFactura  (detalle_fecha_entregado)
+INSERT INTO GESTION_DE_GATOS.DetalleFactura(detalle_fecha_entregado)
 SELECT m.Oferta_Entregado_Fecha FROM gd_esquema.Maestra m
 
 /* Creación de procedures */
