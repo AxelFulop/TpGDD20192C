@@ -330,6 +330,24 @@ namespace FrbaOfertas.ConexionBD
             return resultQuery;
         }
 
+        public ComboBox populateComboBox(ComboBox combo, string query)
+        {
+            SqlDataReader dr;
+            SqlConnection con = Conexion.configDBConnection();
+            this.openConnection(con);
+            SqlCommand cmd = new SqlCommand(query,con);
+            cmd.CommandType = CommandType.Text;
+            dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                combo.Items.Add(dr[0].ToString());
+            }
+            this.closeConnection(con);
+            return combo;
+
+
+        }
+
         public int executeQuery(String query)
         {
             SqlConnection conn = Conexion.configDBConnection();
@@ -383,6 +401,24 @@ namespace FrbaOfertas.ConexionBD
                transaction.Commit();
             
                closeConnection(cnn);
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // Conexion
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "Conexion";
+            this.Load += new System.EventHandler(this.Conexion_Load);
+            this.ResumeLayout(false);
+
+        }
+
+        private void Conexion_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

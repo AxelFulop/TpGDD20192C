@@ -30,7 +30,6 @@
         {
             this.panelAgregarTarjeta = new System.Windows.Forms.Panel();
             this.buttonLimpiar = new System.Windows.Forms.Button();
-            this.dateTimePickerFechaVenc = new System.Windows.Forms.DateTimePicker();
             this.textBoxCVV = new System.Windows.Forms.TextBox();
             this.textBoxBanco = new System.Windows.Forms.TextBox();
             this.comboBoxTipo = new System.Windows.Forms.ComboBox();
@@ -43,6 +42,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.dateTimePickerFechaVenc = new System.Windows.Forms.DateTimePicker();
             this.panelAgregarTarjeta.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,13 +74,6 @@
             this.buttonLimpiar.TabIndex = 13;
             this.buttonLimpiar.Text = "Limpiar";
             this.buttonLimpiar.UseVisualStyleBackColor = true;
-            // 
-            // dateTimePickerFechaVenc
-            // 
-            this.dateTimePickerFechaVenc.Location = new System.Drawing.Point(121, 156);
-            this.dateTimePickerFechaVenc.Name = "dateTimePickerFechaVenc";
-            this.dateTimePickerFechaVenc.Size = new System.Drawing.Size(183, 20);
-            this.dateTimePickerFechaVenc.TabIndex = 12;
             // 
             // textBoxCVV
             // 
@@ -191,6 +184,13 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // dateTimePickerFechaVenc
+            // 
+            this.dateTimePickerFechaVenc.Location = new System.Drawing.Point(121, 150);
+            this.dateTimePickerFechaVenc.Name = "dateTimePickerFechaVenc";
+            this.dateTimePickerFechaVenc.Size = new System.Drawing.Size(183, 20);
+            this.dateTimePickerFechaVenc.TabIndex = 12;
+            // 
             // RegistrarTarjeta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -199,7 +199,7 @@
             this.Controls.Add(this.panelAgregarTarjeta);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(805, 469);
             this.MinimizeBox = false;
@@ -219,7 +219,6 @@
 
         private System.Windows.Forms.Panel panelAgregarTarjeta;
         private System.Windows.Forms.Button buttonLimpiar;
-        private System.Windows.Forms.DateTimePicker dateTimePickerFechaVenc;
         private System.Windows.Forms.TextBox textBoxCVV;
         private System.Windows.Forms.TextBox textBoxBanco;
         private System.Windows.Forms.ComboBox comboBoxTipo;
@@ -232,5 +231,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DateTimePicker dateTimePickerFechaVenc;
     }
 }

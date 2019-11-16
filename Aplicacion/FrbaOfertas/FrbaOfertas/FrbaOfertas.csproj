@@ -206,6 +206,9 @@
     <EmbeddedResource Include="CargaCredito\CargaCreditoABM.resx">
       <DependentUpon>CargaCreditoABM.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ConexionBD\Conexion.resx">
+      <DependentUpon>Conexion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CrearOferta\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -238,6 +241,9 @@
     </Compile>
     <EmbeddedResource Include="RegistrarTarjeta.resx">
       <DependentUpon>RegistrarTarjeta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utils\Util.resx">
+      <DependentUpon>Util.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="GD2C2019DataSet.xsc">
       <DependentUpon>GD2C2019DataSet.xsd</DependentUpon>

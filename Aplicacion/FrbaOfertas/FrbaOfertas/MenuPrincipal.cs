@@ -159,7 +159,7 @@ namespace FrbaOfertas
                         new ListadoEstadistico.Form1().Show();
                         break;
                     case "Registrar tarjeta":
-                        new RegistrarTarjeta(" ").Show();
+                        new RegistrarTarjeta().Show();
                         break;
                     default: break;
                 }

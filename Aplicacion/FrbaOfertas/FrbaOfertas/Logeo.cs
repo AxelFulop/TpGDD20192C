@@ -16,7 +16,23 @@ namespace FrbaOfertas
     {
         int contIntentosFallidos;
         int tiempoBloqueo;
+        private Logeo log;
         Util utils = new Util();
+
+        public string UserName{
+        
+            get {return this.textBoxUser.Text; }
+        }
+
+        public Logeo getInstance()
+        {
+            if (this.log == null)
+            {
+                this.log = new Logeo(5, 3);
+            }
+            return this.log;
+        }
+
 
         public Logeo(int tiempoBloqueo, int contIntentosFallidos)
         {
@@ -68,8 +84,8 @@ namespace FrbaOfertas
                     if (Convert.ToInt32(loginValido) == 1)
                     {
                         //Verificar campos y guardar cliente en la DB
-                        RegistrarTarjeta tarjetaAbm = new RegistrarTarjeta(textBoxUser.Text);
-            
+                        
+                        redireccionar(this.textBoxUser.Text);
                     }
                 }
                 else
@@ -138,6 +154,11 @@ namespace FrbaOfertas
         {
             this.Hide();
             new Login.LoginABM().Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrbaOfertas.ConexionBD;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +13,11 @@ namespace FrbaOfertas.CragaCredito
 {
     public partial class CargaCreditoABM : Form
     {
+
+
+
+      
+
         public CargaCreditoABM()
         {
             InitializeComponent();
@@ -55,7 +61,15 @@ namespace FrbaOfertas.CragaCredito
 
         private void Form1_Load(object sender, EventArgs e)
         {
-   
+            dateTimePickerFechaCarga.Value = Properties.Settings.Default.fecha;
+            dateTimePickerFechaCarga.Enabled = false;
+            Logeo log = (Logeo)Application.OpenForms["Logeo"];
+            TextBox username = (TextBox)log.Controls["textBoxUser"];
+            MessageBox.Show(username.Text);
+            
+            string query = "SELECT tarjeta_numero FROM GESTION_DE_GATOS.Tarjeta t JOIN GESTION_DE_GATOS.Cliente c on t.cliente_id = c.cliente_id JOIN GESTION_DE_GATOS.Usuario u on u.usuario_id = c.usuario_id WHERE u.usuario_nombre = " + "'" + log.UserName + "'";
+            comboBoxTarjeta = new Conexion().populateComboBox(comboBoxTarjeta, query);
+     
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -66,7 +80,22 @@ namespace FrbaOfertas.CragaCredito
         private void buttonAgregarTarjeta_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new RegistrarTarjeta(" ").Show();
+            new RegistrarTarjeta().Show();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+       {
+           
         }
     }
 }

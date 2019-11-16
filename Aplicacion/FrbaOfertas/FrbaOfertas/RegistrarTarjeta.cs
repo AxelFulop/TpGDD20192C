@@ -8,17 +8,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FrbaOfertas.Login;
+using FrbaOfertas.AbmCliente;
 
 namespace FrbaOfertas
 {
     public partial class RegistrarTarjeta : Form
     {
-       public  string userName;
-
-        public RegistrarTarjeta(string username)
+        public string username;
+        public static Logeo log = new Logeo(5, 3);
+        
+        public string Username{
+            get { return username; }
+            set { this.username = value; }
+        }
+        
+        public RegistrarTarjeta()
         {
             InitializeComponent();
-            this.userName = username;
+            
+     
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -37,7 +46,7 @@ namespace FrbaOfertas
         {
             String schema = Properties.Settings.Default.Schema;
             dateTimePickerFechaVenc.Format = DateTimePickerFormat.Custom;
-            dateTimePickerFechaVenc.CustomFormat = "yyyy-MM-dd";
+            dateTimePickerFechaVenc.CustomFormat = "mm-yyyy";
             if (textBoxBanco.Text == "" || textBoxCVV.Text == "" ||
                textBoxNumero.Text == "" || comboBoxTipo.Text == "")
             {
@@ -45,13 +54,16 @@ namespace FrbaOfertas
             }
             else
             {
+                
+                string userName1 = log.UserName;
+            
                 List<String> parametrosTarjeta = new List<String>() { "@numeroTarjeta",
                 "@tipoTarjeta", "@bancoTarjeta","@vencimientoFechaTarjeta","@cvvTarjeta","@userName"};
                 try
                 {
                     new Conexion().executeProcedure(schema + ".altaTarjeta", parametrosTarjeta,
                         textBoxNumero.Text, comboBoxTipo.Text, textBoxBanco.Text, dateTimePickerFechaVenc.Value,
-                        textBoxCVV.Text,this.userName);
+                        textBoxCVV.Text,this.Username);
 
                     MessageBox.Show("Tarjeta agregada con exito");
                 }

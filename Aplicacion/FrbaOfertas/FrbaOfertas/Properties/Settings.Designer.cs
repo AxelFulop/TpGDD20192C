@@ -34,10 +34,10 @@ namespace FrbaOfertas.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("14/09/2019")]
-        public string fecha {
+        [global::System.Configuration.DefaultSettingValueAttribute("2019-09-14")]
+        public global::System.DateTime fecha {
             get {
-                return ((string)(this["fecha"]));
+                return ((global::System.DateTime)(this["fecha"]));
             }
             set {
                 this["fecha"] = value;

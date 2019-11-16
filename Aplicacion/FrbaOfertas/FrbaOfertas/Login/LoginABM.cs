@@ -71,6 +71,9 @@ namespace FrbaOfertas.Login
             else if (rol.SelectedItem.ToString() == "Cliente")
             {
                 procs[1] = altaClienteProc();
+                Logeo log = new Logeo(5, 3);
+                string userName = log.UserName;
+
             }
             else
             {
@@ -301,6 +304,11 @@ namespace FrbaOfertas.Login
         }
 
         private void cli_cp_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void usuario_TextChanged(object sender, EventArgs e)
         {
 
         }               

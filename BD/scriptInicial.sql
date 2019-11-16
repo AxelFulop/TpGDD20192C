@@ -10,6 +10,10 @@ IF OBJECT_ID('GESTION_DE_GATOS.agregarRolAUsuario') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.cambiarNombreRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.cambiarNombreRol
 
+
+IF OBJECT_ID('GESTION_DE_GATOS.tarjetaParaUsuario') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.tarjetaParaUsuario
+
 IF OBJECT_ID('GESTION_DE_GATOS.inhabilitarRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.inhabilitarRol
 
@@ -64,6 +68,9 @@ IF OBJECT_ID('GESTION_DE_GATOS.obtenerFecha') IS NOT NULL
 
 IF OBJECT_ID('GESTION_DE_GATOS.usuarioEstaBloqueado') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.usuarioEstaBloqueado
+
+IF OBJECT_ID('GESTION_DE_GATOS.obtenerTarjetasUsuariologinValido') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.obtenerTarjetasUsuario
 
 IF OBJECT_ID('GESTION_DE_GATOS.loginValido') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.loginValido
@@ -811,6 +818,20 @@ BEGIN
 	end
 END
 
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.tarjetaParaUsuario
+@userName NVARCHAR(255),
+@fechaVencimiento NVARCHAR(20)
+AS
+BEGIN
+DECLARE @numeroTarjeta NUMERIC(18,0),@CVV BIGINT,@idCliente NUMERIC(18,0)
+SET @numeroTarjeta = (SELECT CAST(RAND() * 10000000000000000 AS NUMERIC(18,0)))
+SET @CVV = (SELECT FLOOR(RAND() * 900)+ 100)
+SET @idCliente = (SELECT c.cliente_id FROM GESTION_DE_GATOS.Cliente c,GESTION_DE_GATOS.Usuario u WHERE u.usuario_nombre = @userName and c.usuario_id = u.usuario_id )
+INSERT INTO GESTION_DE_GATOS.Tarjeta (cliente_id,tajeta_saldo,tarjeta_banco,tarjeta_cvv,tarjeta_fecha_vencimiento,tarjeta_numero,tarjeta_tipo)
+VALUES(@idCliente,200,'HSCBC',@CVV,CONVERT(DATETIME,@fechaVencimiento),@numeroTarjeta,'Debito')
+END
+
 /* Creacion de funciones */
 GO
 CREATE FUNCTION GESTION_DE_GATOS.existeUsuario(@nombreUsuario VARCHAR(50))
@@ -838,6 +859,18 @@ BEGIN
 		inner join GESTION_DE_GATOS.Rol r on uxr.rol_id = r.rol_id
 		where u.usuario_nombre = @nombreUsuario
 	RETURN @ret
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.obtenerTarjetasUsuario(@userName NVARCHAR(255))
+RETURNS NUMERIC(18,0)
+AS
+BEGIN
+RETURN (SELECT tarjeta_numero 
+        FROM GESTION_DE_GATOS.Tarjeta t
+		JOIN GESTION_DE_GATOS.Cliente c on t.cliente_id = c.cliente_id
+		JOIN GESTION_DE_GATOS.Usuario u on u.usuario_id = c.usuario_id
+		WHERE u.usuario_nombre = @userName)
 END
 
 GO
@@ -919,8 +952,3 @@ BEGIN
 END
 go
 
-select * from GESTION_DE_GATOS.Usuario
-
-select * from GESTION_DE_GATOS.Cliente where cliente_apellido = 'vera'
-
-select * from GESTION_DE_GATOS.Tarjeta
