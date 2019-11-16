@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.button1 = new System.Windows.Forms.Button();
             this.error_message = new System.Windows.Forms.Label();
@@ -39,7 +40,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.textBoxUser = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,11 +57,22 @@
             this.panel1.Controls.Add(this.textBoxPassword);
             this.panel1.Controls.Add(this.textBoxUser);
             this.panel1.Location = new System.Drawing.Point(-1, -1);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(783, 416);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(544, 366);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(112, 31);
+            this.button2.TabIndex = 11;
+            this.button2.Text = "Salir";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // linkLabel1
             // 
@@ -81,7 +92,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(365, 266);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 22);
             this.button1.TabIndex = 8;
@@ -126,7 +137,7 @@
             // ingresar_btn
             // 
             this.ingresar_btn.Location = new System.Drawing.Point(346, 231);
-            this.ingresar_btn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ingresar_btn.Margin = new System.Windows.Forms.Padding(2);
             this.ingresar_btn.Name = "ingresar_btn";
             this.ingresar_btn.Size = new System.Drawing.Size(112, 31);
             this.ingresar_btn.TabIndex = 4;
@@ -160,7 +171,7 @@
             // textBoxPassword
             // 
             this.textBoxPassword.Location = new System.Drawing.Point(314, 201);
-            this.textBoxPassword.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxPassword.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(175, 20);
             this.textBoxPassword.TabIndex = 1;
@@ -169,22 +180,11 @@
             // textBoxUser
             // 
             this.textBoxUser.Location = new System.Drawing.Point(314, 150);
-            this.textBoxUser.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxUser.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxUser.Name = "textBoxUser";
             this.textBoxUser.Size = new System.Drawing.Size(175, 20);
             this.textBoxUser.TabIndex = 0;
             this.textBoxUser.TextChanged += new System.EventHandler(this.user_TextChanged);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(544, 366);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(112, 31);
-            this.button2.TabIndex = 11;
-            this.button2.Text = "Salir";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Logeo
             // 
@@ -192,7 +192,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(685, 430);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(805, 469);
             this.MinimizeBox = false;
@@ -220,7 +220,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Button button2;
-        public System.Windows.Forms.TextBox textBoxUser;
+        protected System.Windows.Forms.TextBox textBoxUser;
     }
 }
 

@@ -30,7 +30,12 @@
         {
             this.buttonAgregarTarjeta = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBoxCliente = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxTipo = new System.Windows.Forms.TextBox();
+            this.comboBoxTarjeta = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
+            this.dateTimePickerFechaCarga = new System.Windows.Forms.DateTimePicker();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
@@ -38,11 +43,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.dateTimePickerFechaCarga = new System.Windows.Forms.DateTimePicker();
-            this.comboBoxTarjeta = new System.Windows.Forms.ComboBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBoxCliente = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,7 +60,7 @@
             // 
             this.panel1.Controls.Add(this.textBoxCliente);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.textBox2);
+            this.panel1.Controls.Add(this.textBoxTipo);
             this.panel1.Controls.Add(this.comboBoxTarjeta);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.dateTimePickerFechaCarga);
@@ -76,6 +76,41 @@
             this.panel1.TabIndex = 14;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
+            // textBoxCliente
+            // 
+            this.textBoxCliente.Location = new System.Drawing.Point(66, 16);
+            this.textBoxCliente.Name = "textBoxCliente";
+            this.textBoxCliente.Size = new System.Drawing.Size(198, 20);
+            this.textBoxCliente.TabIndex = 19;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(39, 13);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Cliente";
+            this.label1.Click += new System.EventHandler(this.label1_Click_1);
+            // 
+            // textBoxTipo
+            // 
+            this.textBoxTipo.Location = new System.Drawing.Point(66, 75);
+            this.textBoxTipo.Name = "textBoxTipo";
+            this.textBoxTipo.Size = new System.Drawing.Size(198, 20);
+            this.textBoxTipo.TabIndex = 17;
+            // 
+            // comboBoxTarjeta
+            // 
+            this.comboBoxTarjeta.DisplayMember = "\" \"";
+            this.comboBoxTarjeta.FormattingEnabled = true;
+            this.comboBoxTarjeta.Location = new System.Drawing.Point(66, 42);
+            this.comboBoxTarjeta.Name = "comboBoxTarjeta";
+            this.comboBoxTarjeta.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxTarjeta.TabIndex = 16;
+            this.comboBoxTarjeta.ValueMember = "\" \"";
+            this.comboBoxTarjeta.SelectedIndexChanged += new System.EventHandler(this.comboBoxTarjeta_SelectedIndexChanged_1);
+            // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(200, 189);
@@ -85,6 +120,13 @@
             this.button2.TabIndex = 13;
             this.button2.Text = "Limpiar";
             this.button2.UseVisualStyleBackColor = true;
+            // 
+            // dateTimePickerFechaCarga
+            // 
+            this.dateTimePickerFechaCarga.Location = new System.Drawing.Point(76, 145);
+            this.dateTimePickerFechaCarga.Name = "dateTimePickerFechaCarga";
+            this.dateTimePickerFechaCarga.Size = new System.Drawing.Size(199, 20);
+            this.dateTimePickerFechaCarga.TabIndex = 12;
             // 
             // textBox1
             // 
@@ -150,45 +192,6 @@
             this.label9.TabIndex = 15;
             this.label9.Text = "Datos carga";
             // 
-            // dateTimePickerFechaCarga
-            // 
-            this.dateTimePickerFechaCarga.Location = new System.Drawing.Point(76, 145);
-            this.dateTimePickerFechaCarga.Name = "dateTimePickerFechaCarga";
-            this.dateTimePickerFechaCarga.Size = new System.Drawing.Size(199, 20);
-            this.dateTimePickerFechaCarga.TabIndex = 12;
-            // 
-            // comboBoxTarjeta
-            // 
-            this.comboBoxTarjeta.FormattingEnabled = true;
-            this.comboBoxTarjeta.Location = new System.Drawing.Point(66, 42);
-            this.comboBoxTarjeta.Name = "comboBoxTarjeta";
-            this.comboBoxTarjeta.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxTarjeta.TabIndex = 16;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(66, 75);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(198, 20);
-            this.textBox2.TabIndex = 17;
-            // 
-            // textBoxCliente
-            // 
-            this.textBoxCliente.Location = new System.Drawing.Point(66, 16);
-            this.textBoxCliente.Name = "textBoxCliente";
-            this.textBoxCliente.Size = new System.Drawing.Size(198, 20);
-            this.textBoxCliente.TabIndex = 19;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(39, 13);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "Cliente";
-            this.label1.Click += new System.EventHandler(this.label1_Click_1);
-            // 
             // CargaCreditoABM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -227,7 +230,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DateTimePicker dateTimePickerFechaCarga;
         private System.Windows.Forms.ComboBox comboBoxTarjeta;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBoxTipo;
         private System.Windows.Forms.TextBox textBoxCliente;
         private System.Windows.Forms.Label label1;
     }

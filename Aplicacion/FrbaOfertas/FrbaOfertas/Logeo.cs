@@ -16,23 +16,15 @@ namespace FrbaOfertas
     {
         int contIntentosFallidos;
         int tiempoBloqueo;
-        private Logeo log;
         Util utils = new Util();
+        public static string username = "";
 
         public string UserName{
         
-            get {return this.textBoxUser.Text; }
+            get {return textBoxUser.Text; }
         }
 
-        public Logeo getInstance()
-        {
-            if (this.log == null)
-            {
-                this.log = new Logeo(5, 3);
-            }
-            return this.log;
-        }
-
+  
 
         public Logeo(int tiempoBloqueo, int contIntentosFallidos)
         {
@@ -75,8 +67,9 @@ namespace FrbaOfertas
                     error_message.Visible = true;
                 }
                 else if ((Convert.ToInt32(loginValido) == 1) && (Convert.ToInt32(bloqueado) == 0))
-                {  
-                    redireccionar(this.textBoxUser.Text);
+                {
+                    username = textBoxUser.Text;
+                   redireccionar(this.textBoxUser.Text);
                 }
                 else if ((Convert.ToInt32(bloqueado) == 1) && (unixDateTime >= unixDateUser) && Convert.ToInt32(usr) == 1)
                 {
@@ -84,7 +77,7 @@ namespace FrbaOfertas
                     if (Convert.ToInt32(loginValido) == 1)
                     {
                         //Verificar campos y guardar cliente en la DB
-                        
+                        username = textBoxUser.Text;
                         redireccionar(this.textBoxUser.Text);
                     }
                 }

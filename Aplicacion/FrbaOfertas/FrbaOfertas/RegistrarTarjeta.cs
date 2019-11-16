@@ -15,14 +15,7 @@ namespace FrbaOfertas
 {
     public partial class RegistrarTarjeta : Form
     {
-        public string username;
-        public static Logeo log = new Logeo(5, 3);
-        
-        public string Username{
-            get { return username; }
-            set { this.username = value; }
-        }
-        
+       
         public RegistrarTarjeta()
         {
             InitializeComponent();
@@ -54,16 +47,14 @@ namespace FrbaOfertas
             }
             else
             {
-                
-                string userName1 = log.UserName;
-            
+
                 List<String> parametrosTarjeta = new List<String>() { "@numeroTarjeta",
                 "@tipoTarjeta", "@bancoTarjeta","@vencimientoFechaTarjeta","@cvvTarjeta","@userName"};
                 try
                 {
                     new Conexion().executeProcedure(schema + ".altaTarjeta", parametrosTarjeta,
                         textBoxNumero.Text, comboBoxTipo.Text, textBoxBanco.Text, dateTimePickerFechaVenc.Value,
-                        textBoxCVV.Text,this.Username);
+                        textBoxCVV.Text,Logeo.username);
 
                     MessageBox.Show("Tarjeta agregada con exito");
                 }
@@ -73,6 +64,7 @@ namespace FrbaOfertas
                 }
             }
         }
+        //88430112
 
         private void RegistrarTarjeta_Load(object sender, EventArgs e)
         {

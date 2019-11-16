@@ -81,6 +81,15 @@ IF OBJECT_ID('GESTION_DE_GATOS.obtenerCantIntentosFallidos') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.rolEstaHabilitado') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.rolEstaHabilitado
 
+IF OBJECT_ID('GESTION_DE_GATOS.obtenerTarjetasUsuario') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.obtenerTarjetasUsuario
+
+
+IF OBJECT_ID('GESTION_DE_GATOS.tipoTarjeta') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.tipoTarjeta
+	
+
+
 ------------ Eliminacion de FK   ------------------ 
 
 IF (select object_id from sys.foreign_keys where [name] = 'FC1') IS NOT NULL
@@ -950,5 +959,22 @@ BEGIN
 		where rol_nombre = @nombreRol
 	return @ret
 END
-go
 
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.tipoTarjeta(@numeroTarjeta NUMERIC(18,0))
+RETURNS NVARCHAR(10)
+AS
+BEGIN
+DECLARE @TIPO NVARCHAR(10),@Res NVARCHAR(10)
+SET @TIPO= (SELECT tarjeta_tipo FROM GESTION_DE_GATOS.Tarjeta WHERE tarjeta_numero = @numeroTarjeta)
+IF (@TIPO LIKE 'Debito') 
+BEGIN
+SET @Res = 'Debito'
+END
+ELSE
+BEGIN
+SET @Res = 'Credito'
+END
+RETURN @Res
+END

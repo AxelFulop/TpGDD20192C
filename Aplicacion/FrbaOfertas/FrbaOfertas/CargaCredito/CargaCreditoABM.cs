@@ -63,13 +63,15 @@ namespace FrbaOfertas.CragaCredito
         {
             dateTimePickerFechaCarga.Value = Properties.Settings.Default.fecha;
             dateTimePickerFechaCarga.Enabled = false;
-            Logeo log = (Logeo)Application.OpenForms["Logeo"];
-            TextBox username = (TextBox)log.Controls["textBoxUser"];
-            MessageBox.Show(username.Text);
-            
-            string query = "SELECT tarjeta_numero FROM GESTION_DE_GATOS.Tarjeta t JOIN GESTION_DE_GATOS.Cliente c on t.cliente_id = c.cliente_id JOIN GESTION_DE_GATOS.Usuario u on u.usuario_id = c.usuario_id WHERE u.usuario_nombre = " + "'" + log.UserName + "'";
+            string query = "SELECT tarjeta_numero FROM GESTION_DE_GATOS.Tarjeta t JOIN GESTION_DE_GATOS.Cliente c on t.cliente_id = c.cliente_id JOIN GESTION_DE_GATOS.Usuario u on u.usuario_id = c.usuario_id WHERE u.usuario_nombre = " + "'" + Logeo.username + "'";
             comboBoxTarjeta = new Conexion().populateComboBox(comboBoxTarjeta, query);
+            
      
+        }
+
+        private void comboBoxTarjeta_SelectedIndexChanged(object sender, EventArgs e)
+        {
+          
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -96,6 +98,13 @@ namespace FrbaOfertas.CragaCredito
         private void button3_Click(object sender, EventArgs e)
        {
            
+        }
+
+        private void comboBoxTarjeta_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            string tipo = (string)new Conexion().executeScalarFunction("tipoTarjeta", comboBoxTarjeta.Text);
+            textBoxTipo.Text = tipo;
+            textBoxTipo.Enabled = false;
         }
     }
 }
