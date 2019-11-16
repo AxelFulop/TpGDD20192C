@@ -55,7 +55,7 @@ namespace FrbaOfertas.CragaCredito
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+   
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -66,7 +66,7 @@ namespace FrbaOfertas.CragaCredito
         private void buttonAgregarTarjeta_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new RegistrarTarjeta().Show();
+            new RegistrarTarjeta(" ").Show();
         }
     }
 }

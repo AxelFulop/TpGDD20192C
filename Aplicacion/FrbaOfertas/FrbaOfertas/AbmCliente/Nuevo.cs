@@ -25,7 +25,9 @@ namespace FrbaOfertas.AbmCliente
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //Verificar campos y guardar cliente en la DB
+            string username= nombre.Text + '_' + apellido.Text;
+            RegistrarTarjeta tarjetaAbm = new RegistrarTarjeta(username);
+            
         }
     }
 }

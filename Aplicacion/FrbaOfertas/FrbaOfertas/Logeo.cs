@@ -66,8 +66,10 @@ namespace FrbaOfertas
                 {
                     new Conexion().executeProcedure(Properties.Settings.Default.Schema + ".updateBloqueadoUser", new List<string>() { "@nombreUsuario", "@bloqueado" }, textBoxUser.Text, "0");
                     if (Convert.ToInt32(loginValido) == 1)
-                    {         
-                        redireccionar(this.textBoxUser.Text);
+                    {
+                        //Verificar campos y guardar cliente en la DB
+                        RegistrarTarjeta tarjetaAbm = new RegistrarTarjeta(textBoxUser.Text);
+            
                     }
                 }
                 else

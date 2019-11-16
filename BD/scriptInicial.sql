@@ -571,11 +571,15 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaTarjeta
 @tipoTarjeta NVARCHAR(100),
 @bancoTarjeta  NVARCHAR(15),
 @vencimientoFechaTarjeta NVARCHAR(20),
-@cvvTarjeta NUMERIC(18,0)
+@cvvTarjeta NUMERIC(18,0),
+@userName NVARCHAR(255)
 AS
-BEGIN
-INSERT INTO GESTION_DE_GATOS.Tarjeta (tarjeta_numero,tarjeta_tipo,tarjeta_banco,tarjeta_fecha_vencimiento,tarjeta_cvv)
-VALUES (@numeroTarjeta,@tipoTarjeta,@bancoTarjeta,@vencimientoFechaTarjeta,@cvvTarjeta)
+BEGIN 
+DECLARE @clienteID NUMERIC(18,0)
+SET @clienteID = (SELECT cliente_id FROM GESTION_DE_GATOS.Cliente c,GESTION_DE_GATOS.Usuario u
+                  WHERE c.usuario_id = u.usuario_id and u.usuario_nombre = @userName)
+INSERT INTO GESTION_DE_GATOS.Tarjeta (cliente_id,tarjeta_numero,tarjeta_tipo,tarjeta_banco,tarjeta_fecha_vencimiento,tarjeta_cvv)
+VALUES (@clienteID,@numeroTarjeta,@tipoTarjeta,@bancoTarjeta,@vencimientoFechaTarjeta,@cvvTarjeta)
 END
 
 GO
@@ -583,15 +587,11 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaCarga
 @fechaCarga DATETIME,
 @montoCarga NUMERIC(18,2),
 @numeroTarjeta NUMERIC(18,0),
-@tipoTarjeta NVARCHAR(100),
-@bancoTarjeta  NVARCHAR(15),
-@vencimientoFechaTarjeta NVARCHAR(20),
-@cvvTarjeta NUMERIC(18,0),
-@idTarjeta INT
+@vencimientoFechaTarjeta NVARCHAR(20)
 AS
 BEGIN
-EXEC GESTION_DE_GATOS.altaTarjeta @numeroTarjeta,@tipoTarjeta,@bancoTarjeta,@vencimientoFechaTarjeta,@cvvTarjeta
-set @idTarjeta = SCOPE_IDENTITY()
+DECLARE @idTarjeta NUMERIC(18,0)
+set @idTarjeta = (SELECT tarjeta_id FROM GESTION_DE_GATOS.Tarjeta WHERE tarjeta_numero = @numeroTarjeta)
 INSERT INTO GESTION_DE_GATOS.Carga(tarjeta_id,carga_fecha,carga_monto)
 VALUES(@idTarjeta,@fechaCarga,@montoCarga)
 END
@@ -918,3 +918,9 @@ BEGIN
 	return @ret
 END
 go
+
+select * from GESTION_DE_GATOS.Usuario
+
+select * from GESTION_DE_GATOS.Cliente where cliente_apellido = 'vera'
+
+select * from GESTION_DE_GATOS.Tarjeta
