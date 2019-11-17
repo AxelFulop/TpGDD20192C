@@ -37,6 +37,22 @@ namespace FrbaOfertas
 
         private void buttonAceptar_Click(object sender, EventArgs e)
         {
+        }
+        //88430112
+
+        private void RegistrarTarjeta_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new MenuPrincipal().Show();
+        }
+
+        private void cargarBtn_Click(object sender, EventArgs e)
+        {
             String schema = Properties.Settings.Default.Schema;
             dateTimePickerFechaVenc.Format = DateTimePickerFormat.Custom;
             dateTimePickerFechaVenc.CustomFormat = "mm-yyyy";
@@ -54,7 +70,7 @@ namespace FrbaOfertas
                 {
                     new Conexion().executeProcedure(schema + ".altaTarjeta", parametrosTarjeta,
                         textBoxNumero.Text, comboBoxTipo.Text, textBoxBanco.Text, dateTimePickerFechaVenc.Value,
-                        textBoxCVV.Text,Logeo.username);
+                        textBoxCVV.Text, Logeo.username);
 
                     MessageBox.Show("Tarjeta agregada con exito");
                 }
@@ -63,12 +79,6 @@ namespace FrbaOfertas
                     MessageBox.Show(ex.ToString());
                 }
             }
-        }
-        //88430112
-
-        private void RegistrarTarjeta_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

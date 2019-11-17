@@ -49,7 +49,6 @@
             this.textBoxCliente = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxTarjeta = new System.Windows.Forms.ComboBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.dateTimePickerFechaCarga = new System.Windows.Forms.DateTimePicker();
             this.textBoxMonto = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -234,7 +233,7 @@
             this.cargarBtn.Name = "cargarBtn";
             this.cargarBtn.Size = new System.Drawing.Size(174, 57);
             this.cargarBtn.TabIndex = 42;
-            this.cargarBtn.Text = "Registrar";
+            this.cargarBtn.Text = "Cargar crédito";
             this.cargarBtn.UseVisualStyleBackColor = false;
             this.cargarBtn.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -282,18 +281,6 @@
             this.comboBoxTarjeta.TabIndex = 51;
             this.comboBoxTarjeta.ValueMember = "\" \"";
             this.comboBoxTarjeta.SelectedIndexChanged += new System.EventHandler(this.comboBoxTarjeta_SelectedIndexChanged_2);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(199, 366);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button2.Name = "button2";
-            this.button2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.button2.Size = new System.Drawing.Size(112, 35);
-            this.button2.TabIndex = 50;
-            this.button2.Text = "Limpiar";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // dateTimePickerFechaCarga
             // 
@@ -350,7 +337,6 @@
             this.Controls.Add(this.textBoxCliente);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxTarjeta);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.dateTimePickerFechaCarga);
             this.Controls.Add(this.textBoxMonto);
             this.Controls.Add(this.label7);
@@ -396,7 +382,6 @@
         private System.Windows.Forms.TextBox textBoxCliente;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBoxTarjeta;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.DateTimePicker dateTimePickerFechaCarga;
         private System.Windows.Forms.TextBox textBoxMonto;
         private System.Windows.Forms.Label label7;
