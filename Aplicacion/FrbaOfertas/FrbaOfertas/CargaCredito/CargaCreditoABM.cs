@@ -70,7 +70,7 @@ namespace FrbaOfertas.CragaCredito
             string query = "SELECT tarjeta_numero FROM GESTION_DE_GATOS.Tarjeta t " +
             "JOIN GESTION_DE_GATOS.Cliente c on t.cliente_id = c.cliente_id " +
             "JOIN GESTION_DE_GATOS.Usuario u on u.usuario_id = c.usuario_id " +
-            "WHERE u.usuario_nombre = " + "'" + usuario + "'";
+            "WHERE u.usuario_nombre = " + "'" + usuario + "' and t.tarjeta_es_regalo = '0'";
             comboBoxTarjeta = new Conexion().populateComboBox(comboBoxTarjeta, query);
 
             if (comboBoxTarjeta.Items.Count == 0)

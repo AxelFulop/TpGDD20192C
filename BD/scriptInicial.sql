@@ -10,8 +10,8 @@ IF OBJECT_ID('GESTION_DE_GATOS.agregarRolAUsuario') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.cambiarNombreRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.cambiarNombreRol
 
-IF OBJECT_ID('GESTION_DE_GATOS.tarjetaParaUsuario') IS NOT NULL
-    DROP PROCEDURE GESTION_DE_GATOS.tarjetaParaUsuario
+IF OBJECT_ID('GESTION_DE_GATOS.tarjetaRegaloParaUsuario') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.tarjetaRegaloParaUsuario
 
 IF OBJECT_ID('GESTION_DE_GATOS.inhabilitarRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.inhabilitarRol
@@ -299,6 +299,7 @@ tarjeta_tipo NVARCHAR(10),
 tarjeta_banco VARCHAR(15),
 tarjeta_fecha_vencimiento DATETIME,
 tarjeta_cvv NUMERIC(18,0),
+tarjeta_es_regalo char, --1 si es la de regalo, con esta no debería poder realizar cargas
 PRIMARY KEY (tarjeta_id)
 );
 
@@ -612,8 +613,8 @@ BEGIN
 DECLARE @clienteID NUMERIC(18,0)
 SET @clienteID = (SELECT cliente_id FROM GESTION_DE_GATOS.Cliente c,GESTION_DE_GATOS.Usuario u
                   WHERE c.usuario_id = u.usuario_id and u.usuario_nombre = @userName)
-INSERT INTO GESTION_DE_GATOS.Tarjeta (cliente_id,tarjeta_numero,tarjeta_tipo,tarjeta_banco,tarjeta_fecha_vencimiento,tarjeta_cvv)
-VALUES (@clienteID,@numeroTarjeta,@tipoTarjeta,@bancoTarjeta,@vencimientoFechaTarjeta,@cvvTarjeta)
+INSERT INTO GESTION_DE_GATOS.Tarjeta (cliente_id,tarjeta_numero,tarjeta_tipo,tarjeta_banco,tarjeta_fecha_vencimiento,tarjeta_cvv, tarjeta_es_regalo)
+VALUES (@clienteID,@numeroTarjeta,@tipoTarjeta,@bancoTarjeta,@vencimientoFechaTarjeta,@cvvTarjeta, '0')
 END
 
 GO
@@ -845,7 +846,7 @@ BEGIN
 END
 
 GO
-CREATE PROCEDURE GESTION_DE_GATOS.tarjetaParaUsuario
+CREATE PROCEDURE GESTION_DE_GATOS.tarjetaRegaloParaUsuario
 @userName NVARCHAR(255),
 @fechaVencimiento NVARCHAR(20)
 AS
@@ -854,8 +855,8 @@ DECLARE @numeroTarjeta NUMERIC(18,0),@CVV BIGINT,@idCliente NUMERIC(18,0)
 SET @numeroTarjeta = (SELECT CAST(RAND() * 10000000000000000 AS NUMERIC(18,0)))
 SET @CVV = (SELECT FLOOR(RAND() * 900)+ 100)
 SET @idCliente = (SELECT c.cliente_id FROM GESTION_DE_GATOS.Cliente c,GESTION_DE_GATOS.Usuario u WHERE u.usuario_nombre = @userName and c.usuario_id = u.usuario_id )
-INSERT INTO GESTION_DE_GATOS.Tarjeta (cliente_id,tarjeta_saldo,tarjeta_banco,tarjeta_cvv,tarjeta_fecha_vencimiento,tarjeta_numero,tarjeta_tipo)
-VALUES(@idCliente,200,'HSCBC',@CVV,CONVERT(DATETIME,@fechaVencimiento),@numeroTarjeta,'Debito')
+INSERT INTO GESTION_DE_GATOS.Tarjeta (cliente_id,tarjeta_saldo,tarjeta_banco,tarjeta_cvv,tarjeta_fecha_vencimiento,tarjeta_numero,tarjeta_tipo, tarjeta_es_regalo)
+VALUES(@idCliente,200,'HSCBC',@CVV,CONVERT(DATETIME,@fechaVencimiento),@numeroTarjeta,'Debito', '1')
 END
 
 /* Creacion de funciones */

@@ -46,6 +46,8 @@ namespace FrbaOfertas.AbmCliente
                     conection.executeStoredTransaction(procs);
 
                     MessageBox.Show("Cliente creado correctamente");
+                    this.Hide();
+                    new AbmCliente().Show();
                 }
                 catch (System.Data.SqlClient.SqlException ex)
                 {
@@ -94,7 +96,7 @@ namespace FrbaOfertas.AbmCliente
         private Tuple<string, List<string>, Object[]> tarjetaNueva()
         {
             return new Tuple<string, List<string>, Object[]>(
-                 Properties.Settings.Default.Schema + ".tarjetaParaUsuario",
+                 Properties.Settings.Default.Schema + ".tarjetaRegaloParaUsuario",
            new List<String>() {
                "@userName", "@fechaVencimiento"
            },
