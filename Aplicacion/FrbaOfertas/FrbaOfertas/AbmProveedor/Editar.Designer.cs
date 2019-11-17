@@ -60,12 +60,14 @@
             this.label31 = new System.Windows.Forms.Label();
             this.passwordNueva1 = new System.Windows.Forms.TextBox();
             this.label32 = new System.Windows.Forms.Label();
+            this.inhabilitarBtn = new System.Windows.Forms.Button();
+            this.habilitarBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button2
             // 
             this.button2.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.button2.Location = new System.Drawing.Point(398, 544);
+            this.button2.Location = new System.Drawing.Point(428, 564);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(174, 57);
             this.button2.TabIndex = 41;
@@ -76,7 +78,7 @@
             // button1
             // 
             this.button1.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.button1.Location = new System.Drawing.Point(595, 544);
+            this.button1.Location = new System.Drawing.Point(625, 564);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(174, 57);
             this.button1.TabIndex = 40;
@@ -358,12 +360,38 @@
             this.label32.TabIndex = 100;
             this.label32.Text = "Nueva contraseña";
             // 
+            // inhabilitarBtn
+            // 
+            this.inhabilitarBtn.BackColor = System.Drawing.Color.LightCoral;
+            this.inhabilitarBtn.Location = new System.Drawing.Point(263, 487);
+            this.inhabilitarBtn.Name = "inhabilitarBtn";
+            this.inhabilitarBtn.Size = new System.Drawing.Size(160, 38);
+            this.inhabilitarBtn.TabIndex = 106;
+            this.inhabilitarBtn.Text = "Inhabilitar";
+            this.inhabilitarBtn.UseVisualStyleBackColor = false;
+            this.inhabilitarBtn.Visible = false;
+            this.inhabilitarBtn.Click += new System.EventHandler(this.inhabilitarBtn_Click);
+            // 
+            // habilitarBtn
+            // 
+            this.habilitarBtn.BackColor = System.Drawing.Color.LightCoral;
+            this.habilitarBtn.Location = new System.Drawing.Point(263, 487);
+            this.habilitarBtn.Name = "habilitarBtn";
+            this.habilitarBtn.Size = new System.Drawing.Size(160, 38);
+            this.habilitarBtn.TabIndex = 105;
+            this.habilitarBtn.Text = "Habilitar";
+            this.habilitarBtn.UseVisualStyleBackColor = false;
+            this.habilitarBtn.Visible = false;
+            this.habilitarBtn.Click += new System.EventHandler(this.habilitarBtn_Click);
+            // 
             // Editar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 644);
             this.ControlBox = false;
+            this.Controls.Add(this.inhabilitarBtn);
+            this.Controls.Add(this.habilitarBtn);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.passwordNueva2);
             this.Controls.Add(this.label31);
@@ -403,6 +431,7 @@
             this.Name = "Editar";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Editar proveedor";
+            this.Load += new System.EventHandler(this.Editar_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -442,5 +471,7 @@
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.TextBox passwordNueva1;
         private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Button inhabilitarBtn;
+        private System.Windows.Forms.Button habilitarBtn;
     }
 }

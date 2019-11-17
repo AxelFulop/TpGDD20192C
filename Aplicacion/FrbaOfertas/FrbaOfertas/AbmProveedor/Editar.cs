@@ -12,9 +12,12 @@ namespace FrbaOfertas.AbmProveedor
 {
     public partial class Editar : Form
     {
+        private Dictionary<string, string> datos;
+
         public Editar(Dictionary<string, string> row)
         {
             InitializeComponent();
+            datos = row;
             string[] dir = row["direccion"].Split(' ');
 
             this.dir_calle.Text = "";
@@ -36,6 +39,17 @@ namespace FrbaOfertas.AbmProveedor
             this.cuit.Text = row["cuit"];
             this.rubro.Text = row["rubro"];
             this.contacto.Text = row["contacto"];
+
+            Object estaHabilitado = new ConexionBD.Conexion().executeScalarFunction("proveedorEstaHabilitado",
+                        razonSocial.Text, cuit.Text);
+            if (estaHabilitado.ToString() == "1") //Si está inhabilitado
+            {
+                habilitarBtn.Visible = true;
+            }
+            else
+            {
+                inhabilitarBtn.Visible = true;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -47,6 +61,45 @@ namespace FrbaOfertas.AbmProveedor
         private void button1_Click(object sender, EventArgs e)
         {
             //Verificar cambios y guardarlos en la DB
+        }
+
+        private void Editar_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void habilitarBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                new ConexionBD.Conexion().executeProcedure(Properties.Settings.Default.Schema + ".habilitarProveedor",
+                    new List<string>() { "@razonSocial", "@cuit" },
+                    new string[] { datos["razonSocial"], datos["cuit"] });
+                MessageBox.Show("Proveedor habilitado correctamente");
+                this.Hide();
+                new Editar(datos).Show();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al habilitar al proveedor");
+            } 
+        }
+
+        private void inhabilitarBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                new ConexionBD.Conexion().executeProcedure(Properties.Settings.Default.Schema + ".inhabilitarProveedor",
+                    new List<string>() { "@razonSocial", "@cuit" },
+                    new string[] { datos["razonSocial"], datos["cuit"] });
+                MessageBox.Show("Proveedor inhabilitado correctamente");
+                this.Hide();
+                new Editar(datos).Show();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al inhabilitar al proveedor");
+            } 
         }
     }
 }
