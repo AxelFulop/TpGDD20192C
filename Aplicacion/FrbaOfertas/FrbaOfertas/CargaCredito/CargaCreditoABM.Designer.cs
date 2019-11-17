@@ -36,8 +36,8 @@
             this.comboBoxTarjeta = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
             this.dateTimePickerFechaCarga = new System.Windows.Forms.DateTimePicker();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.textBoxMonto = new System.Windows.Forms.TextBox();
+            this.buttonAceptar = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -64,8 +64,8 @@
             this.panel1.Controls.Add(this.comboBoxTarjeta);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.dateTimePickerFechaCarga);
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Controls.Add(this.button3);
+            this.panel1.Controls.Add(this.textBoxMonto);
+            this.panel1.Controls.Add(this.buttonAceptar);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.label10);
@@ -128,24 +128,24 @@
             this.dateTimePickerFechaCarga.Size = new System.Drawing.Size(199, 20);
             this.dateTimePickerFechaCarga.TabIndex = 12;
             // 
-            // textBox1
+            // textBoxMonto
             // 
-            this.textBox1.Location = new System.Drawing.Point(66, 111);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(198, 20);
-            this.textBox1.TabIndex = 11;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBoxMonto.Location = new System.Drawing.Point(66, 111);
+            this.textBoxMonto.Name = "textBoxMonto";
+            this.textBoxMonto.Size = new System.Drawing.Size(198, 20);
+            this.textBoxMonto.TabIndex = 11;
+            this.textBoxMonto.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // button3
+            // buttonAceptar
             // 
-            this.button3.Location = new System.Drawing.Point(104, 189);
-            this.button3.Name = "button3";
-            this.button3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "Aceptar";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.buttonAceptar.Location = new System.Drawing.Point(104, 189);
+            this.buttonAceptar.Name = "buttonAceptar";
+            this.buttonAceptar.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.buttonAceptar.Size = new System.Drawing.Size(75, 23);
+            this.buttonAceptar.TabIndex = 8;
+            this.buttonAceptar.Text = "Aceptar";
+            this.buttonAceptar.UseVisualStyleBackColor = true;
+            this.buttonAceptar.Click += new System.EventHandler(this.buttonAceptar_Click);
             // 
             // label7
             // 
@@ -221,8 +221,8 @@
         private System.Windows.Forms.Button buttonAgregarTarjeta;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox textBoxMonto;
+        private System.Windows.Forms.Button buttonAceptar;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;

@@ -88,7 +88,9 @@ IF OBJECT_ID('GESTION_DE_GATOS.obtenerTarjetasUsuario') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.tipoTarjeta') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.tipoTarjeta
 	
-
+IF OBJECT_ID('GESTION_DE_GATOS.duenioTarjeta') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.duenioTarjeta
+	
 
 ------------ Eliminacion de FK   ------------------ 
 
@@ -600,16 +602,15 @@ END
 
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.altaCarga
-@fechaCarga DATETIME,
+@fechaCarga NVARCHAR(20),
 @montoCarga NUMERIC(18,2),
-@numeroTarjeta NUMERIC(18,0),
-@vencimientoFechaTarjeta NVARCHAR(20)
+@numeroTarjeta NUMERIC(18,0)
 AS
 BEGIN
 DECLARE @idTarjeta NUMERIC(18,0)
 set @idTarjeta = (SELECT tarjeta_id FROM GESTION_DE_GATOS.Tarjeta WHERE tarjeta_numero = @numeroTarjeta)
 INSERT INTO GESTION_DE_GATOS.Carga(tarjeta_id,carga_fecha,carga_monto)
-VALUES(@idTarjeta,@fechaCarga,@montoCarga)
+VALUES(@idTarjeta,CONVERT(datetime,@fechaCarga),@montoCarga)
 END
 
 GO
@@ -977,4 +978,17 @@ BEGIN
 SET @Res = 'Credito'
 END
 RETURN @Res
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.duenioTarjeta(@numeroTarjeta NUMERIC(18,0),@username nvarchar(255))
+RETURNS NVARCHAR(255)
+AS
+BEGIN
+RETURN (SELECT c.cliente_apellido + '-' + c.cliente_nombre FROM GESTION_DE_GATOS.Tarjeta T ,GESTION_DE_GATOS.Cliente C, GESTION_DE_GATOS.Usuario u
+        WHERE tarjeta_numero = @numeroTarjeta and
+		c.usuario_id = u.usuario_id AND
+		u.usuario_nombre = @username AND
+		t.cliente_id = c.cliente_id)
+ 
 END

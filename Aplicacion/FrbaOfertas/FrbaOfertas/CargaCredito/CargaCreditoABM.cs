@@ -95,16 +95,27 @@ namespace FrbaOfertas.CragaCredito
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void buttonAceptar_Click(object sender, EventArgs e)
        {
-           
+           List<String> parametros = new List<string>(){
+               "@fechaCarga","@montoCarga","@numeroTarjeta"
+           };
+           string [] values = new string []
+           {
+           dateTimePickerFechaCarga.Value.ToShortDateString(),textBoxMonto.Text,comboBoxTarjeta.Text
+           };
+           new Conexion().executeProcedure(Properties.Settings.Default.Schema + ".altaCarga",parametros,values);
         }
+    
 
         private void comboBoxTarjeta_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             string tipo = (string)new Conexion().executeScalarFunction("tipoTarjeta", comboBoxTarjeta.Text);
             textBoxTipo.Text = tipo;
             textBoxTipo.Enabled = false;
+            string nombre = (string)new Conexion().executeScalarFunction("duenioTarjeta", comboBoxTarjeta.Text, Logeo.username);
+            textBoxCliente.Text = nombre;
+            textBoxCliente.Enabled = false;
         }
     }
 }
