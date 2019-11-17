@@ -19,8 +19,6 @@ namespace FrbaOfertas
         public RegistrarTarjeta()
         {
             InitializeComponent();
-            
-     
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -34,11 +32,6 @@ namespace FrbaOfertas
            
 
         }
-
-        private void buttonAceptar_Click(object sender, EventArgs e)
-        {
-        }
-        //88430112
 
         private void RegistrarTarjeta_Load(object sender, EventArgs e)
         {
@@ -63,7 +56,6 @@ namespace FrbaOfertas
             }
             else
             {
-
                 List<String> parametrosTarjeta = new List<String>() { "@numeroTarjeta",
                 "@tipoTarjeta", "@bancoTarjeta","@vencimientoFechaTarjeta","@cvvTarjeta","@userName"};
                 try
@@ -72,13 +64,20 @@ namespace FrbaOfertas
                         textBoxNumero.Text, comboBoxTipo.Text, textBoxBanco.Text, dateTimePickerFechaVenc.Value,
                         textBoxCVV.Text, Logeo.username);
 
-                    MessageBox.Show("Tarjeta agregada con exito");
+                    MessageBox.Show("Tarjeta registrada con exito");
                 }
                 catch (System.Data.SqlClient.SqlException ex)
                 {
                     MessageBox.Show(ex.ToString());
                 }
             }
+        }
+
+        private void buttonLimpiar_Click(object sender, EventArgs e)
+        {
+            textBoxBanco.Text = "";
+            textBoxCVV.Text = "";
+            textBoxNumero.Text = "";
         }
     }
 }

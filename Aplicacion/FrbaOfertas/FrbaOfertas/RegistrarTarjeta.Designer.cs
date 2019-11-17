@@ -59,15 +59,15 @@
             this.panelAgregarTarjeta.Controls.Add(this.label4);
             this.panelAgregarTarjeta.Controls.Add(this.label3);
             this.panelAgregarTarjeta.Controls.Add(this.label2);
-            this.panelAgregarTarjeta.Location = new System.Drawing.Point(51, 72);
+            this.panelAgregarTarjeta.Location = new System.Drawing.Point(50, 73);
             this.panelAgregarTarjeta.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelAgregarTarjeta.Name = "panelAgregarTarjeta";
-            this.panelAgregarTarjeta.Size = new System.Drawing.Size(474, 345);
+            this.panelAgregarTarjeta.Size = new System.Drawing.Size(628, 417);
             this.panelAgregarTarjeta.TabIndex = 5;
             // 
             // buttonLimpiar
             // 
-            this.buttonLimpiar.Location = new System.Drawing.Point(167, 289);
+            this.buttonLimpiar.Location = new System.Drawing.Point(296, 282);
             this.buttonLimpiar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonLimpiar.Name = "buttonLimpiar";
             this.buttonLimpiar.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -75,29 +75,30 @@
             this.buttonLimpiar.TabIndex = 13;
             this.buttonLimpiar.Text = "Limpiar";
             this.buttonLimpiar.UseVisualStyleBackColor = true;
+            this.buttonLimpiar.Click += new System.EventHandler(this.buttonLimpiar_Click);
             // 
             // dateTimePickerFechaVenc
             // 
             this.dateTimePickerFechaVenc.Location = new System.Drawing.Point(182, 231);
             this.dateTimePickerFechaVenc.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dateTimePickerFechaVenc.Name = "dateTimePickerFechaVenc";
-            this.dateTimePickerFechaVenc.Size = new System.Drawing.Size(272, 26);
+            this.dateTimePickerFechaVenc.Size = new System.Drawing.Size(354, 26);
             this.dateTimePickerFechaVenc.TabIndex = 12;
             // 
             // textBoxCVV
             // 
-            this.textBoxCVV.Location = new System.Drawing.Point(99, 186);
+            this.textBoxCVV.Location = new System.Drawing.Point(182, 182);
             this.textBoxCVV.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxCVV.Name = "textBoxCVV";
-            this.textBoxCVV.Size = new System.Drawing.Size(295, 26);
+            this.textBoxCVV.Size = new System.Drawing.Size(354, 26);
             this.textBoxCVV.TabIndex = 11;
             // 
             // textBoxBanco
             // 
-            this.textBoxBanco.Location = new System.Drawing.Point(99, 134);
+            this.textBoxBanco.Location = new System.Drawing.Point(182, 130);
             this.textBoxBanco.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxBanco.Name = "textBoxBanco";
-            this.textBoxBanco.Size = new System.Drawing.Size(295, 26);
+            this.textBoxBanco.Size = new System.Drawing.Size(354, 26);
             this.textBoxBanco.TabIndex = 10;
             // 
             // comboBoxTipo
@@ -106,18 +107,18 @@
             this.comboBoxTipo.Items.AddRange(new object[] {
             "Credito",
             "Debito"});
-            this.comboBoxTipo.Location = new System.Drawing.Point(99, 74);
+            this.comboBoxTipo.Location = new System.Drawing.Point(182, 70);
             this.comboBoxTipo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.comboBoxTipo.Name = "comboBoxTipo";
-            this.comboBoxTipo.Size = new System.Drawing.Size(180, 28);
+            this.comboBoxTipo.Size = new System.Drawing.Size(354, 28);
             this.comboBoxTipo.TabIndex = 9;
             // 
             // textBoxNumero
             // 
-            this.textBoxNumero.Location = new System.Drawing.Point(99, 23);
+            this.textBoxNumero.Location = new System.Drawing.Point(182, 19);
             this.textBoxNumero.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxNumero.Name = "textBoxNumero";
-            this.textBoxNumero.Size = new System.Drawing.Size(295, 26);
+            this.textBoxNumero.Size = new System.Drawing.Size(354, 26);
             this.textBoxNumero.TabIndex = 3;
             // 
             // label6
@@ -168,17 +169,18 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 20);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Numero";
+            this.label2.Text = "Número";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label1.Location = new System.Drawing.Point(46, 48);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(152, 20);
+            this.label1.Size = new System.Drawing.Size(232, 20);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Seleccione la tarjeta";
+            this.label1.Text = "Complete los datos de la tarjeta";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // button2

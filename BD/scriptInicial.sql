@@ -613,8 +613,8 @@ BEGIN
 DECLARE @clienteID NUMERIC(18,0)
 SET @clienteID = (SELECT cliente_id FROM GESTION_DE_GATOS.Cliente c,GESTION_DE_GATOS.Usuario u
                   WHERE c.usuario_id = u.usuario_id and u.usuario_nombre = @userName)
-INSERT INTO GESTION_DE_GATOS.Tarjeta (cliente_id,tarjeta_numero,tarjeta_tipo,tarjeta_banco,tarjeta_fecha_vencimiento,tarjeta_cvv, tarjeta_es_regalo)
-VALUES (@clienteID,@numeroTarjeta,@tipoTarjeta,@bancoTarjeta,@vencimientoFechaTarjeta,@cvvTarjeta, '0')
+INSERT INTO GESTION_DE_GATOS.Tarjeta (cliente_id,tarjeta_numero,tarjeta_tipo,tarjeta_banco,tarjeta_fecha_vencimiento,tarjeta_cvv, tarjeta_es_regalo, tarjeta_saldo)
+VALUES (@clienteID,@numeroTarjeta,@tipoTarjeta,@bancoTarjeta,@vencimientoFechaTarjeta,@cvvTarjeta, '0', 0)
 END
 
 GO
@@ -625,9 +625,11 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaCarga
 AS
 BEGIN
 DECLARE @idTarjeta NUMERIC(18,0)
-set @idTarjeta = (SELECT tarjeta_id FROM GESTION_DE_GATOS.Tarjeta WHERE tarjeta_numero = @numeroTarjeta)
-INSERT INTO GESTION_DE_GATOS.Carga(tarjeta_id,carga_fecha,carga_monto)
-VALUES(@idTarjeta,CONVERT(datetime,@fechaCarga),@montoCarga)
+SELECT @idTarjeta = tarjeta_id FROM GESTION_DE_GATOS.Tarjeta WHERE tarjeta_numero = @numeroTarjeta
+INSERT INTO GESTION_DE_GATOS.Carga(tarjeta_id, carga_fecha, carga_monto)
+	VALUES(@idTarjeta, CONVERT(datetime, @fechaCarga), @montoCarga)
+UPDATE GESTION_DE_GATOS.Tarjeta SET tarjeta_saldo = tarjeta_saldo + @montoCarga
+	WHERE tarjeta_id = @idTarjeta
 END
 
 GO
