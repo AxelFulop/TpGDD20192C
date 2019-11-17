@@ -12,9 +12,12 @@ namespace FrbaOfertas.AbmCliente
 {
     public partial class Editar : Form
     {
+        private Dictionary<string, string> datos;
+
         public Editar(Dictionary<string, string> row)
         {
             InitializeComponent();
+            datos = row;
             string[] dir = row["direccion"].Split(' ');
 
             this.dir_calle.Text = "";
@@ -35,6 +38,17 @@ namespace FrbaOfertas.AbmCliente
             this.telefono.Text = row["telefono"];
             this.codigoPostal.Text = row["codigoPostal"];
             this.fechaNacimiento.Text = row["fechaNacimiento"];
+
+            Object estaHabilitado = new ConexionBD.Conexion().executeScalarFunction("clienteEstaHabilitado",
+                        dni.Text, this.nombre.Text, this.apellido.Text);
+            if (estaHabilitado.ToString() == "1") //Si está inhabilitado
+            {
+                habilitarBtn.Visible = true;
+            }
+            else
+            {
+                inhabilitarBtn.Visible = true;
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -71,6 +85,45 @@ namespace FrbaOfertas.AbmCliente
         private void label29_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Editar_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void habilitarBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                new ConexionBD.Conexion().executeProcedure(Properties.Settings.Default.Schema + ".habilitarCliente",
+                    new List<string>() { "@dni", "@nombre", "@apellido" },
+                    new string[] { datos["dni"], datos["nombre"], datos["apellido"] });
+                MessageBox.Show("Cliente habilitado correctamente");
+                this.Hide();
+                new Editar(datos).Show();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al habilitar al cliente");
+            } 
+        }
+
+        private void inhabilitarBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                new ConexionBD.Conexion().executeProcedure(Properties.Settings.Default.Schema + ".inhabilitarCliente",
+                    new List<string>() { "@dni", "@nombre", "@apellido" },
+                    new string[] { datos["dni"], datos["nombre"], datos["apellido"] });
+                MessageBox.Show("Cliente inhabilitado correctamente");
+                this.Hide();
+                new Editar(datos).Show();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al inhabilitar al cliente");
+            } 
         }
     }
 }

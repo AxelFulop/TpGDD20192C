@@ -60,6 +60,8 @@
             this.label31 = new System.Windows.Forms.Label();
             this.passwordNueva1 = new System.Windows.Forms.TextBox();
             this.label32 = new System.Windows.Forms.Label();
+            this.habilitarBtn = new System.Windows.Forms.Button();
+            this.inhabilitarBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -362,12 +364,38 @@
             this.label32.TabIndex = 95;
             this.label32.Text = "Nueva contraseña";
             // 
+            // habilitarBtn
+            // 
+            this.habilitarBtn.BackColor = System.Drawing.Color.LightCoral;
+            this.habilitarBtn.Location = new System.Drawing.Point(200, 472);
+            this.habilitarBtn.Name = "habilitarBtn";
+            this.habilitarBtn.Size = new System.Drawing.Size(160, 38);
+            this.habilitarBtn.TabIndex = 100;
+            this.habilitarBtn.Text = "Habilitar";
+            this.habilitarBtn.UseVisualStyleBackColor = false;
+            this.habilitarBtn.Visible = false;
+            this.habilitarBtn.Click += new System.EventHandler(this.habilitarBtn_Click);
+            // 
+            // inhabilitarBtn
+            // 
+            this.inhabilitarBtn.BackColor = System.Drawing.Color.LightCoral;
+            this.inhabilitarBtn.Location = new System.Drawing.Point(200, 472);
+            this.inhabilitarBtn.Name = "inhabilitarBtn";
+            this.inhabilitarBtn.Size = new System.Drawing.Size(160, 38);
+            this.inhabilitarBtn.TabIndex = 101;
+            this.inhabilitarBtn.Text = "Inhabilitar";
+            this.inhabilitarBtn.UseVisualStyleBackColor = false;
+            this.inhabilitarBtn.Visible = false;
+            this.inhabilitarBtn.Click += new System.EventHandler(this.inhabilitarBtn_Click);
+            // 
             // Editar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 644);
             this.ControlBox = false;
+            this.Controls.Add(this.inhabilitarBtn);
+            this.Controls.Add(this.habilitarBtn);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.passwordNueva2);
             this.Controls.Add(this.label31);
@@ -407,6 +435,7 @@
             this.Name = "Editar";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Editar cliente";
+            this.Load += new System.EventHandler(this.Editar_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -446,5 +475,7 @@
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.TextBox passwordNueva1;
         private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Button habilitarBtn;
+        private System.Windows.Forms.Button inhabilitarBtn;
     }
 }

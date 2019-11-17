@@ -1,8 +1,20 @@
 USE GD2C2019
 
------ Eliminacion de stored procedures ---------  
+----- Eliminacion de stored procedures ---------    
 IF OBJECT_ID('GESTION_DE_GATOS.habilitarRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.habilitarRol
+
+IF OBJECT_ID('GESTION_DE_GATOS.inhabilitarProveedor') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.inhabilitarProveedor
+
+IF OBJECT_ID('GESTION_DE_GATOS.habilitarProveedor') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.habilitarProveedor
+
+IF OBJECT_ID('GESTION_DE_GATOS.inhabilitarCliente') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.inhabilitarCliente
+
+IF OBJECT_ID('GESTION_DE_GATOS.habilitarCliente') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.habilitarCliente
 
 IF OBJECT_ID('GESTION_DE_GATOS.agregarRolAUsuario') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.agregarRolAUsuario
@@ -824,6 +836,44 @@ BEGIN
 END
 
 GO
+CREATE PROCEDURE GESTION_DE_GATOS.habilitarCliente
+@dni numeric(18), @nombre NVARCHAR(255), @apellido NVARCHAR(255)
+AS
+BEGIN 
+	update GESTION_DE_GATOS.Cliente set cliente_habilitado = '0'
+		where cliente_apellido = @apellido and cliente_nombre = @nombre and
+			  cliente_numero_dni = @dni
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.inhabilitarCliente
+@dni numeric(18), @nombre NVARCHAR(255), @apellido NVARCHAR(255)
+AS
+BEGIN 
+	update GESTION_DE_GATOS.Cliente set cliente_habilitado = '1'
+		where cliente_apellido = @apellido and cliente_nombre = @nombre and
+			  cliente_numero_dni = @dni
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.habilitarProveedor
+@razonSocial NVARCHAR(100), @cuit nvarchar(20)
+AS
+BEGIN 
+	update GESTION_DE_GATOS.Proveedor set proveedor_habilitado = '0'
+		where proveedor_cuit = @cuit and proveedor_razon_social = @razonSocial
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.inhabilitarProveedor
+@razonSocial NVARCHAR(100), @cuit nvarchar(20)
+AS
+BEGIN 
+	update GESTION_DE_GATOS.Proveedor set proveedor_habilitado = '1'
+		where proveedor_cuit = @cuit and proveedor_razon_social = @razonSocial
+END
+
+GO
 CREATE PROCEDURE GESTION_DE_GATOS.cambiarNombreRol
 @nombreRol NVARCHAR(15),
 @nuevoNombre NVARCHAR(15)
@@ -987,23 +1037,26 @@ BEGIN
 END
 
 GO
-CREATE FUNCTION GESTION_DE_GATOS.clienteEstaHabilitado(@usuario NVARCHAR(15))
+CREATE FUNCTION GESTION_DE_GATOS.clienteEstaHabilitado(
+@dni numeric(18), @nombre NVARCHAR(255), @apellido NVARCHAR(255)
+)
 RETURNS char
 AS
 BEGIN
-	return (select c.cliente_habilitado from GESTION_DE_GATOS.Cliente c
-				inner join GESTION_DE_GATOS.Usuario u on c.usuario_id = u.usuario_id
-			where u.usuario_nombre = @usuario)
+	return (select cliente_habilitado from GESTION_DE_GATOS.Cliente
+				where cliente_apellido = @apellido and cliente_nombre = @nombre and
+					  cliente_numero_dni = @dni)
 END
 
 GO
-CREATE FUNCTION GESTION_DE_GATOS.proveedorEstaHabilitado(@usuario NVARCHAR(15))
+CREATE FUNCTION GESTION_DE_GATOS.proveedorEstaHabilitado(
+@razonSocial NVARCHAR(100), @cuit nvarchar(20)
+)
 RETURNS char
 AS
 BEGIN
-	return (select c.proveedor_habilitado from GESTION_DE_GATOS.Proveedor c
-				inner join GESTION_DE_GATOS.Usuario u on c.usuario_id = u.usuario_id
-			where u.usuario_nombre = @usuario)
+	return (select proveedor_habilitado from GESTION_DE_GATOS.Proveedor
+				where proveedor_cuit = @cuit and proveedor_razon_social = @razonSocial)
 END
 
 GO
@@ -1097,31 +1150,34 @@ as begin
 	open c_cursor
 	fetch c_cursor into @id_cli, @id_user, @baja, @nombre, @ciudad, @apellido, @dni, @mail, @fecha_nac, 
 		@tel, @dir, @piso, @depto,@localidad, @cp, @dato_inc, @nuevo, @habilitado
+	begin transaction
 	while(@@FETCH_STATUS = 0) begin
 		declare @hayClieGemelo int = 
 			(select count(*) from GESTION_DE_GATOS.Cliente 
 				where cliente_apellido = @apellido and
 					  cliente_nombre = @nombre and
-					  cliente_numero_dni = @dni)
+					  cliente_numero_dni = @dni and
+					  cliente_id <> @id_cli)
 		if(@hayClieGemelo > 0) begin
 			raiserror('Cliente gemelo ya existente', 1, 1)
-			rollback
+			rollback transaction
 		end
 		else begin
-			begin try 
+			declare @cliente_existente numeric(18) = (select cliente_id from GESTION_DE_GATOS.Cliente where cliente_id = @id_cli)
+			if(@cliente_existente is null) begin 
 				insert into GESTION_DE_GATOS.Cliente(usuario_id, cliente_baja, cliente_nombre, cliente_ciudad,
 						cliente_apellido, cliente_numero_dni, cliente_email, cliente_fecha_nacimiento,
 						cliente_telefono, cliente_direccion, cliente_direccion_piso, cliente_direccion_depto,
 						cliente_direccion_localidad, cliente_codigo_postal, cliente_dato_inconsistente,
 						cliente_nuevo, cliente_habilitado)
-					(select usuario_id, cliente_baja, cliente_nombre, cliente_ciudad,
+			(select usuario_id, cliente_baja, cliente_nombre, cliente_ciudad,
 						cliente_apellido, cliente_numero_dni, cliente_email, cliente_fecha_nacimiento,
 						cliente_telefono, cliente_direccion, cliente_direccion_piso, cliente_direccion_depto,
 						cliente_direccion_localidad, cliente_codigo_postal, cliente_dato_inconsistente,
 						cliente_nuevo, cliente_habilitado
 						from inserted where cliente_id = @id_cli)
-			end try
-			begin catch --Si hay error es porque fue un update(ya existía cliente)
+			end
+			else begin 
 				update GESTION_DE_GATOS.Cliente set cliente_apellido = @apellido, 
 					cliente_baja = @baja, cliente_ciudad = @ciudad, cliente_codigo_postal = @cp, cliente_dato_inconsistente = @dato_inc,
 					cliente_direccion = @dir, cliente_direccion_depto = @depto, cliente_direccion_localidad = @localidad,
@@ -1129,11 +1185,12 @@ as begin
 					cliente_habilitado = @habilitado, cliente_nombre = @nombre, cliente_nuevo = @nuevo, 
 					cliente_numero_dni = @dni, cliente_telefono = @tel, usuario_id = @id_user
 					where cliente_id = @id_cli
-			end catch
+			end
 		end
 		fetch c_cursor into @id_cli, @id_user, @baja, @nombre, @ciudad, @apellido, @dni, @mail, @fecha_nac, 
 			@tel, @dir, @piso, @depto,@localidad, @cp, @dato_inc, @nuevo, @habilitado
 	end
+	commit transaction
 	close c_cursor
 	deallocate c_cursor
 end
@@ -1153,13 +1210,14 @@ as begin --No puede haber 2 proveedores con la misma razon social y CUIT
 		declare @hayProvGemelo int = 
 			(select count(*) from GESTION_DE_GATOS.Proveedor 
 				where proveedor_cuit = @cuit and
-					  proveedor_razon_social = @r_social)
+					  proveedor_razon_social = @r_social and
+					  proveedor_id <> @id_prov)
 		if(@hayProvGemelo > 0) begin
 			raiserror('Proveedor gemelo ya existente', 1, 1)
-			rollback
 		end
 		else begin
-			begin try 
+			declare @prov_existente numeric(18) = (select proveedor_id from GESTION_DE_GATOS.Proveedor where proveedor_id = @id_prov)
+			if(@prov_existente is null) begin
 				insert into GESTION_DE_GATOS.Proveedor(usuario_id, proveedor_baja, proveedor_razon_social, proveedor_contacto,
 						proveedor_cuit, proveedor_rubro, proveedor_email, proveedor_telefono, proveedor_direccion,
 						proveedor_direccion_piso, proveedor_direccion_depto, proveedor_direccion_localidad,
@@ -1171,8 +1229,8 @@ as begin --No puede haber 2 proveedores con la misma razon social y CUIT
 						proveedor_ciudad, proveedor_codigo_postal, proveedor_dato_inconsistente,
 						proveedor_nuevo, proveedor_habilitado
 						from inserted where proveedor_id = @id_prov)
-			end try
-			begin catch --Si hay error es porque fue un update(ya existía proveedor)
+			end
+			else begin
 				update GESTION_DE_GATOS.Proveedor set proveedor_contacto = @contacto, 
 					proveedor_baja = @baja, proveedor_ciudad = @ciudad, proveedor_codigo_postal = @cp, proveedor_dato_inconsistente = @dato_inc,
 					proveedor_direccion = @dir, proveedor_direccion_depto = @depto, proveedor_direccion_localidad = @localidad,
@@ -1180,7 +1238,7 @@ as begin --No puede haber 2 proveedores con la misma razon social y CUIT
 					proveedor_habilitado = @habilitado, proveedor_nuevo = @nuevo, 
 					proveedor_cuit = @cuit, proveedor_telefono = @tel, usuario_id = @id_user
 					where proveedor_id = @id_prov
-			end catch
+			end
 		end
 		fetch p_cursor into @id_prov, @id_user, @baja, @r_social, @contacto, @cuit, @rubro, @mail,
 			@tel, @dir, @piso, @depto, @localidad, @ciudad, @cp, @dato_inc, @nuevo, @habilitado
