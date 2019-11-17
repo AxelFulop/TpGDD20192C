@@ -131,7 +131,6 @@ namespace FrbaOfertas.CragaCredito
             {
                 MessageBox.Show("Error al realizar la carga");
             }
-            
         }
 
         private void button1_Click_1(object sender, EventArgs e)

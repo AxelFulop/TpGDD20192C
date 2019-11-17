@@ -973,13 +973,11 @@ END
 
 GO
 CREATE FUNCTION GESTION_DE_GATOS.rolEstaHabilitado(@nombreRol NVARCHAR(15))
-RETURNS BIT
+RETURNS char
 AS
 BEGIN
-	declare @ret bit
-	select @ret = case when rol_habilitado = '0' then 1 else 0 end from GESTION_DE_GATOS.Rol 
-		where rol_nombre = @nombreRol
-	return @ret
+	return (select rol_habilitado from GESTION_DE_GATOS.Rol 
+			where rol_nombre = @nombreRol)
 END
 
 GO

@@ -28,13 +28,13 @@ namespace FrbaOfertas.AbmRol
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
             Object habilitado = conection.executeScalarFunction("rolEstaHabilitado", this.rol);
 
-            if (Convert.ToInt32(habilitado) == 1)
+            if (habilitado.ToString() == "1")
             {
-                this.btn_inhabilitar.Visible = true;
+                this.btn_habilitar.Visible = true;
             }
             else
             {
-                this.btn_habilitar.Visible = true;
+                this.btn_inhabilitar.Visible = true;
             }
         }
 

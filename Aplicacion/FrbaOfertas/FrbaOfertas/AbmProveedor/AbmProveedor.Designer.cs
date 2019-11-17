@@ -31,7 +31,8 @@
             this.grid = new System.Windows.Forms.DataGridView();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.NuevoProvBtn = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -41,7 +42,7 @@
             this.cuit = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.razonSocial = new System.Windows.Forms.TextBox();
-            this.button4 = new System.Windows.Forms.Button();
+            this.msgInhabilitado = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -74,8 +75,9 @@
             this.panel1.AccessibleDescription = "";
             this.panel1.AccessibleName = "";
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.Controls.Add(this.msgInhabilitado);
             this.panel1.Controls.Add(this.button4);
-            this.panel1.Controls.Add(this.button3);
+            this.panel1.Controls.Add(this.NuevoProvBtn);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button1);
@@ -91,16 +93,27 @@
             this.panel1.Size = new System.Drawing.Size(1162, 344);
             this.panel1.TabIndex = 4;
             this.panel1.Tag = "";
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
-            // button3
+            // button4
             // 
-            this.button3.Location = new System.Drawing.Point(840, 42);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(169, 57);
-            this.button3.TabIndex = 11;
-            this.button3.Text = "Nuevo proveedor";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button4.Location = new System.Drawing.Point(1044, 5);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(110, 38);
+            this.button4.TabIndex = 6;
+            this.button4.Text = "Volver";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // NuevoProvBtn
+            // 
+            this.NuevoProvBtn.Location = new System.Drawing.Point(817, 36);
+            this.NuevoProvBtn.Name = "NuevoProvBtn";
+            this.NuevoProvBtn.Size = new System.Drawing.Size(169, 57);
+            this.NuevoProvBtn.TabIndex = 11;
+            this.NuevoProvBtn.Text = "Nuevo proveedor";
+            this.NuevoProvBtn.UseVisualStyleBackColor = true;
+            this.NuevoProvBtn.Click += new System.EventHandler(this.button3_Click);
             // 
             // label5
             // 
@@ -181,15 +194,16 @@
             this.razonSocial.Size = new System.Drawing.Size(144, 26);
             this.razonSocial.TabIndex = 0;
             // 
-            // button4
+            // msgInhabilitado
             // 
-            this.button4.Location = new System.Drawing.Point(1044, 5);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(110, 38);
-            this.button4.TabIndex = 6;
-            this.button4.Text = "Volver";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.msgInhabilitado.AutoSize = true;
+            this.msgInhabilitado.ForeColor = System.Drawing.Color.Red;
+            this.msgInhabilitado.Location = new System.Drawing.Point(992, 70);
+            this.msgInhabilitado.Name = "msgInhabilitado";
+            this.msgInhabilitado.Size = new System.Drawing.Size(117, 20);
+            this.msgInhabilitado.TabIndex = 14;
+            this.msgInhabilitado.Text = "Rol inhabilitado";
+            this.msgInhabilitado.Visible = false;
             // 
             // AbmProveedor
             // 
@@ -206,6 +220,7 @@
             this.Name = "AbmProveedor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ABM - Proveedor";
+            this.Load += new System.EventHandler(this.AbmProveedor_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -227,7 +242,8 @@
         private System.Windows.Forms.TextBox cuit;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox razonSocial;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button NuevoProvBtn;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Label msgInhabilitado;
     }
 }

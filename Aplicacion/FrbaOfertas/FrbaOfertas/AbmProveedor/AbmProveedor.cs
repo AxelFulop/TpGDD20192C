@@ -156,5 +156,20 @@ namespace FrbaOfertas.AbmProveedor
             this.Hide();
             new MenuPrincipal().Show();
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void AbmProveedor_Load(object sender, EventArgs e)
+        {
+            Object estaHabilitado = new ConexionBD.Conexion().executeScalarFunction("rolEstaHabilitado", "Proveedor");
+            if (estaHabilitado.ToString() == "1") //Si no está habilitado
+            {
+                NuevoProvBtn.Enabled = false;
+                msgInhabilitado.Visible = true;
+            }
+        }
     }
 }

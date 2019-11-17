@@ -44,7 +44,12 @@ namespace FrbaOfertas.AbmCliente
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            Object estaHabilitado = new ConexionBD.Conexion().executeScalarFunction("rolEstaHabilitado", "Cliente");
+            if (estaHabilitado.ToString() == "1") //Si no está habilitado
+            {
+                button3.Enabled = false;
+                msgInhabilitado.Visible = true;
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -166,6 +171,11 @@ namespace FrbaOfertas.AbmCliente
         {
             this.Hide();
             new MenuPrincipal().Show();
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            
         }
     }
 }
