@@ -55,6 +55,11 @@
             this.label26 = new System.Windows.Forms.Label();
             this.dir_calle = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.passwordNueva2 = new System.Windows.Forms.TextBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.passwordNueva1 = new System.Windows.Forms.TextBox();
+            this.label32 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -310,12 +315,64 @@
             this.label25.TabIndex = 36;
             this.label25.Text = "Calle";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.SystemColors.Control;
+            this.label5.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.label5.Location = new System.Drawing.Point(590, 350);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(152, 20);
+            this.label5.TabIndex = 99;
+            this.label5.Text = "Cambiar contraseña";
+            // 
+            // passwordNueva2
+            // 
+            this.passwordNueva2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passwordNueva2.Location = new System.Drawing.Point(789, 444);
+            this.passwordNueva2.Name = "passwordNueva2";
+            this.passwordNueva2.Size = new System.Drawing.Size(271, 30);
+            this.passwordNueva2.TabIndex = 98;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.Location = new System.Drawing.Point(589, 444);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(169, 25);
+            this.label31.TabIndex = 97;
+            this.label31.Text = "Repita contraseña";
+            // 
+            // passwordNueva1
+            // 
+            this.passwordNueva1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passwordNueva1.Location = new System.Drawing.Point(789, 394);
+            this.passwordNueva1.Name = "passwordNueva1";
+            this.passwordNueva1.Size = new System.Drawing.Size(271, 30);
+            this.passwordNueva1.TabIndex = 96;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label32.Location = new System.Drawing.Point(589, 399);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(171, 25);
+            this.label32.TabIndex = 95;
+            this.label32.Text = "Nueva contraseña";
+            // 
             // Editar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 644);
             this.ControlBox = false;
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.passwordNueva2);
+            this.Controls.Add(this.label31);
+            this.Controls.Add(this.passwordNueva1);
+            this.Controls.Add(this.label32);
             this.Controls.Add(this.label30);
             this.Controls.Add(this.dir_localidad);
             this.Controls.Add(this.label29);
@@ -384,5 +441,10 @@
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.TextBox dir_calle;
         private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox passwordNueva2;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.TextBox passwordNueva1;
+        private System.Windows.Forms.Label label32;
     }
 }
