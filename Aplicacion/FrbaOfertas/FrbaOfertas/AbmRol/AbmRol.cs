@@ -71,5 +71,10 @@ namespace FrbaOfertas.AbmRol
             this.Hide();
             new MenuPrincipal().Show();
         }
+
+        private void AbmRol_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

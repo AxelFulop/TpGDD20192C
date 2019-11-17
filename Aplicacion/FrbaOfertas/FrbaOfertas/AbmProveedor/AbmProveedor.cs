@@ -13,6 +13,8 @@ namespace FrbaOfertas.AbmProveedor
     public partial class AbmProveedor : Form
     {
         private DataTable proveedores;
+        private static List<Tuple<string, string>> provBorradosLogicamente = new List<Tuple<string, string>>();
+                              //RazonSocial - CUIT
 
         public AbmProveedor()
         {
@@ -20,13 +22,42 @@ namespace FrbaOfertas.AbmProveedor
             cargarProveedores();
         }
 
+        public AbmProveedor(Tuple<string, string> provAExcluir)
+        {
+            InitializeComponent();
+            provBorradosLogicamente.Add(provAExcluir);
+            cargarProveedores();
+        }
+
         private void cargarProveedores()
         {
+            string listaRazonSocial = obtenerListaBorradosQueryRazonSocial();
+            string listaCuit = obtenerListaBorradosQueryCuit();
+
             string query = "SELECT proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion," +
                                    "proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad," +
                                   "proveedor_codigo_postal,proveedor_cuit, proveedor_rubro, proveedor_contacto" +
                            " FROM " + Properties.Settings.Default.Schema + ".Proveedor";
-
+            if(listaRazonSocial != "()" || listaCuit != "()")
+            {
+                query += " WHERE ";
+                if (listaRazonSocial != "()")
+                {
+                    query += "proveedor_razon_social NOT IN " + listaRazonSocial;
+                    if (listaCuit != "()")
+                    {
+                        query += "AND proveedor_cuit NOT IN " + listaCuit;
+                    }
+                }
+                else
+                {
+                    if (listaCuit != "()")
+                    {
+                        query += "proveedor_cuit NOT IN " + listaCuit;
+                    }
+                } 
+            }
+            
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
             proveedores = conection.selectReturnMultiplyRowsByQuery(query);
             grid.DataSource = proveedores;
@@ -70,11 +101,11 @@ namespace FrbaOfertas.AbmProveedor
                     {
                         try
                         {
-                            eliminar(datos);
-                            this.Refresh();
                             MessageBox.Show("Proveedor eliminado correctamente", "",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Information);
+                            this.Hide();
+                            new AbmProveedor(Tuple.Create<string, string>(datos["razonSocial"], datos["cuit"])).Show();
                         }
                         catch (Exception)
                         {
@@ -87,21 +118,38 @@ namespace FrbaOfertas.AbmProveedor
             }
         }
 
-        private void eliminar(Dictionary<string, string> row)
-        {
-            //Eliminar proveedor de la DB
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             razonSocial.Text = "";
             cuit.Text = "";
             mail.Text = "";
 
+            string listaRazonSocial = obtenerListaBorradosQueryRazonSocial();
+            string listaCuit = obtenerListaBorradosQueryCuit();
+
             string query = "SELECT proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion," +
-                                   "proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad," + 
+                                   "proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad," +
                                   "proveedor_codigo_postal,proveedor_cuit, proveedor_rubro, proveedor_contacto" +
                            " FROM " + Properties.Settings.Default.Schema + ".Proveedor";
+            if (listaRazonSocial != "()" || listaCuit != "()")
+            {
+                query += " WHERE ";
+                if (listaRazonSocial != "()")
+                {
+                    query += "proveedor_razon_social NOT IN " + listaRazonSocial;
+                    if (listaCuit != "()")
+                    {
+                        query += "AND proveedor_cuit NOT IN " + listaCuit;
+                    }
+                }
+                else
+                {
+                    if (listaCuit != "()")
+                    {
+                        query += "proveedor_cuit NOT IN " + listaCuit;
+                    }
+                }
+            }
 
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
             proveedores = conection.selectReturnMultiplyRowsByQuery(query);
@@ -139,12 +187,34 @@ namespace FrbaOfertas.AbmProveedor
             string cuit = this.cuit.Text;
             string mail = this.mail.Text;
 
+            string listaRazonSocial = obtenerListaBorradosQueryRazonSocial();
+            string listaCuit = obtenerListaBorradosQueryCuit();
+
             string query = "SELECT proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion,proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad, proveedor_codigo_postal, " +
                                   "proveedor_cuit, proveedor_rubro, proveedor_contacto" +
                            " FROM " + Properties.Settings.Default.Schema + ".Proveedor WHERE " +
                            "isnull(proveedor_email, '') LIKE '%" + mail + "%' AND proveedor_razon_social LIKE '%" + razonSocial + "%'";
             if (cuit != "")
                 query += " AND proveedor_cuit='" + cuit + "'";
+
+            if (listaRazonSocial != "()" || listaCuit != "()")
+            {
+                if (listaRazonSocial != "()")
+                {
+                    query += " AND proveedor_razon_social NOT IN " + listaRazonSocial;
+                    if (listaCuit != "()")
+                    {
+                        query += "AND proveedor_cuit NOT IN " + listaCuit;
+                    }
+                }
+                else
+                {
+                    if (listaCuit != "()")
+                    {
+                        query += " AND proveedor_cuit NOT IN " + listaCuit;
+                    }
+                }
+            } 
 
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
             proveedores = conection.selectReturnMultiplyRowsByQuery(query);
@@ -170,6 +240,30 @@ namespace FrbaOfertas.AbmProveedor
                 NuevoProvBtn.Enabled = false;
                 msgInhabilitado.Visible = true;
             }
+        }
+
+        private string obtenerListaBorradosQueryRazonSocial()
+        {
+            string lista = "(";
+            provBorradosLogicamente.ForEach(p =>
+            {
+                lista += "'" + p.Item1 + "',";
+            });
+            lista = lista.TrimEnd(',');
+            lista += ")";
+            return lista;
+        }
+
+        private string obtenerListaBorradosQueryCuit()
+        {
+            string lista = "(";
+            provBorradosLogicamente.ForEach(p =>
+            {
+                lista += "'" + p.Item2 + "',";
+            });
+            lista = lista.TrimEnd(',');
+            lista += ")";
+            return lista;
         }
     }
 }

@@ -106,6 +106,7 @@
             this.Name = "AbmRol";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ABM - Rol";
+            this.Load += new System.EventHandler(this.AbmRol_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
