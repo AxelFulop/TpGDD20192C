@@ -56,6 +56,12 @@ IF OBJECT_ID('GESTION_DE_GATOS.altaCliente') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.altaCliente
 
 ----- Eliminacion de funciones ---------  
+IF OBJECT_ID('GESTION_DE_GATOS.clienteEstaHabilitado') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.clienteEstaHabilitado
+
+IF OBJECT_ID('GESTION_DE_GATOS.proveedorEstaHabilitado') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.proveedorEstaHabilitado
+
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerRolUsuario') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.obtenerRolUsuario
 
@@ -978,6 +984,26 @@ AS
 BEGIN
 	return (select rol_habilitado from GESTION_DE_GATOS.Rol 
 			where rol_nombre = @nombreRol)
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.clienteEstaHabilitado(@usuario NVARCHAR(15))
+RETURNS char
+AS
+BEGIN
+	return (select c.cliente_habilitado from GESTION_DE_GATOS.Cliente c
+				inner join GESTION_DE_GATOS.Usuario u on c.usuario_id = u.usuario_id
+			where u.usuario_nombre = @usuario)
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.proveedorEstaHabilitado(@usuario NVARCHAR(15))
+RETURNS char
+AS
+BEGIN
+	return (select c.proveedor_habilitado from GESTION_DE_GATOS.Proveedor c
+				inner join GESTION_DE_GATOS.Usuario u on c.usuario_id = u.usuario_id
+			where u.usuario_nombre = @usuario)
 END
 
 GO
