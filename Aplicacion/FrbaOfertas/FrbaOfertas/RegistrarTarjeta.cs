@@ -56,6 +56,14 @@ namespace FrbaOfertas
             }
             else
             {
+                float tipo, cvv, num;
+                if (!float.TryParse(textBoxNumero.Text, out num) ||
+                    !float.TryParse(textBoxCVV.Text, out cvv))
+                {
+                    MessageBox.Show("Número tarjeta y CVV deben ser datos numéricos");
+                    return;
+                }
+
                 List<String> parametrosTarjeta = new List<String>() { "@numeroTarjeta",
                 "@tipoTarjeta", "@bancoTarjeta","@vencimientoFechaTarjeta","@cvvTarjeta","@userName"};
                 try
@@ -65,6 +73,8 @@ namespace FrbaOfertas
                         textBoxCVV.Text, Logeo.username);
 
                     MessageBox.Show("Tarjeta registrada con exito");
+                    this.Hide();
+                    new MenuPrincipal().Show();
                 }
                 catch (System.Data.SqlClient.SqlException ex)
                 {

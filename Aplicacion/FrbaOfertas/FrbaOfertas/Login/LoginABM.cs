@@ -49,14 +49,7 @@ namespace FrbaOfertas.Login
                 return;
             }
 
-            if (dir_calle.Text.Contains("-") || dir_depto.Text.Contains("-") || dir_localidad.Text.Contains("-") ||
-                dir_numero.Text.Contains("-") || dir_piso.Text.Contains("-"))
-            {
-                MessageBox.Show("Valores incorrectos de la dirección", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            Tuple<string, List<string>, Object[]>[] procs = new Tuple<string,List<string>,object[]>[2];
+            Tuple<string, List<string>, Object[]>[] procs = new Tuple<string,List<string>,object[]>[3];
             procs[0] = altaUsuarioProc();
 
             if (rol.SelectedItem == null)
@@ -71,9 +64,7 @@ namespace FrbaOfertas.Login
             else if (rol.SelectedItem.ToString() == "Cliente")
             {
                 procs[1] = altaClienteProc();
-                Logeo log = new Logeo(5, 3);
-                string userName = log.UserName;
-
+                Logeo.username = usuario.Text;
             }
             else
             {
@@ -81,6 +72,7 @@ namespace FrbaOfertas.Login
                 return;
             }
 
+            procs[2] = tarjetaNueva();
             try
             {
                 ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
@@ -94,6 +86,19 @@ namespace FrbaOfertas.Login
             {
                 MessageBox.Show(exec.ToString());
             }            
+        }
+
+        private Tuple<string, List<string>, Object[]> tarjetaNueva()
+        {
+            return new Tuple<string, List<string>, Object[]>(
+                 Properties.Settings.Default.Schema + ".tarjetaRegaloParaUsuario",
+           new List<String>() {
+               "@userName", "@fechaVencimiento"
+           },
+           new Object[]{
+               usuario.Text, new DateTime(2100, 12, 31).ToShortDateString()
+           }
+           );
         }
 
         private Tuple<string, List<string>, Object[]> altaUsuarioProc()
