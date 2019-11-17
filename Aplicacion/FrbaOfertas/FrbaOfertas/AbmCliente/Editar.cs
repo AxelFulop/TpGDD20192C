@@ -64,7 +64,46 @@ namespace FrbaOfertas.AbmCliente
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //Verificar cambios y guardarlos en la DB
+            if (passwordNueva1.Text != passwordNueva2.Text)
+            {
+                MessageBox.Show("Las contraseñas no coinciden");
+                return;
+            }
+            float rAux;
+            if (!float.TryParse(dni.Text, out rAux) || !float.TryParse(telefono.Text, out rAux) ||
+                !float.TryParse(codigoPostal.Text, out rAux) || !float.TryParse(dir_numero.Text, out rAux) ||
+                !float.TryParse(dir_piso.Text, out rAux))
+            {
+                MessageBox.Show("Campos numéricos deben tener sólo números");
+                return;
+            }
+
+            try
+            {
+                new ConexionBD.Conexion().executeQuery(String.Format(
+                "update {0}.Cliente set cliente_nombre='{1}', cliente_apellido='{2}', cliente_email='{3}', " +
+                "cliente_numero_dni={4}, cliente_telefono={5}, cliente_codigo_postal={6}, cliente_fecha_nacimiento='{7}', " +
+                "cliente_direccion='{8}', cliente_direccion_piso={9}, cliente_direccion_depto='{10}', " +
+                "cliente_direccion_localidad='{11}' where cliente_id={12}",
+                Properties.Settings.Default.Schema, nombre.Text, apellido.Text, mail.Text,
+                dni.Text, telefono.Text, codigoPostal.Text, fechaNacimiento.Value.ToShortDateString(),
+                dir_calle.Text + " " + dir_numero.Text, dir_piso.Text, dir_depto.Text, dir_localidad.Text,
+                datos["id"]));
+
+                if (passwordNueva1.Text != "" && passwordNueva2.Text != "")
+                {
+                    new ConexionBD.Conexion().executeProcedure(Properties.Settings.Default.Schema + ".cambiarContraseniaCliente",
+                        new List<string>() { "@id_cliente", "@password" },
+                        new string[] { datos["id"], passwordNueva1.Text });
+                }
+                MessageBox.Show("Cliente actualizado correctamente");
+                this.Hide();
+                new AbmCliente().Show();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al actualizar los datos del cliente");
+            }
         }
 
         private void label28_Click(object sender, EventArgs e)

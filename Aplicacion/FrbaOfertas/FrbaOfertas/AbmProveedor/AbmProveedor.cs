@@ -34,7 +34,7 @@ namespace FrbaOfertas.AbmProveedor
             string listaRazonSocial = obtenerListaBorradosQueryRazonSocial();
             string listaCuit = obtenerListaBorradosQueryCuit();
 
-            string query = "SELECT proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion," +
+            string query = "SELECT proveedor_id, proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion," +
                                    "proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad," +
                                   "proveedor_codigo_postal,proveedor_cuit, proveedor_rubro, proveedor_contacto" +
                            " FROM " + Properties.Settings.Default.Schema + ".Proveedor";
@@ -127,7 +127,7 @@ namespace FrbaOfertas.AbmProveedor
             string listaRazonSocial = obtenerListaBorradosQueryRazonSocial();
             string listaCuit = obtenerListaBorradosQueryCuit();
 
-            string query = "SELECT proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion," +
+            string query = "SELECT proveedor_id, proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion," +
                                    "proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad," +
                                   "proveedor_codigo_postal,proveedor_cuit, proveedor_rubro, proveedor_contacto" +
                            " FROM " + Properties.Settings.Default.Schema + ".Proveedor";
@@ -160,17 +160,18 @@ namespace FrbaOfertas.AbmProveedor
         {
             Dictionary<string, string> datosRow = new Dictionary<string, string>();
 
-            datosRow["razonSocial"] = row.ItemArray[0].ToString();
-            datosRow["mail"] = row.ItemArray[1].ToString();
-            datosRow["telefono"] = row.ItemArray[2].ToString();
-            datosRow["direccion"] = row.ItemArray[3].ToString();
-            datosRow["direccion_piso"] = row.ItemArray[4].ToString();
-            datosRow["direccion_depto"] = row.ItemArray[5].ToString();
-            datosRow["direccion_localidad"] = row.ItemArray[6].ToString();
-            datosRow["codigoPostal"] = row.ItemArray[7].ToString();
-            datosRow["cuit"] = row.ItemArray[8].ToString();
-            datosRow["rubro"] = row.ItemArray[9].ToString();
-            datosRow["contacto"] = row.ItemArray[10].ToString();
+            datosRow["id"] = row.ItemArray[0].ToString();
+            datosRow["razonSocial"] = row.ItemArray[1].ToString();
+            datosRow["mail"] = row.ItemArray[2].ToString();
+            datosRow["telefono"] = row.ItemArray[3].ToString();
+            datosRow["direccion"] = row.ItemArray[4].ToString();
+            datosRow["direccion_piso"] = row.ItemArray[5].ToString();
+            datosRow["direccion_depto"] = row.ItemArray[6].ToString();
+            datosRow["direccion_localidad"] = row.ItemArray[7].ToString();
+            datosRow["codigoPostal"] = row.ItemArray[8].ToString();
+            datosRow["cuit"] = row.ItemArray[9].ToString();
+            datosRow["rubro"] = row.ItemArray[10].ToString();
+            datosRow["contacto"] = row.ItemArray[11].ToString();
 
             return datosRow;
         }
@@ -190,7 +191,7 @@ namespace FrbaOfertas.AbmProveedor
             string listaRazonSocial = obtenerListaBorradosQueryRazonSocial();
             string listaCuit = obtenerListaBorradosQueryCuit();
 
-            string query = "SELECT proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion,proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad, proveedor_codigo_postal, " +
+            string query = "SELECT proveedor_id, proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion,proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad, proveedor_codigo_postal, " +
                                   "proveedor_cuit, proveedor_rubro, proveedor_contacto" +
                            " FROM " + Properties.Settings.Default.Schema + ".Proveedor WHERE " +
                            "isnull(proveedor_email, '') LIKE '%" + mail + "%' AND proveedor_razon_social LIKE '%" + razonSocial + "%'";

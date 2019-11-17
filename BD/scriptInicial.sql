@@ -4,6 +4,12 @@ USE GD2C2019
 IF OBJECT_ID('GESTION_DE_GATOS.habilitarRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.habilitarRol
 
+IF OBJECT_ID('GESTION_DE_GATOS.cambiarContraseniaProveedor') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.cambiarContraseniaProveedor
+
+IF OBJECT_ID('GESTION_DE_GATOS.cambiarContraseniaCliente') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.cambiarContraseniaCliente
+
 IF OBJECT_ID('GESTION_DE_GATOS.inhabilitarProveedor') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.inhabilitarProveedor
 
@@ -738,6 +744,30 @@ BEGIN
 		CAST(@codigoPostalCliente AS NUMERIC(18,0)) ,@ciudadCliente,@id_usuario, @deptoCliente, @localidadCliente,@pisoCliente)
 	insert into UsuarioXRol(usuario_id, rol_id)
 		values(@id_usuario, (select rol_id from Rol where rol_nombre = 'Cliente'))
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.cambiarContraseniaCliente
+@id_cliente numeric(18),
+@password NVARCHAR(128)
+AS
+BEGIN
+DECLARE @passHash varbinary(128)
+SET @passHash =  HASHBYTES('SHA2_256', convert(nvarchar(128), @password))
+update GESTION_DE_GATOS.Usuario set usuario_password = @passHash
+	where usuario_id = (select usuario_id from GESTION_DE_GATOS.Cliente where cliente_id = @id_cliente)
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.cambiarContraseniaProveedor
+@id_proveedor numeric(18),
+@password NVARCHAR(128)
+AS
+BEGIN
+DECLARE @passHash varbinary(128)
+SET @passHash =  HASHBYTES('SHA2_256', convert(nvarchar(128), @password))
+update GESTION_DE_GATOS.Usuario set usuario_password = @passHash
+	where usuario_id = (select usuario_id from GESTION_DE_GATOS.Proveedor where proveedor_id = @id_proveedor)
 END
 
 GO
