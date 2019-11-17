@@ -46,7 +46,7 @@ namespace FrbaOfertas.AbmProveedor
                     query += "proveedor_razon_social NOT IN " + listaRazonSocial;
                     if (listaCuit != "()")
                     {
-                        query += "AND proveedor_cuit NOT IN " + listaCuit;
+                        query += " AND proveedor_cuit NOT IN " + listaCuit;
                     }
                 }
                 else
@@ -80,7 +80,7 @@ namespace FrbaOfertas.AbmProveedor
             var senderGrid = (DataGridView)sender;
 
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
-                e.RowIndex >= 0 && e.RowIndex < grid.Rows.Count - 1)
+                e.RowIndex >= 0 && e.RowIndex < grid.Rows.Count)
             {
                 if (e.ColumnIndex == 0) //Editar
                 {
@@ -139,7 +139,7 @@ namespace FrbaOfertas.AbmProveedor
                     query += "proveedor_razon_social NOT IN " + listaRazonSocial;
                     if (listaCuit != "()")
                     {
-                        query += "AND proveedor_cuit NOT IN " + listaCuit;
+                        query += " AND proveedor_cuit NOT IN " + listaCuit;
                     }
                 }
                 else
@@ -204,7 +204,7 @@ namespace FrbaOfertas.AbmProveedor
                     query += " AND proveedor_razon_social NOT IN " + listaRazonSocial;
                     if (listaCuit != "()")
                     {
-                        query += "AND proveedor_cuit NOT IN " + listaCuit;
+                        query += " AND proveedor_cuit NOT IN " + listaCuit;
                     }
                 }
                 else

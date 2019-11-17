@@ -13,6 +13,8 @@ namespace FrbaOfertas.AbmCliente
     public partial class AbmCliente : Form
     {
         private DataTable clientes;
+        private static List<Tuple<string, string, string>> clientesBorradosLogicamente = new List<Tuple<string, string, string>>();
+                                  //Dni - Nombre - Apellido
 
         public AbmCliente()
         {
@@ -20,10 +22,49 @@ namespace FrbaOfertas.AbmCliente
             cargarClientes();
         }
 
+        public AbmCliente(Tuple<string, string, string> clienteAExcluir)
+        {
+            InitializeComponent();
+            clientesBorradosLogicamente.Add(clienteAExcluir);
+            cargarClientes();
+        }
+
         private void cargarClientes(){
+            string listaDni = obtenerListaBorradosQueryDni();
+            string listaNombre = obtenerListaBorradosQueryNombre();
+            string listaApellido = obtenerListaBorradosQueryApellido();
+
             string query = "SELECT cliente_nombre, cliente_apellido, cliente_numero_dni, cliente_email, cliente_telefono, " +
                                   "cliente_direccion,cliente_direccion_piso,cliente_direccion_depto,cliente_direccion_localidad, cliente_codigo_postal, cliente_fecha_nacimiento" +
                            " FROM " + Properties.Settings.Default.Schema + ".Cliente";
+            if (listaDni != "()" || listaNombre != "()" || listaApellido != "()")
+            {
+                query += " WHERE ";
+                if (listaDni != "()")
+                {
+                    query += "cliente_numero_dni NOT IN " + listaDni;
+                    if (listaNombre != "()")
+                    {
+                        query += " AND cliente_nombre NOT IN " + listaNombre;
+                    }
+                    if (listaApellido != "()")
+                    {
+                        query += " AND cliente_apellido NOT IN " + listaApellido;
+                    }
+                }
+                else if (listaNombre != "()")
+                {
+                    query += "cliente_nombre NOT IN " + listaNombre;
+                    if (listaApellido != "()")
+                    {
+                        query += " AND cliente_apellido NOT IN " + listaApellido;
+                    }
+                }
+                else
+                {
+                    query += "cliente_apellido NOT IN " + listaApellido;
+                }
+            }
 
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
             clientes = conection.selectReturnMultiplyRowsByQuery(query);
@@ -62,7 +103,7 @@ namespace FrbaOfertas.AbmCliente
             var senderGrid = (DataGridView)sender;
 
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
-                e.RowIndex >= 0 && e.RowIndex < grid.Rows.Count - 1)
+                e.RowIndex >= 0 && e.RowIndex < grid.Rows.Count)
             {
                 if (e.ColumnIndex == 0) //Editar
                 {
@@ -75,7 +116,7 @@ namespace FrbaOfertas.AbmCliente
                 {
                     DataRow row = (grid.CurrentRow.DataBoundItem as DataRowView).Row;
                     Dictionary<string, string> datos = ajustarDatosRow(row);
-                    DialogResult result = MessageBox.Show("¿Desea eliminar el cliente '" + datos["nombre"]
+                    DialogResult result = MessageBox.Show("¿Desea eliminar el cliente '" + datos["nombre"] + " "
                                     + datos["apellido"] + "'?",
                     "",
                     MessageBoxButtons.YesNo,
@@ -84,11 +125,13 @@ namespace FrbaOfertas.AbmCliente
                     {
                         try
                         {
-                            eliminar(datos);
-                            this.Refresh();
                             MessageBox.Show("Cliente eliminado correctamente", "",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Information);
+                            this.Hide();
+                            new AbmCliente(Tuple.Create<string, string, string>(
+                                datos["dni"], datos["nombre"], datos["apellido"]
+                                )).Show();
                         }
                         catch (Exception)
                         {
@@ -101,11 +144,6 @@ namespace FrbaOfertas.AbmCliente
             }
         }
 
-        private void eliminar(Dictionary<string, string> row)
-        {
-            //Eliminar cliente de la DB
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             nombre.Text = "";
@@ -113,9 +151,41 @@ namespace FrbaOfertas.AbmCliente
             dni.Text = "";
             mail.Text = "";
 
-            string query = "SELECT cliente_nombre, cliente_apellido,cliente_numero_dni,cliente_email,cliente_telefono," +
-                                  "cliente_direccion,cliente_direccion_piso,cliente_direccion_depto,cliente_direccion_localidad,cliente_codigo_postal,cliente_fecha_nacimiento" +
+            string listaDni = obtenerListaBorradosQueryDni();
+            string listaNombre = obtenerListaBorradosQueryNombre();
+            string listaApellido = obtenerListaBorradosQueryApellido();
+
+            string query = "SELECT cliente_nombre, cliente_apellido, cliente_numero_dni, cliente_email, cliente_telefono, " +
+                                  "cliente_direccion,cliente_direccion_piso,cliente_direccion_depto,cliente_direccion_localidad, cliente_codigo_postal, cliente_fecha_nacimiento" +
                            " FROM " + Properties.Settings.Default.Schema + ".Cliente";
+            if (listaDni != "()" || listaNombre != "()" || listaApellido != "()")
+            {
+                query += " WHERE ";
+                if (listaDni != "()")
+                {
+                    query += "cliente_numero_dni NOT IN " + listaDni;
+                    if (listaNombre != "()")
+                    {
+                        query += " AND cliente_nombre NOT IN " + listaNombre;
+                    }
+                    if (listaApellido != "()")
+                    {
+                        query += " AND cliente_apellido NOT IN " + listaApellido;
+                    }
+                }
+                else if (listaNombre != "()")
+                {
+                    query += "cliente_nombre NOT IN " + listaNombre;
+                    if (listaApellido != "()")
+                    {
+                        query += " AND cliente_apellido NOT IN " + listaApellido;
+                    }
+                }
+                else
+                {
+                    query += "cliente_apellido NOT IN " + listaApellido;
+                }
+            }
 
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
             clientes = conection.selectReturnMultiplyRowsByQuery(query);
@@ -154,6 +224,10 @@ namespace FrbaOfertas.AbmCliente
             string mail = this.mail.Text;
             string dni = this.dni.Text;
 
+            string listaDni = obtenerListaBorradosQueryDni();
+            string listaNombre = obtenerListaBorradosQueryNombre();
+            string listaApellido = obtenerListaBorradosQueryApellido();
+
             string query = "SELECT cliente_nombre, cliente_apellido,cliente_numero_dni,cliente_email,cliente_telefono," +
                                   "cliente_direccion,cliente_direccion_piso,cliente_direccion_depto,cliente_direccion_localidad,cliente_codigo_postal,cliente_fecha_nacimiento" +
                            " FROM " + Properties.Settings.Default.Schema + ".Cliente WHERE " + 
@@ -161,6 +235,34 @@ namespace FrbaOfertas.AbmCliente
                            "cliente_email LIKE '%" + mail + "%'";
             if (dni != "")
                 query += " AND cliente_numero_dni=" + dni;
+
+            if (listaDni != "()" || listaNombre != "()" || listaApellido != "()")
+            {
+                if (listaDni != "()")
+                {
+                    query += " AND cliente_numero_dni NOT IN " + listaDni;
+                    if (listaNombre != "()")
+                    {
+                        query += " AND cliente_nombre NOT IN " + listaNombre;
+                    }
+                    if (listaApellido != "()")
+                    {
+                        query += " AND cliente_apellido NOT IN " + listaApellido;
+                    }
+                }
+                else if (listaNombre != "()")
+                {
+                    query += " AND cliente_nombre NOT IN " + listaNombre;
+                    if (listaApellido != "()")
+                    {
+                        query += " AND cliente_apellido NOT IN " + listaApellido;
+                    }
+                }
+                else
+                {
+                    query += " AND cliente_apellido NOT IN " + listaApellido;
+                }
+            }
 
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
             clientes = conection.selectReturnMultiplyRowsByQuery(query);
@@ -176,6 +278,42 @@ namespace FrbaOfertas.AbmCliente
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             
+        }
+
+        private string obtenerListaBorradosQueryDni()
+        {
+            string lista = "(";
+            clientesBorradosLogicamente.ForEach(p =>
+            {
+                lista += "'" + p.Item1 + "',";
+            });
+            lista = lista.TrimEnd(',');
+            lista += ")";
+            return lista;
+        }
+
+        private string obtenerListaBorradosQueryNombre()
+        {
+            string lista = "(";
+            clientesBorradosLogicamente.ForEach(p =>
+            {
+                lista += "'" + p.Item2 + "',";
+            });
+            lista = lista.TrimEnd(',');
+            lista += ")";
+            return lista;
+        }
+
+        private string obtenerListaBorradosQueryApellido()
+        {
+            string lista = "(";
+            clientesBorradosLogicamente.ForEach(p =>
+            {
+                lista += "'" + p.Item3 + "',";
+            });
+            lista = lista.TrimEnd(',');
+            lista += ")";
+            return lista;
         }
     }
 }
