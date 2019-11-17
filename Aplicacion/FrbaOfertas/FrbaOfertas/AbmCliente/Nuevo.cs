@@ -15,8 +15,6 @@ namespace FrbaOfertas.AbmCliente
     {
         public string username;
 
-
-
         public Nuevo()
         {
             InitializeComponent();
@@ -32,7 +30,7 @@ namespace FrbaOfertas.AbmCliente
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.username= nombre.Text + '_' + apellido.Text;
+            this.username= nombre.Text.ToLower() + '_' + apellido.Text.ToLower();
             DateTime fechaVenc = Properties.Settings.Default.fecha;
             string schema = Properties.Settings.Default.Schema;
 
@@ -53,7 +51,7 @@ namespace FrbaOfertas.AbmCliente
                 {
                     MessageBox.Show(ex.ToString());
                 }
-            }
+        }
 
 
         private Tuple<string, List<string>, Object[]> altaCliente() {

@@ -492,7 +492,7 @@ usuario_id = (SELECT usuario_id FROM GESTION_DE_GATOS.Usuario
 PRINT 'Migrando Usuarios - Proveedores'
 INSERT INTO GESTION_DE_GATOS.Usuario(usuario_nombre, usuario_password,
 									 usuario_bloqueado, usuario_primer_login)
-SELECT proveedor_cuit, HASHBYTES('SHA2_256', CONVERT(nvarchar(128), LOWER(proveedor_razon_social))), 0, 0 from GESTION_DE_GATOS.Proveedor
+SELECT proveedor_cuit, HASHBYTES('SHA2_256', CONVERT(nvarchar(128), proveedor_razon_social)), 0, 0 from GESTION_DE_GATOS.Proveedor
 
 UPDATE GESTION_DE_GATOS.Proveedor SET
 usuario_id = (SELECT usuario_id FROM GESTION_DE_GATOS.Usuario where usuario_nombre = proveedor_cuit)

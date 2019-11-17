@@ -170,7 +170,6 @@ namespace FrbaOfertas.CragaCredito
             tarj_cvv.Text = new Conexion().executeScalarFunction("cvvTarjeta", comboBoxTarjeta.Text).ToString();
             tarj_saldo.Text = (string)new Conexion().executeScalarFunction("saldoTarjeta", comboBoxTarjeta.Text).ToString();
             tarj_fechaVencimiento.Value = (DateTime)new Conexion().executeScalarFunction("fechaVencimientoTarjeta", comboBoxTarjeta.Text);
-            //tarj_fechaVencimiento.Text = tarj_fechaVencimiento.Value.ToShortDateString();
 
             panelAgregarTarjeta.Visible = true;
         }

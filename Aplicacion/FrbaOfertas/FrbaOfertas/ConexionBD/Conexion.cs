@@ -210,10 +210,7 @@ namespace FrbaOfertas.ConexionBD
             return resultQuery;
         }
 
-
-
-
-        public Object selectReturnOnlyObject(String nomTabla, String param, String parametros)
+        /*public Object selectReturnOnlyObject(String nomTabla, String param, String parametros)
         {
             string query = "SELECT " + param + "FROM " + Properties.Settings.Default.Schema + "." + nomTabla + " " + parametros;
             SqlConnection conn = configDBConnection();
@@ -224,6 +221,32 @@ namespace FrbaOfertas.ConexionBD
                 SqlCommand myCommand = new SqlCommand(query, conn);
                 result = myCommand.ExecuteScalar(); // returns the first column of the first row
                 
+            }
+            catch (SqlException ex)
+            {
+                for (int i = 0; i < ex.Errors.Count; i++)
+                {
+                    errorMessages.Append("Index #" + i + "\n" +
+                        "Message: " + ex.Errors[i].Message + "\n" +
+                        "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
+                        "Source: " + ex.Errors[i].Source + "\n");
+                }
+                Console.WriteLine(errorMessages.ToString());
+            }
+            closeConnection(conn);
+            return result;
+        }*/
+
+        public Object selectReturnOnlyObject(String query)
+        {
+            SqlConnection conn = configDBConnection();
+            Object result = null;
+            openConnection(conn);
+            try
+            {
+                SqlCommand myCommand = new SqlCommand(query, conn);
+                result = myCommand.ExecuteScalar(); // returns the first column of the first row
+
             }
             catch (SqlException ex)
             {
