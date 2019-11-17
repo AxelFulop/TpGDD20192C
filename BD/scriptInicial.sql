@@ -99,8 +99,10 @@ IF OBJECT_ID('GESTION_DE_GATOS."saldoTarjeta"') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS."saldoTarjeta"
 
 IF OBJECT_ID('GESTION_DE_GATOS."fechaVencimientoTarjeta"') IS NOT NULL
-    DROP FUNCTION  GESTION_DE_GATOS."fechaVencimientoTarjeta"
+    DROP FUNCTION  GESTION_DE_GATOS."fechaVencimientoTarjeta" 
 
+IF OBJECT_ID('GESTION_DE_GATOS."saldoCliente"') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.saldoCliente
 ------------ Eliminacion de Triggers --------------
 IF OBJECT_ID('GESTION_DE_GATOS."tr_evitar_proveedores_gemelos"') IS NOT NULL
     DROP TRIGGER  GESTION_DE_GATOS.tr_evitar_proveedores_gemelos
@@ -1044,6 +1046,19 @@ DECLARE @banco VARCHAR(15)
 SELECT @banco = tarjeta_banco FROM GESTION_DE_GATOS.Tarjeta 
 	WHERE tarjeta_numero = @numeroTarjeta
 RETURN @banco
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.saldoCliente(@usuario nvarchar(255))
+RETURNS numeric(18, 4)
+AS
+BEGIN
+DECLARE @saldo numeric(18, 4)
+SELECT @saldo = sum(t.tarjeta_saldo) FROM GESTION_DE_GATOS.Tarjeta t
+	inner join GESTION_DE_GATOS.Cliente c on c.cliente_id = t.cliente_id
+	inner join GESTION_DE_GATOS.Usuario u on u.usuario_id = c.usuario_id
+	where u.usuario_nombre = @usuario
+RETURN @saldo
 END
 
 --Triggers

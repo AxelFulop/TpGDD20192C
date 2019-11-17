@@ -107,6 +107,11 @@ namespace FrbaOfertas
                 }
             }
 
+            if (roles.Contains("Cliente"))
+            {
+                this.listadoMenu.Items.Add("Consultar saldo");
+            }
+
             if (listadoMenu.Items.Count == 0)
                 msg_rol_malo.Visible = true;
         }
@@ -131,7 +136,6 @@ namespace FrbaOfertas
         {
             if (listadoMenu.SelectedItem != null && listadoMenu.SelectedItem.ToString() != "")
             {
-                this.Hide();
                 switch (listadoMenu.SelectedItem.ToString())
                 {
                     case "Clientes":
@@ -161,9 +165,19 @@ namespace FrbaOfertas
                     case "Registrar tarjeta":
                         new RegistrarTarjeta().Show();
                         break;
+                    case "Consultar saldo":
+                        consultaSaldoCliente();
+                        return;
                     default: break;
                 }
+                this.Hide();
             }
+        }
+
+        private void consultaSaldoCliente()
+        {
+            Object saldo = new ConexionBD.Conexion().executeScalarFunction("saldoCliente", usuario);
+            MessageBox.Show("Su saldo actual es de: $" + saldo.ToString());
         }
 
         private void MenuPrincipal_Load(object sender, EventArgs e)
