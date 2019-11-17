@@ -168,12 +168,12 @@ namespace FrbaOfertas.Login
             switch (this.rol.Text)
             {
                 case "Cliente":
-                    this.panelProveedor.Hide();
-                    this.panelCliente.Show(); 
+                    this.panelProveedor.Visible = false;
+                    this.panelCliente.Visible = true;
                     break;
                 case "Proveedor":
-                    this.panelCliente.Hide();
-                    this.panelProveedor.Show(); 
+                    this.panelCliente.Visible = false;
+                    this.panelProveedor.Visible = true; 
                     break;
             }
         }

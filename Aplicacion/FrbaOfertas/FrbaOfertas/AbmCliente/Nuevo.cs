@@ -98,10 +98,10 @@ namespace FrbaOfertas.AbmCliente
             return new Tuple<string, List<string>, Object[]>(
                  Properties.Settings.Default.Schema + ".tarjetaParaUsuario",
            new List<String>() {
-               "@userName", "@fechaVencimiento" 
+               "@userName", "@fechaVencimiento"
            },
            new Object[]{
-               username,fechaNacimiento.Value.ToShortDateString()
+               username, new DateTime(2100, 12, 31).ToShortDateString()
            }
            );
         }

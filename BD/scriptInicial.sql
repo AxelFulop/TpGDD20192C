@@ -10,7 +10,6 @@ IF OBJECT_ID('GESTION_DE_GATOS.agregarRolAUsuario') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.cambiarNombreRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.cambiarNombreRol
 
-
 IF OBJECT_ID('GESTION_DE_GATOS.tarjetaParaUsuario') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.tarjetaParaUsuario
 
@@ -69,7 +68,7 @@ IF OBJECT_ID('GESTION_DE_GATOS.obtenerFecha') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.usuarioEstaBloqueado') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.usuarioEstaBloqueado
 
-IF OBJECT_ID('GESTION_DE_GATOS.obtenerTarjetasUsuariologinValido') IS NOT NULL
+IF OBJECT_ID('GESTION_DE_GATOS.obtenerTarjetasUsuario') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.obtenerTarjetasUsuario
 
 IF OBJECT_ID('GESTION_DE_GATOS.loginValido') IS NOT NULL
@@ -84,15 +83,32 @@ IF OBJECT_ID('GESTION_DE_GATOS.rolEstaHabilitado') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerTarjetasUsuario') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.obtenerTarjetasUsuario
 
-
 IF OBJECT_ID('GESTION_DE_GATOS.tipoTarjeta') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.tipoTarjeta
 	
 IF OBJECT_ID('GESTION_DE_GATOS.duenioTarjeta') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.duenioTarjeta
 	
+IF OBJECT_ID('GESTION_DE_GATOS."bancoTarjeta"') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS."bancoTarjeta"
 
------------- Eliminacion de FK   ------------------ 
+IF OBJECT_ID('GESTION_DE_GATOS."cvvTarjeta"') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS."cvvTarjeta"
+
+IF OBJECT_ID('GESTION_DE_GATOS."saldoTarjeta"') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS."saldoTarjeta"
+
+IF OBJECT_ID('GESTION_DE_GATOS."fechaVencimientoTarjeta"') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS."fechaVencimientoTarjeta"
+
+------------ Eliminacion de Triggers --------------
+IF OBJECT_ID('GESTION_DE_GATOS."tr_evitar_proveedores_gemelos"') IS NOT NULL
+    DROP TRIGGER  GESTION_DE_GATOS.tr_evitar_proveedores_gemelos
+
+IF OBJECT_ID('GESTION_DE_GATOS."tr_evitar_clientes_gemelos"') IS NOT NULL
+    DROP TRIGGER  GESTION_DE_GATOS.tr_evitar_clientes_gemelos
+
+------------ Eliminacion de FK   ------------------  
 
 IF (select object_id from sys.foreign_keys where [name] = 'FC1') IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.FuncionalidadXRol DROP CONSTRAINT FC1
@@ -278,8 +294,8 @@ CREATE TABLE GESTION_DE_GATOS.Tarjeta(
 tarjeta_id NUMERIC(18,0) IDENTITY,
 cliente_id NUMERIC(18,0),
 tarjeta_numero NUMERIC(18,0) unique,
-tajeta_saldo NUMERIC(18,4),
-tarjeta_tipo NVARCHAR(100),
+tarjeta_saldo NUMERIC(18,4),
+tarjeta_tipo NVARCHAR(10),
 tarjeta_banco VARCHAR(15),
 tarjeta_fecha_vencimiento DATETIME,
 tarjeta_cvv NUMERIC(18,0),
@@ -838,7 +854,7 @@ DECLARE @numeroTarjeta NUMERIC(18,0),@CVV BIGINT,@idCliente NUMERIC(18,0)
 SET @numeroTarjeta = (SELECT CAST(RAND() * 10000000000000000 AS NUMERIC(18,0)))
 SET @CVV = (SELECT FLOOR(RAND() * 900)+ 100)
 SET @idCliente = (SELECT c.cliente_id FROM GESTION_DE_GATOS.Cliente c,GESTION_DE_GATOS.Usuario u WHERE u.usuario_nombre = @userName and c.usuario_id = u.usuario_id )
-INSERT INTO GESTION_DE_GATOS.Tarjeta (cliente_id,tajeta_saldo,tarjeta_banco,tarjeta_cvv,tarjeta_fecha_vencimiento,tarjeta_numero,tarjeta_tipo)
+INSERT INTO GESTION_DE_GATOS.Tarjeta (cliente_id,tarjeta_saldo,tarjeta_banco,tarjeta_cvv,tarjeta_fecha_vencimiento,tarjeta_numero,tarjeta_tipo)
 VALUES(@idCliente,200,'HSCBC',@CVV,CONVERT(DATETIME,@fechaVencimiento),@numeroTarjeta,'Debito')
 END
 
@@ -961,23 +977,14 @@ BEGIN
 	return @ret
 END
 
-
 GO
 CREATE FUNCTION GESTION_DE_GATOS.tipoTarjeta(@numeroTarjeta NUMERIC(18,0))
 RETURNS NVARCHAR(10)
 AS
 BEGIN
 DECLARE @TIPO NVARCHAR(10),@Res NVARCHAR(10)
-SET @TIPO= (SELECT tarjeta_tipo FROM GESTION_DE_GATOS.Tarjeta WHERE tarjeta_numero = @numeroTarjeta)
-IF (@TIPO LIKE 'Debito') 
-BEGIN
-SET @Res = 'Debito'
-END
-ELSE
-BEGIN
-SET @Res = 'Credito'
-END
-RETURN @Res
+SELECT @TIPO = tarjeta_tipo FROM GESTION_DE_GATOS.Tarjeta WHERE tarjeta_numero = @numeroTarjeta
+RETURN @TIPO
 END
 
 GO
@@ -985,10 +992,157 @@ CREATE FUNCTION GESTION_DE_GATOS.duenioTarjeta(@numeroTarjeta NUMERIC(18,0),@use
 RETURNS NVARCHAR(255)
 AS
 BEGIN
-RETURN (SELECT c.cliente_apellido + '-' + c.cliente_nombre FROM GESTION_DE_GATOS.Tarjeta T ,GESTION_DE_GATOS.Cliente C, GESTION_DE_GATOS.Usuario u
+RETURN (SELECT u.usuario_nombre FROM GESTION_DE_GATOS.Tarjeta T ,GESTION_DE_GATOS.Cliente C, GESTION_DE_GATOS.Usuario u
         WHERE tarjeta_numero = @numeroTarjeta and
 		c.usuario_id = u.usuario_id AND
 		u.usuario_nombre = @username AND
 		t.cliente_id = c.cliente_id)
- 
 END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.saldoTarjeta(@numeroTarjeta NUMERIC(18,0))
+RETURNS NUMERIC(18,4)
+AS
+BEGIN
+DECLARE @saldo NUMERIC(18,4)
+SELECT @saldo = tarjeta_saldo FROM GESTION_DE_GATOS.Tarjeta 
+	WHERE tarjeta_numero = @numeroTarjeta
+RETURN @saldo
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.fechaVencimientoTarjeta(@numeroTarjeta NUMERIC(18,0))
+RETURNS datetime
+AS
+BEGIN
+DECLARE @venc datetime
+SELECT @venc = tarjeta_fecha_vencimiento FROM GESTION_DE_GATOS.Tarjeta 
+	WHERE tarjeta_numero = @numeroTarjeta
+RETURN @venc
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.cvvTarjeta(@numeroTarjeta NUMERIC(18,0))
+RETURNS NUMERIC(18,0)
+AS
+BEGIN
+DECLARE @cvv NUMERIC(18,0)
+SELECT @cvv = tarjeta_cvv FROM GESTION_DE_GATOS.Tarjeta 
+	WHERE tarjeta_numero = @numeroTarjeta
+RETURN @cvv
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.bancoTarjeta(@numeroTarjeta NUMERIC(18,0))
+RETURNS VARCHAR(15)
+AS
+BEGIN
+DECLARE @banco VARCHAR(15)
+SELECT @banco = tarjeta_banco FROM GESTION_DE_GATOS.Tarjeta 
+	WHERE tarjeta_numero = @numeroTarjeta
+RETURN @banco
+END
+
+--Triggers
+go
+create trigger GESTION_DE_GATOS.tr_evitar_clientes_gemelos on GESTION_DE_GATOS.Cliente instead of insert, update
+as begin
+	declare @id_cli numeric(18), @nombre nvarchar(255), @apellido nvarchar(255), @dni numeric(18),
+		    @id_user numeric(18), @baja char, @ciudad nvarchar(255), @mail nvarchar(255),
+			@fecha_nac datetime, @tel numeric(18), @dir nvarchar(255), @piso nvarchar(10), @depto nvarchar(5),
+			@localidad nvarchar(50), @cp nvarchar(255), @dato_inc char, @nuevo char, @habilitado char
+	declare c_cursor cursor for (select * from inserted)
+	open c_cursor
+	fetch c_cursor into @id_cli, @id_user, @baja, @nombre, @ciudad, @apellido, @dni, @mail, @fecha_nac, 
+		@tel, @dir, @piso, @depto,@localidad, @cp, @dato_inc, @nuevo, @habilitado
+	while(@@FETCH_STATUS = 0) begin
+		declare @hayClieGemelo int = 
+			(select count(*) from GESTION_DE_GATOS.Cliente 
+				where cliente_apellido = @apellido and
+					  cliente_nombre = @nombre and
+					  cliente_numero_dni = @dni)
+		if(@hayClieGemelo > 0) begin
+			raiserror('Cliente gemelo ya existente', 1, 1)
+			rollback
+		end
+		else begin
+			begin try 
+				insert into GESTION_DE_GATOS.Cliente(usuario_id, cliente_baja, cliente_nombre, cliente_ciudad,
+						cliente_apellido, cliente_numero_dni, cliente_email, cliente_fecha_nacimiento,
+						cliente_telefono, cliente_direccion, cliente_direccion_piso, cliente_direccion_depto,
+						cliente_direccion_localidad, cliente_codigo_postal, cliente_dato_inconsistente,
+						cliente_nuevo, cliente_habilitado)
+					(select usuario_id, cliente_baja, cliente_nombre, cliente_ciudad,
+						cliente_apellido, cliente_numero_dni, cliente_email, cliente_fecha_nacimiento,
+						cliente_telefono, cliente_direccion, cliente_direccion_piso, cliente_direccion_depto,
+						cliente_direccion_localidad, cliente_codigo_postal, cliente_dato_inconsistente,
+						cliente_nuevo, cliente_habilitado
+						from inserted where cliente_id = @id_cli)
+			end try
+			begin catch --Si hay error es porque fue un update(ya existía cliente)
+				update GESTION_DE_GATOS.Cliente set cliente_apellido = @apellido, 
+					cliente_baja = @baja, cliente_ciudad = @ciudad, cliente_codigo_postal = @cp, cliente_dato_inconsistente = @dato_inc,
+					cliente_direccion = @dir, cliente_direccion_depto = @depto, cliente_direccion_localidad = @localidad,
+					cliente_direccion_piso = @piso, cliente_email = @mail, cliente_fecha_nacimiento = @fecha_nac,
+					cliente_habilitado = @habilitado, cliente_nombre = @nombre, cliente_nuevo = @nuevo, 
+					cliente_numero_dni = @dni, cliente_telefono = @tel, usuario_id = @id_user
+					where cliente_id = @id_cli
+			end catch
+		end
+		fetch c_cursor into @id_cli, @id_user, @baja, @nombre, @ciudad, @apellido, @dni, @mail, @fecha_nac, 
+			@tel, @dir, @piso, @depto,@localidad, @cp, @dato_inc, @nuevo, @habilitado
+	end
+	close c_cursor
+	deallocate c_cursor
+end
+
+go
+create trigger tr_evitar_proveedores_gemelos on GESTION_DE_GATOS.Proveedor instead of insert, update
+as begin --No puede haber 2 proveedores con la misma razon social y CUIT
+	declare @id_prov numeric(18), @id_user numeric(18), @baja char, @r_social nvarchar(100), 
+			@contacto nvarchar(30), @cuit nvarchar(20), @rubro nvarchar(100), @mail nvarchar(255),
+			@tel numeric(18), @dir nvarchar(255), @piso nvarchar(10), @depto nvarchar(5), @localidad nvarchar(50), 
+			@ciudad nvarchar(255), @cp nvarchar(255), @dato_inc char, @nuevo char, @habilitado char
+	declare p_cursor cursor for (select * from inserted)
+	open p_cursor
+	fetch p_cursor into @id_prov, @id_user, @baja, @r_social, @contacto, @cuit, @rubro, @mail,
+			@tel, @dir, @piso, @depto, @localidad, @ciudad, @cp, @dato_inc, @nuevo, @habilitado
+	while(@@FETCH_STATUS = 0) begin
+		declare @hayProvGemelo int = 
+			(select count(*) from GESTION_DE_GATOS.Proveedor 
+				where proveedor_cuit = @cuit and
+					  proveedor_razon_social = @r_social)
+		if(@hayProvGemelo > 0) begin
+			raiserror('Proveedor gemelo ya existente', 1, 1)
+			rollback
+		end
+		else begin
+			begin try 
+				insert into GESTION_DE_GATOS.Proveedor(usuario_id, proveedor_baja, proveedor_razon_social, proveedor_contacto,
+						proveedor_cuit, proveedor_rubro, proveedor_email, proveedor_telefono, proveedor_direccion,
+						proveedor_direccion_piso, proveedor_direccion_depto, proveedor_direccion_localidad,
+						proveedor_ciudad, proveedor_codigo_postal, proveedor_dato_inconsistente,
+						proveedor_nuevo, proveedor_habilitado)
+					(select usuario_id, proveedor_baja, proveedor_razon_social, proveedor_contacto,
+						proveedor_cuit, proveedor_rubro, proveedor_email, proveedor_telefono, proveedor_direccion,
+						proveedor_direccion_piso, proveedor_direccion_depto, proveedor_direccion_localidad,
+						proveedor_ciudad, proveedor_codigo_postal, proveedor_dato_inconsistente,
+						proveedor_nuevo, proveedor_habilitado
+						from inserted where proveedor_id = @id_prov)
+			end try
+			begin catch --Si hay error es porque fue un update(ya existía proveedor)
+				update GESTION_DE_GATOS.Proveedor set proveedor_contacto = @contacto, 
+					proveedor_baja = @baja, proveedor_ciudad = @ciudad, proveedor_codigo_postal = @cp, proveedor_dato_inconsistente = @dato_inc,
+					proveedor_direccion = @dir, proveedor_direccion_depto = @depto, proveedor_direccion_localidad = @localidad,
+					proveedor_direccion_piso = @piso, proveedor_email = @mail, proveedor_rubro = @rubro,
+					proveedor_habilitado = @habilitado, proveedor_nuevo = @nuevo, 
+					proveedor_cuit = @cuit, proveedor_telefono = @tel, usuario_id = @id_user
+					where proveedor_id = @id_prov
+			end catch
+		end
+		fetch p_cursor into @id_prov, @id_user, @baja, @r_social, @contacto, @cuit, @rubro, @mail,
+			@tel, @dir, @piso, @depto, @localidad, @ciudad, @cp, @dato_inc, @nuevo, @habilitado
+	end
+	close p_cursor
+	deallocate p_cursor
+end

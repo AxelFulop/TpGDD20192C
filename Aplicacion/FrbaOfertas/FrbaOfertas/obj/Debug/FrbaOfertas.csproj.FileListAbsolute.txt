@@ -80,3 +80,5 @@ C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\Frba
 C:\Users\axelf\Documents\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ConexionBD.Conexion.resources
 C:\Users\axelf\Documents\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Utils.Util.resources
 C:\Users\axelf\Documents\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.csprojResolveAssemblyReference.cache
+C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ConexionBD.Conexion.resources
+C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.Utils.Util.resources
