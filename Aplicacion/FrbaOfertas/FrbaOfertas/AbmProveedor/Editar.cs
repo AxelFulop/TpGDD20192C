@@ -60,7 +60,44 @@ namespace FrbaOfertas.AbmProveedor
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //Verificar cambios y guardarlos en la DB
+            if (passwordNueva1.Text != passwordNueva2.Text)
+            {
+                MessageBox.Show("Las contraseñas no coinciden");
+                return;
+            }
+            float rAux;
+            if (!float.TryParse(telefono.Text, out rAux) || !float.TryParse(codigoPostal.Text, out rAux) 
+                || !float.TryParse(dir_numero.Text, out rAux) || !float.TryParse(dir_piso.Text, out rAux))
+            {
+                MessageBox.Show("Campos numéricos deben tener sólo números");
+                return;
+            }
+
+            try
+            {
+                new ConexionBD.Conexion().executeQuery(String.Format(
+                "update {0}.Proveedor set proveedor_razon_social='{1}', proveedor_email='{2}', proveedor_telefono={3}, " +
+                "proveedor_codigo_postal={4}, proveedor_cuit='{5}', proveedor_rubro='{6}', proveedor_contacto='{7}', " +
+                "proveedor_direccion='{8}', proveedor_direccion_piso={9}, proveedor_direccion_depto='{10}', " +
+                "proveedor_direccion_localidad='{11}' where proveedor_id={12}",
+                Properties.Settings.Default.Schema,razonSocial.Text, mail.Text, telefono.Text, codigoPostal.Text,
+                cuit.Text, rubro.Text, contacto.Text, dir_calle.Text + " " + dir_numero.Text,
+                dir_piso.Text, dir_depto.Text, dir_localidad.Text, datos["id"]));
+
+                if (passwordNueva1.Text != "" && passwordNueva2.Text != "")
+                {
+                    new ConexionBD.Conexion().executeProcedure(Properties.Settings.Default.Schema + ".cambiarContraseniaProveedor",
+                        new List<string>() { "@id_proveedor", "@password" },
+                        new string[] { datos["id"], passwordNueva1.Text });
+                }
+                MessageBox.Show("Proveedor actualizado correctamente");
+                this.Hide();
+                new AbmProveedor().Show();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al actualizar los datos del proveedor");
+            }
         }
 
         private void Editar_Load(object sender, EventArgs e)
