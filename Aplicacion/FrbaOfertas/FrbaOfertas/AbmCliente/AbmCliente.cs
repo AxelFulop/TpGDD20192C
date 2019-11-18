@@ -91,6 +91,9 @@ namespace FrbaOfertas.AbmCliente
                 button3.Enabled = false;
                 msgInhabilitado.Visible = true;
             }
+            this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
 
         private void label1_Click(object sender, EventArgs e)

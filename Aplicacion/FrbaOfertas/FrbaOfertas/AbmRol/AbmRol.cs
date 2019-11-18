@@ -74,7 +74,9 @@ namespace FrbaOfertas.AbmRol
 
         private void AbmRol_Load(object sender, EventArgs e)
         {
-
+            this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
     }
 }
