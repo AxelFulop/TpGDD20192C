@@ -294,15 +294,94 @@ namespace FrbaOfertas
                 this.Hide();
                 new Perfil(username.Text).Show();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                MessageBox.Show("Error al actualizar los datos");
+                MessageBox.Show("Error al actualizar los datos.\n" + e.ToString());
             }
         }
 
         private void guardarDatosProveedor()
         {
+            if (passwordNueva1.Text != passwordNueva2.Text)
+            {
+                MessageBox.Show("Las contraseñas no coinciden");
+                return;
+            }
+            float rAux;
+            if ((prov_telefono.Text != "" && !float.TryParse(prov_telefono.Text, out rAux)) || (prov_cp.Text != "" && !float.TryParse(prov_cp.Text, out rAux))
+                || (dir_numero.Text != "" && !float.TryParse(dir_numero.Text, out rAux)) || (dir_piso.Text != "" && !float.TryParse(dir_piso.Text, out rAux)))
+            {
+                MessageBox.Show("Campos numéricos deben tener sólo números");
+                return;
+            }
 
+            int cantVector = 2;
+            if (passwordNueva1.Text != "" && passwordNueva2.Text != "")
+                cantVector = 3;
+            Tuple<string, List<string>, Object[]>[] procs = new Tuple<string, List<string>, object[]>[cantVector];
+            Object id_proveedor = new ConexionBD.Conexion().executeScalarFunction("obtenerIdProveedor", usuario);
+
+            procs[0] = Tuple.Create<string, List<string>, Object[]>(
+                    Properties.Settings.Default.Schema + ".actualizarDatosProveedor",
+                    new List<string>() {
+                        "@razonSocial", "@mail", "@telefono", "@codigoPostal" , "@cuit" , "@rubro",
+                        "@contacto", "@direccion", "@direccion_piso", "@direccion_depto", 
+                        "@direccion_localidad", "@id_proveedor"
+                    },
+                    new string[]{
+                        prov_razonSocial.Text, prov_mail.Text, prov_telefono.Text, prov_cp.Text,
+                        prov_cuit.Text, prov_rubro.Text, prov_contacto.Text, dir_calle.Text + " " + dir_numero.Text,
+                        dir_piso.Text, dir_depto.Text, dir_localidad.Text, id_proveedor.ToString()
+                    }
+            );
+
+            if (passwordNueva1.Text != "" && passwordNueva2.Text != "")
+            {
+                procs[1] = Tuple.Create<string, List<string>, Object[]>(
+                    Properties.Settings.Default.Schema + ".cambiarContraseniaProveedor",
+                    new List<string>() {
+                            "@id_proveedor" , "@password"
+                        },
+                    new string[]{
+                            id_proveedor.ToString(), passwordNueva1.Text
+                        }
+                );
+
+                procs[2] = Tuple.Create<string, List<string>, Object[]>(
+                    Properties.Settings.Default.Schema + ".cambiarNombreUsuario",
+                    new List<string>() {
+                            "@nombreActual", "@nombreNuevo"
+                        },
+                    new string[]{
+                            usuario, username.Text
+                        }
+                );
+            }
+            else
+            {
+                procs[1] = Tuple.Create<string, List<string>, Object[]>(
+                    Properties.Settings.Default.Schema + ".cambiarNombreUsuario",
+                    new List<string>() {
+                            "@nombreActual", "@nombreNuevo"
+                        },
+                    new string[]{
+                            usuario, username.Text
+                        }
+                );
+            }
+
+            try
+            {
+                new ConexionBD.Conexion().executeStoredTransaction(procs);
+
+                MessageBox.Show("Datos actualizados correctamente");
+                this.Hide();
+                new Perfil(username.Text).Show();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error al actualizar los datos.\n" + e.ToString());
+            }
         }
 
         private void guardarDatosAdmin()
