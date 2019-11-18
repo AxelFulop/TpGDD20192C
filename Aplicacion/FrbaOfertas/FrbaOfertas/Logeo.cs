@@ -17,6 +17,7 @@ namespace FrbaOfertas
         int contIntentosFallidos;
         int tiempoBloqueo;
         Util utils = new Util();
+        public static List<string> usuariosEliminadosLogicamente = new List<string>();
         public static string username = "";
 
         public string UserName{
@@ -68,18 +69,33 @@ namespace FrbaOfertas
                 }
                 else if ((Convert.ToInt32(loginValido) == 1) && (Convert.ToInt32(bloqueado) == 0))
                 {
-                    username = textBoxUser.Text;
-                    limpiarIntentosFallidos();
-                    redireccionar(this.textBoxUser.Text);
+                    if(usuariosEliminadosLogicamente.Contains(textBoxUser.Text))
+                    {
+                        MessageBox.Show("Usuario ha sido dado de baja por administrador");
+                    }
+                    else
+                    {
+                        username = textBoxUser.Text;
+                        limpiarIntentosFallidos();
+                        redireccionar(this.textBoxUser.Text);
+                    }
+                    
                 }
                 else if ((Convert.ToInt32(bloqueado) == 1) && (unixDateTime >= unixDateUser) && Convert.ToInt32(usr) == 1)
                 {
                     new Conexion().executeProcedure(Properties.Settings.Default.Schema + ".updateBloqueadoUser", new List<string>() { "@nombreUsuario", "@bloqueado" }, textBoxUser.Text, "0");
                     if (Convert.ToInt32(loginValido) == 1)
                     {
-                        username = textBoxUser.Text;
-                        limpiarIntentosFallidos();
-                        redireccionar(this.textBoxUser.Text);
+                        if (usuariosEliminadosLogicamente.Contains(textBoxUser.Text))
+                        {
+                            MessageBox.Show("Usuario ha sido dado de baja por administrador");
+                        }
+                        else
+                        {
+                            username = textBoxUser.Text;
+                            limpiarIntentosFallidos();
+                            redireccionar(this.textBoxUser.Text);
+                        }
                     }
                 }
                 else

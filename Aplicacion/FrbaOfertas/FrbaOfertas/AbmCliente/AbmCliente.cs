@@ -13,7 +13,7 @@ namespace FrbaOfertas.AbmCliente
     public partial class AbmCliente : Form
     {
         private DataTable clientes;
-        private static List<Tuple<string, string, string>> clientesBorradosLogicamente = new List<Tuple<string, string, string>>();
+        public static List<Tuple<string, string, string>> clientesBorradosLogicamente = new List<Tuple<string, string, string>>();
                                   //Dni - Nombre - Apellido
 
         public AbmCliente()
@@ -128,6 +128,9 @@ namespace FrbaOfertas.AbmCliente
                             MessageBox.Show("Cliente eliminado correctamente", "",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Information);
+                            Object user_cliente = new ConexionBD.Conexion().executeScalarFunction("obtenerUsuarioCliente", datos["id"]);
+
+                            Logeo.usuariosEliminadosLogicamente.Add(user_cliente.ToString());
                             this.Hide();
                             new AbmCliente(Tuple.Create<string, string, string>(
                                 datos["dni"], datos["nombre"], datos["apellido"]

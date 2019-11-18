@@ -13,7 +13,7 @@ namespace FrbaOfertas.AbmProveedor
     public partial class AbmProveedor : Form
     {
         private DataTable proveedores;
-        private static List<Tuple<string, string>> provBorradosLogicamente = new List<Tuple<string, string>>();
+        public static List<Tuple<string, string>> provBorradosLogicamente = new List<Tuple<string, string>>();
                               //RazonSocial - CUIT
 
         public AbmProveedor()
@@ -104,6 +104,9 @@ namespace FrbaOfertas.AbmProveedor
                             MessageBox.Show("Proveedor eliminado correctamente", "",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Information);
+                            Object user_prov = new ConexionBD.Conexion().executeScalarFunction("obtenerUsuarioProveedor", datos["id"]);
+
+                            Logeo.usuariosEliminadosLogicamente.Add(user_prov.ToString());
                             this.Hide();
                             new AbmProveedor(Tuple.Create<string, string>(datos["razonSocial"], datos["cuit"])).Show();
                         }

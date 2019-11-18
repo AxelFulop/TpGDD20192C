@@ -88,9 +88,15 @@ IF OBJECT_ID('GESTION_DE_GATOS.altaOferta') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.altaCliente') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.altaCliente
 
------ Eliminacion de funciones ---------   
+----- Eliminacion de funciones ---------    
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdProveedor') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.obtenerIdProveedor
+
+IF OBJECT_ID('GESTION_DE_GATOS.obtenerUsuarioCliente') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.obtenerUsuarioCliente
+
+IF OBJECT_ID('GESTION_DE_GATOS.obtenerUsuarioProveedor') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.obtenerUsuarioProveedor
 
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdCliente') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.obtenerIdCliente
@@ -151,6 +157,7 @@ IF OBJECT_ID('GESTION_DE_GATOS."fechaVencimientoTarjeta"') IS NOT NULL
 
 IF OBJECT_ID('GESTION_DE_GATOS."saldoCliente"') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.saldoCliente
+
 ------------ Eliminacion de Triggers --------------
 IF OBJECT_ID('GESTION_DE_GATOS."tr_evitar_proveedores_gemelos"') IS NOT NULL
     DROP TRIGGER  GESTION_DE_GATOS.tr_evitar_proveedores_gemelos
@@ -1297,6 +1304,26 @@ BEGIN
 RETURN (SELECT p.proveedor_id from GESTION_DE_GATOS.Usuario u
 			inner join GESTION_DE_GATOS.Proveedor p on p.usuario_id = u.usuario_id 
 			where u.usuario_nombre = @usuario_nombre)
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.obtenerUsuarioProveedor(@id_proveedor numeric(18))
+RETURNS nvarchar(255)
+AS
+BEGIN
+RETURN (SELECT u.usuario_nombre from GESTION_DE_GATOS.Proveedor p
+			inner join GESTION_DE_GATOS.Usuario u on p.usuario_id = u.usuario_id 
+			where p.proveedor_id = @id_proveedor)
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.obtenerUsuarioCliente(@id_cliente numeric(18))
+RETURNS nvarchar(255)
+AS
+BEGIN
+RETURN (SELECT u.usuario_nombre from GESTION_DE_GATOS.Cliente p
+			inner join GESTION_DE_GATOS.Usuario u on p.usuario_id = u.usuario_id 
+			where p.cliente_id = @id_cliente)
 END
 
 --Triggers
