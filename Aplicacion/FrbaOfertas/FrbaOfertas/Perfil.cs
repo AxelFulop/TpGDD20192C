@@ -230,31 +230,69 @@ namespace FrbaOfertas
                 return;
             }
 
+            int cantVector = 2;
+            if (passwordNueva1.Text != "" && passwordNueva2.Text != "")
+                cantVector = 3;
+            Tuple<string, List<string>, Object[]>[] procs = new Tuple<string, List<string>, object[]>[cantVector];
+            Object id_cliente = new ConexionBD.Conexion().executeScalarFunction("obtenerIdCliente", usuario);
+
+            procs[0] = Tuple.Create<string, List<string>, Object[]>(
+                    Properties.Settings.Default.Schema + ".actualizarDatosCliente",
+                    new List<string>() {
+                        "@nombre", "@apellido", "@mail", "@dni" , "@telefono" , "@codigoPostal",
+                        "@fechaNacimiento", "@direccion", "@direccion_piso", "@direccion_depto", 
+                        "@direccion_localidad", "@id_cliente"
+                    },
+                    new string[]{
+                        cli_nombre.Text, cli_apellido.Text, cli_mail.Text,
+                        cli_dni.Text, cli_telefono.Text, cli_cp.Text, cli_fechaNacimiento.Value.ToShortDateString(),
+                        dir_calle.Text + " " + dir_numero.Text, dir_piso.Text, dir_depto.Text, dir_localidad.Text,
+                        id_cliente.ToString()
+                    }
+            );
+
+            if (passwordNueva1.Text != "" && passwordNueva2.Text != "")
+            {
+                procs[1] = Tuple.Create<string, List<string>, Object[]>(
+                    Properties.Settings.Default.Schema + ".cambiarContraseniaCliente",
+                    new List<string>() {
+                            "@id_cliente" , "@password"
+                        },
+                    new string[]{
+                            id_cliente.ToString(), passwordNueva1.Text
+                        }
+                );
+
+                procs[2] = Tuple.Create<string, List<string>, Object[]>(
+                    Properties.Settings.Default.Schema + ".cambiarNombreUsuario",
+                    new List<string>() {
+                            "@nombreActual", "@nombreNuevo"
+                        },
+                    new string[]{
+                            usuario, username.Text
+                        }
+                );
+            }
+            else
+            {
+                procs[1] = Tuple.Create<string, List<string>, Object[]>(
+                    Properties.Settings.Default.Schema + ".cambiarNombreUsuario",
+                    new List<string>() {
+                            "@nombreActual", "@nombreNuevo"
+                        },
+                    new string[]{
+                            usuario, username.Text
+                        }
+                );
+            }
+
             try
             {
-                new ConexionBD.Conexion().executeQuery(String.Format(
-                "update {0}.Cliente set cliente_nombre='{1}', cliente_apellido='{2}', cliente_email='{3}', " +
-                "cliente_numero_dni={4}, cliente_telefono={5}, cliente_codigo_postal={6}, cliente_fecha_nacimiento='{7}', " +
-                "cliente_direccion='{8}', cliente_direccion_piso={9}, cliente_direccion_depto='{10}', " +
-                "cliente_direccion_localidad='{11}' where usuario_id=({12})",
-                Properties.Settings.Default.Schema, cli_nombre.Text, cli_apellido.Text, cli_mail.Text,
-                cli_dni.Text, cli_telefono.Text, cli_cp.Text, cli_fechaNacimiento.Value.ToShortDateString(),
-                dir_calle.Text + " " + dir_numero.Text, dir_piso.Text, dir_depto.Text, dir_localidad.Text,
-                "select usuario_id from " + Properties.Settings.Default.Schema + ".Usuario where usuario_nombre = '" + usuario + "'"));
-
-                if (passwordNueva1.Text != "" && passwordNueva2.Text != "")
-                {
-                    Object id_cliente = new ConexionBD.Conexion().selectReturnOnlyObject(
-                        "select cliente_id from " + Properties.Settings.Default.Schema + ".Cliente c " +
-                        "inner join " + Properties.Settings.Default.Schema + ".Usuario u on u.usuario_id=c.usuario_id " + 
-                        "where u.usuario_nombre = '" + usuario + "'");
-                    new ConexionBD.Conexion().executeProcedure(Properties.Settings.Default.Schema + ".cambiarContraseniaCliente",
-                        new List<string>() { "@id_cliente", "@password" },
-                        new string[] { id_cliente.ToString(), passwordNueva1.Text });
-                }
-                MessageBox.Show("Datos actualizado correctamente");
+                new ConexionBD.Conexion().executeStoredTransaction(procs);
+                MessageBox.Show("Datos actualizados correctamente");
+                Logeo.username = username.Text;
                 this.Hide();
-                new MenuPrincipal().Show();
+                new Perfil(username.Text).Show();
             }
             catch (Exception)
             {

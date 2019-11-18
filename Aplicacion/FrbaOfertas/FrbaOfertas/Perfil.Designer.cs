@@ -133,7 +133,7 @@
             this.panelProveedor.Controls.Add(this.label14);
             this.panelProveedor.Controls.Add(this.prov_mail);
             this.panelProveedor.Controls.Add(this.label12);
-            this.panelProveedor.Location = new System.Drawing.Point(5, 37);
+            this.panelProveedor.Location = new System.Drawing.Point(5, 68);
             this.panelProveedor.Name = "panelProveedor";
             this.panelProveedor.Size = new System.Drawing.Size(598, 474);
             this.panelProveedor.TabIndex = 70;

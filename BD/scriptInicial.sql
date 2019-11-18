@@ -4,6 +4,9 @@ USE GD2C2019
 IF OBJECT_ID('GESTION_DE_GATOS.habilitarRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.habilitarRol
 
+IF OBJECT_ID('GESTION_DE_GATOS.cambiarNombreUsuario') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.cambiarNombreUsuario
+
 IF OBJECT_ID('GESTION_DE_GATOS.actualizarDatosProveedor') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.actualizarDatosProveedor
 
@@ -926,6 +929,16 @@ AS
 BEGIN 
 	update Rol set rol_nombre = @nuevoNombre
 		where rol_nombre = @nombreRol
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.cambiarNombreUsuario
+@nombreActual NVARCHAR(255),
+@nombreNuevo NVARCHAR(255)
+AS
+BEGIN 
+	update GESTION_DE_GATOS.Usuario set usuario_nombre = @nombreNuevo
+		where usuario_nombre = @nombreActual
 END
 
 GO
