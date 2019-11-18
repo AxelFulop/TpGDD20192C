@@ -27,7 +27,9 @@ namespace FrbaOfertas.Login
 
         private void LoginABM_Load(object sender, EventArgs e)
         {
-
+            this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
 
         private void label4_Click(object sender, EventArgs e)

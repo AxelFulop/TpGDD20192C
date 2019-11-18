@@ -59,6 +59,9 @@ namespace FrbaOfertas
                 actualizarDatosProveedor();
             if (rol.Text == "Administrador")
                 actualizarDatosAdministrador();
+            this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
 
         private void label2_Click(object sender, EventArgs e)

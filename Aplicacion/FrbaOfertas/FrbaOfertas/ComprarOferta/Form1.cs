@@ -22,5 +22,12 @@ namespace FrbaOfertas.ComprarOferta
             this.Hide();
             new MenuPrincipal().Show();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        }
     }
 }

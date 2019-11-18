@@ -182,7 +182,9 @@ namespace FrbaOfertas
 
         private void MenuPrincipal_Load(object sender, EventArgs e)
         {
-
+            this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
 
         private void button2_Click_1(object sender, EventArgs e)

@@ -88,7 +88,9 @@ namespace FrbaOfertas.AbmRol
 
         private void Editar_Load(object sender, EventArgs e)
         {
-
+            this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
 
         private void button1_Click(object sender, EventArgs e)

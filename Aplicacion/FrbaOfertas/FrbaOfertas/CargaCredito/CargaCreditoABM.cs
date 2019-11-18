@@ -79,6 +79,9 @@ namespace FrbaOfertas.CragaCredito
                 SinTarjetasLink.Visible = true;
                 cargarBtn.Enabled = false;
             }
+            this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
 
         private void comboBoxTarjeta_SelectedIndexChanged(object sender, EventArgs e)

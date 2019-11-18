@@ -233,7 +233,9 @@ namespace FrbaOfertas.AbmProveedor
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-
+            this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
 
         private void AbmProveedor_Load(object sender, EventArgs e)
