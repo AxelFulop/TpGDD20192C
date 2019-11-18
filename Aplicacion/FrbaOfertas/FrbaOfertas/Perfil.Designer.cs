@@ -36,6 +36,7 @@
             this.prov_razonSocial = new System.Windows.Forms.TextBox();
             this.prov_contacto = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.prov_rubro = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.prov_telefono = new System.Windows.Forms.TextBox();
@@ -53,6 +54,7 @@
             this.cli_fechaNacimiento = new System.Windows.Forms.DateTimePicker();
             this.cli_dni = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.cli_cp = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -77,8 +79,6 @@
             this.label25 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.rol = new System.Windows.Forms.TextBox();
             this.username = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -133,7 +133,7 @@
             this.panelProveedor.Controls.Add(this.label14);
             this.panelProveedor.Controls.Add(this.prov_mail);
             this.panelProveedor.Controls.Add(this.label12);
-            this.panelProveedor.Location = new System.Drawing.Point(550, 22);
+            this.panelProveedor.Location = new System.Drawing.Point(516, 156);
             this.panelProveedor.Name = "panelProveedor";
             this.panelProveedor.Size = new System.Drawing.Size(598, 474);
             this.panelProveedor.TabIndex = 70;
@@ -183,6 +183,17 @@
             this.label6.Size = new System.Drawing.Size(91, 25);
             this.label6.TabIndex = 49;
             this.label6.Text = "Contacto";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label9.Location = new System.Drawing.Point(3, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(149, 20);
+            this.label9.TabIndex = 25;
+            this.label9.Text = "Datos de proveedor";
             // 
             // prov_rubro
             // 
@@ -303,7 +314,7 @@
             this.panelCliente.Controls.Add(this.cli_nombre);
             this.panelCliente.Controls.Add(this.cli_apellido);
             this.panelCliente.Controls.Add(this.label23);
-            this.panelCliente.Location = new System.Drawing.Point(550, 22);
+            this.panelCliente.Location = new System.Drawing.Point(540, 31);
             this.panelCliente.Name = "panelCliente";
             this.panelCliente.Size = new System.Drawing.Size(598, 417);
             this.panelCliente.TabIndex = 72;
@@ -353,6 +364,17 @@
             this.label15.Size = new System.Drawing.Size(166, 25);
             this.label15.TabIndex = 49;
             this.label15.Text = "Fecha nacimiento";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label16.Location = new System.Drawing.Point(3, 0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(124, 20);
+            this.label16.TabIndex = 25;
+            this.label16.Text = "Datos de cliente";
             // 
             // cli_cp
             // 
@@ -576,28 +598,6 @@
             this.label1.Text = "Usuario";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label16.Location = new System.Drawing.Point(3, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(124, 20);
-            this.label16.TabIndex = 25;
-            this.label16.Text = "Datos de cliente";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label9.Location = new System.Drawing.Point(3, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(149, 20);
-            this.label9.TabIndex = 25;
-            this.label9.Text = "Datos de proveedor";
-            // 
             // rol
             // 
             this.rol.Enabled = false;
@@ -686,8 +686,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 644);
-            this.Controls.Add(this.panelDireccion);
+            this.Controls.Add(this.panelCliente);
             this.Controls.Add(this.panelProveedor);
+            this.Controls.Add(this.panelDireccion);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.passwordNueva2);
             this.Controls.Add(this.label31);
@@ -695,7 +696,6 @@
             this.Controls.Add(this.label32);
             this.Controls.Add(this.username);
             this.Controls.Add(this.rol);
-            this.Controls.Add(this.panelCliente);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CancelBtn);

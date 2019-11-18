@@ -34,7 +34,19 @@ namespace FrbaOfertas
 
         private void button3_Click(object sender, EventArgs e)
         {
-
+            switch (rol.Text)
+            {
+                case "Cliente":
+                    guardarDatosCliente();
+                    break;
+                case "Proveedor":
+                    guardarDatosProveedor();
+                    break;
+                case "Administrador":
+                    guardarDatosAdmin();
+                    break;
+                default: break;
+            }
         }
 
         private void Perfil_Load(object sender, EventArgs e)
@@ -200,6 +212,64 @@ namespace FrbaOfertas
             numero = dir.Last();
 
             return Tuple.Create<string, string>(calle, numero);
+        }
+
+        private void guardarDatosCliente()
+        {
+            if (passwordNueva1.Text != passwordNueva2.Text)
+            {
+                MessageBox.Show("Las contraseñas no coinciden");
+                return;
+            }
+            float rAux;
+            if (!float.TryParse(cli_dni.Text, out rAux) || !float.TryParse(cli_telefono.Text, out rAux) ||
+                !float.TryParse(cli_cp.Text, out rAux) || !float.TryParse(dir_numero.Text, out rAux) ||
+                !float.TryParse(dir_piso.Text, out rAux))
+            {
+                MessageBox.Show("Campos numéricos deben tener sólo números");
+                return;
+            }
+
+            try
+            {
+                new ConexionBD.Conexion().executeQuery(String.Format(
+                "update {0}.Cliente set cliente_nombre='{1}', cliente_apellido='{2}', cliente_email='{3}', " +
+                "cliente_numero_dni={4}, cliente_telefono={5}, cliente_codigo_postal={6}, cliente_fecha_nacimiento='{7}', " +
+                "cliente_direccion='{8}', cliente_direccion_piso={9}, cliente_direccion_depto='{10}', " +
+                "cliente_direccion_localidad='{11}' where usuario_id=({12})",
+                Properties.Settings.Default.Schema, cli_nombre.Text, cli_apellido.Text, cli_mail.Text,
+                cli_dni.Text, cli_telefono.Text, cli_cp.Text, cli_fechaNacimiento.Value.ToShortDateString(),
+                dir_calle.Text + " " + dir_numero.Text, dir_piso.Text, dir_depto.Text, dir_localidad.Text,
+                "select usuario_id from " + Properties.Settings.Default.Schema + ".Usuario where usuario_nombre = '" + usuario + "'"));
+
+                if (passwordNueva1.Text != "" && passwordNueva2.Text != "")
+                {
+                    Object id_cliente = new ConexionBD.Conexion().selectReturnOnlyObject(
+                        "select cliente_id from " + Properties.Settings.Default.Schema + ".Cliente c " +
+                        "inner join " + Properties.Settings.Default.Schema + ".Usuario u on u.usuario_id=c.usuario_id " + 
+                        "where u.usuario_nombre = '" + usuario + "'");
+                    new ConexionBD.Conexion().executeProcedure(Properties.Settings.Default.Schema + ".cambiarContraseniaCliente",
+                        new List<string>() { "@id_cliente", "@password" },
+                        new string[] { id_cliente.ToString(), passwordNueva1.Text });
+                }
+                MessageBox.Show("Datos actualizado correctamente");
+                this.Hide();
+                new MenuPrincipal().Show();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al actualizar los datos");
+            }
+        }
+
+        private void guardarDatosProveedor()
+        {
+
+        }
+
+        private void guardarDatosAdmin()
+        {
+
         }
     }
 }
