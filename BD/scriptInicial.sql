@@ -4,6 +4,9 @@ USE GD2C2019
 IF OBJECT_ID('GESTION_DE_GATOS.habilitarRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.habilitarRol
 
+IF OBJECT_ID('GESTION_DE_GATOS.cambiarContraseniaUsuario') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.cambiarContraseniaUsuario
+
 IF OBJECT_ID('GESTION_DE_GATOS.cambiarNombreUsuario') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.cambiarNombreUsuario
 
@@ -789,6 +792,18 @@ update GESTION_DE_GATOS.Usuario set usuario_password = @passHash
 END
 
 GO
+CREATE PROCEDURE GESTION_DE_GATOS.cambiarContraseniaUsuario
+@nombreUsuario nvarchar(255),
+@password NVARCHAR(128)
+AS
+BEGIN
+DECLARE @passHash varbinary(128)
+SET @passHash =  HASHBYTES('SHA2_256', convert(nvarchar(128), @password))
+update GESTION_DE_GATOS.Usuario set usuario_password = @passHash
+	where usuario_nombre = @nombreUsuario
+END
+
+GO
 CREATE PROCEDURE GESTION_DE_GATOS.updateBloqueadoUser
 @nombreUsuario NVARCHAR(255),
 @bloqueado NVARCHAR
@@ -1240,7 +1255,7 @@ SELECT @saldo = sum(t.tarjeta_saldo) FROM GESTION_DE_GATOS.Tarjeta t
 	inner join GESTION_DE_GATOS.Cliente c on c.cliente_id = t.cliente_id
 	inner join GESTION_DE_GATOS.Usuario u on u.usuario_id = c.usuario_id
 	where u.usuario_nombre = @usuario
-RETURN @saldo
+RETURN isnull(@saldo, 0)
 END
 
 GO

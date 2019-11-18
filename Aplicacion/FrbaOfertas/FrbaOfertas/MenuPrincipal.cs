@@ -12,7 +12,7 @@ namespace FrbaOfertas
 {
     public partial class MenuPrincipal : Form
     {
-        private static string usuario;
+        public static string usuario;
         private List<string> roles = new List<string>();
 
         public MenuPrincipal()

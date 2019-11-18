@@ -254,12 +254,12 @@ namespace FrbaOfertas
             if (passwordNueva1.Text != "" && passwordNueva2.Text != "")
             {
                 procs[1] = Tuple.Create<string, List<string>, Object[]>(
-                    Properties.Settings.Default.Schema + ".cambiarContraseniaCliente",
+                    Properties.Settings.Default.Schema + ".cambiarContraseniaUsuario",
                     new List<string>() {
-                            "@id_cliente" , "@password"
+                            "@nombreUsuario" , "@password"
                         },
                     new string[]{
-                            id_cliente.ToString(), passwordNueva1.Text
+                            usuario, passwordNueva1.Text
                         }
                 );
 
@@ -291,6 +291,7 @@ namespace FrbaOfertas
                 new ConexionBD.Conexion().executeStoredTransaction(procs);
                 MessageBox.Show("Datos actualizados correctamente");
                 Logeo.username = username.Text;
+                MenuPrincipal.usuario = username.Text;
                 this.Hide();
                 new Perfil(username.Text).Show();
             }
@@ -338,12 +339,12 @@ namespace FrbaOfertas
             if (passwordNueva1.Text != "" && passwordNueva2.Text != "")
             {
                 procs[1] = Tuple.Create<string, List<string>, Object[]>(
-                    Properties.Settings.Default.Schema + ".cambiarContraseniaProveedor",
+                    Properties.Settings.Default.Schema + ".cambiarContraseniaUsuario",
                     new List<string>() {
-                            "@id_proveedor" , "@password"
+                            "@nombreUsuario" , "@password"
                         },
                     new string[]{
-                            id_proveedor.ToString(), passwordNueva1.Text
+                            usuario, passwordNueva1.Text
                         }
                 );
 
@@ -375,6 +376,8 @@ namespace FrbaOfertas
                 new ConexionBD.Conexion().executeStoredTransaction(procs);
 
                 MessageBox.Show("Datos actualizados correctamente");
+                Logeo.username = username.Text;
+                MenuPrincipal.usuario = username.Text;
                 this.Hide();
                 new Perfil(username.Text).Show();
             }
@@ -386,7 +389,66 @@ namespace FrbaOfertas
 
         private void guardarDatosAdmin()
         {
+            if (passwordNueva1.Text != passwordNueva2.Text)
+            {
+                MessageBox.Show("Las contraseñas no coinciden");
+                return;
+            }
 
+            int cantVector = 1;
+            if (passwordNueva1.Text != "" && passwordNueva2.Text != "")
+                cantVector = 2;
+            Tuple<string, List<string>, Object[]>[] procs = new Tuple<string, List<string>, object[]>[cantVector];
+
+            if (passwordNueva1.Text != "" && passwordNueva2.Text != "")
+            {
+                procs[0] = Tuple.Create<string, List<string>, Object[]>(
+                    Properties.Settings.Default.Schema + ".cambiarContraseniaUsuario",
+                    new List<string>() {
+                            "@nombreUsuario" , "@password"
+                        },
+                    new string[]{
+                            usuario, passwordNueva1.Text
+                        }
+                );
+
+                procs[1] = Tuple.Create<string, List<string>, Object[]>(
+                    Properties.Settings.Default.Schema + ".cambiarNombreUsuario",
+                    new List<string>() {
+                            "@nombreActual", "@nombreNuevo"
+                        },
+                    new string[]{
+                            usuario, username.Text
+                        }
+                );
+            }
+            else
+            {
+                procs[0] = Tuple.Create<string, List<string>, Object[]>(
+                    Properties.Settings.Default.Schema + ".cambiarNombreUsuario",
+                    new List<string>() {
+                            "@nombreActual", "@nombreNuevo"
+                        },
+                    new string[]{
+                            usuario, username.Text
+                        }
+                );
+            }
+
+            try
+            {
+                new ConexionBD.Conexion().executeStoredTransaction(procs);
+
+                MessageBox.Show("Datos actualizados correctamente");
+                Logeo.username = username.Text;
+                MenuPrincipal.usuario = username.Text;
+                this.Hide();
+                new Perfil(username.Text).Show();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error al actualizar los datos.\n" + e.Message);
+            }
         }
     }
 }
