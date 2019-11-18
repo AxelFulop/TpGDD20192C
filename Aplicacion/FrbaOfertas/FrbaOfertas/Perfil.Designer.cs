@@ -133,7 +133,7 @@
             this.panelProveedor.Controls.Add(this.label14);
             this.panelProveedor.Controls.Add(this.prov_mail);
             this.panelProveedor.Controls.Add(this.label12);
-            this.panelProveedor.Location = new System.Drawing.Point(516, 156);
+            this.panelProveedor.Location = new System.Drawing.Point(5, 37);
             this.panelProveedor.Name = "panelProveedor";
             this.panelProveedor.Size = new System.Drawing.Size(598, 474);
             this.panelProveedor.TabIndex = 70;
@@ -298,6 +298,7 @@
             // panelCliente
             // 
             this.panelCliente.Controls.Add(this.cli_ciudad);
+            this.panelCliente.Controls.Add(this.panelProveedor);
             this.panelCliente.Controls.Add(this.label10);
             this.panelCliente.Controls.Add(this.cli_fechaNacimiento);
             this.panelCliente.Controls.Add(this.cli_dni);
@@ -687,7 +688,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 644);
             this.Controls.Add(this.panelCliente);
-            this.Controls.Add(this.panelProveedor);
             this.Controls.Add(this.panelDireccion);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.passwordNueva2);

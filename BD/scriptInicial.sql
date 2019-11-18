@@ -4,6 +4,12 @@ USE GD2C2019
 IF OBJECT_ID('GESTION_DE_GATOS.habilitarRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.habilitarRol
 
+IF OBJECT_ID('GESTION_DE_GATOS.actualizarDatosProveedor') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.actualizarDatosProveedor
+
+IF OBJECT_ID('GESTION_DE_GATOS.actualizarDatosCliente') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.actualizarDatosCliente
+
 IF OBJECT_ID('GESTION_DE_GATOS.cambiarContraseniaProveedor') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.cambiarContraseniaProveedor
 
@@ -73,7 +79,16 @@ IF OBJECT_ID('GESTION_DE_GATOS.altaOferta') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.altaCliente') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.altaCliente
 
------ Eliminacion de funciones ---------  
+----- Eliminacion de funciones ---------   
+IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdProveedor') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.obtenerIdProveedor
+
+IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdCliente') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.obtenerIdCliente
+
+IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdUsuario') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.obtenerIdUsuario
+
 IF OBJECT_ID('GESTION_DE_GATOS.clienteEstaHabilitado') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.clienteEstaHabilitado
 
@@ -949,6 +964,53 @@ INSERT INTO GESTION_DE_GATOS.Tarjeta (cliente_id,tarjeta_saldo,tarjeta_banco,tar
 VALUES(@idCliente,200,'HSCBC',@CVV,CONVERT(DATETIME,@fechaVencimiento),@numeroTarjeta,'Debito', '1')
 END
 
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.actualizarDatosCliente
+@nombre NVARCHAR(255),
+@apellido NVARCHAR(255),
+@mail NVARCHAR(255),
+@dni numeric(18),
+@telefono numeric(18),
+@codigoPostal NVARCHAR(255),
+@fechaNacimiento datetime,
+@direccion NVARCHAR(255),
+@direccion_piso nvarchar(10),
+@direccion_depto nvarchar(5),
+@direccion_localidad nvarchar(50),
+@id_cliente NVARCHAR(255) --Para identificar al cliente
+AS
+BEGIN
+	update GESTION_DE_GATOS.Cliente set cliente_nombre=@nombre, cliente_apellido=@apellido, cliente_email=@mail,
+		cliente_numero_dni=@dni, cliente_telefono=@telefono, cliente_codigo_postal=@codigoPostal, cliente_fecha_nacimiento=@fechaNacimiento,
+		cliente_direccion=@direccion, cliente_direccion_piso=@direccion_piso, cliente_direccion_depto=@direccion_depto,
+		cliente_direccion_localidad=@direccion_localidad 
+		where cliente_id = @id_cliente
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.actualizarDatosProveedor
+@razonSocial NVARCHAR(100),
+@mail NVARCHAR(255),
+@telefono numeric(18),
+@codigoPostal NVARCHAR(255),
+@cuit nvarchar(20),
+@rubro nvarchar(100),
+@contacto nvarchar(30),
+@direccion NVARCHAR(255),
+@direccion_piso nvarchar(10),
+@direccion_depto nvarchar(5),
+@direccion_localidad nvarchar(50),
+@id_proveedor NVARCHAR(255) --Para identificar al proveedor
+AS
+BEGIN
+	update GESTION_DE_GATOS.Proveedor set proveedor_razon_social=@razonSocial, proveedor_email=@mail, proveedor_telefono=@telefono,
+		proveedor_codigo_postal=@codigoPostal, proveedor_cuit=@cuit, proveedor_rubro=@rubro, proveedor_contacto=@contacto,
+		proveedor_direccion=@direccion, proveedor_direccion_piso=@direccion_piso, proveedor_direccion_depto=@direccion_depto,
+		proveedor_direccion_localidad=@direccion_localidad 
+		where proveedor_id = @id_proveedor
+END
+
 /* Creacion de funciones */
 GO
 CREATE FUNCTION GESTION_DE_GATOS.existeUsuario(@nombreUsuario VARCHAR(50))
@@ -1166,6 +1228,35 @@ SELECT @saldo = sum(t.tarjeta_saldo) FROM GESTION_DE_GATOS.Tarjeta t
 	inner join GESTION_DE_GATOS.Usuario u on u.usuario_id = c.usuario_id
 	where u.usuario_nombre = @usuario
 RETURN @saldo
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.obtenerIdUsuario(@usuario_nombre nvarchar(255))
+RETURNS numeric(18)
+AS
+BEGIN
+RETURN (SELECT usuario_id from GESTION_DE_GATOS.Usuario
+			where usuario_nombre = @usuario_nombre)
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.obtenerIdCliente(@usuario_nombre nvarchar(255))
+RETURNS numeric(18)
+AS
+BEGIN
+RETURN (SELECT c.cliente_id from GESTION_DE_GATOS.Usuario u
+			inner join GESTION_DE_GATOS.Cliente c on c.usuario_id = u.usuario_id 
+			where u.usuario_nombre = @usuario_nombre)
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.obtenerIdProveedor(@usuario_nombre nvarchar(255))
+RETURNS numeric(18)
+AS
+BEGIN
+RETURN (SELECT p.proveedor_id from GESTION_DE_GATOS.Usuario u
+			inner join GESTION_DE_GATOS.Proveedor p on p.usuario_id = u.usuario_id 
+			where u.usuario_nombre = @usuario_nombre)
 END
 
 --Triggers

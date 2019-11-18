@@ -222,9 +222,9 @@ namespace FrbaOfertas
                 return;
             }
             float rAux;
-            if (!float.TryParse(cli_dni.Text, out rAux) || !float.TryParse(cli_telefono.Text, out rAux) ||
-                !float.TryParse(cli_cp.Text, out rAux) || !float.TryParse(dir_numero.Text, out rAux) ||
-                !float.TryParse(dir_piso.Text, out rAux))
+            if ((cli_dni.Text != "" && !float.TryParse(cli_dni.Text, out rAux)) || (cli_telefono.Text != "" && !float.TryParse(cli_telefono.Text, out rAux)) ||
+                (cli_cp.Text != "" && !float.TryParse(cli_cp.Text, out rAux)) || (dir_numero.Text != "" && !float.TryParse(dir_numero.Text, out rAux)) ||
+                (dir_piso.Text != "" && !float.TryParse(dir_piso.Text, out rAux)))
             {
                 MessageBox.Show("Campos numéricos deben tener sólo números");
                 return;

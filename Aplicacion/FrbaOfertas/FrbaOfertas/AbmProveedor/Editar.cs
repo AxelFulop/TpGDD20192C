@@ -66,34 +66,52 @@ namespace FrbaOfertas.AbmProveedor
                 return;
             }
             float rAux;
-            if (!float.TryParse(telefono.Text, out rAux) || !float.TryParse(codigoPostal.Text, out rAux) 
-                || !float.TryParse(dir_numero.Text, out rAux) || !float.TryParse(dir_piso.Text, out rAux))
+            if ((telefono.Text != "" && !float.TryParse(telefono.Text, out rAux)) || (codigoPostal.Text != "" && !float.TryParse(codigoPostal.Text, out rAux))
+                || (dir_numero.Text != "" && !float.TryParse(dir_numero.Text, out rAux)) || (dir_piso.Text != "" && !float.TryParse(dir_piso.Text, out rAux)))
             {
                 MessageBox.Show("Campos numéricos deben tener sólo números");
                 return;
             }
 
+            int cantVector = 1;
+            if (passwordNueva1.Text != "" && passwordNueva2.Text != "")
+                cantVector = 2;
+            Tuple<string, List<string>, Object[]>[] procs = new Tuple<string, List<string>, object[]>[cantVector];
+
+            procs[0] = Tuple.Create<string, List<string>, Object[]>(
+                    Properties.Settings.Default.Schema + ".actualizarDatosProveedor",
+                    new List<string>() {
+                        "@razonSocial", "@mail", "@telefono", "@codigoPostal" , "@cuit" , "@rubro",
+                        "@contacto", "@direccion", "@direccion_piso", "@direccion_depto", 
+                        "@direccion_localidad", "@id_proveedor"
+                    },
+                    new string[]{
+                        razonSocial.Text, mail.Text, telefono.Text, codigoPostal.Text,
+                        cuit.Text, rubro.Text, contacto.Text, dir_calle.Text + " " + dir_numero.Text,
+                        dir_piso.Text, dir_depto.Text, dir_localidad.Text, datos["id"]
+                    }
+            );
+
+            if (passwordNueva1.Text != "" && passwordNueva2.Text != "")
+            {
+                    procs[1] = Tuple.Create<string, List<string>, Object[]>(
+                        Properties.Settings.Default.Schema + ".cambiarContraseniaProveedor",
+                        new List<string>() {
+                            "@id_proveedor" , "@password"
+                        },
+                        new string[]{
+                            datos["id"], passwordNueva1.Text
+                        }
+                    );
+            }
             try
             {
-                new ConexionBD.Conexion().executeQuery(String.Format(
-                "update {0}.Proveedor set proveedor_razon_social='{1}', proveedor_email='{2}', proveedor_telefono={3}, " +
-                "proveedor_codigo_postal={4}, proveedor_cuit='{5}', proveedor_rubro='{6}', proveedor_contacto='{7}', " +
-                "proveedor_direccion='{8}', proveedor_direccion_piso={9}, proveedor_direccion_depto='{10}', " +
-                "proveedor_direccion_localidad='{11}' where proveedor_id={12}",
-                Properties.Settings.Default.Schema,razonSocial.Text, mail.Text, telefono.Text, codigoPostal.Text,
-                cuit.Text, rubro.Text, contacto.Text, dir_calle.Text + " " + dir_numero.Text,
-                dir_piso.Text, dir_depto.Text, dir_localidad.Text, datos["id"]));
+                    new ConexionBD.Conexion().executeStoredTransaction(procs);
 
-                if (passwordNueva1.Text != "" && passwordNueva2.Text != "")
-                {
-                    new ConexionBD.Conexion().executeProcedure(Properties.Settings.Default.Schema + ".cambiarContraseniaProveedor",
-                        new List<string>() { "@id_proveedor", "@password" },
-                        new string[] { datos["id"], passwordNueva1.Text });
-                }
-                MessageBox.Show("Proveedor actualizado correctamente");
-                this.Hide();
-                new AbmProveedor().Show();
-            }
+                    MessageBox.Show("Proveedor actualizado correctamente");
+                    this.Hide();
+                    new AbmProveedor().Show();
+            }  
             catch (Exception)
             {
                 MessageBox.Show("Error al actualizar los datos del proveedor");
