@@ -4,6 +4,9 @@ USE GD2C2019
 IF OBJECT_ID('GESTION_DE_GATOS.habilitarRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.habilitarRol
 
+IF OBJECT_ID('GESTION_DE_GATOS.reiniciarIntentosFallidos') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.reiniciarIntentosFallidos
+
 IF OBJECT_ID('GESTION_DE_GATOS.cambiarContraseniaUsuario') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.cambiarContraseniaUsuario
 
@@ -821,6 +824,15 @@ CREATE PROCEDURE GESTION_DE_GATOS.sumarIntentoFallido
 AS
 BEGIN
 	UPDATE GESTION_DE_GATOS.Usuario SET usuario_cont_ingresos_fallidos = cast(usuario_cont_ingresos_fallidos as int) + 1
+		WHERE usuario_nombre = @nombreUsuario
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.reiniciarIntentosFallidos
+@nombreUsuario NVARCHAR(255)
+AS
+BEGIN
+	UPDATE GESTION_DE_GATOS.Usuario SET usuario_cont_ingresos_fallidos = 0
 		WHERE usuario_nombre = @nombreUsuario
 END
 

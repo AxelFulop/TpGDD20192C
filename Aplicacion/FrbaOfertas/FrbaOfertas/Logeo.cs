@@ -69,15 +69,16 @@ namespace FrbaOfertas
                 else if ((Convert.ToInt32(loginValido) == 1) && (Convert.ToInt32(bloqueado) == 0))
                 {
                     username = textBoxUser.Text;
-                   redireccionar(this.textBoxUser.Text);
+                    limpiarIntentosFallidos();
+                    redireccionar(this.textBoxUser.Text);
                 }
                 else if ((Convert.ToInt32(bloqueado) == 1) && (unixDateTime >= unixDateUser) && Convert.ToInt32(usr) == 1)
                 {
                     new Conexion().executeProcedure(Properties.Settings.Default.Schema + ".updateBloqueadoUser", new List<string>() { "@nombreUsuario", "@bloqueado" }, textBoxUser.Text, "0");
                     if (Convert.ToInt32(loginValido) == 1)
                     {
-                        //Verificar campos y guardar cliente en la DB
                         username = textBoxUser.Text;
+                        limpiarIntentosFallidos();
                         redireccionar(this.textBoxUser.Text);
                     }
                 }
@@ -152,6 +153,14 @@ namespace FrbaOfertas
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void limpiarIntentosFallidos()
+        {
+            new Conexion().executeProcedure(
+                Properties.Settings.Default.Schema + ".reiniciarIntentosFallidos",
+                new List<string>() { "@nombreUsuario" },
+                textBoxUser.Text);
         }
     }
 }
