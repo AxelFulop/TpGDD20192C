@@ -142,7 +142,7 @@ namespace FrbaOfertas
                         new AbmCliente.AbmCliente().Show();
                         break;
                     case "Ofertas":
-                        new CrearOferta.Form1().Show();
+                        new CrearOferta.ConfeccionarOferta().Show();
                         break;
                     case "Proveedores":
                         new AbmProveedor.AbmProveedor().Show();

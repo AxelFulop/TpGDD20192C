@@ -104,6 +104,10 @@ IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdCliente') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdUsuario') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.obtenerIdUsuario
 
+	
+IF OBJECT_ID('GESTION_DE_GATOS.obtenerRazonSocialProveedor') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.obtenerRazonSocialProveedor
+
 IF OBJECT_ID('GESTION_DE_GATOS.clienteEstaHabilitado') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.clienteEstaHabilitado
 
@@ -157,6 +161,9 @@ IF OBJECT_ID('GESTION_DE_GATOS."fechaVencimientoTarjeta"') IS NOT NULL
 
 IF OBJECT_ID('GESTION_DE_GATOS."saldoCliente"') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.saldoCliente
+
+IF OBJECT_ID('GESTION_DE_GATOS."obtenerOfertas"') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.obtenerOfertas
 
 ------------ Eliminacion de Triggers --------------
 IF OBJECT_ID('GESTION_DE_GATOS."tr_evitar_proveedores_gemelos"') IS NOT NULL
@@ -698,6 +705,8 @@ BEGIN
 		VALUES (@nombreRol, 0)
 END
 
+
+
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.altaOferta
 @descripcionOferta NVARCHAR(255), 
@@ -708,11 +717,11 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaOferta
 @stockDisponibleOferta NUMERIC(18,0),
 @precioOferta NUMERIC(18,2),
 @precioListaOferta NUMERIC(18,2),
-@proveedorCuit NUMERIC(18,0)
+@proveedorRazonSocial NVARCHAR(255)
 AS
 BEGIN
 DECLARE @proveedorId NUMERIC(18,0)
-SET @proveedorId = (SELECT proveedor_id FROM GESTION_DE_GATOS.Proveedor WHERE proveedor_cuit = @proveedorCuit)
+SET @proveedorId = (SELECT proveedor_id FROM GESTION_DE_GATOS.Proveedor WHERE proveedor_cuit = @proveedorRazonSocial)
 INSERT INTO GESTION_DE_GATOS.Oferta (proveedor_id,oferta_descripcion,oferta_codigo,oferta_fecha_publicacion,oferta_fecha_vencimiento,oferta_limite_compra,oferta_stock_disponible,oferta_precio,oferta_precio_lista)
 VALUES(@proveedorId,@descripcionOferta,@codigoOferta,@fechaPublicacionOferta,@fechaVencimientoOferta,@limiteCompraOferta,@stockDisponibleOferta,@precioOferta,@precioListaOferta)
 END
@@ -1306,6 +1315,19 @@ RETURN (SELECT p.proveedor_id from GESTION_DE_GATOS.Usuario u
 			where u.usuario_nombre = @usuario_nombre)
 END
 
+
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.obtenerRazonSocialProveedor(@usuario_nombre nvarchar(255))
+RETURNS NVARCHAR(255)
+AS
+BEGIN
+RETURN (SELECT p.proveedor_razon_social from GESTION_DE_GATOS.Usuario u
+			inner join GESTION_DE_GATOS.Proveedor p on p.usuario_id = u.usuario_id 
+			where u.usuario_nombre = @usuario_nombre)
+END
+
+
 GO
 CREATE FUNCTION GESTION_DE_GATOS.obtenerUsuarioProveedor(@id_proveedor numeric(18))
 RETURNS nvarchar(255)
@@ -1434,3 +1456,4 @@ as begin --No puede haber 2 proveedores con la misma razon social y CUIT
 	close p_cursor
 	deallocate p_cursor
 end
+

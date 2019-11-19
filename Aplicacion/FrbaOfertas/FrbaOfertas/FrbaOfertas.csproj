@@ -115,11 +115,11 @@
     <Compile Include="CargaCredito\CargaCreditoABM.Designer.cs">
       <DependentUpon>CargaCreditoABM.cs</DependentUpon>
     </Compile>
-    <Compile Include="CrearOferta\Form1.cs">
+    <Compile Include="CrearOferta\ConfeccionarOferta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CrearOferta\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="CrearOferta\ConfeccionarOferta.Designer.cs">
+      <DependentUpon>ConfeccionarOferta.cs</DependentUpon>
     </Compile>
     <Compile Include="Facturar\Form1.cs">
       <SubType>Form</SubType>
@@ -209,8 +209,8 @@
     <EmbeddedResource Include="ConexionBD\Conexion.resx">
       <DependentUpon>Conexion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CrearOferta\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="CrearOferta\ConfeccionarOferta.resx">
+      <DependentUpon>ConfeccionarOferta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Facturar\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
