@@ -64,8 +64,8 @@ namespace FrbaOfertas.AbmProveedor
                          
                     },
                    new Object[]{
-                        razonSocial.Text, mail.Text, telefono.Text, calle.Text + " " + numero.Text,
-                        piso.Text, depto.Text, localidad.Text, codigoPostal.Text, ciudad.Text,
+                        razonSocial.Text, mail.Text, telefono.Text == ""? DBNull.Value.ToString() : telefono.Text, calle.Text + " " + (numero.Text == ""? DBNull.Value.ToString() : numero.Text),
+                        piso.Text == ""? DBNull.Value.ToString() : piso.Text, depto.Text, localidad.Text, codigoPostal.Text == ""? DBNull.Value.ToString() : codigoPostal.Text, ciudad.Text,
                         cuit.Text, rubro.Text, contacto.Text, cuit.Text       
                     }
            );

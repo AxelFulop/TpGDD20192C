@@ -240,9 +240,10 @@ namespace FrbaOfertas
                     },
                     new string[]{
                         cli_nombre.Text, cli_apellido.Text, cli_mail.Text,
-                        cli_dni.Text, cli_telefono.Text, cli_cp.Text, cli_fechaNacimiento.Value.ToShortDateString(),
-                        dir_calle.Text + " " + dir_numero.Text, dir_piso.Text, dir_depto.Text, dir_localidad.Text,
-                        id_cliente.ToString()
+                        cli_dni.Text == ""? DBNull.Value.ToString() : cli_dni.Text, cli_telefono.Text == ""? DBNull.Value.ToString() : cli_telefono.Text, 
+                        cli_cp.Text == ""? DBNull.Value.ToString() : cli_cp.Text, cli_fechaNacimiento.Value.ToShortDateString(),
+                        dir_calle.Text + " " + (dir_numero.Text == ""? DBNull.Value.ToString() : dir_numero.Text), dir_piso.Text == ""? DBNull.Value.ToString() : dir_piso.Text, 
+                        dir_depto.Text, dir_localidad.Text, id_cliente.ToString()
                     }
             );
 
@@ -318,9 +319,9 @@ namespace FrbaOfertas
                         "@direccion_localidad", "@id_proveedor"
                     },
                     new string[]{
-                        prov_razonSocial.Text, prov_mail.Text, prov_telefono.Text, prov_cp.Text,
-                        prov_cuit.Text, prov_rubro.Text, prov_contacto.Text, dir_calle.Text + " " + dir_numero.Text,
-                        dir_piso.Text, dir_depto.Text, dir_localidad.Text, id_proveedor.ToString()
+                        prov_razonSocial.Text, prov_mail.Text, prov_telefono.Text == ""? DBNull.Value.ToString() : prov_telefono.Text, prov_cp.Text == ""? DBNull.Value.ToString() : prov_cp.Text,
+                        prov_cuit.Text, prov_rubro.Text, prov_contacto.Text, dir_calle.Text + " " + (dir_numero.Text == ""? DBNull.Value.ToString() : dir_numero.Text),
+                        dir_piso.Text == ""? DBNull.Value.ToString() : dir_piso.Text, dir_depto.Text, dir_localidad.Text, id_proveedor.ToString()
                     }
             );
 

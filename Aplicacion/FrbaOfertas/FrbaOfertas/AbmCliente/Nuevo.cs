@@ -73,9 +73,9 @@ namespace FrbaOfertas.AbmCliente
 		                 "@codigoPostalCliente" ,"@ciudadCliente","@usuario"
                     },
                    new Object[]{
-                        fechaNacimiento.Value.ToShortDateString(),nombre.Text,apellido.Text,dni.Text,
-                        mail.Text,telefono.Text, calle.Text + " " + numero.Text, piso.Text,depto.Text,
-                        localidaad.Text,codigoPostal.Text,city.Text,username
+                        fechaNacimiento.Value.ToShortDateString(),nombre.Text,apellido.Text,dni.Text == ""? DBNull.Value.ToString() : dni.Text,
+                        mail.Text,telefono.Text, calle.Text + " " + (numero.Text == ""? DBNull.Value.ToString() : numero.Text), piso.Text == ""? DBNull.Value.ToString() : piso.Text, depto.Text,
+                        localidaad.Text,codigoPostal.Text == ""? DBNull.Value.ToString() : codigoPostal.Text, city.Text, username
                     }
            );
         

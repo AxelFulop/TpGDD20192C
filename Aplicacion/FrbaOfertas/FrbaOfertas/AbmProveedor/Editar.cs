@@ -79,9 +79,9 @@ namespace FrbaOfertas.AbmProveedor
                         "@direccion_localidad", "@id_proveedor"
                     },
                     new string[]{
-                        razonSocial.Text, mail.Text, telefono.Text, codigoPostal.Text,
-                        cuit.Text, rubro.Text, contacto.Text, dir_calle.Text + " " + dir_numero.Text,
-                        dir_piso.Text, dir_depto.Text, dir_localidad.Text, datos["id"]
+                        razonSocial.Text, mail.Text, telefono.Text == ""? DBNull.Value.ToString() : telefono.Text, codigoPostal.Text == ""? DBNull.Value.ToString() : codigoPostal.Text,
+                        cuit.Text, rubro.Text, contacto.Text, dir_calle.Text + " " + (dir_numero.Text == ""? DBNull.Value.ToString() : dir_numero.Text),
+                        dir_piso.Text == ""? DBNull.Value.ToString() : dir_piso.Text, dir_depto.Text, dir_localidad.Text, datos["id"]
                     }
             );
 
