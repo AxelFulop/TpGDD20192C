@@ -58,9 +58,9 @@ namespace FrbaOfertas
             }
             else
             {
-                float tipo, cvv, num;
-                if (!float.TryParse(textBoxNumero.Text, out num) ||
-                    !float.TryParse(textBoxCVV.Text, out cvv))
+                float aux;
+                if (!float.TryParse(textBoxNumero.Text, out aux) ||
+                    !float.TryParse(textBoxCVV.Text, out aux))
                 {
                     MessageBox.Show("Número tarjeta y CVV deben ser datos numéricos");
                     return;

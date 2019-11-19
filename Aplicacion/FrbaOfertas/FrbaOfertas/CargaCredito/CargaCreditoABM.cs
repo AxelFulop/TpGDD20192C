@@ -107,14 +107,20 @@ namespace FrbaOfertas.CragaCredito
 
         private void button3_Click(object sender, EventArgs e)
         {
-            float rAux;
-            if(!float.TryParse(textBoxMonto.Text, out rAux)){
-                MessageBox.Show("Monto debe ser un número");
-                return;
-            }
-            if (rAux <= 0)
+            if (textBoxMonto.Value <= 0)
             {
                 MessageBox.Show("Monto debe ser un número positivo");
+                return;
+            }
+
+            List<string> tarjetasValidas = new List<string>();
+            foreach(string tarj in comboBoxTarjeta.Items){
+                tarjetasValidas.Add(tarj);
+            }
+
+            if (comboBoxTarjeta.SelectedItem == null)
+            {
+                MessageBox.Show("Tarjeta inválida. Por favor seleccione una tarjeta válida");
                 return;
             }
 
@@ -129,6 +135,8 @@ namespace FrbaOfertas.CragaCredito
             {
                 new Conexion().executeProcedure(Properties.Settings.Default.Schema + ".altaCarga", parametros, values);
                 MessageBox.Show("Carga realizada correctamente");
+                this.Hide();
+                new CargaCreditoABM().Show();
             }
             catch (Exception)
             {

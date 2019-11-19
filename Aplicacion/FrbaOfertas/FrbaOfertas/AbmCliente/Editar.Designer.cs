@@ -34,11 +34,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.mail = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.dni = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.telefono = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.codigoPostal = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -49,9 +46,7 @@
             this.label29 = new System.Windows.Forms.Label();
             this.dir_depto = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
-            this.dir_piso = new System.Windows.Forms.TextBox();
             this.label27 = new System.Windows.Forms.Label();
-            this.dir_numero = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
             this.dir_calle = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
@@ -62,6 +57,16 @@
             this.label32 = new System.Windows.Forms.Label();
             this.habilitarBtn = new System.Windows.Forms.Button();
             this.inhabilitarBtn = new System.Windows.Forms.Button();
+            this.dir_piso = new System.Windows.Forms.NumericUpDown();
+            this.dir_numero = new System.Windows.Forms.NumericUpDown();
+            this.codigoPostal = new System.Windows.Forms.NumericUpDown();
+            this.telefono = new System.Windows.Forms.NumericUpDown();
+            this.dni = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.dir_piso)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dir_numero)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.codigoPostal)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.telefono)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dni)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -119,14 +124,6 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "Mail";
             // 
-            // dni
-            // 
-            this.dni.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dni.Location = new System.Drawing.Point(232, 249);
-            this.dni.Name = "dni";
-            this.dni.Size = new System.Drawing.Size(309, 30);
-            this.dni.TabIndex = 7;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -137,14 +134,6 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "DNI";
             // 
-            // telefono
-            // 
-            this.telefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.telefono.Location = new System.Drawing.Point(232, 309);
-            this.telefono.Name = "telefono";
-            this.telefono.Size = new System.Drawing.Size(309, 30);
-            this.telefono.TabIndex = 17;
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -154,14 +143,6 @@
             this.label9.Size = new System.Drawing.Size(89, 25);
             this.label9.TabIndex = 16;
             this.label9.Text = "Teléfono";
-            // 
-            // codigoPostal
-            // 
-            this.codigoPostal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.codigoPostal.Location = new System.Drawing.Point(232, 362);
-            this.codigoPostal.Name = "codigoPostal";
-            this.codigoPostal.Size = new System.Drawing.Size(309, 30);
-            this.codigoPostal.TabIndex = 19;
             // 
             // label10
             // 
@@ -263,14 +244,6 @@
             this.label28.Text = "Departamento";
             this.label28.Click += new System.EventHandler(this.label28_Click);
             // 
-            // dir_piso
-            // 
-            this.dir_piso.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dir_piso.Location = new System.Drawing.Point(789, 192);
-            this.dir_piso.Name = "dir_piso";
-            this.dir_piso.Size = new System.Drawing.Size(271, 30);
-            this.dir_piso.TabIndex = 41;
-            // 
             // label27
             // 
             this.label27.AutoSize = true;
@@ -280,14 +253,6 @@
             this.label27.Size = new System.Drawing.Size(50, 25);
             this.label27.TabIndex = 40;
             this.label27.Text = "Piso";
-            // 
-            // dir_numero
-            // 
-            this.dir_numero.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dir_numero.Location = new System.Drawing.Point(789, 135);
-            this.dir_numero.Name = "dir_numero";
-            this.dir_numero.Size = new System.Drawing.Size(271, 30);
-            this.dir_numero.TabIndex = 39;
             // 
             // label26
             // 
@@ -388,12 +353,77 @@
             this.inhabilitarBtn.Visible = false;
             this.inhabilitarBtn.Click += new System.EventHandler(this.inhabilitarBtn_Click);
             // 
+            // dir_piso
+            // 
+            this.dir_piso.Location = new System.Drawing.Point(789, 192);
+            this.dir_piso.Maximum = new decimal(new int[] {
+            1874919423,
+            2328306,
+            0,
+            0});
+            this.dir_piso.Name = "dir_piso";
+            this.dir_piso.Size = new System.Drawing.Size(271, 26);
+            this.dir_piso.TabIndex = 102;
+            // 
+            // dir_numero
+            // 
+            this.dir_numero.Location = new System.Drawing.Point(789, 134);
+            this.dir_numero.Maximum = new decimal(new int[] {
+            -727379969,
+            232,
+            0,
+            0});
+            this.dir_numero.Name = "dir_numero";
+            this.dir_numero.Size = new System.Drawing.Size(271, 26);
+            this.dir_numero.TabIndex = 103;
+            // 
+            // codigoPostal
+            // 
+            this.codigoPostal.Location = new System.Drawing.Point(232, 364);
+            this.codigoPostal.Maximum = new decimal(new int[] {
+            -727379969,
+            232,
+            0,
+            0});
+            this.codigoPostal.Name = "codigoPostal";
+            this.codigoPostal.Size = new System.Drawing.Size(309, 26);
+            this.codigoPostal.TabIndex = 104;
+            // 
+            // telefono
+            // 
+            this.telefono.Location = new System.Drawing.Point(232, 308);
+            this.telefono.Maximum = new decimal(new int[] {
+            -1530494977,
+            232830,
+            0,
+            0});
+            this.telefono.Name = "telefono";
+            this.telefono.Size = new System.Drawing.Size(309, 26);
+            this.telefono.TabIndex = 105;
+            // 
+            // dni
+            // 
+            this.dni.Location = new System.Drawing.Point(232, 251);
+            this.dni.Maximum = new decimal(new int[] {
+            -727379969,
+            232,
+            0,
+            0});
+            this.dni.Name = "dni";
+            this.dni.Size = new System.Drawing.Size(309, 26);
+            this.dni.TabIndex = 106;
+            // 
             // Editar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 644);
             this.ControlBox = false;
+            this.Controls.Add(this.dni);
+            this.Controls.Add(this.telefono);
+            this.Controls.Add(this.codigoPostal);
+            this.Controls.Add(this.dir_numero);
+            this.Controls.Add(this.dir_piso);
             this.Controls.Add(this.inhabilitarBtn);
             this.Controls.Add(this.habilitarBtn);
             this.Controls.Add(this.label5);
@@ -406,9 +436,7 @@
             this.Controls.Add(this.label29);
             this.Controls.Add(this.dir_depto);
             this.Controls.Add(this.label28);
-            this.Controls.Add(this.dir_piso);
             this.Controls.Add(this.label27);
-            this.Controls.Add(this.dir_numero);
             this.Controls.Add(this.label26);
             this.Controls.Add(this.dir_calle);
             this.Controls.Add(this.label25);
@@ -416,11 +444,8 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.codigoPostal);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.telefono);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.dni);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.mail);
             this.Controls.Add(this.label3);
@@ -436,6 +461,11 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Editar cliente";
             this.Load += new System.EventHandler(this.Editar_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dir_piso)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dir_numero)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.codigoPostal)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.telefono)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dni)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -449,11 +479,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox mail;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox dni;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox telefono;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox codigoPostal;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button button1;
@@ -464,9 +491,7 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.TextBox dir_depto;
         private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.TextBox dir_piso;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.TextBox dir_numero;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.TextBox dir_calle;
         private System.Windows.Forms.Label label25;
@@ -477,5 +502,10 @@
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Button habilitarBtn;
         private System.Windows.Forms.Button inhabilitarBtn;
+        private System.Windows.Forms.NumericUpDown dir_piso;
+        private System.Windows.Forms.NumericUpDown dir_numero;
+        private System.Windows.Forms.NumericUpDown codigoPostal;
+        private System.Windows.Forms.NumericUpDown telefono;
+        private System.Windows.Forms.NumericUpDown dni;
     }
 }

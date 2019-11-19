@@ -13,7 +13,7 @@ namespace FrbaOfertas.AbmCliente
 {
     public partial class Nuevo : Form
     {
-        public string username;
+        private string username;
 
         public Nuevo()
         {
@@ -30,6 +30,12 @@ namespace FrbaOfertas.AbmCliente
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (apellido.Text == "" || nombre.Text == "")
+            {
+                MessageBox.Show("Campos 'Nombre' y 'Apellido' son obligatorios");
+                return;
+            }
+
             this.username= nombre.Text.ToLower() + '_' + apellido.Text.ToLower();
             DateTime fechaVenc = Properties.Settings.Default.fecha;
             string schema = Properties.Settings.Default.Schema;
@@ -49,9 +55,9 @@ namespace FrbaOfertas.AbmCliente
                     this.Hide();
                     new AbmCliente().Show();
                 }
-                catch (System.Data.SqlClient.SqlException ex)
+                catch (Exception ex)
                 {
-                    MessageBox.Show(ex.ToString());
+                    MessageBox.Show(ex.Message.ToString());
                 }
         }
 
@@ -65,15 +71,11 @@ namespace FrbaOfertas.AbmCliente
 		                 "@mailCliente","@telefonoCliente","@direccionCliente", "@pisoCliente",
                          "@deptoCliente", "@localidadCliente",
 		                 "@codigoPostalCliente" ,"@ciudadCliente","@usuario"
-                         
                     },
                    new Object[]{
-
                         fechaNacimiento.Value.ToShortDateString(),nombre.Text,apellido.Text,dni.Text,
-                        mail.Text,telefono.Text,direccion.Text,piso.Text,depto.Text,
-                        localidad.Text,codigoPostal.Text,ciudad.Text,username
-                         
-                       
+                        mail.Text,telefono.Text, calle.Text + " " + numero.Text, piso.Text,depto.Text,
+                        localidaad.Text,codigoPostal.Text,city.Text,username
                     }
            );
         
@@ -112,6 +114,16 @@ namespace FrbaOfertas.AbmCliente
             this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fechaNacimiento_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

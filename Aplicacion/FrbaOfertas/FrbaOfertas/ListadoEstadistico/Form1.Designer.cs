@@ -33,10 +33,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(693, 8);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Location = new System.Drawing.Point(1040, 12);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(85, 37);
+            this.button1.Size = new System.Drawing.Size(128, 57);
             this.button1.TabIndex = 0;
             this.button1.Text = "Volver";
             this.button1.UseVisualStyleBackColor = true;
@@ -44,15 +43,14 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(685, 430);
+            this.ClientSize = new System.Drawing.Size(1174, 635);
             this.Controls.Add(this.button1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(805, 469);
+            this.MaximumSize = new System.Drawing.Size(1196, 691);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(687, 469);
+            this.MinimumSize = new System.Drawing.Size(1020, 691);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";

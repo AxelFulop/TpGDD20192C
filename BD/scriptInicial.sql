@@ -162,9 +162,6 @@ IF OBJECT_ID('GESTION_DE_GATOS."fechaVencimientoTarjeta"') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS."saldoCliente"') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.saldoCliente
 
-IF OBJECT_ID('GESTION_DE_GATOS."obtenerOfertas"') IS NOT NULL
-    DROP FUNCTION  GESTION_DE_GATOS.obtenerOfertas
-
 ------------ Eliminacion de Triggers --------------
 IF OBJECT_ID('GESTION_DE_GATOS."tr_evitar_proveedores_gemelos"') IS NOT NULL
     DROP TRIGGER  GESTION_DE_GATOS.tr_evitar_proveedores_gemelos
@@ -651,6 +648,7 @@ where Oferta_Fecha_Compra is not null
 PRINT 'Migrando Fechas de entrega'
 INSERT INTO GESTION_DE_GATOS.DetalleFactura(detalle_fecha_entregado)
 SELECT m.Oferta_Entregado_Fecha FROM gd_esquema.Maestra m
+
 
 /* Creación de procedures */
 GO
@@ -1364,8 +1362,8 @@ as begin
 	while(@@FETCH_STATUS = 0) begin
 		declare @hayClieGemelo int = 
 			(select count(*) from GESTION_DE_GATOS.Cliente 
-				where cliente_apellido = @apellido and
-					  cliente_nombre = @nombre and
+				where lower(cliente_apellido) = lower(@apellido) and
+					  lower(cliente_nombre) = lower(@nombre) and
 					  cliente_numero_dni = @dni and
 					  cliente_id <> @id_cli)
 		if(@hayClieGemelo > 0) begin
@@ -1419,8 +1417,8 @@ as begin --No puede haber 2 proveedores con la misma razon social y CUIT
 	while(@@FETCH_STATUS = 0) begin
 		declare @hayProvGemelo int = 
 			(select count(*) from GESTION_DE_GATOS.Proveedor 
-				where proveedor_cuit = @cuit and
-					  proveedor_razon_social = @r_social and
+				where lower(proveedor_cuit) = lower(@cuit) and
+					  lower(proveedor_razon_social) = lower(@r_social) and
 					  proveedor_id <> @id_prov)
 		if(@hayProvGemelo > 0) begin
 			raiserror('Proveedor gemelo ya existente', 1, 1)

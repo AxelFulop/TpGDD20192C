@@ -69,14 +69,6 @@ namespace FrbaOfertas.AbmCliente
                 MessageBox.Show("Las contraseñas no coinciden");
                 return;
             }
-            float rAux;
-            if ((dni.Text != "" && !float.TryParse(dni.Text, out rAux)) || ( telefono.Text != "" && !float.TryParse(telefono.Text, out rAux)) ||
-                (codigoPostal.Text != "" && !float.TryParse(codigoPostal.Text, out rAux)) || (dir_numero.Text != "" && !float.TryParse(dir_numero.Text, out rAux)) ||
-                (dir_piso.Text != "" && !float.TryParse(dir_piso.Text, out rAux)))
-            {
-                MessageBox.Show("Campos numéricos deben tener sólo números");
-                return;
-            }
 
             int cantVector = 1;
             if (passwordNueva1.Text != "" && passwordNueva2.Text != "")
@@ -90,10 +82,11 @@ namespace FrbaOfertas.AbmCliente
                         "@fechaNacimiento", "@direccion", "@direccion_piso", "@direccion_depto", 
                         "@direccion_localidad", "@id_cliente"
                     },
-                    new string[]{
+                    new Object[]{
                         nombre.Text, apellido.Text, mail.Text,
-                        dni.Text, telefono.Text, codigoPostal.Text, fechaNacimiento.Value.ToShortDateString(),
-                        dir_calle.Text + " " + dir_numero.Text, dir_piso.Text, dir_depto.Text, dir_localidad.Text,
+                        dni.Text == ""? DBNull.Value.ToString() : dni.Text, telefono.Text == ""? DBNull.Value.ToString() : telefono.Text, codigoPostal.Text == ""? DBNull.Value.ToString() : codigoPostal.Text, 
+                        fechaNacimiento.Value.ToShortDateString(),
+                        dir_calle.Text + " " + dir_numero.Text, dir_piso.Text == ""? DBNull.Value.ToString() : dir_piso.Text, dir_depto.Text, dir_localidad.Text,
                         datos["id"]
                     }
             );

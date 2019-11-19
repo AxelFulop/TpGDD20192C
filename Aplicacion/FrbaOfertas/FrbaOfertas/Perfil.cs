@@ -224,14 +224,6 @@ namespace FrbaOfertas
                 MessageBox.Show("Las contraseñas no coinciden");
                 return;
             }
-            float rAux;
-            if ((cli_dni.Text != "" && !float.TryParse(cli_dni.Text, out rAux)) || (cli_telefono.Text != "" && !float.TryParse(cli_telefono.Text, out rAux)) ||
-                (cli_cp.Text != "" && !float.TryParse(cli_cp.Text, out rAux)) || (dir_numero.Text != "" && !float.TryParse(dir_numero.Text, out rAux)) ||
-                (dir_piso.Text != "" && !float.TryParse(dir_piso.Text, out rAux)))
-            {
-                MessageBox.Show("Campos numéricos deben tener sólo números");
-                return;
-            }
 
             int cantVector = 2;
             if (passwordNueva1.Text != "" && passwordNueva2.Text != "")
@@ -309,13 +301,6 @@ namespace FrbaOfertas
             if (passwordNueva1.Text != passwordNueva2.Text)
             {
                 MessageBox.Show("Las contraseñas no coinciden");
-                return;
-            }
-            float rAux;
-            if ((prov_telefono.Text != "" && !float.TryParse(prov_telefono.Text, out rAux)) || (prov_cp.Text != "" && !float.TryParse(prov_cp.Text, out rAux))
-                || (dir_numero.Text != "" && !float.TryParse(dir_numero.Text, out rAux)) || (dir_piso.Text != "" && !float.TryParse(dir_piso.Text, out rAux)))
-            {
-                MessageBox.Show("Campos numéricos deben tener sólo números");
                 return;
             }
 

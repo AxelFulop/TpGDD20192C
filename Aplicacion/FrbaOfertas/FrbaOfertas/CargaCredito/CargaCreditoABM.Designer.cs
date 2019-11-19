@@ -50,11 +50,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxTarjeta = new System.Windows.Forms.ComboBox();
             this.dateTimePickerFechaCarga = new System.Windows.Forms.DateTimePicker();
-            this.textBoxMonto = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.textBoxMonto = new System.Windows.Forms.NumericUpDown();
             this.panelAgregarTarjeta.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.textBoxMonto)).BeginInit();
             this.SuspendLayout();
             // 
             // label9
@@ -290,14 +291,6 @@
             this.dateTimePickerFechaCarga.Size = new System.Drawing.Size(296, 26);
             this.dateTimePickerFechaCarga.TabIndex = 49;
             // 
-            // textBoxMonto
-            // 
-            this.textBoxMonto.Location = new System.Drawing.Point(152, 235);
-            this.textBoxMonto.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBoxMonto.Name = "textBoxMonto";
-            this.textBoxMonto.Size = new System.Drawing.Size(295, 26);
-            this.textBoxMonto.TabIndex = 48;
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -328,17 +321,29 @@
             this.label11.TabIndex = 45;
             this.label11.Text = "Número tarjeta";
             // 
+            // textBoxMonto
+            // 
+            this.textBoxMonto.Location = new System.Drawing.Point(152, 236);
+            this.textBoxMonto.Maximum = new decimal(new int[] {
+            -1530494977,
+            232830,
+            0,
+            0});
+            this.textBoxMonto.Name = "textBoxMonto";
+            this.textBoxMonto.Size = new System.Drawing.Size(296, 26);
+            this.textBoxMonto.TabIndex = 117;
+            // 
             // CargaCreditoABM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1172, 626);
+            this.Controls.Add(this.textBoxMonto);
             this.Controls.Add(this.panelAgregarTarjeta);
             this.Controls.Add(this.textBoxCliente);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxTarjeta);
             this.Controls.Add(this.dateTimePickerFechaCarga);
-            this.Controls.Add(this.textBoxMonto);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label11);
@@ -356,6 +361,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panelAgregarTarjeta.ResumeLayout(false);
             this.panelAgregarTarjeta.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.textBoxMonto)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -383,11 +389,11 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBoxTarjeta;
         private System.Windows.Forms.DateTimePicker dateTimePickerFechaCarga;
-        private System.Windows.Forms.TextBox textBoxMonto;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox tarj_saldo;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown textBoxMonto;
     }
 }

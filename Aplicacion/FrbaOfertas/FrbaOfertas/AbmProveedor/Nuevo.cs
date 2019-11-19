@@ -25,6 +25,12 @@ namespace FrbaOfertas.AbmProveedor
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (razonSocial.Text == "" || cuit.Text == "")
+            {
+                MessageBox.Show("Campos 'Razon social' y 'CUIT' son obligatorios");
+                return;
+            }
+
             DateTime fechaVenc = Properties.Settings.Default.fecha;
             string schema = Properties.Settings.Default.Schema;
 
@@ -58,8 +64,7 @@ namespace FrbaOfertas.AbmProveedor
                          
                     },
                    new Object[]{
-
-                        razonSocial.Text, mail.Text, telefono.Text, direccion.Text,
+                        razonSocial.Text, mail.Text, telefono.Text, calle.Text + " " + numero.Text,
                         piso.Text, depto.Text, localidad.Text, codigoPostal.Text, ciudad.Text,
                         cuit.Text, rubro.Text, contacto.Text, cuit.Text       
                     }

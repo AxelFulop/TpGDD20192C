@@ -48,11 +48,9 @@
             this.label9 = new System.Windows.Forms.Label();
             this.prov_rubro = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.prov_telefono = new System.Windows.Forms.TextBox();
             this.prov_cuit = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.prov_cp = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.prov_mail = new System.Windows.Forms.TextBox();
@@ -61,14 +59,11 @@
             this.cli_ciudad = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.cli_fechaNacimiento = new System.Windows.Forms.DateTimePicker();
-            this.cli_dni = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.cli_cp = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.cli_mail = new System.Windows.Forms.TextBox();
-            this.cli_telefono = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
@@ -77,17 +72,29 @@
             this.label23 = new System.Windows.Forms.Label();
             this.dir_calle = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
-            this.dir_numero = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
-            this.dir_piso = new System.Windows.Forms.TextBox();
             this.label27 = new System.Windows.Forms.Label();
             this.dir_depto = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
             this.dir_localidad = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
+            this.dir_numero = new System.Windows.Forms.NumericUpDown();
+            this.dir_piso = new System.Windows.Forms.NumericUpDown();
+            this.prov_telefono = new System.Windows.Forms.NumericUpDown();
+            this.prov_cp = new System.Windows.Forms.NumericUpDown();
+            this.cli_dni = new System.Windows.Forms.NumericUpDown();
+            this.cli_cp = new System.Windows.Forms.NumericUpDown();
+            this.cli_telefono = new System.Windows.Forms.NumericUpDown();
             this.panelProveedor.SuspendLayout();
             this.panelCliente.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dir_numero)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dir_piso)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.prov_telefono)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.prov_cp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cli_dni)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cli_cp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cli_telefono)).BeginInit();
             this.SuspendLayout();
             // 
             // label3
@@ -203,6 +210,8 @@
             // 
             // panelProveedor
             // 
+            this.panelProveedor.Controls.Add(this.prov_cp);
+            this.panelProveedor.Controls.Add(this.prov_telefono);
             this.panelProveedor.Controls.Add(this.prov_ciudad);
             this.panelProveedor.Controls.Add(this.label24);
             this.panelProveedor.Controls.Add(this.prov_razonSocial);
@@ -211,11 +220,9 @@
             this.panelProveedor.Controls.Add(this.label9);
             this.panelProveedor.Controls.Add(this.prov_rubro);
             this.panelProveedor.Controls.Add(this.label7);
-            this.panelProveedor.Controls.Add(this.prov_telefono);
             this.panelProveedor.Controls.Add(this.prov_cuit);
             this.panelProveedor.Controls.Add(this.label8);
             this.panelProveedor.Controls.Add(this.label13);
-            this.panelProveedor.Controls.Add(this.prov_cp);
             this.panelProveedor.Controls.Add(this.label11);
             this.panelProveedor.Controls.Add(this.label14);
             this.panelProveedor.Controls.Add(this.prov_mail);
@@ -308,15 +315,6 @@
             this.label7.Text = "Rubro";
             this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
-            // prov_telefono
-            // 
-            this.prov_telefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.prov_telefono.Location = new System.Drawing.Point(184, 122);
-            this.prov_telefono.Name = "prov_telefono";
-            this.prov_telefono.Size = new System.Drawing.Size(403, 30);
-            this.prov_telefono.TabIndex = 38;
-            this.prov_telefono.TextChanged += new System.EventHandler(this.telefono_TextChanged);
-            // 
             // prov_cuit
             // 
             this.prov_cuit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -347,15 +345,6 @@
             this.label13.TabIndex = 33;
             this.label13.Text = "Razón social";
             this.label13.Click += new System.EventHandler(this.label13_Click);
-            // 
-            // prov_cp
-            // 
-            this.prov_cp.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.prov_cp.Location = new System.Drawing.Point(184, 171);
-            this.prov_cp.Name = "prov_cp";
-            this.prov_cp.Size = new System.Drawing.Size(403, 30);
-            this.prov_cp.TabIndex = 44;
-            this.prov_cp.TextChanged += new System.EventHandler(this.prov_cp_TextChanged);
             // 
             // label11
             // 
@@ -401,17 +390,17 @@
             // 
             // panelCliente
             // 
+            this.panelCliente.Controls.Add(this.cli_telefono);
+            this.panelCliente.Controls.Add(this.cli_cp);
+            this.panelCliente.Controls.Add(this.cli_dni);
             this.panelCliente.Controls.Add(this.cli_ciudad);
             this.panelCliente.Controls.Add(this.label10);
             this.panelCliente.Controls.Add(this.cli_fechaNacimiento);
-            this.panelCliente.Controls.Add(this.cli_dni);
             this.panelCliente.Controls.Add(this.label15);
             this.panelCliente.Controls.Add(this.label16);
-            this.panelCliente.Controls.Add(this.cli_cp);
             this.panelCliente.Controls.Add(this.label17);
             this.panelCliente.Controls.Add(this.label18);
             this.panelCliente.Controls.Add(this.cli_mail);
-            this.panelCliente.Controls.Add(this.cli_telefono);
             this.panelCliente.Controls.Add(this.label19);
             this.panelCliente.Controls.Add(this.label20);
             this.panelCliente.Controls.Add(this.label21);
@@ -451,14 +440,6 @@
             this.cli_fechaNacimiento.Size = new System.Drawing.Size(402, 30);
             this.cli_fechaNacimiento.TabIndex = 50;
             // 
-            // cli_dni
-            // 
-            this.cli_dni.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cli_dni.Location = new System.Drawing.Point(184, 172);
-            this.cli_dni.Name = "cli_dni";
-            this.cli_dni.Size = new System.Drawing.Size(403, 30);
-            this.cli_dni.TabIndex = 40;
-            // 
             // label15
             // 
             this.label15.AutoSize = true;
@@ -479,15 +460,6 @@
             this.label16.Size = new System.Drawing.Size(124, 20);
             this.label16.TabIndex = 25;
             this.label16.Text = "Datos de cliente";
-            // 
-            // cli_cp
-            // 
-            this.cli_cp.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cli_cp.Location = new System.Drawing.Point(184, 222);
-            this.cli_cp.Name = "cli_cp";
-            this.cli_cp.Size = new System.Drawing.Size(403, 30);
-            this.cli_cp.TabIndex = 48;
-            this.cli_cp.TextChanged += new System.EventHandler(this.cli_cp_TextChanged);
             // 
             // label17
             // 
@@ -517,15 +489,6 @@
             this.cli_mail.Size = new System.Drawing.Size(403, 30);
             this.cli_mail.TabIndex = 38;
             this.cli_mail.TextChanged += new System.EventHandler(this.cli_mail_TextChanged);
-            // 
-            // cli_telefono
-            // 
-            this.cli_telefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cli_telefono.Location = new System.Drawing.Point(184, 266);
-            this.cli_telefono.Name = "cli_telefono";
-            this.cli_telefono.Size = new System.Drawing.Size(403, 30);
-            this.cli_telefono.TabIndex = 46;
-            this.cli_telefono.TextChanged += new System.EventHandler(this.cli_telefono_TextChanged);
             // 
             // label19
             // 
@@ -603,15 +566,6 @@
             this.label25.TabIndex = 25;
             this.label25.Text = "Calle";
             // 
-            // dir_numero
-            // 
-            this.dir_numero.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dir_numero.Location = new System.Drawing.Point(214, 417);
-            this.dir_numero.Name = "dir_numero";
-            this.dir_numero.Size = new System.Drawing.Size(180, 30);
-            this.dir_numero.TabIndex = 28;
-            this.dir_numero.TextChanged += new System.EventHandler(this.dir_numero_TextChanged);
-            // 
             // label26
             // 
             this.label26.AutoSize = true;
@@ -621,14 +575,6 @@
             this.label26.Size = new System.Drawing.Size(81, 25);
             this.label26.TabIndex = 27;
             this.label26.Text = "Número";
-            // 
-            // dir_piso
-            // 
-            this.dir_piso.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dir_piso.Location = new System.Drawing.Point(214, 462);
-            this.dir_piso.Name = "dir_piso";
-            this.dir_piso.Size = new System.Drawing.Size(180, 30);
-            this.dir_piso.TabIndex = 30;
             // 
             // label27
             // 
@@ -689,21 +635,105 @@
             this.label30.TabIndex = 35;
             this.label30.Text = "Dirección";
             // 
+            // dir_numero
+            // 
+            this.dir_numero.Location = new System.Drawing.Point(214, 419);
+            this.dir_numero.Maximum = new decimal(new int[] {
+            -1530494977,
+            232830,
+            0,
+            0});
+            this.dir_numero.Name = "dir_numero";
+            this.dir_numero.Size = new System.Drawing.Size(180, 26);
+            this.dir_numero.TabIndex = 118;
+            // 
+            // dir_piso
+            // 
+            this.dir_piso.Location = new System.Drawing.Point(214, 464);
+            this.dir_piso.Maximum = new decimal(new int[] {
+            -1530494977,
+            232830,
+            0,
+            0});
+            this.dir_piso.Name = "dir_piso";
+            this.dir_piso.Size = new System.Drawing.Size(180, 26);
+            this.dir_piso.TabIndex = 119;
+            // 
+            // prov_telefono
+            // 
+            this.prov_telefono.Location = new System.Drawing.Point(184, 127);
+            this.prov_telefono.Maximum = new decimal(new int[] {
+            -1530494977,
+            232830,
+            0,
+            0});
+            this.prov_telefono.Name = "prov_telefono";
+            this.prov_telefono.Size = new System.Drawing.Size(403, 26);
+            this.prov_telefono.TabIndex = 118;
+            // 
+            // prov_cp
+            // 
+            this.prov_cp.Location = new System.Drawing.Point(184, 174);
+            this.prov_cp.Maximum = new decimal(new int[] {
+            -1530494977,
+            232830,
+            0,
+            0});
+            this.prov_cp.Name = "prov_cp";
+            this.prov_cp.Size = new System.Drawing.Size(403, 26);
+            this.prov_cp.TabIndex = 119;
+            // 
+            // cli_dni
+            // 
+            this.cli_dni.Location = new System.Drawing.Point(184, 174);
+            this.cli_dni.Maximum = new decimal(new int[] {
+            -1530494977,
+            232830,
+            0,
+            0});
+            this.cli_dni.Name = "cli_dni";
+            this.cli_dni.Size = new System.Drawing.Size(403, 26);
+            this.cli_dni.TabIndex = 118;
+            // 
+            // cli_cp
+            // 
+            this.cli_cp.Location = new System.Drawing.Point(180, 268);
+            this.cli_cp.Maximum = new decimal(new int[] {
+            -1530494977,
+            232830,
+            0,
+            0});
+            this.cli_cp.Name = "cli_cp";
+            this.cli_cp.Size = new System.Drawing.Size(407, 26);
+            this.cli_cp.TabIndex = 119;
+            // 
+            // cli_telefono
+            // 
+            this.cli_telefono.Location = new System.Drawing.Point(180, 220);
+            this.cli_telefono.Maximum = new decimal(new int[] {
+            -1530494977,
+            232830,
+            0,
+            0});
+            this.cli_telefono.Name = "cli_telefono";
+            this.cli_telefono.Size = new System.Drawing.Size(407, 26);
+            this.cli_telefono.TabIndex = 120;
+            // 
             // LoginABM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1172, 626);
-            this.Controls.Add(this.panelProveedor);
             this.Controls.Add(this.panelCliente);
+            this.Controls.Add(this.dir_piso);
+            this.Controls.Add(this.dir_numero);
+            this.Controls.Add(this.panelProveedor);
             this.Controls.Add(this.label30);
             this.Controls.Add(this.dir_localidad);
             this.Controls.Add(this.label29);
             this.Controls.Add(this.dir_depto);
             this.Controls.Add(this.label28);
-            this.Controls.Add(this.dir_piso);
             this.Controls.Add(this.label27);
-            this.Controls.Add(this.dir_numero);
             this.Controls.Add(this.label26);
             this.Controls.Add(this.dir_calle);
             this.Controls.Add(this.label25);
@@ -731,6 +761,13 @@
             this.panelProveedor.PerformLayout();
             this.panelCliente.ResumeLayout(false);
             this.panelCliente.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dir_numero)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dir_piso)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.prov_telefono)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.prov_cp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cli_dni)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cli_cp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cli_telefono)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -751,7 +788,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Panel panelProveedor;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox prov_telefono;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox prov_razonSocial;
@@ -763,17 +799,13 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox prov_cuit;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox prov_cp;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panelCliente;
-        private System.Windows.Forms.TextBox cli_dni;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox cli_cp;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox cli_mail;
-        private System.Windows.Forms.TextBox cli_telefono;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
@@ -785,9 +817,7 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox dir_calle;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.TextBox dir_numero;
         private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.TextBox dir_piso;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.TextBox dir_depto;
         private System.Windows.Forms.Label label28;
@@ -796,5 +826,12 @@
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.TextBox cli_ciudad;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown dir_numero;
+        private System.Windows.Forms.NumericUpDown dir_piso;
+        private System.Windows.Forms.NumericUpDown prov_telefono;
+        private System.Windows.Forms.NumericUpDown prov_cp;
+        private System.Windows.Forms.NumericUpDown cli_dni;
+        private System.Windows.Forms.NumericUpDown cli_telefono;
+        private System.Windows.Forms.NumericUpDown cli_cp;
     }
 }

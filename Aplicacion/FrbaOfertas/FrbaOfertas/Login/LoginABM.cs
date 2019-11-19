@@ -84,9 +84,9 @@ namespace FrbaOfertas.Login
                 this.Hide();
                 new MenuPrincipal(usuario.Text).Show();
             }
-            catch (System.Data.SqlClient.SqlException exec)
+            catch (Exception exec)
             {
-                MessageBox.Show(exec.ToString());
+                MessageBox.Show(exec.Message.ToString());
             }            
         }
 
