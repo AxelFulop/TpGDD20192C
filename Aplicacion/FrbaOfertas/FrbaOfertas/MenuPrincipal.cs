@@ -14,12 +14,14 @@ namespace FrbaOfertas
     {
         public static string usuario;
         private List<string> roles = new List<string>();
+        private Boolean estaHabilitado;
 
         public MenuPrincipal()
         {
             InitializeComponent();
             cargarRoles();
             determinarMenu();
+            identificarHabilitacion();
         }
 
         public MenuPrincipal(string nombreUsuario)
@@ -28,6 +30,7 @@ namespace FrbaOfertas
             usuario = nombreUsuario;
             cargarRoles();
             determinarMenu();
+            identificarHabilitacion();
         }
 
         private void cargarRoles()
@@ -136,13 +139,20 @@ namespace FrbaOfertas
         {
             if (listadoMenu.SelectedItem != null && listadoMenu.SelectedItem.ToString() != "")
             {
+                Boolean mustHide = true;
                 switch (listadoMenu.SelectedItem.ToString())
                 {
                     case "Clientes":
                         new AbmCliente.AbmCliente().Show();
                         break;
                     case "Ofertas":
-                        new CrearOferta.ConfeccionarOferta().Show();
+                        if (estaHabilitado)
+                            new CrearOferta.ConfeccionarOferta().Show();
+                        else
+                        {
+                            MessageBox.Show("Un proveedor inhabilitado no puede confeccionar ofertas");
+                            mustHide = false;
+                        }
                         break;
                     case "Proveedores":
                         new AbmProveedor.AbmProveedor().Show();
@@ -151,10 +161,22 @@ namespace FrbaOfertas
                         new AbmRol.AbmRol().Show();
                         break;
                     case "Cargar crédito":
-                        new CragaCredito.CargaCreditoABM(usuario).Show();
+                        if (estaHabilitado)
+                            new CragaCredito.CargaCreditoABM(usuario).Show();
+                        else
+                        {
+                            MessageBox.Show("Un cliente inhabilitado no puede cargar crédito");
+                            mustHide = false;
+                        }
                         break;
                     case "Comprar ofertas":
-                        new ComprarOferta.Form1().Show();
+                        if (estaHabilitado)
+                            new ComprarOferta.Form1().Show();
+                        else
+                        {
+                            MessageBox.Show("Un cliente inhabilitado no puede comprar ofertas");
+                            mustHide = false;
+                        }
                         break;
                     case "Facturar":
                         new Facturar.Form1().Show();
@@ -170,7 +192,8 @@ namespace FrbaOfertas
                         return;
                     default: break;
                 }
-                this.Hide();
+                if (mustHide)
+                    this.Hide();
             }
         }
 
@@ -191,6 +214,14 @@ namespace FrbaOfertas
         {
             this.Hide();
             new Logeo(5,3).Show();
+        }
+
+        public void identificarHabilitacion()
+        {
+            Object habilitado = new ConexionBD.Conexion().executeScalarFunction("usuarioEstaHabilitado", usuario);
+            this.estaHabilitado = habilitado.ToString() == "0"? true : false;
+            if(!estaHabilitado)
+                inhabilitadoMsg.Visible = true;
         }
     }
 }

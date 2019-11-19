@@ -34,6 +34,7 @@
             this.msg_sin_rol = new System.Windows.Forms.Label();
             this.msg_rol_malo = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.inhabilitadoMsg = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -106,11 +107,25 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
+            // inhabilitadoMsg
+            // 
+            this.inhabilitadoMsg.AutoSize = true;
+            this.inhabilitadoMsg.BackColor = System.Drawing.Color.Transparent;
+            this.inhabilitadoMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inhabilitadoMsg.ForeColor = System.Drawing.Color.OrangeRed;
+            this.inhabilitadoMsg.Location = new System.Drawing.Point(453, 44);
+            this.inhabilitadoMsg.Name = "inhabilitadoMsg";
+            this.inhabilitadoMsg.Size = new System.Drawing.Size(277, 29);
+            this.inhabilitadoMsg.TabIndex = 7;
+            this.inhabilitadoMsg.Text = "Usuario está inhabilitado";
+            this.inhabilitadoMsg.Visible = false;
+            // 
             // MenuPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1174, 635);
+            this.Controls.Add(this.inhabilitadoMsg);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.msg_rol_malo);
             this.Controls.Add(this.msg_sin_rol);
@@ -138,5 +153,6 @@
         private System.Windows.Forms.Label msg_sin_rol;
         private System.Windows.Forms.Label msg_rol_malo;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label inhabilitadoMsg;
     }
 }

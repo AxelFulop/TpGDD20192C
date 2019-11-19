@@ -92,6 +92,9 @@ IF OBJECT_ID('GESTION_DE_GATOS.altaCliente') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdProveedor') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.obtenerIdProveedor
 
+IF OBJECT_ID('GESTION_DE_GATOS.usuarioEstaHabilitado') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.usuarioEstaHabilitado
+
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerUsuarioCliente') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.obtenerUsuarioCliente
 
@@ -104,7 +107,6 @@ IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdCliente') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdUsuario') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.obtenerIdUsuario
 
-	
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerRazonSocialProveedor') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.obtenerRazonSocialProveedor
 
@@ -628,7 +630,7 @@ Cli_Apellido = c.cliente_apellido AND
 Cli_Dni = c.cliente_numero_dni AND
 Cli_Mail = c.cliente_email
 )
-WHERE Carga_Credito IS NOT NULL 
+WHERE Carga_Credito IS NOT NULL
 
 --Compra
 PRINT 'Migrando Compras'
@@ -1180,6 +1182,25 @@ AS
 BEGIN
 	return (select rol_habilitado from GESTION_DE_GATOS.Rol 
 			where rol_nombre = @nombreRol)
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.usuarioEstaHabilitado(
+@nombreUsuario nvarchar(255)
+)
+RETURNS char
+AS
+BEGIN
+	declare @habilitado char
+	select @habilitado = c.cliente_habilitado from GESTION_DE_GATOS.Usuario u
+		inner join GESTION_DE_GATOS.Cliente c on c.usuario_id = u.usuario_id
+		where usuario_nombre = @nombreUsuario
+	if(@habilitado is null) begin
+		select @habilitado = p.proveedor_habilitado from GESTION_DE_GATOS.Usuario u
+			inner join GESTION_DE_GATOS.Proveedor p on p.usuario_id = u.usuario_id
+			where usuario_nombre = @nombreUsuario
+	end
+	return @habilitado
 END
 
 GO
