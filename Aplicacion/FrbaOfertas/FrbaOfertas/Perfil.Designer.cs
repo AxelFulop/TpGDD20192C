@@ -31,6 +31,8 @@
             this.CancelBtn = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.panelProveedor = new System.Windows.Forms.Panel();
+            this.prov_telefono = new System.Windows.Forms.NumericUpDown();
+            this.prov_cp = new System.Windows.Forms.NumericUpDown();
             this.prov_ciudad = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
             this.prov_razonSocial = new System.Windows.Forms.TextBox();
@@ -47,6 +49,9 @@
             this.prov_mail = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.panelCliente = new System.Windows.Forms.Panel();
+            this.cli_cp = new System.Windows.Forms.NumericUpDown();
+            this.cli_telefono = new System.Windows.Forms.NumericUpDown();
+            this.cli_dni = new System.Windows.Forms.NumericUpDown();
             this.cli_ciudad = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.cli_fechaNacimiento = new System.Windows.Forms.DateTimePicker();
@@ -80,23 +85,18 @@
             this.passwordNueva1 = new System.Windows.Forms.TextBox();
             this.label32 = new System.Windows.Forms.Label();
             this.panelDireccion = new System.Windows.Forms.Panel();
-            this.dir_numero = new System.Windows.Forms.NumericUpDown();
             this.dir_piso = new System.Windows.Forms.NumericUpDown();
-            this.cli_dni = new System.Windows.Forms.NumericUpDown();
-            this.cli_telefono = new System.Windows.Forms.NumericUpDown();
-            this.cli_cp = new System.Windows.Forms.NumericUpDown();
-            this.prov_cp = new System.Windows.Forms.NumericUpDown();
-            this.prov_telefono = new System.Windows.Forms.NumericUpDown();
+            this.dir_numero = new System.Windows.Forms.NumericUpDown();
             this.panelProveedor.SuspendLayout();
-            this.panelCliente.SuspendLayout();
-            this.panelDireccion.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dir_numero)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dir_piso)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cli_dni)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cli_telefono)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cli_cp)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.prov_cp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.prov_telefono)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.prov_cp)).BeginInit();
+            this.panelCliente.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cli_cp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cli_telefono)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cli_dni)).BeginInit();
+            this.panelDireccion.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dir_piso)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dir_numero)).BeginInit();
             this.SuspendLayout();
             // 
             // CancelBtn
@@ -146,6 +146,30 @@
             this.panelProveedor.TabIndex = 70;
             this.panelProveedor.Tag = "";
             this.panelProveedor.Visible = false;
+            // 
+            // prov_telefono
+            // 
+            this.prov_telefono.Location = new System.Drawing.Point(184, 140);
+            this.prov_telefono.Maximum = new decimal(new int[] {
+            -1530494977,
+            232830,
+            0,
+            0});
+            this.prov_telefono.Name = "prov_telefono";
+            this.prov_telefono.Size = new System.Drawing.Size(403, 26);
+            this.prov_telefono.TabIndex = 122;
+            // 
+            // prov_cp
+            // 
+            this.prov_cp.Location = new System.Drawing.Point(184, 184);
+            this.prov_cp.Maximum = new decimal(new int[] {
+            -1530494977,
+            232830,
+            0,
+            0});
+            this.prov_cp.Name = "prov_cp";
+            this.prov_cp.Size = new System.Drawing.Size(403, 26);
+            this.prov_cp.TabIndex = 121;
             // 
             // prov_ciudad
             // 
@@ -311,6 +335,42 @@
             this.panelCliente.TabIndex = 72;
             this.panelCliente.Tag = "";
             this.panelCliente.Visible = false;
+            // 
+            // cli_cp
+            // 
+            this.cli_cp.Location = new System.Drawing.Point(184, 268);
+            this.cli_cp.Maximum = new decimal(new int[] {
+            -1530494977,
+            232830,
+            0,
+            0});
+            this.cli_cp.Name = "cli_cp";
+            this.cli_cp.Size = new System.Drawing.Size(399, 26);
+            this.cli_cp.TabIndex = 121;
+            // 
+            // cli_telefono
+            // 
+            this.cli_telefono.Location = new System.Drawing.Point(184, 224);
+            this.cli_telefono.Maximum = new decimal(new int[] {
+            -1530494977,
+            232830,
+            0,
+            0});
+            this.cli_telefono.Name = "cli_telefono";
+            this.cli_telefono.Size = new System.Drawing.Size(403, 26);
+            this.cli_telefono.TabIndex = 120;
+            // 
+            // cli_dni
+            // 
+            this.cli_dni.Location = new System.Drawing.Point(184, 174);
+            this.cli_dni.Maximum = new decimal(new int[] {
+            -1530494977,
+            232830,
+            0,
+            0});
+            this.cli_dni.Name = "cli_dni";
+            this.cli_dni.Size = new System.Drawing.Size(403, 26);
+            this.cli_dni.TabIndex = 119;
             // 
             // cli_ciudad
             // 
@@ -583,6 +643,7 @@
             this.passwordNueva2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordNueva2.Location = new System.Drawing.Point(221, 224);
             this.passwordNueva2.Name = "passwordNueva2";
+            this.passwordNueva2.PasswordChar = '*';
             this.passwordNueva2.Size = new System.Drawing.Size(252, 30);
             this.passwordNueva2.TabIndex = 87;
             // 
@@ -601,6 +662,7 @@
             this.passwordNueva1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordNueva1.Location = new System.Drawing.Point(221, 174);
             this.passwordNueva1.Name = "passwordNueva1";
+            this.passwordNueva1.PasswordChar = '*';
             this.passwordNueva1.Size = new System.Drawing.Size(252, 30);
             this.passwordNueva1.TabIndex = 85;
             // 
@@ -632,18 +694,6 @@
             this.panelDireccion.Size = new System.Drawing.Size(494, 295);
             this.panelDireccion.TabIndex = 95;
             // 
-            // dir_numero
-            // 
-            this.dir_numero.Location = new System.Drawing.Point(205, 104);
-            this.dir_numero.Maximum = new decimal(new int[] {
-            -1530494977,
-            232830,
-            0,
-            0});
-            this.dir_numero.Name = "dir_numero";
-            this.dir_numero.Size = new System.Drawing.Size(256, 26);
-            this.dir_numero.TabIndex = 119;
-            // 
             // dir_piso
             // 
             this.dir_piso.Location = new System.Drawing.Point(209, 149);
@@ -656,65 +706,17 @@
             this.dir_piso.Size = new System.Drawing.Size(252, 26);
             this.dir_piso.TabIndex = 120;
             // 
-            // cli_dni
+            // dir_numero
             // 
-            this.cli_dni.Location = new System.Drawing.Point(184, 174);
-            this.cli_dni.Maximum = new decimal(new int[] {
+            this.dir_numero.Location = new System.Drawing.Point(205, 104);
+            this.dir_numero.Maximum = new decimal(new int[] {
             -1530494977,
             232830,
             0,
             0});
-            this.cli_dni.Name = "cli_dni";
-            this.cli_dni.Size = new System.Drawing.Size(403, 26);
-            this.cli_dni.TabIndex = 119;
-            // 
-            // cli_telefono
-            // 
-            this.cli_telefono.Location = new System.Drawing.Point(184, 224);
-            this.cli_telefono.Maximum = new decimal(new int[] {
-            -1530494977,
-            232830,
-            0,
-            0});
-            this.cli_telefono.Name = "cli_telefono";
-            this.cli_telefono.Size = new System.Drawing.Size(403, 26);
-            this.cli_telefono.TabIndex = 120;
-            // 
-            // cli_cp
-            // 
-            this.cli_cp.Location = new System.Drawing.Point(184, 268);
-            this.cli_cp.Maximum = new decimal(new int[] {
-            -1530494977,
-            232830,
-            0,
-            0});
-            this.cli_cp.Name = "cli_cp";
-            this.cli_cp.Size = new System.Drawing.Size(399, 26);
-            this.cli_cp.TabIndex = 121;
-            // 
-            // prov_cp
-            // 
-            this.prov_cp.Location = new System.Drawing.Point(184, 184);
-            this.prov_cp.Maximum = new decimal(new int[] {
-            -1530494977,
-            232830,
-            0,
-            0});
-            this.prov_cp.Name = "prov_cp";
-            this.prov_cp.Size = new System.Drawing.Size(403, 26);
-            this.prov_cp.TabIndex = 121;
-            // 
-            // prov_telefono
-            // 
-            this.prov_telefono.Location = new System.Drawing.Point(184, 140);
-            this.prov_telefono.Maximum = new decimal(new int[] {
-            -1530494977,
-            232830,
-            0,
-            0});
-            this.prov_telefono.Name = "prov_telefono";
-            this.prov_telefono.Size = new System.Drawing.Size(403, 26);
-            this.prov_telefono.TabIndex = 122;
+            this.dir_numero.Name = "dir_numero";
+            this.dir_numero.Size = new System.Drawing.Size(256, 26);
+            this.dir_numero.TabIndex = 119;
             // 
             // Perfil
             // 
@@ -745,17 +747,17 @@
             this.Load += new System.EventHandler(this.Perfil_Load);
             this.panelProveedor.ResumeLayout(false);
             this.panelProveedor.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.prov_telefono)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.prov_cp)).EndInit();
             this.panelCliente.ResumeLayout(false);
             this.panelCliente.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cli_cp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cli_telefono)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cli_dni)).EndInit();
             this.panelDireccion.ResumeLayout(false);
             this.panelDireccion.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dir_numero)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dir_piso)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cli_dni)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cli_telefono)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cli_cp)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.prov_cp)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.prov_telefono)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dir_numero)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -298,6 +298,7 @@
             this.passwordNueva2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordNueva2.Location = new System.Drawing.Point(789, 444);
             this.passwordNueva2.Name = "passwordNueva2";
+            this.passwordNueva2.PasswordChar = '*';
             this.passwordNueva2.Size = new System.Drawing.Size(271, 30);
             this.passwordNueva2.TabIndex = 98;
             // 
@@ -316,6 +317,7 @@
             this.passwordNueva1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordNueva1.Location = new System.Drawing.Point(789, 394);
             this.passwordNueva1.Name = "passwordNueva1";
+            this.passwordNueva1.PasswordChar = '*';
             this.passwordNueva1.Size = new System.Drawing.Size(271, 30);
             this.passwordNueva1.TabIndex = 96;
             // 
