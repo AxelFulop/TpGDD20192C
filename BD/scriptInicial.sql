@@ -1201,6 +1201,9 @@ BEGIN
 			inner join GESTION_DE_GATOS.Proveedor p on p.usuario_id = u.usuario_id
 			where usuario_nombre = @nombreUsuario
 	end
+	if(@habilitado is null) begin --Si el usuario es admin @habilitado es null acá
+		set @habilitado = '0'
+	end
 	return @habilitado
 END
 
