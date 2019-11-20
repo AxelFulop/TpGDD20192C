@@ -30,6 +30,10 @@ namespace FrbaOfertas.CrearOferta
             this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            dateTimePickerFechaPub.Format = DateTimePickerFormat.Custom;
+            dateTimePickerFechVenc.Format = DateTimePickerFormat.Custom;
+            dateTimePickerFechaPub.CustomFormat = "yyyy-MM-dd";
+            dateTimePickerFechVenc.CustomFormat = "yyyy-MM-dd";
             razonSocial.Text = this.obtenerRazonSocial();
             cuit.Text = obtenerCuit();
             if (razonSocial.Text != "" && cuit.Text != "")
@@ -158,10 +162,11 @@ namespace FrbaOfertas.CrearOferta
 
         private void buttonGen_Click_1(object sender, EventArgs e)
         {
-            string str = new Util().RandomString(5, true);
-            int num = new Util().RandomNumber(100, 999);
-            string codOferta = num.ToString() + str;
+            string str = new Util().RandomString(10,false);
+            int num = new Util().RandomNumber(1, 9);
+            string codOferta = str + num.ToString();
             textBoxCodOferta.Text = codOferta;
+            buttonGen.Enabled = false;
         }
     }
 }

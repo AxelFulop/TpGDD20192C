@@ -100,11 +100,11 @@
     <Compile Include="AbmRol\Nuevo.Designer.cs">
       <DependentUpon>Nuevo.cs</DependentUpon>
     </Compile>
-    <Compile Include="ComprarOferta\Form1.cs">
+    <Compile Include="ComprarOferta\ComprarOfertaABM.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ComprarOferta\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ComprarOferta\ComprarOfertaABM.Designer.cs">
+      <DependentUpon>ComprarOfertaABM.cs</DependentUpon>
     </Compile>
     <Compile Include="ConexionBD\Conexion.cs">
       <SubType>Form</SubType>
@@ -200,8 +200,8 @@
     <EmbeddedResource Include="AbmRol\Nuevo.resx">
       <DependentUpon>Nuevo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ComprarOferta\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="ComprarOferta\ComprarOfertaABM.resx">
+      <DependentUpon>ComprarOfertaABM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CargaCredito\CargaCreditoABM.resx">
       <DependentUpon>CargaCreditoABM.cs</DependentUpon>

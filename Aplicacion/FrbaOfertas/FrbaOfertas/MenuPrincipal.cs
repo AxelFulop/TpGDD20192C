@@ -171,7 +171,7 @@ namespace FrbaOfertas
                         break;
                     case "Comprar ofertas":
                         if (estaHabilitado)
-                            new ComprarOferta.Form1().Show();
+                            new ComprarOferta.ComprarOfertaABM().Show();
                         else
                         {
                             MessageBox.Show("Un cliente inhabilitado no puede comprar ofertas");

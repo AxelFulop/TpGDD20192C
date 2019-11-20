@@ -139,7 +139,7 @@ namespace FrbaOfertas.Utils
             }
             if (lowerCase)
                 return builder.ToString().ToLower();
-            return builder.ToString();
+            return builder.ToString().ToUpper();
         } 
 
     }
