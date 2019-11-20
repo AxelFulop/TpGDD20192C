@@ -328,6 +328,7 @@ rol_id NUMERIC(18,0) NOT NULL,
 PRIMARY KEY (usuario_id, rol_id)
 );
 
+
 --Como en la maestra la direccion esta dada como calle + numero en la bd se migra igual y se separa en la app por calle,numero en atributos distintos
 -- Dato inconsistente en un char , puede ser un 1 o 0 o un S o N, con esto sabemos que hay algun dato repetido o erroneo, se debera validar del todo desde la app
 
@@ -1474,4 +1475,3 @@ as begin --No puede haber 2 proveedores con la misma razon social y CUIT
 	close p_cursor
 	deallocate p_cursor
 end
-
