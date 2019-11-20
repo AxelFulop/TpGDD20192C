@@ -89,6 +89,9 @@ IF OBJECT_ID('GESTION_DE_GATOS.altaCliente') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.altaCliente
 
 ----- Eliminacion de funciones ---------    
+IF OBJECT_ID('GESTION_DE_GATOS.obtenerCuitProveedor') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.obtenerCuitProveedor
+
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdProveedor') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.obtenerIdProveedor
 
@@ -1069,6 +1072,16 @@ BEGIN
 END
 
 /* Creacion de funciones */
+GO
+CREATE FUNCTION GESTION_DE_GATOS.obtenerCuitProveedor(@usuario_nombre nvarchar(255))
+RETURNS NVARCHAR(20)
+AS
+BEGIN
+RETURN (SELECT p.proveedor_cuit from GESTION_DE_GATOS.Usuario u
+			inner join GESTION_DE_GATOS.Proveedor p on p.usuario_id = u.usuario_id 
+			where u.usuario_nombre = @usuario_nombre)
+END
+
 GO
 CREATE FUNCTION GESTION_DE_GATOS.existeUsuario(@nombreUsuario VARCHAR(50))
 RETURNS NUMERIC(18,0)
