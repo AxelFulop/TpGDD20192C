@@ -666,7 +666,13 @@ AS
 BEGIN
 DECLARE @passHash varbinary(128)
 SET @passHash =  HASHBYTES('SHA2_256', convert(nvarchar(128), @password))
-INSERT INTO GESTION_DE_GATOS.Usuario (usuario_nombre,usuario_password) VALUES (@nombreUsuario,@passHash)
+begin try
+INSERT INTO GESTION_DE_GATOS.Usuario (usuario_nombre,usuario_password) 
+	VALUES (@nombreUsuario,@passHash)
+end try
+begin catch
+raiserror('Usuario %s ya existente', 16, 1, @nombreUsuario)
+end catch
 END
 
 GO
@@ -1392,10 +1398,12 @@ RETURN (SELECT u.usuario_nombre from GESTION_DE_GATOS.Cliente p
 			inner join GESTION_DE_GATOS.Usuario u on p.usuario_id = u.usuario_id 
 			where p.cliente_id = @id_cliente)
 END
+
 --Triggers
 go
 create trigger GESTION_DE_GATOS.tr_evitar_clientes_gemelos on GESTION_DE_GATOS.Cliente instead of insert, update
-as begin
+as begin 
+	begin transaction
 	declare @id_cli numeric(18), @nombre nvarchar(255), @apellido nvarchar(255), @dni numeric(18),
 		    @id_user numeric(18), @baja char, @ciudad nvarchar(255), @mail nvarchar(255),
 			@fecha_nac datetime, @tel numeric(18), @dir nvarchar(255), @piso nvarchar(10), @depto nvarchar(5),
@@ -1404,7 +1412,6 @@ as begin
 	open c_cursor
 	fetch c_cursor into @id_cli, @id_user, @baja, @nombre, @ciudad, @apellido, @dni, @mail, @fecha_nac, 
 		@tel, @dir, @piso, @depto,@localidad, @cp, @dato_inc, @nuevo, @habilitado
-	begin transaction
 	while(@@FETCH_STATUS = 0) begin
 		declare @hayClieGemelo int = 
 			(select count(*) from GESTION_DE_GATOS.Cliente 
@@ -1415,6 +1422,7 @@ as begin
 		if(@hayClieGemelo > 0) begin
 			raiserror('Cliente gemelo ya existente', 16, 1)
 			rollback transaction
+			return
 		end
 		else begin
 			declare @cliente_existente numeric(18) = (select cliente_id from GESTION_DE_GATOS.Cliente where cliente_id = @id_cli)
@@ -1444,14 +1452,15 @@ as begin
 		fetch c_cursor into @id_cli, @id_user, @baja, @nombre, @ciudad, @apellido, @dni, @mail, @fecha_nac, 
 			@tel, @dir, @piso, @depto,@localidad, @cp, @dato_inc, @nuevo, @habilitado
 	end
-	commit transaction
 	close c_cursor
 	deallocate c_cursor
+	commit transaction
 end
 
 go
 create trigger tr_evitar_proveedores_gemelos on GESTION_DE_GATOS.Proveedor instead of insert, update
 as begin --No puede haber 2 proveedores con la misma razon social y CUIT
+	begin transaction
 	declare @id_prov numeric(18), @id_user numeric(18), @baja char, @r_social nvarchar(100), 
 			@contacto nvarchar(30), @cuit nvarchar(20), @rubro nvarchar(100), @mail nvarchar(255),
 			@tel numeric(18), @dir nvarchar(255), @piso nvarchar(10), @depto nvarchar(5), @localidad nvarchar(50), 
@@ -1468,6 +1477,8 @@ as begin --No puede haber 2 proveedores con la misma razon social y CUIT
 					  proveedor_id <> @id_prov)
 		if(@hayProvGemelo > 0) begin
 			raiserror('Proveedor gemelo ya existente', 16, 1)
+			rollback transaction
+			return
 		end
 		else begin
 			declare @prov_existente numeric(18) = (select proveedor_id from GESTION_DE_GATOS.Proveedor where proveedor_id = @id_prov)
@@ -1499,4 +1510,5 @@ as begin --No puede haber 2 proveedores con la misma razon social y CUIT
 	end
 	close p_cursor
 	deallocate p_cursor
+	commit transaction
 end
