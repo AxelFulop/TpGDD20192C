@@ -513,7 +513,7 @@ insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Li
 insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Cargar credito') --6 cliente
 insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Comprar oferta') --7 cliente
 insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Registrar tarjeta') --8 cliente
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('ABM oferta') --9 prov
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Confeccionar ofertas') --9 prov
 
 --Funcionalidades Admin
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 1)
@@ -521,6 +521,7 @@ insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 3)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 4)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 5)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 9)
 
 --Funcionalidades Cliente
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,6)
@@ -709,8 +710,6 @@ BEGIN
 		VALUES (@nombreRol, 0)
 END
 
-
-
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.altaOferta
 @descripcionOferta NVARCHAR(255), 
@@ -721,13 +720,22 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaOferta
 @stockDisponibleOferta NUMERIC(18,0),
 @precioOferta NUMERIC(18,2),
 @precioListaOferta NUMERIC(18,2),
-@proveedorRazonSocial NVARCHAR(255)
+@proveedorRazonSocial NVARCHAR(255),
+@proveedorCuit nvarchar(20)
 AS
 BEGIN
 DECLARE @proveedorId NUMERIC(18,0)
-SET @proveedorId = (SELECT proveedor_id FROM GESTION_DE_GATOS.Proveedor WHERE proveedor_razon_social = @proveedorRazonSocial)
-INSERT INTO GESTION_DE_GATOS.Oferta (proveedor_id,oferta_descripcion,oferta_codigo,oferta_fecha_publicacion,oferta_fecha_vencimiento,oferta_limite_compra,oferta_stock_disponible,oferta_precio,oferta_precio_lista)
-VALUES(@proveedorId,@descripcionOferta,@codigoOferta,@fechaPublicacionOferta,@fechaVencimientoOferta,@limiteCompraOferta,@stockDisponibleOferta,@precioOferta,@precioListaOferta)
+SET @proveedorId = (SELECT proveedor_id FROM GESTION_DE_GATOS.Proveedor WHERE proveedor_razon_social = @proveedorRazonSocial and proveedor_cuit = @proveedorCuit)
+if(@proveedorId is null) begin
+	raiserror('Proveedor inexistente', 1, 1)
+end
+else begin
+INSERT INTO GESTION_DE_GATOS.Oferta (proveedor_id,oferta_descripcion,oferta_codigo,
+	oferta_fecha_publicacion,oferta_fecha_vencimiento,oferta_limite_compra,oferta_stock_disponible,
+	oferta_precio,oferta_precio_lista)
+VALUES(@proveedorId,@descripcionOferta,@codigoOferta,@fechaPublicacionOferta,@fechaVencimientoOferta,
+	@limiteCompraOferta,@stockDisponibleOferta,@precioOferta,@precioListaOferta)
+end
 END
 
 GO

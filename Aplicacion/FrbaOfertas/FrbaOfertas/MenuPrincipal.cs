@@ -150,7 +150,7 @@ namespace FrbaOfertas
                             new CrearOferta.ConfeccionarOferta().Show();
                         else
                         {
-                            MessageBox.Show("Un proveedor inhabilitado no puede confeccionar ofertas");
+                            MessageBox.Show("Un usuario inhabilitado no puede confeccionar ofertas");
                             mustHide = false;
                         }
                         break;
