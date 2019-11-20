@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.numericUpDownCantDisp = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownLimCom = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
@@ -40,290 +38,304 @@
             this.dateTimePickerFechVenc = new System.Windows.Forms.DateTimePicker();
             this.richTextBoxDesc = new System.Windows.Forms.RichTextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBoxProovedor = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.labelFecVencOfer = new System.Windows.Forms.Label();
             this.labelFechaPub = new System.Windows.Forms.Label();
-            this.textBoxPrecioLista = new System.Windows.Forms.TextBox();
-            this.textBoxPrecOfer = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.precioOferta = new System.Windows.Forms.NumericUpDown();
+            this.precioLista = new System.Windows.Forms.NumericUpDown();
+            this.razonSocial = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cuit = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.panel1.SuspendLayout();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCantDisp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLimCom)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.precioOferta)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.precioLista)).BeginInit();
             this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(1030, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(135, 55);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Volver";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.numericUpDownCantDisp);
-            this.panel1.Controls.Add(this.numericUpDownLimCom);
-            this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.buttonGen);
-            this.panel1.Controls.Add(this.textBoxCodOferta);
-            this.panel1.Controls.Add(this.labelCodOferta);
-            this.panel1.Controls.Add(this.dateTimePickerFechaPub);
-            this.panel1.Controls.Add(this.dateTimePickerFechVenc);
-            this.panel1.Controls.Add(this.richTextBoxDesc);
-            this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.textBoxProovedor);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.labelFecVencOfer);
-            this.panel1.Controls.Add(this.labelFechaPub);
-            this.panel1.Controls.Add(this.textBoxPrecioLista);
-            this.panel1.Controls.Add(this.textBoxPrecOfer);
-            this.panel1.Location = new System.Drawing.Point(57, 34);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(952, 491);
-            this.panel1.TabIndex = 1;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // numericUpDownCantDisp
             // 
-            this.numericUpDownCantDisp.Location = new System.Drawing.Point(255, 265);
+            this.numericUpDownCantDisp.Location = new System.Drawing.Point(254, 415);
             this.numericUpDownCantDisp.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numericUpDownCantDisp.Name = "numericUpDownCantDisp";
             this.numericUpDownCantDisp.Size = new System.Drawing.Size(93, 26);
-            this.numericUpDownCantDisp.TabIndex = 20;
+            this.numericUpDownCantDisp.TabIndex = 39;
             // 
             // numericUpDownLimCom
             // 
-            this.numericUpDownLimCom.Location = new System.Drawing.Point(255, 423);
+            this.numericUpDownLimCom.Location = new System.Drawing.Point(254, 513);
             this.numericUpDownLimCom.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numericUpDownLimCom.Name = "numericUpDownLimCom";
             this.numericUpDownLimCom.Size = new System.Drawing.Size(93, 26);
-            this.numericUpDownLimCom.TabIndex = 19;
+            this.numericUpDownLimCom.TabIndex = 38;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(20, 426);
+            this.label7.Location = new System.Drawing.Point(71, 515);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(108, 20);
-            this.label7.TabIndex = 18;
+            this.label7.TabIndex = 37;
             this.label7.Text = "Limite compra";
             // 
             // buttonGen
             // 
-            this.buttonGen.Location = new System.Drawing.Point(537, 365);
+            this.buttonGen.Location = new System.Drawing.Point(558, 454);
             this.buttonGen.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonGen.Name = "buttonGen";
-            this.buttonGen.Size = new System.Drawing.Size(110, 43);
-            this.buttonGen.TabIndex = 5;
-            this.buttonGen.Text = "Gen cod";
+            this.buttonGen.Size = new System.Drawing.Size(132, 43);
+            this.buttonGen.TabIndex = 24;
+            this.buttonGen.Text = "Generar código";
             this.buttonGen.UseVisualStyleBackColor = true;
-            this.buttonGen.Click += new System.EventHandler(this.buttonGen_Click);
+            this.buttonGen.Click += new System.EventHandler(this.buttonGen_Click_1);
             // 
             // textBoxCodOferta
             // 
             this.textBoxCodOferta.Enabled = false;
-            this.textBoxCodOferta.Location = new System.Drawing.Point(255, 372);
+            this.textBoxCodOferta.Location = new System.Drawing.Point(254, 462);
             this.textBoxCodOferta.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxCodOferta.Name = "textBoxCodOferta";
-            this.textBoxCodOferta.Size = new System.Drawing.Size(271, 26);
-            this.textBoxCodOferta.TabIndex = 17;
+            this.textBoxCodOferta.Size = new System.Drawing.Size(292, 26);
+            this.textBoxCodOferta.TabIndex = 36;
             // 
             // labelCodOferta
             // 
             this.labelCodOferta.AutoSize = true;
-            this.labelCodOferta.Location = new System.Drawing.Point(20, 372);
+            this.labelCodOferta.Location = new System.Drawing.Point(71, 467);
             this.labelCodOferta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelCodOferta.Name = "labelCodOferta";
             this.labelCodOferta.Size = new System.Drawing.Size(59, 20);
-            this.labelCodOferta.TabIndex = 16;
+            this.labelCodOferta.TabIndex = 35;
             this.labelCodOferta.Text = "Codigo";
             // 
             // dateTimePickerFechaPub
             // 
-            this.dateTimePickerFechaPub.Location = new System.Drawing.Point(255, 31);
+            this.dateTimePickerFechaPub.Location = new System.Drawing.Point(254, 179);
             this.dateTimePickerFechaPub.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dateTimePickerFechaPub.Name = "dateTimePickerFechaPub";
             this.dateTimePickerFechaPub.Size = new System.Drawing.Size(292, 26);
-            this.dateTimePickerFechaPub.TabIndex = 15;
+            this.dateTimePickerFechaPub.TabIndex = 34;
             // 
             // dateTimePickerFechVenc
             // 
-            this.dateTimePickerFechVenc.Location = new System.Drawing.Point(255, 92);
+            this.dateTimePickerFechVenc.Location = new System.Drawing.Point(254, 239);
             this.dateTimePickerFechVenc.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dateTimePickerFechVenc.Name = "dateTimePickerFechVenc";
             this.dateTimePickerFechVenc.Size = new System.Drawing.Size(292, 26);
-            this.dateTimePickerFechVenc.TabIndex = 14;
+            this.dateTimePickerFechVenc.TabIndex = 33;
             // 
             // richTextBoxDesc
             // 
-            this.richTextBoxDesc.Location = new System.Drawing.Point(660, 91);
+            this.richTextBoxDesc.Location = new System.Drawing.Point(644, 184);
             this.richTextBoxDesc.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.richTextBoxDesc.Name = "richTextBoxDesc";
-            this.richTextBoxDesc.Size = new System.Drawing.Size(266, 202);
-            this.richTextBoxDesc.TabIndex = 13;
+            this.richTextBoxDesc.Size = new System.Drawing.Size(468, 182);
+            this.richTextBoxDesc.TabIndex = 32;
             this.richTextBoxDesc.Text = "";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(714, 31);
+            this.label6.Location = new System.Drawing.Point(640, 159);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(92, 20);
-            this.label6.TabIndex = 12;
+            this.label6.TabIndex = 31;
             this.label6.Text = "Descripcion";
-            // 
-            // textBoxProovedor
-            // 
-            this.textBoxProovedor.Location = new System.Drawing.Point(255, 318);
-            this.textBoxProovedor.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBoxProovedor.Name = "textBoxProovedor";
-            this.textBoxProovedor.Size = new System.Drawing.Size(271, 26);
-            this.textBoxProovedor.TabIndex = 11;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 323);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(81, 20);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Proovedor";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(20, 275);
+            this.label5.Location = new System.Drawing.Point(71, 417);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(148, 20);
-            this.label5.TabIndex = 9;
+            this.label5.TabIndex = 28;
             this.label5.Text = "Cantidad disponible";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(20, 220);
+            this.label4.Location = new System.Drawing.Point(71, 362);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(107, 20);
-            this.label4.TabIndex = 8;
+            this.label4.TabIndex = 27;
             this.label4.Text = "Precio de lista";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(20, 165);
+            this.label3.Location = new System.Drawing.Point(71, 307);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(99, 20);
-            this.label3.TabIndex = 7;
+            this.label3.TabIndex = 26;
             this.label3.Text = "Precio oferta";
             // 
             // labelFecVencOfer
             // 
             this.labelFecVencOfer.AutoSize = true;
-            this.labelFecVencOfer.Location = new System.Drawing.Point(20, 102);
+            this.labelFecVencOfer.Location = new System.Drawing.Point(71, 244);
             this.labelFecVencOfer.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelFecVencOfer.Name = "labelFecVencOfer";
             this.labelFecVencOfer.Size = new System.Drawing.Size(137, 20);
-            this.labelFecVencOfer.TabIndex = 6;
+            this.labelFecVencOfer.TabIndex = 25;
             this.labelFecVencOfer.Text = "Fecha venc oferta";
             // 
             // labelFechaPub
             // 
             this.labelFechaPub.AutoSize = true;
-            this.labelFechaPub.Location = new System.Drawing.Point(20, 42);
+            this.labelFechaPub.Location = new System.Drawing.Point(71, 184);
             this.labelFechaPub.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelFechaPub.Name = "labelFechaPub";
             this.labelFechaPub.Size = new System.Drawing.Size(137, 20);
-            this.labelFechaPub.TabIndex = 5;
+            this.labelFechaPub.TabIndex = 23;
             this.labelFechaPub.Text = "Fecha publicacion";
             // 
-            // textBoxPrecioLista
+            // button1
             // 
-            this.textBoxPrecioLista.Location = new System.Drawing.Point(255, 209);
-            this.textBoxPrecioLista.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBoxPrecioLista.Name = "textBoxPrecioLista";
-            this.textBoxPrecioLista.Size = new System.Drawing.Size(271, 26);
-            this.textBoxPrecioLista.TabIndex = 3;
+            this.button1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.button1.Location = new System.Drawing.Point(420, 566);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(174, 57);
+            this.button1.TabIndex = 41;
+            this.button1.Text = "Cancelar";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
-            // textBoxPrecOfer
+            // button4
             // 
-            this.textBoxPrecOfer.Location = new System.Drawing.Point(255, 154);
-            this.textBoxPrecOfer.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBoxPrecOfer.Name = "textBoxPrecOfer";
-            this.textBoxPrecOfer.Size = new System.Drawing.Size(271, 26);
-            this.textBoxPrecOfer.TabIndex = 2;
+            this.button4.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.button4.Location = new System.Drawing.Point(617, 566);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(174, 57);
+            this.button4.TabIndex = 40;
+            this.button4.Text = "Confeccionar";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // precioOferta
+            // 
+            this.precioOferta.Location = new System.Drawing.Point(254, 305);
+            this.precioOferta.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.precioOferta.Name = "precioOferta";
+            this.precioOferta.Size = new System.Drawing.Size(292, 26);
+            this.precioOferta.TabIndex = 42;
+            // 
+            // precioLista
+            // 
+            this.precioLista.Location = new System.Drawing.Point(254, 360);
+            this.precioLista.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.precioLista.Name = "precioLista";
+            this.precioLista.Size = new System.Drawing.Size(292, 26);
+            this.precioLista.TabIndex = 43;
+            // 
+            // razonSocial
+            // 
+            this.razonSocial.Location = new System.Drawing.Point(254, 97);
+            this.razonSocial.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.razonSocial.Name = "razonSocial";
+            this.razonSocial.Size = new System.Drawing.Size(292, 26);
+            this.razonSocial.TabIndex = 45;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(71, 100);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(100, 20);
+            this.label1.TabIndex = 44;
+            this.label1.Text = "Razón social";
+            // 
+            // cuit
+            // 
+            this.cuit.Location = new System.Drawing.Point(254, 61);
+            this.cuit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cuit.Name = "cuit";
+            this.cuit.Size = new System.Drawing.Size(292, 26);
+            this.cuit.TabIndex = 47;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Location = new System.Drawing.Point(71, 64);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(51, 20);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "label2";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
+            this.label2.Size = new System.Drawing.Size(46, 20);
+            this.label2.TabIndex = 46;
+            this.label2.Text = "CUIT";
             // 
-            // button2
+            // label8
             // 
-            this.button2.Location = new System.Drawing.Point(414, 534);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(147, 52);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Limpiar";
-            this.button2.UseVisualStyleBackColor = true;
+            this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label8.Location = new System.Drawing.Point(52, 25);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(127, 20);
+            this.label8.TabIndex = 48;
+            this.label8.Text = "Datos proveedor";
             // 
-            // button3
+            // label9
             // 
-            this.button3.Location = new System.Drawing.Point(634, 534);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(147, 52);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "Generar";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.label9.AutoSize = true;
+            this.label9.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label9.Location = new System.Drawing.Point(52, 148);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(98, 20);
+            this.label9.TabIndex = 49;
+            this.label9.Text = "Datos oferta";
             // 
             // ConfeccionarOferta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1174, 635);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.cuit);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.razonSocial);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.precioLista);
+            this.Controls.Add(this.precioOferta);
             this.Controls.Add(this.button1);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.numericUpDownCantDisp);
+            this.Controls.Add(this.numericUpDownLimCom);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.buttonGen);
+            this.Controls.Add(this.textBoxCodOferta);
+            this.Controls.Add(this.labelCodOferta);
+            this.Controls.Add(this.dateTimePickerFechaPub);
+            this.Controls.Add(this.dateTimePickerFechVenc);
+            this.Controls.Add(this.richTextBoxDesc);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.labelFecVencOfer);
+            this.Controls.Add(this.labelFechaPub);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1196, 691);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(1020, 691);
             this.Name = "ConfeccionarOferta";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Confeccionar ofertas";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCantDisp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLimCom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.precioOferta)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.precioLista)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -331,29 +343,30 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox textBoxPrecioLista;
-        private System.Windows.Forms.TextBox textBoxPrecOfer;
+        private System.Windows.Forms.NumericUpDown numericUpDownCantDisp;
+        private System.Windows.Forms.NumericUpDown numericUpDownLimCom;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button buttonGen;
+        private System.Windows.Forms.TextBox textBoxCodOferta;
+        private System.Windows.Forms.Label labelCodOferta;
+        private System.Windows.Forms.DateTimePicker dateTimePickerFechaPub;
+        private System.Windows.Forms.DateTimePicker dateTimePickerFechVenc;
+        private System.Windows.Forms.RichTextBox richTextBoxDesc;
+        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label labelFecVencOfer;
         private System.Windows.Forms.Label labelFechaPub;
-        private System.Windows.Forms.TextBox textBoxProovedor;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.NumericUpDown precioOferta;
+        private System.Windows.Forms.NumericUpDown precioLista;
+        private System.Windows.Forms.TextBox razonSocial;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox cuit;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.RichTextBox richTextBoxDesc;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.DateTimePicker dateTimePickerFechaPub;
-        private System.Windows.Forms.DateTimePicker dateTimePickerFechVenc;
-        private System.Windows.Forms.Button buttonGen;
-        private System.Windows.Forms.TextBox textBoxCodOferta;
-        private System.Windows.Forms.Label labelCodOferta;
-        private System.Windows.Forms.NumericUpDown numericUpDownCantDisp;
-        private System.Windows.Forms.NumericUpDown numericUpDownLimCom;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
     }
 }

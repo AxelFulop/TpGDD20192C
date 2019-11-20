@@ -92,6 +92,9 @@ IF OBJECT_ID('GESTION_DE_GATOS.altaCliente') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdProveedor') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.obtenerIdProveedor
 
+IF OBJECT_ID('GESTION_DE_GATOS.obtenerCuitProveedor') IS NOT NULL
+    DROP FUNCTION  GESTION_DE_GATOS.obtenerCuitProveedor
+
 IF OBJECT_ID('GESTION_DE_GATOS.usuarioEstaHabilitado') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.usuarioEstaHabilitado
 
@@ -493,7 +496,7 @@ ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC19 FOREIGN KEY(cliente_id) R
 /* Inserccion de datos previos */
 --Usuario Admin
 INSERT INTO GESTION_DE_GATOS.Usuario (usuario_nombre,usuario_password)
-VALUES('admin',HASHBYTES('SHA2_256',convert(nvarchar(128), 'admin'))) 
+VALUES('admin',HASHBYTES('SHA2_256',convert(nvarchar(128), 'admin')))
 
 --Roles
 insert into GESTION_DE_GATOS.Rol(rol_nombre, rol_habilitado) values('Administrador', '0')
@@ -509,7 +512,7 @@ insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Li
 insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Cargar credito') --6 cliente
 insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Comprar oferta') --7 cliente
 insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Registrar tarjeta') --8 cliente
-insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('ABM oferta') --9 prov
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Confeccionar ofertas') --9 prov, admin
 
 --Funcionalidades Admin
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 1)
@@ -517,6 +520,7 @@ insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 3)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 4)
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 5)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 9)
 
 --Funcionalidades Cliente
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(2,6)
@@ -717,11 +721,12 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaOferta
 @stockDisponibleOferta NUMERIC(18,0),
 @precioOferta NUMERIC(18,2),
 @precioListaOferta NUMERIC(18,2),
-@proveedorRazonSocial NVARCHAR(255)
+@proveedorRazonSocial NVARCHAR(255),
+@proveedorCuit nvarchar(20)
 AS
 BEGIN
 DECLARE @proveedorId NUMERIC(18,0)
-SET @proveedorId = (SELECT proveedor_id FROM GESTION_DE_GATOS.Proveedor WHERE proveedor_cuit = @proveedorRazonSocial)
+SET @proveedorId = (SELECT proveedor_id FROM GESTION_DE_GATOS.Proveedor WHERE proveedor_razon_social = @proveedorRazonSocial and proveedor_cuit = @proveedorCuit)
 INSERT INTO GESTION_DE_GATOS.Oferta (proveedor_id,oferta_descripcion,oferta_codigo,oferta_fecha_publicacion,oferta_fecha_vencimiento,oferta_limite_compra,oferta_stock_disponible,oferta_precio,oferta_precio_lista)
 VALUES(@proveedorId,@descripcionOferta,@codigoOferta,@fechaPublicacionOferta,@fechaVencimientoOferta,@limiteCompraOferta,@stockDisponibleOferta,@precioOferta,@precioListaOferta)
 END
@@ -1200,6 +1205,9 @@ BEGIN
 			inner join GESTION_DE_GATOS.Proveedor p on p.usuario_id = u.usuario_id
 			where usuario_nombre = @nombreUsuario
 	end
+	if(@habilitado is null) begin
+		set @habilitado = '0'
+	end
 	return @habilitado
 END
 
@@ -1342,6 +1350,16 @@ RETURNS NVARCHAR(255)
 AS
 BEGIN
 RETURN (SELECT p.proveedor_razon_social from GESTION_DE_GATOS.Usuario u
+			inner join GESTION_DE_GATOS.Proveedor p on p.usuario_id = u.usuario_id 
+			where u.usuario_nombre = @usuario_nombre)
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.obtenerCuitProveedor(@usuario_nombre nvarchar(255))
+RETURNS NVARCHAR(20)
+AS
+BEGIN
+RETURN (SELECT p.proveedor_cuit from GESTION_DE_GATOS.Usuario u
 			inner join GESTION_DE_GATOS.Proveedor p on p.usuario_id = u.usuario_id 
 			where u.usuario_nombre = @usuario_nombre)
 END

@@ -73,9 +73,9 @@ namespace FrbaOfertas
                             if(!this.listadoMenu.Items.Contains("Clientes"))
                                 this.listadoMenu.Items.Add("Clientes");
                             break;
-                        case "ABM oferta":
-                            if (!this.listadoMenu.Items.Contains("Ofertas"))
-                                this.listadoMenu.Items.Add("Ofertas");
+                        case "Confeccionar ofertas":
+                            if (!this.listadoMenu.Items.Contains("Confeccionar oferta"))
+                                this.listadoMenu.Items.Add("Confeccionar oferta");
                             break;
                         case "ABM proveedor":
                             if (!this.listadoMenu.Items.Contains("Proveedores"))
@@ -145,7 +145,7 @@ namespace FrbaOfertas
                     case "Clientes":
                         new AbmCliente.AbmCliente().Show();
                         break;
-                    case "Ofertas":
+                    case "Confeccionar oferta":
                         if (estaHabilitado)
                             new CrearOferta.ConfeccionarOferta().Show();
                         else

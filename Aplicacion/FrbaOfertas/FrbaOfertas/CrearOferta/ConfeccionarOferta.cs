@@ -30,16 +30,33 @@ namespace FrbaOfertas.CrearOferta
             this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            textBoxProovedor.Text = this.obtenerUsername();
-            textBoxProovedor.Enabled = false;
-           
+            razonSocial.Text = this.obtenerRazonSocial();
+            cuit.Text = obtenerCuit();
+            if (razonSocial.Text != "" && cuit.Text != "")
+            { //Si no lo confecciona un admin
+                razonSocial.Enabled = false;
+                cuit.Enabled = false;
+            }
+            
         }
 
-        private string obtenerUsername()
+        private string obtenerRazonSocial()
         {
-            return (string) new Conexion().executeScalarFunction("obtenerRazonSocialProveedor",Logeo.username);
+            Object ret =  new Conexion().executeScalarFunction("obtenerRazonSocialProveedor",Logeo.username);
+            if (ret == DBNull.Value)
+                return "";
+            else
+                return ret.ToString();
         }
 
+        private string obtenerCuit()
+        {
+            Object ret = new Conexion().executeScalarFunction("obtenerCuitProveedor", Logeo.username);
+            if (ret == DBNull.Value)
+                return "";
+            else
+                return ret.ToString();
+        }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
@@ -54,6 +71,54 @@ namespace FrbaOfertas.CrearOferta
         private void button3_Click(object sender, EventArgs e)
         {
             
+            
+
+        }
+
+
+        private void buttonGen_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new MenuPrincipal().Show();
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            this.Hide();
+            new MenuPrincipal().Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (dateTimePickerFechaPub.Value.CompareTo(Properties.Settings.Default.fecha) <= 0 ||
+                dateTimePickerFechVenc.Value.CompareTo(Properties.Settings.Default.fecha) <= 0)
+            {
+                MessageBox.Show("Fechas inválidas. Deben ser fechas posteriores a la fecha actual ( " + 
+                    Properties.Settings.Default.fecha.ToShortDateString() + " )");
+                return;
+            }
+
+            if (dateTimePickerFechaPub.Value.CompareTo(dateTimePickerFechVenc.Value) >= 0)
+            {
+                MessageBox.Show("La fecha de vencimiento debe ser posterior a la fecha de publicación");
+                return;
+            }
+
+            if(textBoxCodOferta.Text == ""){
+                MessageBox.Show("El código de la oferta no puede estar vacío");
+                return;
+            }
+
+            if (razonSocial.Text == "" || cuit.Text == "")
+            {
+                MessageBox.Show("Los datos del proveedor no pueden estar vacios");
+                return;
+            }
+
             List<string> values = new List<string>(){
                "@descripcionOferta",
                "@codigoOferta",
@@ -63,7 +128,8 @@ namespace FrbaOfertas.CrearOferta
                "@stockDisponibleOferta",
                "@precioOferta",
                "@precioListaOferta",
-               "@proveedorRazonSocial"
+               "@proveedorRazonSocial",
+               "@proveedorCuit"
             };
             Object[] parametros = new Object[]{
               richTextBoxDesc.Text,
@@ -72,10 +138,10 @@ namespace FrbaOfertas.CrearOferta
               dateTimePickerFechVenc.Value,
               numericUpDownLimCom.Value,
               numericUpDownCantDisp.Value,
-              textBoxPrecOfer.Text,
-              textBoxPrecioLista.Text,
-              textBoxProovedor.Text
-              
+              precioOferta.Text,
+              precioLista.Text,
+              razonSocial.Text,
+              cuit.Text
            };
 
             try
@@ -88,11 +154,9 @@ namespace FrbaOfertas.CrearOferta
             {
                 MessageBox.Show(ex.ToString());
             }
-
         }
 
-
-        private void buttonGen_Click(object sender, EventArgs e)
+        private void buttonGen_Click_1(object sender, EventArgs e)
         {
             string str = new Util().RandomString(5, true);
             int num = new Util().RandomNumber(100, 999);
