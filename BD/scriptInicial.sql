@@ -233,6 +233,9 @@ IF (select object_id from sys.foreign_keys where [name] = 'FC18')  IS NOT NULL
 IF (select object_id from sys.foreign_keys where [name] = 'FC19')  IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.Carga  DROP CONSTRAINT FC19
 
+IF (select object_id from sys.foreign_keys where [name] = 'FC20')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.Cupon  DROP CONSTRAINT FC20
+
 ------------ Eliminacion de tablas    ------------------
 
 IF OBJECT_ID('GESTION_DE_GATOS.FuncionalidadXRol','U') IS NOT NULL
@@ -421,6 +424,7 @@ PRIMARY KEY (oferta_id)
 CREATE TABLE GESTION_DE_GATOS.Cupon(
 cupon_id NUMERIC(18,0) IDENTITY,
 oferta_id NUMERIC(18,0),
+compra_id NUMERIC(18,0),
 cupon_codigo NVARCHAR(50),
 cupon_canjeado CHAR(1),
 cupon_fecha_vencimiento DATETIME,
@@ -435,8 +439,7 @@ compra_id NUMERIC(18,0) IDENTITY,
 cliente_id NUMERIC(18,0),
 oferta_id NUMERIC(18,0),
 compra_fecha DATETIME,
-dato_inconsistente CHAR(1),
-limite_cliente NUMERIC(18,0)
+dato_inconsistente CHAR(1)
 PRIMARY KEY (compra_id)
 );
 
@@ -493,6 +496,7 @@ ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD CONSTRAINT FC16 FOREIGN KEY(of
 ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD CONSTRAINT FC17 FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
 ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC18 FOREIGN KEY(tarjeta_id) REFERENCES GESTION_DE_GATOS.Tarjeta(tarjeta_id)
 ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC19 FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
+ALTER TABLE GESTION_DE_GATOS.Cupon ADD CONSTRAINT FC20 FOREIGN KEY(compra_id) REFERENCES GESTION_DE_GATOS.Compra(compra_id)
 
 /* Inserccion de datos previos */
 --Usuario Admin
@@ -595,11 +599,11 @@ group by Factura_Nro, Factura_Fecha, proveedor_id
 
 --Oferta
 PRINT 'Migrando Ofertas'
-INSERT INTO GESTION_DE_GATOS.Oferta (proveedor_id,oferta_stock_disponible,oferta_codigo,
+INSERT INTO GESTION_DE_GATOS.Oferta (oferta_codigo,proveedor_id,oferta_stock_disponible,
 	oferta_descripcion,oferta_fecha_publicacion,oferta_fecha_vencimiento,oferta_precio,
 	oferta_precio_lista, oferta_limite_compra)
-SELECT DISTINCT proveedor_id,Oferta_Cantidad,Oferta_Codigo,Oferta_Descripcion,Oferta_Fecha,
-	Oferta_Fecha_Venc,Oferta_Precio,Oferta_Precio_Ficticio, Oferta_Cantidad --Inicialmente un cliente podria comprar todo el stock
+SELECT DISTINCT Oferta_Codigo,proveedor_id,Oferta_Cantidad - sum(1),Oferta_Descripcion,Oferta_Fecha,
+	Oferta_Fecha_Venc,Oferta_Precio,Oferta_Precio_Ficticio, Oferta_Cantidad - sum(1) --Inicialmente un cliente podria comprar todo el stock
 FROM gd_esquema.Maestra
 JOIN GESTION_DE_GATOS.Proveedor ON (
 Provee_RS = proveedor_razon_social AND
@@ -607,6 +611,8 @@ Provee_CUIT = Provee_CUIT AND
 Provee_Telefono = proveedor_telefono
 )
 WHERE Oferta_Codigo IS NOT NULL
+group by Oferta_Codigo,proveedor_id,Oferta_Cantidad,Oferta_Descripcion,Oferta_Fecha,
+	Oferta_Fecha_Venc,Oferta_Precio,Oferta_Precio_Ficticio --Inicialmente un cliente podria comprar todo el stock
 
 --Tarjeta
 /*PRINT 'Migrando Tarjetas'
@@ -627,13 +633,12 @@ Cli_Mail = cliente_email
 --Carga
 PRINT 'Migrando Carga'
 INSERT INTO GESTION_DE_GATOS.Carga(tarjeta_id,carga_monto,carga_fecha, cliente_id)
-SELECT DISTINCT null, Carga_Credito, Carga_Fecha, c.cliente_id
+SELECT null, Carga_Credito, Carga_Fecha, c.cliente_id
 FROM gd_esquema.Maestra
 JOIN GESTION_DE_GATOS.Cliente c ON (
 Cli_Nombre = c.cliente_nombre AND
 Cli_Apellido = c.cliente_apellido AND
-Cli_Dni = c.cliente_numero_dni AND
-Cli_Mail = c.cliente_email
+Cli_Dni = c.cliente_numero_dni
 )
 WHERE Carga_Credito IS NOT NULL
 
@@ -642,14 +647,30 @@ PRINT 'Migrando Compras'
 INSERT INTO GESTION_DE_GATOS.Compra (oferta_id,cliente_id,compra_fecha)
 SELECT o.oferta_id, c.cliente_id, m.Oferta_Fecha_Compra FROM  gd_esquema.Maestra m
 JOIN GESTION_DE_GATOS.Cliente c  ON (
-Cli_Dni = c.cliente_numero_dni AND
-Cli_Mail = c.cliente_email
+Cli_Apellido = c.cliente_apellido AND
+Cli_Nombre = c.cliente_nombre AND
+Cli_Dni = c.cliente_numero_dni
 )
 JOIN GESTION_DE_GATOS.Oferta o ON (
-m.Oferta_Codigo = o.oferta_codigo AND
-m.Oferta_Fecha = o.oferta_fecha_publicacion
+m.Oferta_Codigo = o.oferta_codigo
 )
 where Oferta_Fecha_Compra is not null
+
+--Cupones
+PRINT 'Migrando/creando Cupones'
+INSERT INTO GESTION_DE_GATOS.Cupon(compra_id,oferta_id,cupon_codigo,cupon_canjeado, cupon_fecha_vencimiento, 
+	cupon_fecha_consumo,cupon_precio, cupon_precio_lista)
+SELECT distinct c.compra_id, o.oferta_id, o.oferta_codigo, 
+	case when (m.Oferta_Entregado_Fecha is null) then '0' else '1' end, 
+	o.oferta_fecha_vencimiento,
+	c.compra_fecha, o.oferta_precio, o.oferta_precio_lista
+FROM GESTION_DE_GATOS.Compra c
+RIGHT JOIN GESTION_DE_GATOS.Oferta o ON (
+c.oferta_id = o.oferta_id
+)
+RIGHT JOIN gd_esquema.Maestra m ON (
+m.Oferta_Codigo = o.oferta_codigo
+)
 
 --DetalleFactura
 PRINT 'Migrando Fechas de entrega'
