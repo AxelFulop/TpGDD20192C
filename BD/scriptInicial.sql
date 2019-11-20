@@ -725,9 +725,10 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaOferta
 AS
 BEGIN
 DECLARE @proveedorId NUMERIC(18,0)
-SET @proveedorId = (SELECT proveedor_id FROM GESTION_DE_GATOS.Proveedor WHERE proveedor_razon_social = @proveedorRazonSocial and proveedor_cuit = @proveedorCuit)
+SELECT @proveedorId = proveedor_id FROM GESTION_DE_GATOS.Proveedor
+	WHERE proveedor_razon_social = @proveedorRazonSocial and proveedor_cuit = @proveedorCuit
 if(@proveedorId is null) begin
-	raiserror('Proveedor inexistente', 1, 1)
+	raiserror('Proveedor inexistente', 16, 1)
 end
 else begin
 INSERT INTO GESTION_DE_GATOS.Oferta (proveedor_id,oferta_descripcion,oferta_codigo,
@@ -1412,7 +1413,7 @@ as begin
 					  cliente_numero_dni = @dni and
 					  cliente_id <> @id_cli)
 		if(@hayClieGemelo > 0) begin
-			raiserror('Cliente gemelo ya existente', 1, 1)
+			raiserror('Cliente gemelo ya existente', 16, 1)
 			rollback transaction
 		end
 		else begin
@@ -1466,7 +1467,7 @@ as begin --No puede haber 2 proveedores con la misma razon social y CUIT
 					  lower(proveedor_razon_social) = lower(@r_social) and
 					  proveedor_id <> @id_prov)
 		if(@hayProvGemelo > 0) begin
-			raiserror('Proveedor gemelo ya existente', 1, 1)
+			raiserror('Proveedor gemelo ya existente', 16, 1)
 		end
 		else begin
 			declare @prov_existente numeric(18) = (select proveedor_id from GESTION_DE_GATOS.Proveedor where proveedor_id = @id_prov)
