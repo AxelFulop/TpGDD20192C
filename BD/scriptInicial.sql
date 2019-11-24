@@ -660,8 +660,8 @@ where Oferta_Fecha_Compra is not null
 PRINT 'Migrando/creando Cupones'
 INSERT INTO GESTION_DE_GATOS.Cupon(compra_id,oferta_id,cupon_codigo,cupon_canjeado, cupon_fecha_vencimiento, 
 	cupon_fecha_consumo,cupon_precio, cupon_precio_lista)
-SELECT distinct c.compra_id, o.oferta_id, o.oferta_codigo, 
-	case when (m.Oferta_Entregado_Fecha is null) then '0' else '1' end, 
+SELECT distinct c.compra_id, o.oferta_id, c.compra_id,
+	'1', 
 	o.oferta_fecha_vencimiento,
 	c.compra_fecha, o.oferta_precio, o.oferta_precio_lista
 FROM GESTION_DE_GATOS.Compra c
