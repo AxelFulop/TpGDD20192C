@@ -36,6 +36,7 @@
             this.grid = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.vacioMsg = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.year)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.SuspendLayout();
@@ -98,7 +99,7 @@
             this.grid.AllowUserToAddRows = false;
             this.grid.AllowUserToDeleteRows = false;
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grid.Location = new System.Drawing.Point(141, 249);
+            this.grid.Location = new System.Drawing.Point(144, 285);
             this.grid.Name = "grid";
             this.grid.ReadOnly = true;
             this.grid.RowTemplate.Height = 28;
@@ -123,12 +124,27 @@
             this.button2.TabIndex = 14;
             this.button2.Text = "Calcular listado";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // vacioMsg
+            // 
+            this.vacioMsg.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.vacioMsg.AutoSize = true;
+            this.vacioMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vacioMsg.ForeColor = System.Drawing.Color.Red;
+            this.vacioMsg.Location = new System.Drawing.Point(255, 240);
+            this.vacioMsg.Name = "vacioMsg";
+            this.vacioMsg.Size = new System.Drawing.Size(647, 25);
+            this.vacioMsg.TabIndex = 15;
+            this.vacioMsg.Text = "No se ha encontrado ninguna factura de algún proveedor en ese intervalo";
+            this.vacioMsg.Visible = false;
             // 
             // listFacturacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 644);
+            this.Controls.Add(this.vacioMsg);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.semestre);
             this.Controls.Add(this.label3);
@@ -162,5 +178,6 @@
         private System.Windows.Forms.DataGridView grid;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label vacioMsg;
     }
 }
