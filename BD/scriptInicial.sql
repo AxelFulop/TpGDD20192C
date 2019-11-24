@@ -422,10 +422,9 @@ PRIMARY KEY (oferta_id)
 
 
 CREATE TABLE GESTION_DE_GATOS.Cupon(
-cupon_id NUMERIC(18,0) IDENTITY,
+cupon_id NUMERIC(18,0) IDENTITY, --Id es el código del cupón
 oferta_id NUMERIC(18,0),
 compra_id NUMERIC(18,0),
-cupon_codigo NVARCHAR(50),
 cupon_canjeado CHAR(1),
 cupon_fecha_vencimiento DATETIME,
 cupon_fecha_consumo DATETIME,
@@ -657,9 +656,9 @@ where Oferta_Fecha_Compra is not null
 
 --Cupones
 PRINT 'Migrando/creando Cupones'
-INSERT INTO GESTION_DE_GATOS.Cupon(compra_id,oferta_id,cupon_codigo,cupon_canjeado, cupon_fecha_vencimiento, 
+INSERT INTO GESTION_DE_GATOS.Cupon(compra_id,oferta_id,cupon_canjeado, cupon_fecha_vencimiento, 
 	cupon_fecha_consumo,cupon_precio, cupon_precio_lista)
-SELECT distinct c.compra_id, o.oferta_id, c.compra_id,
+SELECT distinct c.compra_id, o.oferta_id,
 	'1', 
 	o.oferta_fecha_vencimiento,
 	c.compra_fecha, o.oferta_precio, o.oferta_precio_lista
