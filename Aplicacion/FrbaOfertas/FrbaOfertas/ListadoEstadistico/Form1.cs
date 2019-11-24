@@ -29,5 +29,17 @@ namespace FrbaOfertas.ListadoEstadistico
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new listDescuento().Show();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new listFacturacion().Show();
+        }
     }
 }

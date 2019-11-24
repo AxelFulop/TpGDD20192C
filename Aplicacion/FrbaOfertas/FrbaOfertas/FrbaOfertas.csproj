@@ -132,6 +132,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GD2C2019DataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="ListadoEstadistico\listDescuento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListadoEstadistico\listDescuento.Designer.cs">
+      <DependentUpon>listDescuento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListadoEstadistico\listFacturacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListadoEstadistico\listFacturacion.Designer.cs">
+      <DependentUpon>listFacturacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logeo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -214,6 +226,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Facturar\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListadoEstadistico\listDescuento.resx">
+      <DependentUpon>listDescuento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListadoEstadistico\listFacturacion.resx">
+      <DependentUpon>listFacturacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Logeo.resx">
       <DependentUpon>Logeo.cs</DependentUpon>
