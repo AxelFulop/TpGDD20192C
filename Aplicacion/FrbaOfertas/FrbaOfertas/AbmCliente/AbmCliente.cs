@@ -19,12 +19,14 @@ namespace FrbaOfertas.AbmCliente
         public AbmCliente()
         {
             InitializeComponent();
+            grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             cargarClientes();
         }
 
         public AbmCliente(Tuple<string, string, string> clienteAExcluir)
         {
             InitializeComponent();
+            grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             clientesBorradosLogicamente.Add(clienteAExcluir);
             cargarClientes();
         }

@@ -596,7 +596,6 @@ Provee_Telefono = proveedor_telefono
 WHERE Factura_Nro IS NOT NULL AND Factura_Fecha IS NOT NULL
 group by Factura_Nro, Factura_Fecha, proveedor_id
 
-
 --Oferta
 PRINT 'Migrando Ofertas'
 INSERT INTO GESTION_DE_GATOS.Oferta (oferta_codigo,proveedor_id,oferta_stock_disponible,

@@ -19,12 +19,14 @@ namespace FrbaOfertas.AbmProveedor
         public AbmProveedor()
         {
             InitializeComponent();
+            grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             cargarProveedores();
         }
 
         public AbmProveedor(Tuple<string, string> provAExcluir)
         {
             InitializeComponent();
+            grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             provBorradosLogicamente.Add(provAExcluir);
             cargarProveedores();
         }

@@ -12,6 +12,8 @@ namespace FrbaOfertas.ListadoEstadistico
 {
     public partial class listFacturacion : Form
     {
+        private DataTable proveedores;
+
         public listFacturacion()
         {
             InitializeComponent();
@@ -25,8 +27,23 @@ namespace FrbaOfertas.ListadoEstadistico
 
         private void listFacturacion_Load(object sender, EventArgs e)
         {
+            grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+
             year.Value = Properties.Settings.Default.fecha.Year;
             semestre.SelectedItem = "Primero";
+
+            string query = "select top 5 p.proveedor_cuit as Cuit, p.proveedor_razon_social as Razon_social, sum(f.factura_monto_total) as Facturacion," +
+	                "avg(f.factura_monto_total) as Promedio_Facturado_Por_Mes " + 
+	                "from " + Properties.Settings.Default.Schema + ".Proveedor p " +
+	                "inner join " + Properties.Settings.Default.Schema + ".Factura f on f.proveedor_id = p.proveedor_id " +
+                    "where (f.factura_fecha between '" + new DateTime(int.Parse(year.Value.ToString()), 1, 1).ToShortDateString() + "' and '" +
+                    new DateTime(int.Parse(year.Value.ToString()), 6, 1).ToShortDateString() + "') and year(f.factura_fecha) = " + year.Value.ToString() +
+	                " group by p.proveedor_cuit, p.proveedor_razon_social " +
+	                "order by sum(f.factura_monto_total) desc";
+
+            ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+            proveedores = conection.selectReturnMultiplyRowsByQuery(query);
+            grid.DataSource = proveedores;
         }
     }
 }

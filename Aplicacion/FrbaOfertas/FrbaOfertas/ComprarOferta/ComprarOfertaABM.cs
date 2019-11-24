@@ -17,6 +17,7 @@ namespace FrbaOfertas.ComprarOferta
         public ComprarOfertaABM()
         {
             InitializeComponent();
+            grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             cargarOfertas();
         }
 
