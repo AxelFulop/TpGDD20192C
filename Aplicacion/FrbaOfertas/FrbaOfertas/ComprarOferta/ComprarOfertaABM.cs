@@ -60,31 +60,9 @@ namespace FrbaOfertas.ComprarOferta
                 if (e.ColumnIndex == 0)
                 {
                     DataRow row = (grid.CurrentRow.DataBoundItem as DataRowView).Row;
-                    DialogResult result = MessageBox.Show("¿Desea comprar la oferta de código '" + row.ItemArray[0].ToString() + "'?",
-                    "Comprar oferta",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
-                    {
-                        realizarCompra(row);
-                    }
+                    new boxCompraOferta(this, row).Show();
                 }
             }
-        }
-
-        private bool realizarCompra(DataRow row)
-        {
-            try
-            {
-                MessageBox.Show("Compra realizada correctamente");
-                this.Hide();
-                new ComprarOfertaABM().Show();
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show("Error al realizar la compra.\n" + e.Message);
-            }
-            return true;
         }
 
         private void button2_Click(object sender, EventArgs e)
