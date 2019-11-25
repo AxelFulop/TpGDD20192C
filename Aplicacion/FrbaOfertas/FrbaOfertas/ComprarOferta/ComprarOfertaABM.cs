@@ -86,5 +86,30 @@ namespace FrbaOfertas.ComprarOferta
             }
             return true;
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string query = "SELECT oferta_codigo,oferta_descripcion,oferta_fecha_publicacion,oferta_fecha_vencimiento,oferta_limite_compra,oferta_stock_disponible,oferta_precio "
+                + "FROM GESTION_DE_GATOS.Oferta WHERE ('" + Properties.Settings.Default.fecha.ToShortDateString() +
+            "' BETWEEN oferta_fecha_publicacion and oferta_fecha_vencimiento)";
+            if (filtroDescripcion.Text != "")
+                query += " AND oferta_descripcion LIKE '%" + filtroDescripcion.Text + "%'";
+
+            ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+            ofertas = conection.selectReturnMultiplyRowsByQuery(query);
+            grid.DataSource = ofertas;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            filtroDescripcion.Text = "";
+
+            string query = "SELECT oferta_codigo,oferta_descripcion,oferta_fecha_publicacion,oferta_fecha_vencimiento,oferta_limite_compra,oferta_stock_disponible,oferta_precio "
+                + "FROM GESTION_DE_GATOS.Oferta WHERE '" + Properties.Settings.Default.fecha.ToShortDateString() +
+            "' BETWEEN oferta_fecha_publicacion and oferta_fecha_vencimiento";
+            ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+            ofertas = conection.selectReturnMultiplyRowsByQuery(query);
+            grid.DataSource = ofertas;
+        }
     }
 }

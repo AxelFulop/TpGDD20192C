@@ -247,7 +247,7 @@
             this.SinTarjetasLink.Size = new System.Drawing.Size(286, 20);
             this.SinTarjetasLink.TabIndex = 44;
             this.SinTarjetasLink.TabStop = true;
-            this.SinTarjetasLink.Text = "Registre una tarjete para cargar crédito";
+            this.SinTarjetasLink.Text = "Registre una tarjeta para cargar crédito";
             this.SinTarjetasLink.Visible = false;
             this.SinTarjetasLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 

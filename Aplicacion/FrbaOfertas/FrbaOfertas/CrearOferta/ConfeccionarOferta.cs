@@ -98,13 +98,14 @@ namespace FrbaOfertas.CrearOferta
 
         private void button4_Click(object sender, EventArgs e)
         {
+            /*
             if (dateTimePickerFechaPub.Value.CompareTo(Properties.Settings.Default.fecha) <= 0 ||
                 dateTimePickerFechVenc.Value.CompareTo(Properties.Settings.Default.fecha) <= 0)
             {
                 MessageBox.Show("Fechas inválidas. Deben ser fechas posteriores a la fecha actual ( " + 
                     Properties.Settings.Default.fecha.ToShortDateString() + " )");
                 return;
-            }
+            } */
 
             if (dateTimePickerFechaPub.Value.CompareTo(dateTimePickerFechVenc.Value) >= 0)
             {
