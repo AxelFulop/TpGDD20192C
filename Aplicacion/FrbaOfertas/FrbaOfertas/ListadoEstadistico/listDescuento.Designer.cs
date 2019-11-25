@@ -29,14 +29,15 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.grid = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.year = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.semestre = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.vacioMsg = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.year)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,14 +51,14 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "TOP 5 proveedores con mayor descuento en sus ofertas";
             // 
-            // dataGridView1
+            // grid
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(31, 255);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 28;
-            this.dataGridView1.Size = new System.Drawing.Size(1113, 362);
-            this.dataGridView1.TabIndex = 1;
+            this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grid.Location = new System.Drawing.Point(104, 263);
+            this.grid.Name = "grid";
+            this.grid.RowTemplate.Height = 28;
+            this.grid.Size = new System.Drawing.Size(961, 339);
+            this.grid.TabIndex = 1;
             // 
             // button1
             // 
@@ -120,19 +121,34 @@
             this.button2.TabIndex = 15;
             this.button2.Text = "Calcular listado";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // vacioMsg
+            // 
+            this.vacioMsg.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.vacioMsg.AutoSize = true;
+            this.vacioMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vacioMsg.ForeColor = System.Drawing.Color.Red;
+            this.vacioMsg.Location = new System.Drawing.Point(260, 225);
+            this.vacioMsg.Name = "vacioMsg";
+            this.vacioMsg.Size = new System.Drawing.Size(637, 25);
+            this.vacioMsg.TabIndex = 16;
+            this.vacioMsg.Text = "No se ha encontrado ninguna oferta de algún proveedor en ese intervalo";
+            this.vacioMsg.Visible = false;
             // 
             // listDescuento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 644);
+            this.Controls.Add(this.vacioMsg);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.semestre);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.year);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.grid);
             this.Controls.Add(this.label1);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1200, 700);
@@ -142,7 +158,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Listado de proveedores con mayor descuento";
             this.Load += new System.EventHandler(this.listDescuento_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.year)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -152,12 +168,13 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView grid;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.NumericUpDown year;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox semestre;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label vacioMsg;
     }
 }
