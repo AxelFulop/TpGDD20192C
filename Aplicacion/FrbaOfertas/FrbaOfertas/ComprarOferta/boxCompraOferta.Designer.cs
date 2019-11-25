@@ -326,6 +326,11 @@
             // 
             this.cantidad.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.cantidad.Location = new System.Drawing.Point(191, 344);
+            this.cantidad.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
             this.cantidad.Minimum = new decimal(new int[] {
             1,
             0,

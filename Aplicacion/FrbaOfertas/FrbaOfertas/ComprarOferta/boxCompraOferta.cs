@@ -14,6 +14,7 @@ namespace FrbaOfertas.ComprarOferta
     {
         private ComprarOfertaABM pantallaOfertas;
         private Dictionary<string, string> datos;
+        private decimal maxCantidad;
 
         public boxCompraOferta(ComprarOfertaABM pantallaOfertas, Dictionary<string, string> row)
         {
@@ -43,9 +44,9 @@ namespace FrbaOfertas.ComprarOferta
             decimal limiteCompra = decimal.Parse(datos["limiteCompra"]);
             decimal stockDisponible = decimal.Parse(datos["stock"]);
             if(stockDisponible >= limiteCompra)
-                cantidad.Maximum = limiteCompra;
+                maxCantidad = limiteCompra;
             else
-                cantidad.Maximum = stockDisponible;        
+                maxCantidad = stockDisponible;        
         }
 
         private void CancelBtn_Click(object sender, EventArgs e)
@@ -55,27 +56,46 @@ namespace FrbaOfertas.ComprarOferta
 
         private void button3_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("¿Desea comprar la oferta de código '" + datos["codigo"] + "'?",
+            "Comprar oferta",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+                registrarCompra();
+        }
+
+        private void registrarCompra()
+        {
+            if (cantidad.Value < 1)
+            {
+                MessageBox.Show("Cantidad no puede ser menor a 1");
+                return;
+            }
+
+            if (cantidad.Value > maxCantidad)
+            {
+                MessageBox.Show("La cantidad excede el limite de compra (" + datos["limiteCompra"] + ")");
+                return;
+            }
+
+            if ((comboBoxTarjeta.SelectedItem != null && !comboBoxTarjeta.Items.Contains(comboBoxTarjeta.SelectedItem)) || comboBoxTarjeta.SelectedItem == null)
+            {
+                MessageBox.Show("Tarjeta inválida");
+                return;
+            }
+
             try
             {
-                DialogResult result = MessageBox.Show("¿Desea comprar la oferta de código '" + datos["codigo"] + "'?",
-                "Comprar oferta",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    //Registrar compra
-                    MessageBox.Show("Compra realizada correctamente");
-                }
-                else return;
+                //Registrar compra
+                MessageBox.Show("Compra realizada correctamente");
+                this.Hide();
+                pantallaOfertas.Hide();
+                new ComprarOfertaABM().Show();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al realizar la compra.\n" + ex.Message);
             }
-
-            this.Hide();
-            pantallaOfertas.Hide();
-            new ComprarOfertaABM().Show();
         }
 
         private void tarj_numero_SelectedIndexChanged(object sender, EventArgs e)
