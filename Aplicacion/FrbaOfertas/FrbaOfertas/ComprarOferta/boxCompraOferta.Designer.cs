@@ -55,6 +55,7 @@
             this.label14 = new System.Windows.Forms.Label();
             this.cantidad = new System.Windows.Forms.NumericUpDown();
             this.o_descripcion = new System.Windows.Forms.RichTextBox();
+            this.SinTarjetasLink = new System.Windows.Forms.LinkLabel();
             this.panelAgregarTarjeta.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cantidad)).BeginInit();
@@ -124,7 +125,7 @@
             this.panelAgregarTarjeta.Controls.Add(this.label5);
             this.panelAgregarTarjeta.Controls.Add(this.label4);
             this.panelAgregarTarjeta.Controls.Add(this.label3);
-            this.panelAgregarTarjeta.Location = new System.Drawing.Point(464, 89);
+            this.panelAgregarTarjeta.Location = new System.Drawing.Point(464, 112);
             this.panelAgregarTarjeta.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelAgregarTarjeta.Name = "panelAgregarTarjeta";
             this.panelAgregarTarjeta.Size = new System.Drawing.Size(357, 258);
@@ -354,11 +355,25 @@
             this.o_descripcion.TabIndex = 17;
             this.o_descripcion.Text = "";
             // 
+            // SinTarjetasLink
+            // 
+            this.SinTarjetasLink.AutoSize = true;
+            this.SinTarjetasLink.LinkColor = System.Drawing.Color.Red;
+            this.SinTarjetasLink.Location = new System.Drawing.Point(647, 84);
+            this.SinTarjetasLink.Name = "SinTarjetasLink";
+            this.SinTarjetasLink.Size = new System.Drawing.Size(123, 20);
+            this.SinTarjetasLink.TabIndex = 71;
+            this.SinTarjetasLink.TabStop = true;
+            this.SinTarjetasLink.Text = "Registrar tarjeta";
+            this.SinTarjetasLink.Visible = false;
+            this.SinTarjetasLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.SinTarjetasLink_LinkClicked);
+            // 
             // boxCompraOferta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(878, 444);
+            this.Controls.Add(this.SinTarjetasLink);
             this.Controls.Add(this.cantidad);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.panel1);
@@ -413,5 +428,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.NumericUpDown cantidad;
         private System.Windows.Forms.RichTextBox o_descripcion;
+        private System.Windows.Forms.LinkLabel SinTarjetasLink;
     }
 }

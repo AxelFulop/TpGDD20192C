@@ -35,6 +35,7 @@ namespace FrbaOfertas.ComprarOferta
             {
                 comboBoxTarjeta.Text = "Sin tarjetas registradas";
                 comprarBtn.Enabled = false;
+                SinTarjetasLink.Visible = true;
             }
 
             o_codigo.Text = datos["codigo"];
@@ -121,6 +122,12 @@ namespace FrbaOfertas.ComprarOferta
         private void label7_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void SinTarjetasLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.Hide();
+            new RegistrarTarjeta().Show();
         }
     }
 }
