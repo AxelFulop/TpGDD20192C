@@ -60,9 +60,24 @@ namespace FrbaOfertas.ComprarOferta
                 if (e.ColumnIndex == 0)
                 {
                     DataRow row = (grid.CurrentRow.DataBoundItem as DataRowView).Row;
-                    new boxCompraOferta(this, row).Show();
+                    new boxCompraOferta(this, ajustarDatosRow(row)).Show();
                 }
             }
+        }
+
+        private Dictionary<string, string> ajustarDatosRow(DataRow row)
+        {
+            Dictionary<string, string> datosRow = new Dictionary<string, string>();
+
+            datosRow["codigo"] = row.ItemArray[0].ToString();
+            datosRow["descripcion"] = row.ItemArray[1].ToString();
+            datosRow["fechaPublicacion"] = row.ItemArray[2].ToString();
+            datosRow["fechaVencimiento"] = row.ItemArray[3].ToString();
+            datosRow["limiteCompra"] = row.ItemArray[4].ToString();
+            datosRow["stock"] = row.ItemArray[5].ToString();
+            datosRow["precio"] = row.ItemArray[6].ToString();
+
+            return datosRow;
         }
 
         private void button2_Click(object sender, EventArgs e)
