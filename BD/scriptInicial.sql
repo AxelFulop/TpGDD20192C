@@ -1,8 +1,17 @@
 USE GD2C2019
 
------ Eliminacion de stored procedures ---------    
+----- Eliminacion de stored procedures ---------     
 IF OBJECT_ID('GESTION_DE_GATOS.habilitarRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.habilitarRol
+
+IF OBJECT_ID('GESTION_DE_GATOS.reducirSaldoTarjeta') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.reducirSaldoTarjeta
+
+IF OBJECT_ID('GESTION_DE_GATOS.reducirCantidadOferta') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.reducirCantidadOferta
+
+IF OBJECT_ID('GESTION_DE_GATOS.altaCompra') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.altaCompra
 
 IF OBJECT_ID('GESTION_DE_GATOS.reiniciarIntentosFallidos') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.reiniciarIntentosFallidos
@@ -409,7 +418,7 @@ CREATE TABLE GESTION_DE_GATOS.Oferta(
 oferta_id NUMERIC(18,0) IDENTITY,
 proveedor_id NUMERIC(18,0),
 oferta_descripcion NVARCHAR(255),
-oferta_codigo NVARCHAR(50),
+oferta_codigo NVARCHAR(50) unique,
 oferta_fecha_publicacion DATETIME,
 oferta_fecha_vencimiento DATETIME,
 oferta_limite_compra NUMERIC(18,0),
@@ -677,6 +686,57 @@ SELECT m.Oferta_Entregado_Fecha FROM gd_esquema.Maestra m
 
 
 /* Creación de procedures */
+	--Inicio procedures compra
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.altaCompra
+@nombreUsuario NVARCHAR(255),
+@id_cliente numeric(18),
+@codigo_oferta NVARCHAR(50),
+@fecha datetime
+AS
+BEGIN
+DECLARE @id_oferta NVARCHAR(50), @fechaVenOferta datetime, @precioOferta numeric(18), 
+	@precioListaOferta numeric(18), @id_compra numeric(18)
+select @id_oferta = oferta_id from GESTION_DE_GATOS.Oferta 
+	where oferta_codigo = @codigo_oferta
+INSERT INTO GESTION_DE_GATOS.Compra(cliente_id, oferta_id, compra_fecha) 
+	VALUES (@id_cliente, @id_oferta, @fecha)
+set @id_compra = SCOPE_IDENTITY()
+select @fechaVenOferta = oferta_fecha_vencimiento, @precioOferta = oferta_precio,
+	   @precioListaOferta = oferta_precio_lista
+    from GESTION_DE_GATOS.Oferta
+	where oferta_id = @id_oferta
+
+insert into GESTION_DE_GATOS.Cupon(oferta_id, compra_id, cupon_canjeado, cupon_fecha_vencimiento,
+	                               cupon_precio, cupon_precio_lista)
+	values(@id_oferta, @id_compra, '0', DATEADD(day, 7, @fechaVenOferta), @precioOferta, @precioListaOferta)
+--El cupón se vence luego de 7 días del vencimiento de la oferta a la cual hace referencia
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.reducirSaldoTarjeta
+@numero_tarjeta numeric(18),
+@saldo_a_reducir nvarchar(255)
+AS
+BEGIN
+update GESTION_DE_GATOS.Tarjeta set tarjeta_saldo =
+	case when (tarjeta_saldo - convert(numeric(18, 4), @saldo_a_reducir) < 0) then 0 else tarjeta_saldo - convert(numeric(18, 4), @saldo_a_reducir) end 
+	where tarjeta_numero = @numero_tarjeta
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.reducirCantidadOferta
+@codigo_oferta NVARCHAR(50),
+@cant_a_reducir numeric(18)
+AS
+BEGIN
+update GESTION_DE_GATOS.Oferta set oferta_stock_disponible =
+	case when (oferta_stock_disponible - @cant_a_reducir < 0) then 0 
+		else oferta_stock_disponible - @cant_a_reducir end 
+	where oferta_codigo = @codigo_oferta
+END
+
+	--Fin procedures compra
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.altaUsuario
 @nombreUsuario NVARCHAR(255),
@@ -1384,8 +1444,6 @@ RETURN (SELECT p.proveedor_id from GESTION_DE_GATOS.Usuario u
 			inner join GESTION_DE_GATOS.Proveedor p on p.usuario_id = u.usuario_id 
 			where u.usuario_nombre = @usuario_nombre)
 END
-
-
 
 GO
 CREATE FUNCTION GESTION_DE_GATOS.obtenerRazonSocialProveedor(@usuario_nombre nvarchar(255))

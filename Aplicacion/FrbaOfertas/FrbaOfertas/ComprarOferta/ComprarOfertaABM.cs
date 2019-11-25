@@ -60,7 +60,13 @@ namespace FrbaOfertas.ComprarOferta
                 if (e.ColumnIndex == 0)
                 {
                     DataRow row = (grid.CurrentRow.DataBoundItem as DataRowView).Row;
-                    new boxCompraOferta(this, ajustarDatosRow(row)).Show();
+                    Dictionary<string, string> datos = ajustarDatosRow(row);
+                    if (int.Parse(datos["stock"]) <= 0)
+                    {
+                        MessageBox.Show("Esta oferta no tiene stock disponible");
+                        return;
+                    }
+                    new boxCompraOferta(this, datos).Show();
                 }
             }
         }

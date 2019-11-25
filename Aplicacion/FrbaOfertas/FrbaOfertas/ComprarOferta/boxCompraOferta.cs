@@ -57,7 +57,8 @@ namespace FrbaOfertas.ComprarOferta
 
         private void button3_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("¿Desea comprar la oferta de código '" + datos["codigo"] + "'?",
+            decimal totalAPagar = decimal.Parse(o_precio.Text) * cantidad.Value;
+            DialogResult result = MessageBox.Show("¿Desea comprar la oferta de código '" + datos["codigo"] + "'?\nTotal: $" + totalAPagar,
             "Comprar oferta",
             MessageBoxButtons.YesNo,
             MessageBoxIcon.Question);
@@ -75,7 +76,7 @@ namespace FrbaOfertas.ComprarOferta
 
             if (cantidad.Value > maxCantidad)
             {
-                MessageBox.Show("La cantidad excede el limite de compra (" + datos["limiteCompra"] + ")");
+                MessageBox.Show("La cantidad excede el limite de compra (" + maxCantidad + ")");
                 return;
             }
 
@@ -95,7 +96,14 @@ namespace FrbaOfertas.ComprarOferta
 
             try
             {
-                //Registrar compra
+                Tuple<string, List<string>, Object[]>[] procs = new Tuple<string, List<string>, object[]>[3];
+                procs[0] = altaCompra();
+                procs[1] = reduccionSaldoTarjeta(totalAPagar);
+                procs[2] = reducirOfertaProv();
+
+                ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
+                conection.executeStoredTransaction(procs);
+
                 MessageBox.Show("Compra realizada correctamente");
                 this.Hide();
                 pantallaOfertas.Hide();
@@ -105,6 +113,53 @@ namespace FrbaOfertas.ComprarOferta
             {
                 MessageBox.Show("Error al realizar la compra.\n" + ex.Message);
             }
+        }
+
+        private Tuple<string, List<string>, object[]> altaCompra()
+        {
+            string idCliente = new ConexionBD.Conexion().
+                executeScalarFunction("obtenerIdCliente", Logeo.username).ToString();
+
+            return new Tuple<string, List<string>, Object[]>(
+                   Properties.Settings.Default.Schema + ".altaCompra",
+                   new List<String>()
+                    {
+                         "@nombreUsuario","@id_cliente","@codigo_oferta","@fecha"
+                    },
+                   new Object[]{
+                        Logeo.username, int.Parse(idCliente), datos["codigo"],
+                        Properties.Settings.Default.fecha.ToShortDateString()
+                    }
+           );
+        }
+
+        private Tuple<string, List<string>, object[]> reduccionSaldoTarjeta(decimal saldo)
+        {
+            return new Tuple<string, List<string>, Object[]>(
+                   Properties.Settings.Default.Schema + ".reducirSaldoTarjeta",
+                   new List<String>()
+                    {
+                         "@numero_tarjeta","@saldo_a_reducir"
+                    },
+                   new Object[]{
+                        decimal.Parse(comboBoxTarjeta.SelectedItem.ToString()), 
+                        String.Format("{0:0.0000}", saldo).Replace(",", ".")
+                    }
+           );
+        }
+
+        private Tuple<string, List<string>, object[]> reducirOfertaProv()
+        {
+            return new Tuple<string, List<string>, Object[]>(
+                   Properties.Settings.Default.Schema + ".reducirCantidadOferta",
+                   new List<String>()
+                    {
+                         "@codigo_oferta","@cant_a_reducir"
+                    },
+                   new Object[]{
+                        datos["codigo"], cantidad.Value
+                    }
+           );
         }
 
         private void tarj_numero_SelectedIndexChanged(object sender, EventArgs e)
