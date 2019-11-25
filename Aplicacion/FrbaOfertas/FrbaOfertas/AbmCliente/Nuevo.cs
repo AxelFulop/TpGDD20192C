@@ -51,7 +51,7 @@ namespace FrbaOfertas.AbmCliente
                     ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
                     conection.executeStoredTransaction(procs);
 
-                    MessageBox.Show("Cliente creado correctamente");
+                    MessageBox.Show("Cliente creado correctamente.\nUsuario:'" + this.username + "'\nContraseña:'" + dni.Text + "'");
                     this.Hide();
                     new AbmCliente().Show();
                 }

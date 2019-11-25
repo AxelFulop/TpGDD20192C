@@ -54,10 +54,10 @@
             // grid
             // 
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grid.Location = new System.Drawing.Point(104, 263);
+            this.grid.Location = new System.Drawing.Point(65, 264);
             this.grid.Name = "grid";
             this.grid.RowTemplate.Height = 28;
-            this.grid.Size = new System.Drawing.Size(961, 339);
+            this.grid.Size = new System.Drawing.Size(1047, 335);
             this.grid.TabIndex = 1;
             // 
             // button1

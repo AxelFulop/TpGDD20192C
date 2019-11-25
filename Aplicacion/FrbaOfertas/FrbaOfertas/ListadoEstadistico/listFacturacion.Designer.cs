@@ -99,11 +99,11 @@
             this.grid.AllowUserToAddRows = false;
             this.grid.AllowUserToDeleteRows = false;
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grid.Location = new System.Drawing.Point(144, 285);
+            this.grid.Location = new System.Drawing.Point(122, 282);
             this.grid.Name = "grid";
             this.grid.ReadOnly = true;
             this.grid.RowTemplate.Height = 28;
-            this.grid.Size = new System.Drawing.Size(872, 309);
+            this.grid.Size = new System.Drawing.Size(931, 307);
             this.grid.TabIndex = 9;
             // 
             // label1

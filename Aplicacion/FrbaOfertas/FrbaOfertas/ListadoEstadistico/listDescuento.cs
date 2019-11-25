@@ -31,14 +31,14 @@ namespace FrbaOfertas.ListadoEstadistico
             year.Value = Properties.Settings.Default.fecha.Year;
             semestre.SelectedItem = "Primero";
 
-            string query = "SELECT top 5 p.proveedor_cuit, p.proveedor_razon_social," +
+            string query = "SELECT top 5 p.proveedor_id,p.proveedor_cuit, p.proveedor_razon_social," +
                 "avg(100-o.oferta_precio*100/o.oferta_precio_lista) as Porcentaje_Descuento_Promedio," +
                 "count(o.oferta_codigo) as Cantidad_ofertas " +
                 "FROM " + Properties.Settings.Default.Schema + ".Proveedor p " +
                 "inner join " + Properties.Settings.Default.Schema + ".Oferta o on p.proveedor_id = o.proveedor_id " +
                 "where (o.oferta_fecha_publicacion between '" + new DateTime(int.Parse(year.Value.ToString()), 1, 1).ToShortDateString() + "' and '" +
                  new DateTime(int.Parse(year.Value.ToString()), 7, 1).ToShortDateString() + "') " +
-                "group by p.proveedor_cuit, p.proveedor_razon_social " +
+                "group by p.proveedor_id,p.proveedor_cuit, p.proveedor_razon_social " +
                 "order by Porcentaje_Descuento_Promedio desc";
 
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
@@ -69,14 +69,14 @@ namespace FrbaOfertas.ListadoEstadistico
                 return;
             }
 
-            string query = "SELECT top 5 p.proveedor_cuit, p.proveedor_razon_social," +
+            string query = "SELECT top 5 p.proveedor_id,p.proveedor_cuit, p.proveedor_razon_social," +
                 "avg(100-o.oferta_precio*100/o.oferta_precio_lista) as Porcentaje_Descuento_Promedio," +
                 "count(o.oferta_codigo) as Cantidad_ofertas " +
                 "FROM " + Properties.Settings.Default.Schema + ".Proveedor p " +
                 "inner join " + Properties.Settings.Default.Schema + ".Oferta o on p.proveedor_id = o.proveedor_id " +
                 "where (o.oferta_fecha_publicacion between '" + fechaInicio + "' and '" +
                  fechaFin + "') " +
-                "group by p.proveedor_cuit, p.proveedor_razon_social " +
+                "group by p.proveedor_id,p.proveedor_cuit, p.proveedor_razon_social " +
                 "order by Porcentaje_Descuento_Promedio desc";
 
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();

@@ -43,7 +43,7 @@ namespace FrbaOfertas.AbmProveedor
                 ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
                 conection.executeStoredTransaction(procs);
 
-                MessageBox.Show("Proveedor creado correctamente");
+                MessageBox.Show("Proveedor creado correctamente\nUsuario:'" + cuit.Text + "'\nContraseña:'" + razonSocial.Text + "'");
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
