@@ -84,6 +84,14 @@ namespace FrbaOfertas.ComprarOferta
                 return;
             }
 
+            decimal saldo = decimal.Parse(tarj_saldo.Text);
+            decimal totalAPagar = decimal.Parse(o_precio.Text) * cantidad.Value;
+            if (saldo < totalAPagar)
+            {
+                MessageBox.Show("Saldo insuficiente.\n Total a pagar: $ " + totalAPagar + "\n Saldo tarjeta: $ " + saldo);
+                return;
+            }
+
             try
             {
                 //Registrar compra
