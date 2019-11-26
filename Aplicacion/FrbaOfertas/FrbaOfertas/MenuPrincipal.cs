@@ -218,8 +218,12 @@ namespace FrbaOfertas
 
         public void identificarHabilitacion()
         {
-            Object habilitado = new ConexionBD.Conexion().executeScalarFunction("usuarioEstaHabilitado", usuario);
-            this.estaHabilitado = habilitado.ToString() == "0"? true : false;
+            Object rolHabilitado = "0";
+            Object userHabilitado = new ConexionBD.Conexion().executeScalarFunction("usuarioEstaHabilitado", usuario);
+            if(roles.Count != 0)
+                rolHabilitado = new ConexionBD.Conexion().executeScalarFunction("rolEstaHabilitado", roles.First());
+            
+            this.estaHabilitado = userHabilitado.ToString() == "0" && rolHabilitado.ToString() == "0";
             if(!estaHabilitado)
                 inhabilitadoMsg.Visible = true;
         }
