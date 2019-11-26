@@ -76,6 +76,8 @@ namespace FrbaOfertas
                         case "Confeccionar ofertas":
                             if (!this.listadoMenu.Items.Contains("Confeccionar oferta"))
                                 this.listadoMenu.Items.Add("Confeccionar oferta");
+                            if (!this.listadoMenu.Items.Contains("Consumición de oferta"))
+                                this.listadoMenu.Items.Add("Consumición de oferta");
                             break;
                         case "ABM proveedor":
                             if (!this.listadoMenu.Items.Contains("Proveedores"))
@@ -190,6 +192,9 @@ namespace FrbaOfertas
                     case "Consultar saldo":
                         consultaSaldoCliente();
                         return;
+                    case "Consumición de oferta":
+                        new ConsumoCupon.consumoCupon().Show();
+                        break;
                     default: break;
                 }
                 if (mustHide)

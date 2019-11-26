@@ -85,3 +85,4 @@ C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\Frba
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ListadoEstadistico.listDescuento.resources
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ListadoEstadistico.listFacturacion.resources
 C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ComprarOferta.boxCompraOferta.resources
+C:\Users\anton\git\TpGDD20192C\Aplicacion\FrbaOfertas\FrbaOfertas\obj\Debug\FrbaOfertas.ConsumoCupon.consumoCupon.resources

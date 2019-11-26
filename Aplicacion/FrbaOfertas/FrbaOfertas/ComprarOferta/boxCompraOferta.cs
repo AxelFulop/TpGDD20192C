@@ -182,6 +182,7 @@ namespace FrbaOfertas.ComprarOferta
         private void SinTarjetasLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             this.Hide();
+            pantallaOfertas.Hide();
             new RegistrarTarjeta().Show();
         }
     }
