@@ -50,6 +50,19 @@ namespace FrbaOfertas.Login
                 MessageBox.Show("Las contraseñas no coinciden", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            if (prov_cuit.Text == "")
+            {
+                MessageBox.Show("CUIT no puede estar vacío");
+                return;
+            }
+
+            if (prov_razonSocial.Text == "")
+            {
+                MessageBox.Show("Razón social no puede estar vacío");
+                return;
+            }
+
             int cantProcs = 3;
             if (rol.SelectedItem.ToString() == "Proveedor")
                 cantProcs = 2;
@@ -84,6 +97,7 @@ namespace FrbaOfertas.Login
                 conection.executeStoredTransaction(procs);
 
                 MessageBox.Show("Usuario creado correctamente");
+                Logeo.username = usuario.Text;
                 this.Hide();
                 new MenuPrincipal(usuario.Text).Show();
             }
