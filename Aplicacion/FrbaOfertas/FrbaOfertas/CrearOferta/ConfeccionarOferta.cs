@@ -100,7 +100,7 @@ namespace FrbaOfertas.CrearOferta
         {
             if (dateTimePickerFechaPub.Value.CompareTo(Properties.Settings.Default.fecha) <= 0)
             {
-                MessageBox.Show("La fecha de debe ser porterior o igual a fecha actual('" +
+                MessageBox.Show("La fecha de publicación debe ser posterior o igual a fecha actual('" +
                     Properties.Settings.Default.fecha.ToShortDateString() + "')");
                 return;
             }
@@ -136,8 +136,10 @@ namespace FrbaOfertas.CrearOferta
             Object[] parametros = new Object[]{
               richTextBoxDesc.Text,
               textBoxCodOferta.Text,
-              dateTimePickerFechaPub.Value + new TimeSpan(0, 0, 0),
-              dateTimePickerFechVenc.Value + new TimeSpan(23, 59, 59),
+              dateTimePickerFechaPub.Value.Subtract(new TimeSpan(dateTimePickerFechaPub.Value.Hour, 
+                  dateTimePickerFechaPub.Value.Minute, dateTimePickerFechaPub.Value.Second)),
+              dateTimePickerFechVenc.Value.Add(new TimeSpan(23-dateTimePickerFechVenc.Value.Hour, 
+                  59-dateTimePickerFechVenc.Value.Minute, 59-dateTimePickerFechVenc.Value.Second)),
               numericUpDownLimCom.Value,
               numericUpDownCantDisp.Value,
               precioOferta.Text,
