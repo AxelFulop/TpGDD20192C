@@ -51,13 +51,13 @@ namespace FrbaOfertas.Login
                 return;
             }
 
-            if (prov_cuit.Text == "")
+            if (prov_cuit.Text == "" && rol.SelectedItem.ToString() == "Proveedor")
             {
                 MessageBox.Show("CUIT no puede estar vacío");
                 return;
             }
 
-            if (prov_razonSocial.Text == "")
+            if (prov_razonSocial.Text == "" && rol.SelectedItem.ToString() == "Proveedor")
             {
                 MessageBox.Show("Razón social no puede estar vacío");
                 return;
