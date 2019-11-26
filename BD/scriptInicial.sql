@@ -828,14 +828,14 @@ GO
 CREATE PROCEDURE GESTION_DE_GATOS.altaProveedor
 @razonSocialProveedor NVARCHAR(100),
 @mailProveedor NVARCHAR(255),
-@teléfonoProveedor NUMERIC(18,0),
+@telefonoProveedor nvarchar(25),
 @direccionProveedor NVARCHAR(255),
-@pisoProveedor int,
+@pisoProveedor nvarchar(5),
 @deptoProveedor nvarchar(5),
 @localidadProveedor nvarchar(50),
-@codigoPostalProveedor NUMERIC(18,0),
+@codigoPostalProveedor nvarchar(255),
 @ciudadProveedor NVARCHAR(255),
-@cuitProveedor NUMERIC(18,0),
+@cuitProveedor nvarchar(20),
 @rubroProveedor NVARCHAR(100),
 @nombreDeContactoProveedor NVARCHAR(30),
 @usuario NVARCHAR(255)
@@ -847,9 +847,10 @@ BEGIN
 			proveedor_direccion,proveedor_codigo_postal,proveedor_ciudad,
 			proveedor_cuit,proveedor_rubro,proveedor_contacto, usuario_id,
 			proveedor_direccion_depto, proveedor_direccion_localidad, proveedor_direccion_piso)
-		VALUES (@razonSocialProveedor,@mailProveedor,@teléfonoProveedor,@direccionProveedor,
+		VALUES (@razonSocialProveedor,@mailProveedor,cast(@telefonoProveedor as numeric(18)),@direccionProveedor,
 			@codigoPostalProveedor,@ciudadProveedor,@cuitProveedor,@rubroProveedor,
-			@nombreDeContactoProveedor, @id_usuario, @deptoProveedor, @localidadProveedor, @pisoProveedor)
+			@nombreDeContactoProveedor, @id_usuario, @deptoProveedor, @localidadProveedor, 
+			cast(@pisoProveedor as int))
 	insert into UsuarioXRol(usuario_id, rol_id)
 		values(@id_usuario, (select rol_id from Rol where rol_nombre = 'Proveedor'))
 END

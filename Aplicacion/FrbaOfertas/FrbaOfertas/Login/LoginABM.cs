@@ -50,8 +50,10 @@ namespace FrbaOfertas.Login
                 MessageBox.Show("Las contraseñas no coinciden", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            Tuple<string, List<string>, Object[]>[] procs = new Tuple<string,List<string>,object[]>[3];
+            int cantProcs = 3;
+            if (rol.SelectedItem.ToString() == "Proveedor")
+                cantProcs = 2;
+            Tuple<string, List<string>, Object[]>[] procs = new Tuple<string,List<string>,object[]>[cantProcs];
             procs[0] = altaUsuarioProc();
 
             if (rol.SelectedItem == null)
@@ -74,13 +76,14 @@ namespace FrbaOfertas.Login
                 return;
             }
 
-            procs[2] = tarjetaNueva();
+            if (cantProcs == 3)
+                procs[2] = tarjetaNueva();
             try
             {
                 ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
                 conection.executeStoredTransaction(procs);
 
-                MessageBox.Show("Usuario creado correctamente", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Usuario creado correctamente");
                 this.Hide();
                 new MenuPrincipal(usuario.Text).Show();
             }
@@ -123,14 +126,14 @@ namespace FrbaOfertas.Login
                     Properties.Settings.Default.Schema + ".altaProveedor",
                     new List<String>()
                     {
-                        "@razonSocialProveedor", "@mailProveedor", "@teléfonoProveedor", "@direccionProveedor","@pisoProveedor", 
+                        "@razonSocialProveedor", "@mailProveedor", "@telefonoProveedor", "@direccionProveedor","@pisoProveedor", 
                         "@deptoProveedor", "@localidadProveedor", "@codigoPostalProveedor", "@ciudadProveedor", "@cuitProveedor", "@rubroProveedor", 
                         "@nombreDeContactoProveedor", "@usuario"
                     },
                     new String[]{
-                        prov_razonSocial.Text, prov_mail.Text, prov_telefono.Text == ""? DBNull.Value.ToString() : prov_telefono.Text,
-                        dir_calle.Text + " " + (dir_numero.Text == ""? DBNull.Value.ToString() : dir_numero.Text), dir_piso.Text == ""? DBNull.Value.ToString() : dir_piso.Text, dir_depto.Text, dir_localidad.Text, 
-                        prov_cp.Text == ""? DBNull.Value.ToString() : prov_cp.Text, prov_ciudad.Text, prov_cuit.Text, prov_rubro.Text, prov_contacto.Text, usuario.Text
+                        prov_razonSocial.Text, prov_mail.Text, prov_telefono.Value.ToString() == ""? DBNull.Value.ToString() : prov_telefono.Value.ToString(),
+                        dir_calle.Text + " " + (dir_numero.Value.ToString() == ""? DBNull.Value.ToString() : dir_numero.Value.ToString()), dir_piso.Value.ToString() == ""? DBNull.Value.ToString() : dir_piso.Value.ToString(), dir_depto.Text, dir_localidad.Text, 
+                        prov_cp.Value.ToString() == ""? DBNull.Value.ToString() : prov_cp.Value.ToString(), prov_ciudad.Text, prov_cuit.Text, prov_rubro.Text, prov_contacto.Text, usuario.Text
                     }
                 );
         }

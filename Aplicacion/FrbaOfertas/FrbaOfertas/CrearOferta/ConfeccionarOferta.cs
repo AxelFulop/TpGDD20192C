@@ -98,15 +98,12 @@ namespace FrbaOfertas.CrearOferta
 
         private void button4_Click(object sender, EventArgs e)
         {
-            /*
-            if (dateTimePickerFechaPub.Value.CompareTo(Properties.Settings.Default.fecha) <= 0 ||
-                dateTimePickerFechVenc.Value.CompareTo(Properties.Settings.Default.fecha) <= 0)
+            if (dateTimePickerFechaPub.Value.CompareTo(Properties.Settings.Default.fecha) <= 0)
             {
-                MessageBox.Show("Fechas inválidas. Deben ser fechas posteriores a la fecha actual ( " + 
-                    Properties.Settings.Default.fecha.ToShortDateString() + " )");
+                MessageBox.Show("La fecha de debe ser porterior o igual a fecha actual('" +
+                    Properties.Settings.Default.fecha.ToShortDateString() + "')");
                 return;
-            } */
-
+            }
             if (dateTimePickerFechaPub.Value.CompareTo(dateTimePickerFechVenc.Value) >= 0)
             {
                 MessageBox.Show("La fecha de vencimiento debe ser posterior a la fecha de publicación");
@@ -139,8 +136,8 @@ namespace FrbaOfertas.CrearOferta
             Object[] parametros = new Object[]{
               richTextBoxDesc.Text,
               textBoxCodOferta.Text,
-              dateTimePickerFechaPub.Value,
-              dateTimePickerFechVenc.Value,
+              dateTimePickerFechaPub.Value + new TimeSpan(0, 0, 0),
+              dateTimePickerFechVenc.Value + new TimeSpan(23, 59, 59),
               numericUpDownLimCom.Value,
               numericUpDownCantDisp.Value,
               precioOferta.Text,
