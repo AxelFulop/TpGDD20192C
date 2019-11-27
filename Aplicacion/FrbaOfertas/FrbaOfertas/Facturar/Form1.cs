@@ -22,12 +22,30 @@ namespace FrbaOfertas.Facturar
             this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+
+            fechaInicio.Value = Properties.Settings.Default.fecha;
+            FechaFin.Value = Properties.Settings.Default.fecha.AddMonths(1);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
             new MenuPrincipal().Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (cuit.Text == "" || razonSocial.Text == "")
+            {
+                MessageBox.Show("Complete todos los campos");
+                return;
+            }
+
+            if (fechaInicio.Value.CompareTo(FechaFin.Value) < 0)
+            {
+                MessageBox.Show("La fecha final no puede ser menor a la inicial");
+                return;
+            }
         }
     }
 }

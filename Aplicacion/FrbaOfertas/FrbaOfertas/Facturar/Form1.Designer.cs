@@ -33,14 +33,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.grid = new System.Windows.Forms.DataGridView();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.fechaInicio = new System.Windows.Forms.DateTimePicker();
+            this.FechaFin = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.cuit = new System.Windows.Forms.TextBox();
+            this.razonSocial = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,6 +62,7 @@
             this.button2.TabIndex = 22;
             this.button2.Text = "Ver ofertas compras";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label3
             // 
@@ -92,19 +93,19 @@
             this.grid.Size = new System.Drawing.Size(1154, 383);
             this.grid.TabIndex = 17;
             // 
-            // dateTimePicker1
+            // fechaInicio
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(764, 90);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(336, 26);
-            this.dateTimePicker1.TabIndex = 24;
+            this.fechaInicio.Location = new System.Drawing.Point(764, 90);
+            this.fechaInicio.Name = "fechaInicio";
+            this.fechaInicio.Size = new System.Drawing.Size(336, 26);
+            this.fechaInicio.TabIndex = 24;
             // 
-            // dateTimePicker2
+            // FechaFin
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(764, 141);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(336, 26);
-            this.dateTimePicker2.TabIndex = 25;
+            this.FechaFin.Location = new System.Drawing.Point(764, 141);
+            this.FechaFin.Name = "FechaFin";
+            this.FechaFin.Size = new System.Drawing.Size(336, 26);
+            this.FechaFin.TabIndex = 25;
             // 
             // label1
             // 
@@ -146,33 +147,33 @@
             this.label6.TabIndex = 28;
             this.label6.Text = "CUIT";
             // 
-            // textBox1
+            // cuit
             // 
-            this.textBox1.Location = new System.Drawing.Point(237, 91);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(299, 26);
-            this.textBox1.TabIndex = 30;
+            this.cuit.Location = new System.Drawing.Point(237, 91);
+            this.cuit.Name = "cuit";
+            this.cuit.Size = new System.Drawing.Size(299, 26);
+            this.cuit.TabIndex = 30;
             // 
-            // textBox2
+            // razonSocial
             // 
-            this.textBox2.Location = new System.Drawing.Point(237, 142);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(299, 26);
-            this.textBox2.TabIndex = 31;
+            this.razonSocial.Location = new System.Drawing.Point(237, 142);
+            this.razonSocial.Name = "razonSocial";
+            this.razonSocial.Size = new System.Drawing.Size(299, 26);
+            this.razonSocial.TabIndex = 31;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 644);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.razonSocial);
+            this.Controls.Add(this.cuit);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.dateTimePicker2);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.FechaFin);
+            this.Controls.Add(this.fechaInicio);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -199,13 +200,13 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridView grid;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker fechaInicio;
+        private System.Windows.Forms.DateTimePicker FechaFin;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox cuit;
+        private System.Windows.Forms.TextBox razonSocial;
     }
 }
