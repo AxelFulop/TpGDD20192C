@@ -76,6 +76,8 @@ namespace FrbaOfertas
                         case "Confeccionar ofertas":
                             if (!this.listadoMenu.Items.Contains("Confeccionar oferta"))
                                 this.listadoMenu.Items.Add("Confeccionar oferta");
+                            break;
+                        case "Consumir ofertas":
                             if (!this.listadoMenu.Items.Contains("Consumición de oferta"))
                                 this.listadoMenu.Items.Add("Consumición de oferta");
                             break;

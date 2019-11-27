@@ -529,6 +529,7 @@ insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Ca
 insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Comprar oferta') --7 cliente
 insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Registrar tarjeta') --8 cliente
 insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Confeccionar ofertas') --9 prov
+insert into GESTION_DE_GATOS.Funcionalidad(funcionalidad_descripcion) values('Consumir ofertas') --10 prov
 
 --Funcionalidades Admin
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(1, 1)
@@ -545,6 +546,7 @@ insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(
 
 --Funcionalidades Proveedor
 insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,9)
+insert into GESTION_DE_GATOS.FuncionalidadXRol(rol_id, funcionalidad_id) values(3,10)
 
 /* Migracion de la Maestra */
 --Cliente
