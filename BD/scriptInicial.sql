@@ -4,6 +4,9 @@ USE GD2C2019
 IF OBJECT_ID('GESTION_DE_GATOS.registrarEntregaCupon') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.registrarEntregaCupon
 
+IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdProveedorPorCuitYRs') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.obtenerIdProveedorPorCuitYRs
+
 IF OBJECT_ID('GESTION_DE_GATOS.habilitarRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.habilitarRol
 
@@ -1458,6 +1461,18 @@ BEGIN
 RETURN (SELECT p.proveedor_id from GESTION_DE_GATOS.Usuario u
 			inner join GESTION_DE_GATOS.Proveedor p on p.usuario_id = u.usuario_id 
 			where u.usuario_nombre = @usuario_nombre)
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.obtenerIdProveedorPorCuitYRs(
+@cuit nvarchar(20),
+@razonSocial nvarchar(100)
+)
+RETURNS numeric(18)
+AS
+BEGIN
+RETURN (SELECT proveedor_id from GESTION_DE_GATOS.Proveedor
+			where proveedor_cuit = @cuit and proveedor_razon_social = @razonSocial)
 END
 
 GO

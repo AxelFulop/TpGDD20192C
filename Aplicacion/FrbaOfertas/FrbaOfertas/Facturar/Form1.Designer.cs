@@ -41,14 +41,16 @@
             this.label6 = new System.Windows.Forms.Label();
             this.cuit = new System.Windows.Forms.TextBox();
             this.razonSocial = new System.Windows.Forms.TextBox();
+            this.facturarBtn = new System.Windows.Forms.Button();
+            this.cantComprasMsg = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1040, 12);
+            this.button1.Location = new System.Drawing.Point(396, 585);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(126, 58);
+            this.button1.Size = new System.Drawing.Size(174, 47);
             this.button1.TabIndex = 0;
             this.button1.Text = "Volver";
             this.button1.UseVisualStyleBackColor = true;
@@ -56,11 +58,11 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(495, 190);
+            this.button2.Location = new System.Drawing.Point(496, 183);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(189, 44);
             this.button2.TabIndex = 22;
-            this.button2.Text = "Ver ofertas compras";
+            this.button2.Text = "Ver ofertas compradas\r\n";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -87,10 +89,10 @@
             // grid
             // 
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grid.Location = new System.Drawing.Point(12, 249);
+            this.grid.Location = new System.Drawing.Point(12, 233);
             this.grid.Name = "grid";
             this.grid.RowTemplate.Height = 28;
-            this.grid.Size = new System.Drawing.Size(1154, 383);
+            this.grid.Size = new System.Drawing.Size(1154, 346);
             this.grid.TabIndex = 17;
             // 
             // fechaInicio
@@ -161,11 +163,33 @@
             this.razonSocial.Size = new System.Drawing.Size(299, 26);
             this.razonSocial.TabIndex = 31;
             // 
+            // facturarBtn
+            // 
+            this.facturarBtn.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.facturarBtn.Enabled = false;
+            this.facturarBtn.Location = new System.Drawing.Point(601, 585);
+            this.facturarBtn.Name = "facturarBtn";
+            this.facturarBtn.Size = new System.Drawing.Size(174, 47);
+            this.facturarBtn.TabIndex = 41;
+            this.facturarBtn.Text = "Facturar";
+            this.facturarBtn.UseVisualStyleBackColor = false;
+            // 
+            // cantComprasMsg
+            // 
+            this.cantComprasMsg.AutoSize = true;
+            this.cantComprasMsg.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.cantComprasMsg.Location = new System.Drawing.Point(13, 199);
+            this.cantComprasMsg.Name = "cantComprasMsg";
+            this.cantComprasMsg.Size = new System.Drawing.Size(0, 20);
+            this.cantComprasMsg.TabIndex = 42;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 644);
+            this.Controls.Add(this.cantComprasMsg);
+            this.Controls.Add(this.facturarBtn);
             this.Controls.Add(this.razonSocial);
             this.Controls.Add(this.cuit);
             this.Controls.Add(this.label5);
@@ -208,5 +232,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox cuit;
         private System.Windows.Forms.TextBox razonSocial;
+        private System.Windows.Forms.Button facturarBtn;
+        private System.Windows.Forms.Label cantComprasMsg;
     }
 }
