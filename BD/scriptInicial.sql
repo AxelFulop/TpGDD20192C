@@ -1,6 +1,9 @@
 USE GD2C2019
 
------ Eliminacion de stored procedures ---------     
+----- Eliminacion de stored procedures ---------
+IF OBJECT_ID('GESTION_DE_GATOS.registrarEntregaCupon') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.registrarEntregaCupon
+
 IF OBJECT_ID('GESTION_DE_GATOS.habilitarRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.habilitarRol
 
@@ -1119,6 +1122,15 @@ INSERT INTO GESTION_DE_GATOS.Tarjeta (cliente_id,tarjeta_saldo,tarjeta_banco,tar
 VALUES(@idCliente,200,'HSCBC',@CVV,CONVERT(DATETIME,@fechaVencimiento),@numeroTarjeta,'Debito', '1')
 END
 
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.registrarEntregaCupon
+@codigo_cupon numeric(18),
+@fechaConsumo datetime
+AS
+BEGIN
+update GESTION_DE_GATOS.Cupon set cupon_fecha_consumo = @fechaConsumo, cupon_canjeado = '1'
+	where cupon_id = @codigo_cupon
+END
 
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.actualizarDatosCliente
