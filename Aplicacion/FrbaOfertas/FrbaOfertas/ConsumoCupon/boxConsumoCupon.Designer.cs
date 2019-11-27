@@ -73,6 +73,7 @@
             this.comprarBtn.TabIndex = 72;
             this.comprarBtn.Text = "Notificar entrega";
             this.comprarBtn.UseVisualStyleBackColor = false;
+            this.comprarBtn.Click += new System.EventHandler(this.comprarBtn_Click);
             // 
             // oferta_codigo
             // 

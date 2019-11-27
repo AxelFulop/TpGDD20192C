@@ -48,5 +48,38 @@ namespace FrbaOfertas.ConsumoCupon
         {
 
         }
+
+        private void comprarBtn_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("¿Desea registrar la entrega?",
+            "Registrar entrega",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    new ConexionBD.Conexion().getInstance().executeProcedure(
+                        Properties.Settings.Default.Schema + ".registrarEntregaCupon",
+                        new List<string>() {
+                            "@codigo_cupon", "@fechaConsumo"
+                        },
+                        new Object[]{
+                            cupon_codigo.Text, fechaEntrega.Value.ToShortDateString()
+                        }
+                    );
+
+                    MessageBox.Show("Entrega registrada correctamente");
+                    this.Hide();
+                    pantallaConsumoCupon.Hide();
+                    pantallaConsumoCupon.Show();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al procesar la entrega de la oferta.\n'" + ex.Message + "'");
+                }
+                
+            }
+        }
     }
 }
