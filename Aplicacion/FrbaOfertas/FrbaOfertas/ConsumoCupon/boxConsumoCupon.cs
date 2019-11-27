@@ -57,6 +57,17 @@ namespace FrbaOfertas.ConsumoCupon
             MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
+                if(fechaEntrega.Value.CompareTo(cupon_fechaCompra.Value) < 0){
+                    MessageBox.Show("La fecha de entrega no puede ser menor a la fecha de compra");
+                    return;
+                }
+
+                if (fechaEntrega.Value.CompareTo(cupon_fechaVencimiento.Value) > 0)
+                {
+                    MessageBox.Show("La fecha de entrega no puede ser mayor que la fecha de vencimiento");
+                    return;
+                }
+
                 try
                 {
                     new ConexionBD.Conexion().getInstance().executeProcedure(
@@ -71,8 +82,8 @@ namespace FrbaOfertas.ConsumoCupon
 
                     MessageBox.Show("Entrega registrada correctamente");
                     this.Hide();
-                    pantallaConsumoCupon.Hide();
-                    pantallaConsumoCupon.Show();
+                    pantallaConsumoCupon.Dispose();
+                    new ConsumoCupon.consumoCupon().Show();
                 }
                 catch (Exception ex)
                 {
