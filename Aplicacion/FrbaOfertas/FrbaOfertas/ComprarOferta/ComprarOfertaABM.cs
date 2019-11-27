@@ -57,17 +57,21 @@ namespace FrbaOfertas.ComprarOferta
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0 && e.RowIndex < grid.Rows.Count)
             {
-                if (e.ColumnIndex == 0)
+                try
                 {
-                    DataRow row = (grid.CurrentRow.DataBoundItem as DataRowView).Row;
-                    Dictionary<string, string> datos = ajustarDatosRow(row);
-                    if (int.Parse(datos["stock"]) <= 0)
+                    if (e.ColumnIndex == 0)
                     {
-                        MessageBox.Show("Esta oferta no tiene stock disponible");
-                        return;
+                        DataRow row = (grid.CurrentRow.DataBoundItem as DataRowView).Row;
+                        Dictionary<string, string> datos = ajustarDatosRow(row);
+                        if (int.Parse(datos["stock"]) <= 0)
+                        {
+                            MessageBox.Show("Esta oferta no tiene stock disponible");
+                            return;
+                        }
+                        new boxCompraOferta(this, datos).Show();
                     }
-                    new boxCompraOferta(this, datos).Show();
                 }
+                catch (Exception) { }
             }
         }
 

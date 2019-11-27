@@ -104,17 +104,21 @@ namespace FrbaOfertas.ConsumoCupon
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0 && e.RowIndex < grid.Rows.Count)
             {
-                if (e.ColumnIndex == 8)
+                try
                 {
-                    DataRow row = (grid.CurrentRow.DataBoundItem as DataRowView).Row;
-                    Dictionary<string, string> datos = ajustarDatosRow(row);
-                    if (DateTime.Parse(datos["cupon_fechaVencimiento"]).CompareTo(Properties.Settings.Default.fecha) < 0)
+                    if (e.ColumnIndex == 8)
                     {
-                        MessageBox.Show("El cupón ya ha vencido");
-                        return;
+                        DataRow row = (grid.CurrentRow.DataBoundItem as DataRowView).Row;
+                        Dictionary<string, string> datos = ajustarDatosRow(row);
+                        if (DateTime.Parse(datos["cupon_fechaVencimiento"]).CompareTo(Properties.Settings.Default.fecha) < 0)
+                        {
+                            MessageBox.Show("El cupón ya ha vencido");
+                            return;
+                        }
+                        new boxConsumoCupon(this, datos).Show();
                     }
-                    new boxConsumoCupon(this, datos).Show();
                 }
+                catch (Exception) { }
             }
         }
 

@@ -110,45 +110,49 @@ namespace FrbaOfertas.AbmCliente
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0 && e.RowIndex < grid.Rows.Count)
             {
-                if (e.ColumnIndex == 0) //Editar
+                try
                 {
-                    DataRow row = (grid.CurrentRow.DataBoundItem as DataRowView).Row;
-                    Dictionary<string, string> datos = ajustarDatosRow(row);
-                    this.Hide();
-                    new Editar(datos).Show();
-                }
-                else if (e.ColumnIndex == 1) //Eliminar
-                {
-                    DataRow row = (grid.CurrentRow.DataBoundItem as DataRowView).Row;
-                    Dictionary<string, string> datos = ajustarDatosRow(row);
-                    DialogResult result = MessageBox.Show("¿Desea eliminar el cliente '" + datos["nombre"] + " "
-                                    + datos["apellido"] + "'?",
-                    "",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
+                    if (e.ColumnIndex == 0) //Editar
                     {
-                        try
+                        DataRow row = (grid.CurrentRow.DataBoundItem as DataRowView).Row;
+                        Dictionary<string, string> datos = ajustarDatosRow(row);
+                        this.Hide();
+                        new Editar(datos).Show();
+                    }
+                    else if (e.ColumnIndex == 1) //Eliminar
+                    {
+                        DataRow row = (grid.CurrentRow.DataBoundItem as DataRowView).Row;
+                        Dictionary<string, string> datos = ajustarDatosRow(row);
+                        DialogResult result = MessageBox.Show("¿Desea eliminar el cliente '" + datos["nombre"] + " "
+                                        + datos["apellido"] + "'?",
+                        "",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+                        if (result == DialogResult.Yes)
                         {
-                            MessageBox.Show("Cliente eliminado correctamente", "",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Information);
-                            Object user_cliente = new ConexionBD.Conexion().executeScalarFunction("obtenerUsuarioCliente", datos["id"]);
+                            try
+                            {
+                                MessageBox.Show("Cliente eliminado correctamente", "",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+                                Object user_cliente = new ConexionBD.Conexion().executeScalarFunction("obtenerUsuarioCliente", datos["id"]);
 
-                            Logeo.usuariosEliminadosLogicamente.Add(user_cliente.ToString());
-                            this.Hide();
-                            new AbmCliente(Tuple.Create<string, string, string>(
-                                datos["dni"], datos["nombre"], datos["apellido"]
-                                )).Show();
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show("Error al eliminar el cliente", "",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
+                                Logeo.usuariosEliminadosLogicamente.Add(user_cliente.ToString());
+                                this.Hide();
+                                new AbmCliente(Tuple.Create<string, string, string>(
+                                    datos["dni"], datos["nombre"], datos["apellido"]
+                                    )).Show();
+                            }
+                            catch (Exception)
+                            {
+                                MessageBox.Show("Error al eliminar el cliente", "",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                            }
                         }
                     }
                 }
+                catch (Exception) { }
             }
         }
 

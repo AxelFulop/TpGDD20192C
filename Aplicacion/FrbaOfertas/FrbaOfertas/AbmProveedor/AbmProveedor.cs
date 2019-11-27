@@ -84,42 +84,46 @@ namespace FrbaOfertas.AbmProveedor
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0 && e.RowIndex < grid.Rows.Count)
             {
-                if (e.ColumnIndex == 0) //Editar
+                try
                 {
-                    DataRow row = (grid.CurrentRow.DataBoundItem as DataRowView).Row;
-                    Dictionary<string, string> datos = ajustarDatosRow(row);
-                    this.Hide();
-                    new Editar(datos).Show();
-                }
-                else if (e.ColumnIndex == 1) //Eliminar
-                {
-                    DataRow row = (grid.CurrentRow.DataBoundItem as DataRowView).Row;
-                    Dictionary<string, string> datos = ajustarDatosRow(row);
-                    DialogResult result = MessageBox.Show("¿Desea eliminar el proveedor '" + datos["razonSocial"] + "'?",
-                    "",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
+                    if (e.ColumnIndex == 0) //Editar
                     {
-                        try
+                        DataRow row = (grid.CurrentRow.DataBoundItem as DataRowView).Row;
+                        Dictionary<string, string> datos = ajustarDatosRow(row);
+                        this.Hide();
+                        new Editar(datos).Show();
+                    }
+                    else if (e.ColumnIndex == 1) //Eliminar
+                    {
+                        DataRow row = (grid.CurrentRow.DataBoundItem as DataRowView).Row;
+                        Dictionary<string, string> datos = ajustarDatosRow(row);
+                        DialogResult result = MessageBox.Show("¿Desea eliminar el proveedor '" + datos["razonSocial"] + "'?",
+                        "",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+                        if (result == DialogResult.Yes)
                         {
-                            MessageBox.Show("Proveedor eliminado correctamente", "",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Information);
-                            Object user_prov = new ConexionBD.Conexion().executeScalarFunction("obtenerUsuarioProveedor", datos["id"]);
+                            try
+                            {
+                                MessageBox.Show("Proveedor eliminado correctamente", "",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+                                Object user_prov = new ConexionBD.Conexion().executeScalarFunction("obtenerUsuarioProveedor", datos["id"]);
 
-                            Logeo.usuariosEliminadosLogicamente.Add(user_prov.ToString());
-                            this.Hide();
-                            new AbmProveedor(Tuple.Create<string, string>(datos["razonSocial"], datos["cuit"])).Show();
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show("Error al eliminar el proveedor", "",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
+                                Logeo.usuariosEliminadosLogicamente.Add(user_prov.ToString());
+                                this.Hide();
+                                new AbmProveedor(Tuple.Create<string, string>(datos["razonSocial"], datos["cuit"])).Show();
+                            }
+                            catch (Exception)
+                            {
+                                MessageBox.Show("Error al eliminar el proveedor", "",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                            }
                         }
                     }
                 }
+                catch (Exception) { }
             }
         }
 
