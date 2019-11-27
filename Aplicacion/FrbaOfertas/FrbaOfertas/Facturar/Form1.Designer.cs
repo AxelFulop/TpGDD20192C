@@ -173,6 +173,7 @@
             this.facturarBtn.TabIndex = 41;
             this.facturarBtn.Text = "Facturar";
             this.facturarBtn.UseVisualStyleBackColor = false;
+            this.facturarBtn.Click += new System.EventHandler(this.facturarBtn_Click);
             // 
             // cantComprasMsg
             // 

@@ -4,9 +4,6 @@ USE GD2C2019
 IF OBJECT_ID('GESTION_DE_GATOS.registrarEntregaCupon') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.registrarEntregaCupon
 
-IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdProveedorPorCuitYRs') IS NOT NULL
-    DROP PROCEDURE GESTION_DE_GATOS.obtenerIdProveedorPorCuitYRs
-
 IF OBJECT_ID('GESTION_DE_GATOS.habilitarRol') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.habilitarRol
 
@@ -103,7 +100,10 @@ IF OBJECT_ID('GESTION_DE_GATOS.altaOferta') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.altaCliente') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.altaCliente
 
------ Eliminacion de funciones ---------    
+----- Eliminacion de funciones ---------   
+IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdProveedorPorCuitYRs') IS NOT NULL
+    DROP FUNCTION GESTION_DE_GATOS.obtenerIdProveedorPorCuitYRs
+	 
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerCuitProveedor') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.obtenerCuitProveedor
 
@@ -444,7 +444,8 @@ cupon_canjeado CHAR(1),
 cupon_fecha_vencimiento DATETIME,
 cupon_fecha_consumo DATETIME,
 cupon_precio NUMERIC(18,0),
-cupon_precio_lista NUMERIC(18,0)
+cupon_precio_lista NUMERIC(18,0),
+cupon_facturado char,
 PRIMARY KEY (cupon_id)
 );
 
@@ -674,11 +675,11 @@ where Oferta_Fecha_Compra is not null
 --Cupones
 PRINT 'Migrando/creando Cupones'
 INSERT INTO GESTION_DE_GATOS.Cupon(compra_id,oferta_id,cupon_canjeado, cupon_fecha_vencimiento, 
-	cupon_fecha_consumo,cupon_precio, cupon_precio_lista)
+	cupon_fecha_consumo,cupon_precio, cupon_precio_lista, cupon_facturado)
 SELECT distinct c.compra_id, o.oferta_id,
 	'1', 
 	o.oferta_fecha_vencimiento,
-	c.compra_fecha, o.oferta_precio, o.oferta_precio_lista
+	c.compra_fecha, o.oferta_precio, o.oferta_precio_lista, '1'
 FROM GESTION_DE_GATOS.Compra c
 RIGHT JOIN GESTION_DE_GATOS.Oferta o ON (
 c.oferta_id = o.oferta_id
@@ -716,8 +717,8 @@ select @fechaVenOferta = oferta_fecha_vencimiento, @precioOferta = oferta_precio
 	where oferta_id = @id_oferta
 
 insert into GESTION_DE_GATOS.Cupon(oferta_id, compra_id, cupon_canjeado, cupon_fecha_vencimiento,
-	                               cupon_precio, cupon_precio_lista)
-	values(@id_oferta, @id_compra, '0', DATEADD(day, 7, @fechaVenOferta), @precioOferta, @precioListaOferta)
+	                               cupon_precio, cupon_precio_lista, cupon_facturado)
+	values(@id_oferta, @id_compra, '0', DATEADD(day, 7, @fechaVenOferta), @precioOferta, @precioListaOferta, '0')
 --El cupón se vence luego de 7 días del vencimiento de la oferta a la cual hace referencia
 END
 
