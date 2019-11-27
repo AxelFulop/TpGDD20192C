@@ -121,6 +121,12 @@
     <Compile Include="CargaCredito\CargaCreditoABM.Designer.cs">
       <DependentUpon>CargaCreditoABM.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConsumoCupon\boxConsumoCupon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConsumoCupon\boxConsumoCupon.Designer.cs">
+      <DependentUpon>boxConsumoCupon.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConsumoCupon\consumoCupon.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -235,6 +241,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ConexionBD\Conexion.resx">
       <DependentUpon>Conexion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConsumoCupon\boxConsumoCupon.resx">
+      <DependentUpon>boxConsumoCupon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ConsumoCupon\consumoCupon.resx">
       <DependentUpon>consumoCupon.cs</DependentUpon>

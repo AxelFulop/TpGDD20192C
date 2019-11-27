@@ -27,7 +27,7 @@ namespace FrbaOfertas.ConsumoCupon
             string idProv = new ConexionBD.Conexion().
                 executeScalarFunction("obtenerIdProveedor", Logeo.username).ToString();
 
-            string query = "SELECT c.cupon_id,c.cupon_precio,c.cupon_fecha_vencimiento,cp.compra_fecha,cli.cliente_id" +
+            string query = "SELECT c.cupon_id,c.cupon_precio,c.cupon_fecha_vencimiento,cp.compra_fecha,cli.cliente_numero_dni" +
                 ",lower(concat(cli.cliente_nombre, ' ', cli.cliente_apellido)) as nom_y_apellido_cliente" +
                 ",o.oferta_codigo,o.oferta_descripcion FROM GESTION_DE_GATOS.Cupon c " +
                 "inner join GESTION_DE_GATOS.Oferta o on o.oferta_id = c.oferta_id " +
@@ -56,7 +56,7 @@ namespace FrbaOfertas.ConsumoCupon
             string idProv = new ConexionBD.Conexion().
                 executeScalarFunction("obtenerIdProveedor", Logeo.username).ToString();
 
-            string query = "SELECT c.cupon_id,c.cupon_precio,c.cupon_fecha_vencimiento,cp.compra_fecha,cli.cliente_id" +
+            string query = "SELECT c.cupon_id,c.cupon_precio,c.cupon_fecha_vencimiento,cp.compra_fecha,cli.cliente_numero_dni" +
                 ",lower(concat(cli.cliente_nombre, ' ', cli.cliente_apellido)) as nom_y_apellido_cliente" +
 	            ",o.oferta_codigo,o.oferta_descripcion FROM GESTION_DE_GATOS.Cupon c " +
                 "inner join GESTION_DE_GATOS.Oferta o on o.oferta_id = c.oferta_id " +
@@ -81,7 +81,7 @@ namespace FrbaOfertas.ConsumoCupon
             string idProv = new ConexionBD.Conexion().
                 executeScalarFunction("obtenerIdProveedor", Logeo.username).ToString();
 
-            string query = "SELECT c.cupon_id,c.cupon_precio,c.cupon_fecha_vencimiento,cp.compra_fecha,cli.cliente_id" +
+            string query = "SELECT c.cupon_id,c.cupon_precio,c.cupon_fecha_vencimiento,cp.compra_fecha,cli.cliente_numero_dni" +
                 ",lower(concat(cli.cliente_nombre, ' ', cli.cliente_apellido)) as nom_y_apellido_cliente" +
                 ",o.oferta_codigo,o.oferta_descripcion FROM GESTION_DE_GATOS.Cupon c " +
                 "inner join GESTION_DE_GATOS.Oferta o on o.oferta_id = c.oferta_id " +
@@ -95,6 +95,43 @@ namespace FrbaOfertas.ConsumoCupon
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
             cupones = conection.selectReturnMultiplyRowsByQuery(query);
             grid.DataSource = cupones;
+        }
+
+        private void grid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var senderGrid = (DataGridView)sender;
+
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+                e.RowIndex >= 0 && e.RowIndex < grid.Rows.Count)
+            {
+                if (e.ColumnIndex == 8)
+                {
+                    DataRow row = (grid.CurrentRow.DataBoundItem as DataRowView).Row;
+                    Dictionary<string, string> datos = ajustarDatosRow(row);
+                    if (DateTime.Parse(datos["cupon_fechaVencimiento"]).CompareTo(Properties.Settings.Default.fecha) < 0)
+                    {
+                        MessageBox.Show("El cupón ya ha vencido");
+                        return;
+                    }
+                    new boxConsumoCupon(this, datos).Show();
+                }
+            }
+        }
+
+        private Dictionary<string, string> ajustarDatosRow(DataRow row)
+        {
+            Dictionary<string, string> datosRow = new Dictionary<string, string>();
+
+            datosRow["cupon_id"] = row.ItemArray[0].ToString();
+            datosRow["cupon_precio"] = row.ItemArray[1].ToString();
+            datosRow["cupon_fechaVencimiento"] = row.ItemArray[2].ToString();
+            datosRow["compra_fecha"] = row.ItemArray[3].ToString();
+            datosRow["cliente_dni"] = row.ItemArray[4].ToString();
+            datosRow["cliente_nom_ape"] = row.ItemArray[5].ToString();
+            datosRow["oferta_codigo"] = row.ItemArray[6].ToString();
+            datosRow["oferta_descripcion"] = row.ItemArray[7].ToString();
+
+            return datosRow;
         }
     }
 }

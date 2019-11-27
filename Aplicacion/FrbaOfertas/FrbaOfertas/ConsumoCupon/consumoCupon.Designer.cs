@@ -93,6 +93,7 @@
             this.grid.Name = "grid";
             this.grid.Size = new System.Drawing.Size(1149, 438);
             this.grid.TabIndex = 8;
+            this.grid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_CellContentClick);
             // 
             // button1
             // 
