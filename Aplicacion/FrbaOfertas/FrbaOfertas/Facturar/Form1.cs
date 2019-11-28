@@ -13,7 +13,7 @@ namespace FrbaOfertas.Facturar
     public partial class Form1 : Form
     {
         private DataTable cupones;
-        private const string tailMsgCantidad = " ofertas compradas y entregadas";
+        private const string tailMsgCantidad = " compras realizadas";
 
         public Form1()
         {
@@ -59,15 +59,15 @@ namespace FrbaOfertas.Facturar
                 return;
             }
 
-            string query = "SELECT c.cupon_id,c.cupon_precio,c.cupon_fecha_vencimiento,cp.compra_fecha,cli.cliente_numero_dni" +
-                ",lower(concat(cli.cliente_nombre, ' ', cli.cliente_apellido)) as nom_y_apellido_cliente" +
-                ",o.oferta_codigo,o.oferta_descripcion FROM GESTION_DE_GATOS.Cupon c " +
-                "inner join GESTION_DE_GATOS.Oferta o on o.oferta_id = c.oferta_id " +
-                "inner join GESTION_DE_GATOS.Compra cp on c.compra_id = cp.compra_id " +
-                "inner join GESTION_DE_GATOS.Cliente cli on cli.cliente_id = cp.cliente_id " +
-                "where c.cupon_canjeado = '1' AND o.proveedor_id = " + idProv + " AND cupon_facturado = '0'" +
-                " AND c.cupon_fecha_consumo BETWEEN '" + fechaInicio.Value.ToShortDateString() + 
-                "' AND '" + FechaFin.Value.ToShortDateString() + "'";
+            string query = "SELECT c.compra_fecha, cli.cliente_numero_dni," +
+	                "lower(concat(cli.cliente_nombre, ' ', cli.cliente_apellido)) as nom_y_apellido_cliente," +
+	                "o.oferta_codigo, o.oferta_descripcion, o.oferta_precio " +
+                    "FROM " + Properties.Settings.Default.Schema + ".Compra c " +
+                    "inner join " + Properties.Settings.Default.Schema + ".Cliente cli on cli.cliente_id = c.cliente_id " +
+                    "inner join " + Properties.Settings.Default.Schema + ".Oferta o on o.oferta_id = c.oferta_id " +
+                    "where o.proveedor_id = " + idProv + " AND compra_facturada = '0' " +
+                    "AND c.compra_fecha BETWEEN '" + fechaInicio.Value.ToShortDateString() + "' AND '" +
+                    FechaFin.Value.ToShortDateString() + "'";
 
 
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
@@ -92,12 +92,10 @@ namespace FrbaOfertas.Facturar
             string idProv = new ConexionBD.Conexion().
                 executeScalarFunction("obtenerIdProveedorPorCuitYRs", cuit.Text, razonSocial.Text).ToString();
 
-            string query = "SELECT sum(c.cupon_precio) FROM GESTION_DE_GATOS.Cupon c " +
+            string query = "SELECT sum(o.oferta_precio) FROM GESTION_DE_GATOS.Compra c " +
                 "inner join GESTION_DE_GATOS.Oferta o on o.oferta_id = c.oferta_id " +
-                "inner join GESTION_DE_GATOS.Compra cp on c.compra_id = cp.compra_id " +
-                "inner join GESTION_DE_GATOS.Cliente cli on cli.cliente_id = cp.cliente_id " +
-                "where c.cupon_canjeado = '1' AND o.proveedor_id = " + idProv + " AND cupon_facturado = '0'" +
-                " AND c.cupon_fecha_consumo BETWEEN '" + fechaInicio.Value.ToShortDateString() +
+                "where c.compra_facturada = '0' AND o.proveedor_id = " + idProv +
+                " AND c.compra_fecha BETWEEN '" + fechaInicio.Value.ToShortDateString() +
                 "' AND '" + FechaFin.Value.ToShortDateString() + "'";
 
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();

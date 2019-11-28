@@ -445,7 +445,6 @@ cupon_fecha_vencimiento DATETIME,
 cupon_fecha_consumo DATETIME,
 cupon_precio NUMERIC(18,0),
 cupon_precio_lista NUMERIC(18,0),
-cupon_facturado char,
 PRIMARY KEY (cupon_id)
 );
 
@@ -454,7 +453,8 @@ compra_id NUMERIC(18,0) IDENTITY,
 cliente_id NUMERIC(18,0),
 oferta_id NUMERIC(18,0),
 compra_fecha DATETIME,
-dato_inconsistente CHAR(1)
+compra_facturada char,
+dato_inconsistente CHAR(1),
 PRIMARY KEY (compra_id)
 );
 
@@ -660,8 +660,9 @@ WHERE Carga_Credito IS NOT NULL
 
 --Compra
 PRINT 'Migrando Compras'
-INSERT INTO GESTION_DE_GATOS.Compra (oferta_id,cliente_id,compra_fecha)
-SELECT o.oferta_id, c.cliente_id, m.Oferta_Fecha_Compra FROM  gd_esquema.Maestra m
+INSERT INTO GESTION_DE_GATOS.Compra (oferta_id,cliente_id,compra_fecha, compra_facturada)
+SELECT o.oferta_id, c.cliente_id, m.Oferta_Fecha_Compra, '1'
+FROM  gd_esquema.Maestra m
 JOIN GESTION_DE_GATOS.Cliente c  ON (
 Cli_Apellido = c.cliente_apellido AND
 Cli_Nombre = c.cliente_nombre AND
@@ -675,11 +676,11 @@ where Oferta_Fecha_Compra is not null
 --Cupones
 PRINT 'Migrando/creando Cupones'
 INSERT INTO GESTION_DE_GATOS.Cupon(compra_id,oferta_id,cupon_canjeado, cupon_fecha_vencimiento, 
-	cupon_fecha_consumo,cupon_precio, cupon_precio_lista, cupon_facturado)
+	cupon_fecha_consumo,cupon_precio, cupon_precio_lista)
 SELECT distinct c.compra_id, o.oferta_id,
 	'1', 
 	o.oferta_fecha_vencimiento,
-	c.compra_fecha, o.oferta_precio, o.oferta_precio_lista, '1'
+	c.compra_fecha, o.oferta_precio, o.oferta_precio_lista
 FROM GESTION_DE_GATOS.Compra c
 RIGHT JOIN GESTION_DE_GATOS.Oferta o ON (
 c.oferta_id = o.oferta_id
@@ -704,12 +705,12 @@ CREATE PROCEDURE GESTION_DE_GATOS.altaCompra
 @fecha datetime
 AS
 BEGIN
-DECLARE @id_oferta NVARCHAR(50), @fechaVenOferta datetime, @precioOferta numeric(18), 
+DECLARE @id_oferta NVARCHAR(50), @fechaVenOferta datetime, @precioOferta numeric(18),
 	@precioListaOferta numeric(18), @id_compra numeric(18)
-select @id_oferta = oferta_id from GESTION_DE_GATOS.Oferta 
+select @id_oferta = oferta_id from GESTION_DE_GATOS.Oferta
 	where oferta_codigo = @codigo_oferta
-INSERT INTO GESTION_DE_GATOS.Compra(cliente_id, oferta_id, compra_fecha) 
-	VALUES (@id_cliente, @id_oferta, @fecha)
+INSERT INTO GESTION_DE_GATOS.Compra(cliente_id, oferta_id, compra_fecha, compra_facturada)
+	VALUES (@id_cliente, @id_oferta, @fecha, '0')
 set @id_compra = SCOPE_IDENTITY()
 select @fechaVenOferta = oferta_fecha_vencimiento, @precioOferta = oferta_precio,
 	   @precioListaOferta = oferta_precio_lista
@@ -717,8 +718,8 @@ select @fechaVenOferta = oferta_fecha_vencimiento, @precioOferta = oferta_precio
 	where oferta_id = @id_oferta
 
 insert into GESTION_DE_GATOS.Cupon(oferta_id, compra_id, cupon_canjeado, cupon_fecha_vencimiento,
-	                               cupon_precio, cupon_precio_lista, cupon_facturado)
-	values(@id_oferta, @id_compra, '0', DATEADD(day, 7, @fechaVenOferta), @precioOferta, @precioListaOferta, '0')
+	                               cupon_precio, cupon_precio_lista)
+	values(@id_oferta, @id_compra, '0', DATEADD(day, 7, @fechaVenOferta), @precioOferta, @precioListaOferta)
 --El cupón se vence luego de 7 días del vencimiento de la oferta a la cual hace referencia
 END
 

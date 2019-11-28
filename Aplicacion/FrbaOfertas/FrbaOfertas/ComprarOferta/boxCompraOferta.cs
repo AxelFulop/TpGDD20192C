@@ -96,10 +96,15 @@ namespace FrbaOfertas.ComprarOferta
 
             try
             {
-                Tuple<string, List<string>, Object[]>[] procs = new Tuple<string, List<string>, object[]>[3];
-                procs[0] = altaCompra();
-                procs[1] = reduccionSaldoTarjeta(totalAPagar);
-                procs[2] = reducirOfertaProv();
+                int cantProcs = 2 + int.Parse(cantidad.Value.ToString());
+                Tuple<string, List<string>, Object[]>[] procs = new Tuple<string, List<string>, object[]>[cantProcs];
+                
+                for (int i = 0; i < cantProcs - 2; i++)
+                {
+                    procs[i] = altaCompra();
+                }
+                procs[cantProcs-2] = reduccionSaldoTarjeta(totalAPagar);
+                procs[cantProcs-1] = reducirOfertaProv();
 
                 ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
                 conection.executeStoredTransaction(procs);
