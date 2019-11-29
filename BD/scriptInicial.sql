@@ -1,6 +1,9 @@
 USE GD2C2019
 
------ Eliminacion de stored procedures ---------
+----- Eliminacion de stored procedures --------- 
+IF OBJECT_ID('GESTION_DE_GATOS.facturarProveedor') IS NOT NULL
+    DROP PROCEDURE GESTION_DE_GATOS.facturarProveedor
+
 IF OBJECT_ID('GESTION_DE_GATOS.registrarEntregaCupon') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.registrarEntregaCupon
 
@@ -251,6 +254,9 @@ IF (select object_id from sys.foreign_keys where [name] = 'FC19')  IS NOT NULL
 IF (select object_id from sys.foreign_keys where [name] = 'FC20')  IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.Cupon  DROP CONSTRAINT FC20
 
+IF (select object_id from sys.foreign_keys where [name] = 'FC21')  IS NOT NULL
+    ALTER TABLE GESTION_DE_GATOS.Compra  DROP CONSTRAINT FC21
+
 ------------ Eliminacion de tablas    ------------------
 
 IF OBJECT_ID('GESTION_DE_GATOS.FuncionalidadXRol','U') IS NOT NULL
@@ -452,6 +458,7 @@ CREATE TABLE GESTION_DE_GATOS.Compra(
 compra_id NUMERIC(18,0) IDENTITY,
 cliente_id NUMERIC(18,0),
 oferta_id NUMERIC(18,0),
+factura_id NUMERIC(18, 0),
 compra_fecha DATETIME,
 compra_facturada char,
 dato_inconsistente CHAR(1),
@@ -463,7 +470,7 @@ factura_id NUMERIC(18,0) IDENTITY,
 proveedor_id NUMERIC(18,0),
 factura_numero NUMERIC(18,0),
 factura_fecha DATETIME,
-factura_monto_total NUMERIC(18,0),
+factura_monto_total NUMERIC(18,2),
 factura_dato_inconsistente CHAR(1)
 PRIMARY KEY (factura_id)
 );
@@ -512,6 +519,7 @@ ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD CONSTRAINT FC17 FOREIGN KEY(cl
 ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC18 FOREIGN KEY(tarjeta_id) REFERENCES GESTION_DE_GATOS.Tarjeta(tarjeta_id)
 ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC19 FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
 ALTER TABLE GESTION_DE_GATOS.Cupon ADD CONSTRAINT FC20 FOREIGN KEY(compra_id) REFERENCES GESTION_DE_GATOS.Compra(compra_id)
+ALTER TABLE GESTION_DE_GATOS.Compra ADD CONSTRAINT FC21 FOREIGN KEY(factura_id) REFERENCES GESTION_DE_GATOS.Factura(factura_id)
 
 /* Inserccion de datos previos */
 --Usuario Admin
@@ -660,8 +668,9 @@ WHERE Carga_Credito IS NOT NULL
 
 --Compra
 PRINT 'Migrando Compras'
-INSERT INTO GESTION_DE_GATOS.Compra (oferta_id,cliente_id,compra_fecha, compra_facturada)
-SELECT o.oferta_id, c.cliente_id, m.Oferta_Fecha_Compra, '1'
+INSERT INTO GESTION_DE_GATOS.Compra (oferta_id,cliente_id,compra_fecha, compra_facturada)--facttura_id)
+SELECT o.oferta_id, c.cliente_id, m.Oferta_Fecha_Compra, '1' 
+--(select factura_id from GESTION_DE_GATOS.Factura where factura_numero = Factura_Nro)
 FROM  gd_esquema.Maestra m
 JOIN GESTION_DE_GATOS.Cliente c  ON (
 Cli_Apellido = c.cliente_apellido AND
@@ -893,6 +902,28 @@ BEGIN
 		CAST(@codigoPostalCliente AS NUMERIC(18,0)) ,@ciudadCliente,@id_usuario, @deptoCliente, @localidadCliente,@pisoCliente)
 	insert into UsuarioXRol(usuario_id, rol_id)
 		values(@id_usuario, (select rol_id from Rol where rol_nombre = 'Cliente'))
+END
+
+GO
+CREATE PROCEDURE GESTION_DE_GATOS.facturarProveedor
+@id_proveedor numeric(18),
+@fecha_inicio datetime,
+@fecha_fin datetime,
+@monto numeric(18, 2)
+AS
+BEGIN
+
+insert into GESTION_DE_GATOS.Factura(factura_fecha, factura_monto_total, proveedor_id)
+	values(@fecha_fin, @monto, @id_proveedor)
+declare @fact_id numeric(18) = SCOPE_IDENTITY()
+
+update GESTION_DE_GATOS.Compra set compra_facturada = '1', factura_id = @fact_id
+	where compra_id IN
+	(select c.compra_id FROM GESTION_DE_GATOS.Compra c
+		inner join GESTION_DE_GATOS.Oferta o on o.oferta_id = c.oferta_id
+		where o.proveedor_id = @id_proveedor AND compra_facturada = '0'
+		AND c.compra_fecha BETWEEN @fecha_inicio AND @fecha_fin
+	)
 END
 
 GO

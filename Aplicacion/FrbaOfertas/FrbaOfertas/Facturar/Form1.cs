@@ -92,8 +92,8 @@ namespace FrbaOfertas.Facturar
             string idProv = new ConexionBD.Conexion().
                 executeScalarFunction("obtenerIdProveedorPorCuitYRs", cuit.Text, razonSocial.Text).ToString();
 
-            string query = "SELECT sum(o.oferta_precio) FROM GESTION_DE_GATOS.Compra c " +
-                "inner join GESTION_DE_GATOS.Oferta o on o.oferta_id = c.oferta_id " +
+            string query = "SELECT sum(o.oferta_precio) FROM " + Properties.Settings.Default.Schema + ".Compra c " +
+                "inner join " + Properties.Settings.Default.Schema + ".Oferta o on o.oferta_id = c.oferta_id " +
                 "where c.compra_facturada = '0' AND o.proveedor_id = " + idProv +
                 " AND c.compra_fecha BETWEEN '" + fechaInicio.Value.ToShortDateString() +
                 "' AND '" + FechaFin.Value.ToShortDateString() + "'";
@@ -109,7 +109,17 @@ namespace FrbaOfertas.Facturar
             {
                 try
                 {
-                    //Guardar facturación
+                    new ConexionBD.Conexion().getInstance().executeProcedure(Properties.Settings.Default.Schema + ".facturarProveedor",
+                        new List<string>()
+                        {
+                            "@id_proveedor", "@fecha_inicio", "@fecha_fin",  "@monto"
+                        },
+                        new Object[]{
+                            int.Parse(idProv), fechaInicio.Value, FechaFin.Value,
+                            sumaFacturacion
+                        }
+                    );
+                    
                     MessageBox.Show("Facturación completa");
                     this.Hide();
                     new MenuPrincipal().Show();
