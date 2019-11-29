@@ -153,6 +153,8 @@ namespace FrbaOfertas.CrearOferta
                 string schema = Properties.Settings.Default.Schema;
                 new Conexion().executeProcedure(schema + ".altaOferta", values, parametros);
                 MessageBox.Show("oferta de codigo " + textBoxCodOferta.Text + " confeccionada");
+                this.Hide();
+                new MenuPrincipal().Show();
             }
             catch (Exception ex)
             {
