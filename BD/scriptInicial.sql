@@ -871,7 +871,7 @@ BEGIN
 			@nombreDeContactoProveedor, @id_usuario, @deptoProveedor, @localidadProveedor, 
 			cast(@pisoProveedor as int))
 	insert into UsuarioXRol(usuario_id, rol_id)
-		values(@id_usuario, (select rol_id from Rol where rol_nombre = 'Proveedor'))
+		values(@id_usuario, (select rol_id from Rol where rol_id = 3))
 END
 
 GO
@@ -901,7 +901,7 @@ BEGIN
 		@mailCliente,CAST(@telefonoCliente AS numeric(18,0)),@direccionCliente,
 		CAST(@codigoPostalCliente AS NUMERIC(18,0)) ,@ciudadCliente,@id_usuario, @deptoCliente, @localidadCliente,@pisoCliente)
 	insert into UsuarioXRol(usuario_id, rol_id)
-		values(@id_usuario, (select rol_id from Rol where rol_nombre = 'Cliente'))
+		values(@id_usuario, (select rol_id from Rol where rol_id = 2)) --Cliente
 END
 
 GO
