@@ -23,6 +23,7 @@ namespace FrbaOfertas.Login
             InitializeComponent();
             cli_fechaNacimiento.Format = DateTimePickerFormat.Custom;
             cli_fechaNacimiento.CustomFormat = "yyyy-MM-dd";
+
         }
 
         private void LoginABM_Load(object sender, EventArgs e)
@@ -145,9 +146,9 @@ namespace FrbaOfertas.Login
                         "@nombreDeContactoProveedor", "@usuario"
                     },
                     new String[]{
-                        prov_razonSocial.Text, prov_mail.Text, prov_telefono.Value.ToString() == ""? DBNull.Value.ToString() : prov_telefono.Value.ToString(),
+                        prov_razonSocial.Text, prov_mail.Text, textBoxTelefono.Text == ""? DBNull.Value.ToString() : textBoxTelefono.Text,
                         dir_calle.Text + " " + (dir_numero.Value.ToString() == ""? DBNull.Value.ToString() : dir_numero.Value.ToString()), dir_piso.Value.ToString() == ""? DBNull.Value.ToString() : dir_piso.Value.ToString(), dir_depto.Text, dir_localidad.Text, 
-                        prov_cp.Value.ToString() == ""? DBNull.Value.ToString() : prov_cp.Value.ToString(), prov_ciudad.Text, prov_cuit.Text, prov_rubro.Text, prov_contacto.Text, usuario.Text
+                        textBoxProvCodPost.Text == ""? DBNull.Value.ToString() : textBoxProvCodPost.Text, prov_ciudad.Text, prov_cuit.Text, prov_rubro.Text, prov_contacto.Text, usuario.Text
                     }
                 );
         }
@@ -165,10 +166,10 @@ namespace FrbaOfertas.Login
                          
                     },
                     new Object[]{
-                         cli_fechaNacimiento.Value.ToString(),cli_nombre.Text,cli_apellido.Text,cli_dni.Text == ""? DBNull.Value.ToString() : cli_dni.Text,
-                         cli_mail.Text,cli_telefono.Text == ""? DBNull.Value.ToString() : cli_telefono.Text, dir_calle.Text + " " + (dir_numero.Text == ""? DBNull.Value.ToString() : dir_numero.Text), 
+                         cli_fechaNacimiento.Value.ToString(),cli_nombre.Text,cli_apellido.Text,textBoxDni.Text == ""? DBNull.Value.ToString() : textBoxDni.Text,
+                         cli_mail.Text,textBoxTelefono.Text == ""? DBNull.Value.ToString() : textBoxTelefono.Text, dir_calle.Text + " " + (dir_numero.Text == ""? DBNull.Value.ToString() : dir_numero.Text), 
                          dir_piso.Text == ""? DBNull.Value.ToString() : dir_piso.Text, dir_depto.Text, dir_localidad.Text, 
-                         cli_cp.Text == ""? DBNull.Value.ToString() : cli_cp.Text, cli_ciudad.Text, usuario.Text
+                         textBoxCodPostal.Text == ""? DBNull.Value.ToString() : textBoxCodPostal.Text, cli_ciudad.Text, usuario.Text
                     }
             );
         }
@@ -226,15 +227,18 @@ namespace FrbaOfertas.Login
 
         private void cli_mail_TextChanged(object sender, EventArgs e)
         {
-
+            
         }
+
+       
+
+        private void cli_mail_Leave(object sender, EventArgs e)
+        {
+            new Util().emailValidator(cli_mail);
+        }
+
 
         private void label12_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label10_Click(object sender, EventArgs e)
         {
 
         }
@@ -281,17 +285,7 @@ namespace FrbaOfertas.Login
 
         private void prov_cuit_TextChanged(object sender, EventArgs e)
         {
-
-        }
-
-        private void prov_cp_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void prov_direccion_TextChanged(object sender, EventArgs e)
-        {
-
+            new Util().textBoxValidate(prov_cuit, "cuit");
         }
 
         private void prov_mail_TextChanged(object sender, EventArgs e)
@@ -332,6 +326,71 @@ namespace FrbaOfertas.Login
         private void usuario_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void dir_piso_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+        private void textBoxDni_KeyPress(object sender, EventArgs e)
+        {
+            new Util().textBoxValidate(textBoxDni, "DNI");
+        }
+
+        private void textBoxCodPostal_KeyPress(object sender, EventArgs e)
+        {
+            new Util().textBoxValidate(textBoxCodPostal, "codigo postal");
+        }
+
+        private void textBoxTelefono_KeyPress(object sender, EventArgs e)
+        {
+            new Util().textBoxValidate(textBoxTelefono, "telefono");
+        }  
+
+        private void cli_dni_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxDni_TextChanged(object sender, EventArgs e)
+        {
+            new Util().textBoxValidate(textBoxDni, "DNI");
+        }
+
+  
+        private void textBoxTelefono_TextChanged(object sender, EventArgs e)
+        {
+            new Util().textBoxValidate(textBoxTelefono, "telefono");
+        }
+
+        private void textBoxCodPostal_TextChanged(object sender, EventArgs e)
+        {
+            new Util().textBoxValidate(textBoxCodPostal, "codigo postal");
+        }
+
+        private void cli_mail_LostFocus_1(object sender, EventArgs e)
+        {
+            new Util().emailValidator(cli_mail);
+        }
+
+
+
+        private void prov_mail_LostFocus_1(object sender, EventArgs e)
+        {
+            new Util().emailValidator(prov_mail);
+        }
+
+        private void textBoxProvTelefono_TextChanged(object sender, EventArgs e)
+        {
+            new Util().textBoxValidate(textBoxProvTelefono, "telefono");
+        }
+
+        private void textBoxProvCodPost_TextChanged(object sender, EventArgs e)
+        {
+            new Util().textBoxValidate(textBoxProvCodPost, "codigo postal");
         }               
     }
 

@@ -76,6 +76,29 @@ namespace FrbaOfertas.Utils
         }
 
 
+
+        public void textBoxValidate(TextBox textbox,string campo)
+        {
+            if (System.Text.RegularExpressions.Regex.IsMatch(textbox.Text, "[^0-9]"))
+            {
+                MessageBox.Show("En el campo " + campo + " solo se aceptan numeros");
+                textbox.Text = textbox.Text.Remove(textbox.Text.Length - 1);
+            }
+        }
+
+        public void emailValidator(TextBox texbox)
+        {
+            string email = texbox.Text;
+            string regex = @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$";
+            if (!System.Text.RegularExpressions.Regex.IsMatch(email, regex) &&  texbox.Text != "")
+            {
+                MessageBox.Show("Formato de email invalido: debe contener un @ y un . ");
+                texbox.Text = "";
+            }
+
+        }
+
+
         public BindingSource showSelect(DataGridView data, String nomTabla, params String[] parametros)
         {
             SqlConnection conn = ConexionBD.Conexion.configDBConnection();
@@ -140,6 +163,24 @@ namespace FrbaOfertas.Utils
             if (lowerCase)
                 return builder.ToString().ToLower();
             return builder.ToString().ToUpper();
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // Util
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "Util";
+            this.Load += new System.EventHandler(this.Util_Load);
+            this.ResumeLayout(false);
+
+        }
+
+        private void Util_Load(object sender, EventArgs e)
+        {
+
         } 
 
     }
