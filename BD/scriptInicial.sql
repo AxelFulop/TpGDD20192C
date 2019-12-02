@@ -230,15 +230,6 @@ IF (select object_id from sys.foreign_keys where [name] = 'FC11')  IS NOT NULL
 IF (select object_id from sys.foreign_keys where [name] = 'FC12')  IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.Compra  DROP CONSTRAINT FC12
 
-IF (select object_id from sys.foreign_keys where [name] = 'FC13')  IS NOT NULL
-    ALTER TABLE GESTION_DE_GATOS.DetallePorFactura  DROP CONSTRAINT FC13
-
-IF (select object_id from sys.foreign_keys where [name] = 'FC14')  IS NOT NULL
-    ALTER TABLE GESTION_DE_GATOS.DetallePorFactura  DROP CONSTRAINT FC14
-
-IF (select object_id from sys.foreign_keys where [name] = 'FC15')  IS NOT NULL
-    ALTER TABLE GESTION_DE_GATOS.DetallePorFactura  DROP CONSTRAINT FC15
-
 IF (select object_id from sys.foreign_keys where [name] = 'FC16') IS NOT NULL
     ALTER TABLE GESTION_DE_GATOS.HistorialCliente  DROP CONSTRAINT FC16
 
@@ -274,9 +265,6 @@ IF OBJECT_ID('GESTION_DE_GATOS.Rol','U') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.Funcionalidad','U') IS NOT NULL
     DROP TABLE GESTION_DE_GATOS.Funcionalidad;
 
-IF OBJECT_ID('GESTION_DE_GATOS.DetallePorFactura','U') IS NOT NULL
-	DROP TABLE GESTION_DE_GATOS.DetallePorFactura;
-
 IF OBJECT_ID('GESTION_DE_GATOS.Tarjeta','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.Tarjeta;
 
@@ -298,15 +286,11 @@ IF OBJECT_ID('GESTION_DE_GATOS.Factura','U') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.Compra','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.Compra;
 
-IF OBJECT_ID('GESTION_DE_GATOS.DetalleFactura','U') IS NOT NULL
-	DROP TABLE GESTION_DE_GATOS.DetalleFactura;
-
 IF OBJECT_ID('GESTION_DE_GATOS.Cliente','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.Cliente;
 
 IF OBJECT_ID('GESTION_DE_GATOS.Usuario','U') IS NOT NULL
 	DROP TABLE GESTION_DE_GATOS.Usuario;
-
 
 -------Eliminacion del esquema------
 
@@ -355,7 +339,6 @@ rol_id NUMERIC(18,0) NOT NULL,
 PRIMARY KEY (usuario_id, rol_id)
 );
 
-
 --Como en la maestra la direccion esta dada como calle + numero en la bd se migra igual y se separa en la app por calle,numero en atributos distintos
 -- Dato inconsistente en un char , puede ser un 1 o 0 o un S o N, con esto sabemos que hay algun dato repetido o erroneo, se debera validar del todo desde la app
 
@@ -375,7 +358,6 @@ cliente_direccion_piso NVARCHAR(10),
 cliente_direccion_depto nvarchar(5),
 cliente_direccion_localidad nvarchar(50),
 cliente_codigo_postal NVARCHAR(255),
-cliente_dato_inconsistente CHAR(1),
 cliente_nuevo CHAR(1),
 cliente_habilitado char,
 PRIMARY KEY (cliente_id)
@@ -420,7 +402,6 @@ proveedor_direccion_depto nvarchar(5),
 proveedor_direccion_localidad nvarchar(50),
 proveedor_ciudad NVARCHAR(255),
 proveedor_codigo_postal NVARCHAR(255),
-proveedor_dato_inconsistente CHAR(1),
 proveedor_nuevo CHAR(1),
 proveedor_habilitado char,
 PRIMARY KEY (proveedor_id)
@@ -437,7 +418,6 @@ oferta_limite_compra NUMERIC(18,0),
 oferta_stock_disponible NUMERIC(18,0),
 oferta_precio NUMERIC(18,2),
 oferta_precio_lista NUMERIC(18,2),
-oferta_dato_inconsistente NUMERIC(18,0),
 PRIMARY KEY (oferta_id)
 );
 
@@ -461,7 +441,6 @@ oferta_id NUMERIC(18,0),
 factura_id NUMERIC(18, 0),
 compra_fecha DATETIME,
 compra_facturada char,
-dato_inconsistente CHAR(1),
 PRIMARY KEY (compra_id)
 );
 
@@ -471,24 +450,7 @@ proveedor_id NUMERIC(18,0),
 factura_numero NUMERIC(18,0),
 factura_fecha DATETIME,
 factura_monto_total NUMERIC(18,2),
-factura_dato_inconsistente CHAR(1)
 PRIMARY KEY (factura_id)
-);
-
-CREATE TABLE GESTION_DE_GATOS.DetallePorFactura(
-detalle_id NUMERIC(18,0),
-factura_id NUMERIC(18,0),
-oferta_id NUMERIC(18,0),
-PRIMARY KEY (detalle_id, factura_id, oferta_id)
-);
-
-CREATE TABLE GESTION_DE_GATOS.DetalleFactura(
-detalle_id NUMERIC(18,0) IDENTITY,
-detalle_monto NUMERIC(18,0),
-datalle_cantidad  NUMERIC(18,0),
-detalle_descripcion NUMERIC(18,0),
-detalle_fecha_entregado DATETIME
-PRIMARY KEY (detalle_id)
 );
 
 CREATE TABLE GESTION_DE_GATOS.HistorialCliente(
@@ -511,9 +473,6 @@ ALTER TABLE GESTION_DE_GATOS.Oferta ADD CONSTRAINT FC9 FOREIGN KEY(proveedor_id)
 ALTER TABLE GESTION_DE_GATOS.Cupon ADD CONSTRAINT FC10 FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
 ALTER TABLE GESTION_DE_GATOS.Compra ADD CONSTRAINT FC11 FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
 ALTER TABLE GESTION_DE_GATOS.Compra ADD CONSTRAINT FC12 FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
-ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD CONSTRAINT FC13 FOREIGN KEY(detalle_id) REFERENCES GESTION_DE_GATOS.DetalleFactura(detalle_id)
-ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD CONSTRAINT FC14 FOREIGN KEY(factura_id) REFERENCES GESTION_DE_GATOS.Factura(factura_id)
-ALTER TABLE GESTION_DE_GATOS.DetallePorFactura ADD CONSTRAINT FC15 FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
 ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD CONSTRAINT FC16 FOREIGN KEY(oferta_id) REFERENCES GESTION_DE_GATOS.Oferta(oferta_id)
 ALTER TABLE GESTION_DE_GATOS.HistorialCliente ADD CONSTRAINT FC17 FOREIGN KEY(cliente_id) REFERENCES GESTION_DE_GATOS.Cliente(cliente_id)
 ALTER TABLE GESTION_DE_GATOS.Carga ADD CONSTRAINT FC18 FOREIGN KEY(tarjeta_id) REFERENCES GESTION_DE_GATOS.Tarjeta(tarjeta_id)
@@ -697,12 +656,6 @@ c.oferta_id = o.oferta_id
 RIGHT JOIN gd_esquema.Maestra m ON (
 m.Oferta_Codigo = o.oferta_codigo
 )
-
---DetalleFactura
-PRINT 'Migrando Fechas de entrega'
-INSERT INTO GESTION_DE_GATOS.DetalleFactura(detalle_fecha_entregado)
-SELECT m.Oferta_Entregado_Fecha FROM gd_esquema.Maestra m
-
 
 /* Creación de procedures */
 	--Inicio procedures compra
@@ -1547,11 +1500,11 @@ as begin
 	declare @id_cli numeric(18), @nombre nvarchar(255), @apellido nvarchar(255), @dni numeric(18),
 		    @id_user numeric(18), @baja char, @ciudad nvarchar(255), @mail nvarchar(255),
 			@fecha_nac datetime, @tel numeric(18), @dir nvarchar(255), @piso nvarchar(10), @depto nvarchar(5),
-			@localidad nvarchar(50), @cp nvarchar(255), @dato_inc char, @nuevo char, @habilitado char
+			@localidad nvarchar(50), @cp nvarchar(255), @nuevo char, @habilitado char
 	declare c_cursor cursor for (select * from inserted)
 	open c_cursor
 	fetch c_cursor into @id_cli, @id_user, @baja, @nombre, @ciudad, @apellido, @dni, @mail, @fecha_nac, 
-		@tel, @dir, @piso, @depto,@localidad, @cp, @dato_inc, @nuevo, @habilitado
+		@tel, @dir, @piso, @depto,@localidad, @cp, @nuevo, @habilitado
 	while(@@FETCH_STATUS = 0) begin
 		declare @hayClieGemelo int = 
 			(select count(*) from GESTION_DE_GATOS.Cliente 
@@ -1570,18 +1523,18 @@ as begin
 				insert into GESTION_DE_GATOS.Cliente(usuario_id, cliente_baja, cliente_nombre, cliente_ciudad,
 						cliente_apellido, cliente_numero_dni, cliente_email, cliente_fecha_nacimiento,
 						cliente_telefono, cliente_direccion, cliente_direccion_piso, cliente_direccion_depto,
-						cliente_direccion_localidad, cliente_codigo_postal, cliente_dato_inconsistente,
+						cliente_direccion_localidad, cliente_codigo_postal,
 						cliente_nuevo, cliente_habilitado)
 			(select usuario_id, cliente_baja, cliente_nombre, cliente_ciudad,
 						cliente_apellido, cliente_numero_dni, cliente_email, cliente_fecha_nacimiento,
 						cliente_telefono, cliente_direccion, cliente_direccion_piso, cliente_direccion_depto,
-						cliente_direccion_localidad, cliente_codigo_postal, cliente_dato_inconsistente,
+						cliente_direccion_localidad, cliente_codigo_postal,
 						cliente_nuevo, cliente_habilitado
 						from inserted where cliente_id = @id_cli)
 			end
 			else begin 
 				update GESTION_DE_GATOS.Cliente set cliente_apellido = @apellido, 
-					cliente_baja = @baja, cliente_ciudad = @ciudad, cliente_codigo_postal = @cp, cliente_dato_inconsistente = @dato_inc,
+					cliente_baja = @baja, cliente_ciudad = @ciudad, cliente_codigo_postal = @cp,
 					cliente_direccion = @dir, cliente_direccion_depto = @depto, cliente_direccion_localidad = @localidad,
 					cliente_direccion_piso = @piso, cliente_email = @mail, cliente_fecha_nacimiento = @fecha_nac,
 					cliente_habilitado = @habilitado, cliente_nombre = @nombre, cliente_nuevo = @nuevo, 
@@ -1590,7 +1543,7 @@ as begin
 			end
 		end
 		fetch c_cursor into @id_cli, @id_user, @baja, @nombre, @ciudad, @apellido, @dni, @mail, @fecha_nac, 
-			@tel, @dir, @piso, @depto,@localidad, @cp, @dato_inc, @nuevo, @habilitado
+			@tel, @dir, @piso, @depto,@localidad, @cp, @nuevo, @habilitado
 	end
 	close c_cursor
 	deallocate c_cursor
@@ -1604,11 +1557,11 @@ as begin --No puede haber 2 proveedores con la misma razon social y CUIT
 	declare @id_prov numeric(18), @id_user numeric(18), @baja char, @r_social nvarchar(100), 
 			@contacto nvarchar(30), @cuit nvarchar(20), @rubro nvarchar(100), @mail nvarchar(255),
 			@tel numeric(18), @dir nvarchar(255), @piso nvarchar(10), @depto nvarchar(5), @localidad nvarchar(50), 
-			@ciudad nvarchar(255), @cp nvarchar(255), @dato_inc char, @nuevo char, @habilitado char
+			@ciudad nvarchar(255), @cp nvarchar(255), @nuevo char, @habilitado char
 	declare p_cursor cursor for (select * from inserted)
 	open p_cursor
 	fetch p_cursor into @id_prov, @id_user, @baja, @r_social, @contacto, @cuit, @rubro, @mail,
-			@tel, @dir, @piso, @depto, @localidad, @ciudad, @cp, @dato_inc, @nuevo, @habilitado
+			@tel, @dir, @piso, @depto, @localidad, @ciudad, @cp, @nuevo, @habilitado
 	while(@@FETCH_STATUS = 0) begin
 		declare @hayProvGemelo int = 
 			(select count(*) from GESTION_DE_GATOS.Proveedor 
@@ -1626,18 +1579,18 @@ as begin --No puede haber 2 proveedores con la misma razon social y CUIT
 				insert into GESTION_DE_GATOS.Proveedor(usuario_id, proveedor_baja, proveedor_razon_social, proveedor_contacto,
 						proveedor_cuit, proveedor_rubro, proveedor_email, proveedor_telefono, proveedor_direccion,
 						proveedor_direccion_piso, proveedor_direccion_depto, proveedor_direccion_localidad,
-						proveedor_ciudad, proveedor_codigo_postal, proveedor_dato_inconsistente,
+						proveedor_ciudad, proveedor_codigo_postal,
 						proveedor_nuevo, proveedor_habilitado)
 					(select usuario_id, proveedor_baja, proveedor_razon_social, proveedor_contacto,
 						proveedor_cuit, proveedor_rubro, proveedor_email, proveedor_telefono, proveedor_direccion,
 						proveedor_direccion_piso, proveedor_direccion_depto, proveedor_direccion_localidad,
-						proveedor_ciudad, proveedor_codigo_postal, proveedor_dato_inconsistente,
+						proveedor_ciudad, proveedor_codigo_postal,
 						proveedor_nuevo, proveedor_habilitado
 						from inserted where proveedor_id = @id_prov)
 			end
 			else begin
 				update GESTION_DE_GATOS.Proveedor set proveedor_contacto = @contacto, 
-					proveedor_baja = @baja, proveedor_ciudad = @ciudad, proveedor_codigo_postal = @cp, proveedor_dato_inconsistente = @dato_inc,
+					proveedor_baja = @baja, proveedor_ciudad = @ciudad, proveedor_codigo_postal = @cp,
 					proveedor_direccion = @dir, proveedor_direccion_depto = @depto, proveedor_direccion_localidad = @localidad,
 					proveedor_direccion_piso = @piso, proveedor_email = @mail, proveedor_rubro = @rubro,
 					proveedor_habilitado = @habilitado, proveedor_nuevo = @nuevo, 
@@ -1646,7 +1599,7 @@ as begin --No puede haber 2 proveedores con la misma razon social y CUIT
 			end
 		end
 		fetch p_cursor into @id_prov, @id_user, @baja, @r_social, @contacto, @cuit, @rubro, @mail,
-			@tel, @dir, @piso, @depto, @localidad, @ciudad, @cp, @dato_inc, @nuevo, @habilitado
+			@tel, @dir, @piso, @depto, @localidad, @ciudad, @cp, @nuevo, @habilitado
 	end
 	close p_cursor
 	deallocate p_cursor
