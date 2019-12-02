@@ -86,6 +86,12 @@ namespace FrbaOfertas.ComprarOferta
                 return;
             }
 
+            if (tarj_fechaVencimiento.Value.CompareTo(Properties.Settings.Default.fecha) < 0)
+            {
+                MessageBox.Show("Tarjeta ya vencida");
+                return;
+            }
+
             decimal saldo = decimal.Parse(tarj_saldo.Text);
             decimal totalAPagar = decimal.Parse(o_precio.Text) * cantidad.Value;
             if (saldo < totalAPagar)
