@@ -87,7 +87,7 @@ namespace FrbaOfertas.AbmCliente
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Object estaHabilitado = new ConexionBD.Conexion().executeScalarFunction("rolEstaHabilitado", "Cliente");
+            Object estaHabilitado = new ConexionBD.Conexion().executeScalarFunction("rolEstaHabilitadoPorId", "2");
             if (estaHabilitado.ToString() == "1") //Si no está habilitado
             {
                 button3.Enabled = false;

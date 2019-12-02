@@ -53,11 +53,12 @@ namespace FrbaOfertas
         {
             username.Text = usuario;
             rol.Text = new ConexionBD.Conexion().executeScalarFunction("obtenerRolUsuario", usuario).ToString();
-            if (rol.Text == "Cliente")
+            string idRol = new ConexionBD.Conexion().executeScalarFunction("obtenerIdRolUsuario", usuario).ToString();
+            if (idRol == "2")
                 actualizarDatosCliente();
-            if (rol.Text == "Proveedor")
+            if (idRol == "3")
                 actualizarDatosProveedor();
-            if (rol.Text == "Administrador")
+            if (idRol == "1")
                 actualizarDatosAdministrador();
             this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
             this.AutoSize = true;

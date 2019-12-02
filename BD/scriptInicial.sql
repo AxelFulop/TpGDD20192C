@@ -107,6 +107,12 @@ IF OBJECT_ID('GESTION_DE_GATOS.altaCliente') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdProveedorPorCuitYRs') IS NOT NULL
     DROP FUNCTION GESTION_DE_GATOS.obtenerIdProveedorPorCuitYRs
 
+IF OBJECT_ID('GESTION_DE_GATOS.rolEstaHabilitadoPorId') IS NOT NULL
+    DROP FUNCTION GESTION_DE_GATOS.rolEstaHabilitadoPorId
+
+IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdRolUsuario') IS NOT NULL
+    DROP FUNCTION GESTION_DE_GATOS.obtenerIdRolUsuario
+
 IF OBJECT_ID('GESTION_DE_GATOS.totalFacturacionProveedor') IS NOT NULL
     DROP FUNCTION GESTION_DE_GATOS.totalFacturacionProveedor
 	 
@@ -1214,6 +1220,19 @@ BEGIN
 END
 
 GO
+CREATE FUNCTION GESTION_DE_GATOS.obtenerIdRolUsuario(@nombreUsuario VARCHAR(50))
+RETURNS numeric(18)
+AS
+BEGIN
+	DECLARE @ret numeric(18)
+	SELECT @ret = r.rol_id from GESTION_DE_GATOS.Usuario u 
+		inner join GESTION_DE_GATOS.UsuarioXRol uxr on uxr.usuario_id = u.usuario_id
+		inner join GESTION_DE_GATOS.Rol r on uxr.rol_id = r.rol_id
+		where u.usuario_nombre = @nombreUsuario
+	RETURN @ret
+END
+
+GO
 CREATE FUNCTION GESTION_DE_GATOS.obtenerTarjetasUsuario(@userName NVARCHAR(255))
 RETURNS NUMERIC(18,0)
 AS
@@ -1300,6 +1319,17 @@ BEGIN
 	return (select rol_habilitado from GESTION_DE_GATOS.Rol 
 			where rol_nombre = @nombreRol)
 END
+
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.rolEstaHabilitadoPorId(@id_rol numeric(18))
+RETURNS char
+AS
+BEGIN
+	return (select rol_habilitado from GESTION_DE_GATOS.Rol 
+			where rol_id = @id_rol)
+END
+
 
 GO
 CREATE FUNCTION GESTION_DE_GATOS.usuarioEstaHabilitado(

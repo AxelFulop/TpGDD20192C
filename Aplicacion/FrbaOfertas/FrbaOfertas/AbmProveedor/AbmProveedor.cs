@@ -246,7 +246,7 @@ namespace FrbaOfertas.AbmProveedor
 
         private void AbmProveedor_Load(object sender, EventArgs e)
         {
-            Object estaHabilitado = new ConexionBD.Conexion().executeScalarFunction("rolEstaHabilitado", "Proveedor");
+            Object estaHabilitado = new ConexionBD.Conexion().executeScalarFunction("rolEstaHabilitadoPorId", "3");
             if (estaHabilitado.ToString() == "1") //Si no está habilitado
             {
                 NuevoProvBtn.Enabled = false;

@@ -40,6 +40,23 @@
             this.rol = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
             this.panelProveedor = new System.Windows.Forms.Panel();
+            this.prov_cuit = new System.Windows.Forms.TextBox();
+            this.textBoxProvTelefono = new System.Windows.Forms.TextBox();
+            this.textBoxProvCodPost = new System.Windows.Forms.TextBox();
+            this.prov_ciudad = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.prov_razonSocial = new System.Windows.Forms.TextBox();
+            this.prov_contacto = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.prov_rubro = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.prov_mail = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.panelCliente = new System.Windows.Forms.Panel();
             this.textBoxCodPostal = new System.Windows.Forms.TextBox();
             this.textBoxTelefono = new System.Windows.Forms.TextBox();
@@ -58,22 +75,6 @@
             this.cli_nombre = new System.Windows.Forms.TextBox();
             this.cli_apellido = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
-            this.textBoxProvTelefono = new System.Windows.Forms.TextBox();
-            this.textBoxProvCodPost = new System.Windows.Forms.TextBox();
-            this.prov_ciudad = new System.Windows.Forms.TextBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.prov_razonSocial = new System.Windows.Forms.TextBox();
-            this.prov_contacto = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.prov_rubro = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.prov_mail = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
             this.dir_calle = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
@@ -85,7 +86,6 @@
             this.label30 = new System.Windows.Forms.Label();
             this.dir_numero = new System.Windows.Forms.NumericUpDown();
             this.dir_piso = new System.Windows.Forms.NumericUpDown();
-            this.prov_cuit = new System.Windows.Forms.TextBox();
             this.panelProveedor.SuspendLayout();
             this.panelCliente.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dir_numero)).BeginInit();
@@ -222,13 +222,184 @@
             this.panelProveedor.Controls.Add(this.label14);
             this.panelProveedor.Controls.Add(this.prov_mail);
             this.panelProveedor.Controls.Add(this.label12);
-            this.panelProveedor.Location = new System.Drawing.Point(531, 90);
+            this.panelProveedor.Location = new System.Drawing.Point(520, 93);
             this.panelProveedor.Name = "panelProveedor";
             this.panelProveedor.Size = new System.Drawing.Size(598, 426);
             this.panelProveedor.TabIndex = 24;
             this.panelProveedor.Tag = "";
             this.panelProveedor.Visible = false;
             this.panelProveedor.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // prov_cuit
+            // 
+            this.prov_cuit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.prov_cuit.Location = new System.Drawing.Point(184, 222);
+            this.prov_cuit.Name = "prov_cuit";
+            this.prov_cuit.Size = new System.Drawing.Size(403, 30);
+            this.prov_cuit.TabIndex = 55;
+            // 
+            // textBoxProvTelefono
+            // 
+            this.textBoxProvTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxProvTelefono.Location = new System.Drawing.Point(184, 125);
+            this.textBoxProvTelefono.Name = "textBoxProvTelefono";
+            this.textBoxProvTelefono.Size = new System.Drawing.Size(403, 30);
+            this.textBoxProvTelefono.TabIndex = 54;
+            this.textBoxProvTelefono.TextChanged += new System.EventHandler(this.textBoxProvTelefono_TextChanged);
+            // 
+            // textBoxProvCodPost
+            // 
+            this.textBoxProvCodPost.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxProvCodPost.Location = new System.Drawing.Point(184, 171);
+            this.textBoxProvCodPost.Name = "textBoxProvCodPost";
+            this.textBoxProvCodPost.Size = new System.Drawing.Size(403, 30);
+            this.textBoxProvCodPost.TabIndex = 53;
+            this.textBoxProvCodPost.TextChanged += new System.EventHandler(this.textBoxProvCodPost_TextChanged);
+            // 
+            // prov_ciudad
+            // 
+            this.prov_ciudad.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.prov_ciudad.Location = new System.Drawing.Point(184, 368);
+            this.prov_ciudad.Name = "prov_ciudad";
+            this.prov_ciudad.Size = new System.Drawing.Size(403, 30);
+            this.prov_ciudad.TabIndex = 52;
+            this.prov_ciudad.TextChanged += new System.EventHandler(this.prov_ciudad_TextChanged);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(15, 371);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(75, 25);
+            this.label24.TabIndex = 51;
+            this.label24.Text = "Ciudad";
+            this.label24.Click += new System.EventHandler(this.label24_Click);
+            // 
+            // prov_razonSocial
+            // 
+            this.prov_razonSocial.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.prov_razonSocial.Location = new System.Drawing.Point(184, 32);
+            this.prov_razonSocial.Name = "prov_razonSocial";
+            this.prov_razonSocial.Size = new System.Drawing.Size(403, 30);
+            this.prov_razonSocial.TabIndex = 34;
+            this.prov_razonSocial.TextChanged += new System.EventHandler(this.razonSocial_TextChanged);
+            // 
+            // prov_contacto
+            // 
+            this.prov_contacto.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.prov_contacto.Location = new System.Drawing.Point(184, 318);
+            this.prov_contacto.Name = "prov_contacto";
+            this.prov_contacto.Size = new System.Drawing.Size(403, 30);
+            this.prov_contacto.TabIndex = 50;
+            this.prov_contacto.TextChanged += new System.EventHandler(this.prov_contacto_TextChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(15, 322);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(91, 25);
+            this.label6.TabIndex = 49;
+            this.label6.Text = "Contacto";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label9.Location = new System.Drawing.Point(3, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(149, 20);
+            this.label9.TabIndex = 25;
+            this.label9.Text = "Datos de proveedor";
+            // 
+            // prov_rubro
+            // 
+            this.prov_rubro.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.prov_rubro.Location = new System.Drawing.Point(184, 268);
+            this.prov_rubro.Name = "prov_rubro";
+            this.prov_rubro.Size = new System.Drawing.Size(403, 30);
+            this.prov_rubro.TabIndex = 48;
+            this.prov_rubro.TextChanged += new System.EventHandler(this.prov_rubro_TextChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(15, 268);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(64, 25);
+            this.label7.TabIndex = 47;
+            this.label7.Text = "Rubro";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(15, 220);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(59, 25);
+            this.label8.TabIndex = 45;
+            this.label8.Text = "CUIT";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(15, 32);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(123, 25);
+            this.label13.TabIndex = 33;
+            this.label13.Text = "Razón social";
+            this.label13.Click += new System.EventHandler(this.label13_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(15, 122);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(89, 25);
+            this.label11.TabIndex = 37;
+            this.label11.Text = "Teléfono";
+            this.label11.Click += new System.EventHandler(this.label11_Click);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(15, 171);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(132, 25);
+            this.label14.TabIndex = 43;
+            this.label14.Text = "Código postal";
+            this.label14.Click += new System.EventHandler(this.label14_Click);
+            // 
+            // prov_mail
+            // 
+            this.prov_mail.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.prov_mail.Location = new System.Drawing.Point(184, 78);
+            this.prov_mail.Name = "prov_mail";
+            this.prov_mail.Size = new System.Drawing.Size(403, 30);
+            this.prov_mail.TabIndex = 36;
+            this.prov_mail.TextChanged += new System.EventHandler(this.label8_Click);
+            this.prov_mail.Leave += new System.EventHandler(this.prov_mail_LostFocus_1);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(15, 78);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(48, 25);
+            this.label12.TabIndex = 35;
+            this.label12.Text = "Mail";
+            this.label12.Click += new System.EventHandler(this.label12_Click);
             // 
             // panelCliente
             // 
@@ -417,169 +588,6 @@
             this.label23.TabIndex = 35;
             this.label23.Text = "Apellido";
             // 
-            // textBoxProvTelefono
-            // 
-            this.textBoxProvTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxProvTelefono.Location = new System.Drawing.Point(184, 125);
-            this.textBoxProvTelefono.Name = "textBoxProvTelefono";
-            this.textBoxProvTelefono.Size = new System.Drawing.Size(403, 30);
-            this.textBoxProvTelefono.TabIndex = 54;
-            this.textBoxProvTelefono.TextChanged += new System.EventHandler(this.textBoxProvTelefono_TextChanged);
-            // 
-            // textBoxProvCodPost
-            // 
-            this.textBoxProvCodPost.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxProvCodPost.Location = new System.Drawing.Point(184, 171);
-            this.textBoxProvCodPost.Name = "textBoxProvCodPost";
-            this.textBoxProvCodPost.Size = new System.Drawing.Size(403, 30);
-            this.textBoxProvCodPost.TabIndex = 53;
-            this.textBoxProvCodPost.TextChanged += new System.EventHandler(this.textBoxProvCodPost_TextChanged);
-            // 
-            // prov_ciudad
-            // 
-            this.prov_ciudad.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.prov_ciudad.Location = new System.Drawing.Point(184, 368);
-            this.prov_ciudad.Name = "prov_ciudad";
-            this.prov_ciudad.Size = new System.Drawing.Size(403, 30);
-            this.prov_ciudad.TabIndex = 52;
-            this.prov_ciudad.TextChanged += new System.EventHandler(this.prov_ciudad_TextChanged);
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(15, 371);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(75, 25);
-            this.label24.TabIndex = 51;
-            this.label24.Text = "Ciudad";
-            this.label24.Click += new System.EventHandler(this.label24_Click);
-            // 
-            // prov_razonSocial
-            // 
-            this.prov_razonSocial.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.prov_razonSocial.Location = new System.Drawing.Point(184, 32);
-            this.prov_razonSocial.Name = "prov_razonSocial";
-            this.prov_razonSocial.Size = new System.Drawing.Size(403, 30);
-            this.prov_razonSocial.TabIndex = 34;
-            this.prov_razonSocial.TextChanged += new System.EventHandler(this.razonSocial_TextChanged);
-            // 
-            // prov_contacto
-            // 
-            this.prov_contacto.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.prov_contacto.Location = new System.Drawing.Point(184, 318);
-            this.prov_contacto.Name = "prov_contacto";
-            this.prov_contacto.Size = new System.Drawing.Size(403, 30);
-            this.prov_contacto.TabIndex = 50;
-            this.prov_contacto.TextChanged += new System.EventHandler(this.prov_contacto_TextChanged);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(15, 322);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(91, 25);
-            this.label6.TabIndex = 49;
-            this.label6.Text = "Contacto";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label9.Location = new System.Drawing.Point(3, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(149, 20);
-            this.label9.TabIndex = 25;
-            this.label9.Text = "Datos de proveedor";
-            // 
-            // prov_rubro
-            // 
-            this.prov_rubro.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.prov_rubro.Location = new System.Drawing.Point(184, 268);
-            this.prov_rubro.Name = "prov_rubro";
-            this.prov_rubro.Size = new System.Drawing.Size(403, 30);
-            this.prov_rubro.TabIndex = 48;
-            this.prov_rubro.TextChanged += new System.EventHandler(this.prov_rubro_TextChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(15, 268);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(64, 25);
-            this.label7.TabIndex = 47;
-            this.label7.Text = "Rubro";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(15, 220);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(59, 25);
-            this.label8.TabIndex = 45;
-            this.label8.Text = "CUIT";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(15, 32);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(123, 25);
-            this.label13.TabIndex = 33;
-            this.label13.Text = "Razón social";
-            this.label13.Click += new System.EventHandler(this.label13_Click);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(15, 122);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(89, 25);
-            this.label11.TabIndex = 37;
-            this.label11.Text = "Teléfono";
-            this.label11.Click += new System.EventHandler(this.label11_Click);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(15, 171);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(132, 25);
-            this.label14.TabIndex = 43;
-            this.label14.Text = "Código postal";
-            this.label14.Click += new System.EventHandler(this.label14_Click);
-            // 
-            // prov_mail
-            // 
-            this.prov_mail.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.prov_mail.Location = new System.Drawing.Point(184, 78);
-            this.prov_mail.Name = "prov_mail";
-            this.prov_mail.Size = new System.Drawing.Size(403, 30);
-            this.prov_mail.TabIndex = 36;
-            this.prov_mail.TextChanged += new System.EventHandler(this.label8_Click);
-            this.prov_mail.Leave += new System.EventHandler(this.prov_mail_LostFocus_1);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(15, 78);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(48, 25);
-            this.label12.TabIndex = 35;
-            this.label12.Text = "Mail";
-            this.label12.Click += new System.EventHandler(this.label12_Click);
-            // 
             // dir_calle
             // 
             this.dir_calle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -693,14 +701,6 @@
             this.dir_piso.TabIndex = 119;
             this.dir_piso.ValueChanged += new System.EventHandler(this.dir_piso_ValueChanged);
             // 
-            // prov_cuit
-            // 
-            this.prov_cuit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.prov_cuit.Location = new System.Drawing.Point(184, 222);
-            this.prov_cuit.Name = "prov_cuit";
-            this.prov_cuit.Size = new System.Drawing.Size(403, 30);
-            this.prov_cuit.TabIndex = 55;
-            // 
             // LoginABM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -723,12 +723,12 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.password2);
             this.Controls.Add(this.label4);
+            this.Controls.Add(this.panelProveedor);
             this.Controls.Add(this.password1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.usuario);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.panelProveedor);
             this.Controls.Add(this.panelCliente);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;

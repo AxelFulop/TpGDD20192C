@@ -140,7 +140,7 @@
             this.panelProveedor.Controls.Add(this.label14);
             this.panelProveedor.Controls.Add(this.prov_mail);
             this.panelProveedor.Controls.Add(this.label12);
-            this.panelProveedor.Location = new System.Drawing.Point(548, 48);
+            this.panelProveedor.Location = new System.Drawing.Point(547, 90);
             this.panelProveedor.Name = "panelProveedor";
             this.panelProveedor.Size = new System.Drawing.Size(598, 474);
             this.panelProveedor.TabIndex = 70;
@@ -329,7 +329,7 @@
             this.panelCliente.Controls.Add(this.cli_nombre);
             this.panelCliente.Controls.Add(this.cli_apellido);
             this.panelCliente.Controls.Add(this.label23);
-            this.panelCliente.Location = new System.Drawing.Point(548, 61);
+            this.panelCliente.Location = new System.Drawing.Point(547, 78);
             this.panelCliente.Name = "panelCliente";
             this.panelCliente.Size = new System.Drawing.Size(598, 417);
             this.panelCliente.TabIndex = 72;
