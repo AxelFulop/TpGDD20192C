@@ -414,6 +414,7 @@
             this.dni.Name = "dni";
             this.dni.Size = new System.Drawing.Size(309, 26);
             this.dni.TabIndex = 106;
+            this.dni.ValueChanged += new System.EventHandler(this.dni_ValueChanged);
             // 
             // Editar
             // 

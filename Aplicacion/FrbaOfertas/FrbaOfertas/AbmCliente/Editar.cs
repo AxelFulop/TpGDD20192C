@@ -177,5 +177,10 @@ namespace FrbaOfertas.AbmCliente
                 MessageBox.Show("Error al inhabilitar al cliente");
             } 
         }
+
+        private void dni_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

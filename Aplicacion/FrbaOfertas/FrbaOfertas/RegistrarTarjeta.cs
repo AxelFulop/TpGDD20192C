@@ -48,6 +48,12 @@ namespace FrbaOfertas
 
         private void cargarBtn_Click(object sender, EventArgs e)
         {
+            if (comboBoxTipo.SelectedItem == null)
+            {
+                MessageBox.Show("Tipo de tarjeta inválido");
+                return;
+            }
+
             String schema = Properties.Settings.Default.Schema;
             dateTimePickerFechaVenc.Format = DateTimePickerFormat.Custom;
             dateTimePickerFechaVenc.CustomFormat = "mm-yyyy";
