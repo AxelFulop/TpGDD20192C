@@ -31,6 +31,12 @@ namespace FrbaOfertas.Login
             this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+
+            textBoxProvTelefono.Text = "0";
+            textBoxProvCodPost.Text = "0";
+            textBoxDni.Text = "0";
+            textBoxTelefono.Text = "0";
+            textBoxCodPostal.Text = "0";
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -285,7 +291,7 @@ namespace FrbaOfertas.Login
 
         private void prov_cuit_TextChanged(object sender, EventArgs e)
         {
-            new Util().textBoxValidate(prov_cuit, "cuit");
+
         }
 
         private void prov_mail_TextChanged(object sender, EventArgs e)
