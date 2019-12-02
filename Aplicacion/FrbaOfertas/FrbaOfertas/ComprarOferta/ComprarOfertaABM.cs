@@ -31,7 +31,7 @@ namespace FrbaOfertas.ComprarOferta
         {
             string query = "SELECT oferta_codigo,oferta_descripcion,oferta_fecha_publicacion,oferta_fecha_vencimiento,oferta_limite_compra,oferta_stock_disponible,oferta_precio "
                 + "FROM GESTION_DE_GATOS.Oferta WHERE '" + Properties.Settings.Default.fecha.ToShortDateString() +
-            "' BETWEEN oferta_fecha_publicacion and oferta_fecha_vencimiento";
+            "' BETWEEN oferta_fecha_publicacion and oferta_fecha_vencimiento AND oferta_stock_disponible > 0";
             ConexionBD.Conexion conection = new ConexionBD.Conexion().getInstance();
             ofertas  = conection.selectReturnMultiplyRowsByQuery(query);
             grid.DataSource = ofertas;
