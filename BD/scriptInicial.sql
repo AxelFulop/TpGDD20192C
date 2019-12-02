@@ -103,9 +103,12 @@ IF OBJECT_ID('GESTION_DE_GATOS.altaOferta') IS NOT NULL
 IF OBJECT_ID('GESTION_DE_GATOS.altaCliente') IS NOT NULL
     DROP PROCEDURE GESTION_DE_GATOS.altaCliente
 
------ Eliminacion de funciones ---------   
+----- Eliminacion de funciones ---------    
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerIdProveedorPorCuitYRs') IS NOT NULL
     DROP FUNCTION GESTION_DE_GATOS.obtenerIdProveedorPorCuitYRs
+
+IF OBJECT_ID('GESTION_DE_GATOS.totalFacturacionProveedor') IS NOT NULL
+    DROP FUNCTION GESTION_DE_GATOS.totalFacturacionProveedor
 	 
 IF OBJECT_ID('GESTION_DE_GATOS.obtenerCuitProveedor') IS NOT NULL
     DROP FUNCTION  GESTION_DE_GATOS.obtenerCuitProveedor
@@ -1492,6 +1495,21 @@ BEGIN
 RETURN (SELECT u.usuario_nombre from GESTION_DE_GATOS.Cliente p
 			inner join GESTION_DE_GATOS.Usuario u on p.usuario_id = u.usuario_id 
 			where p.cliente_id = @id_cliente)
+END
+
+GO
+CREATE FUNCTION GESTION_DE_GATOS.totalFacturacionProveedor(
+@id_prov numeric(18),
+@fechaInicio datetime,
+@fechaFin datetime
+)
+RETURNS numeric(18, 2)
+AS
+BEGIN
+RETURN (SELECT sum(factura_monto_total)
+           FROM GESTION_DE_GATOS.Factura
+           where proveedor_id = @id_prov and
+           factura_fecha between @fechaInicio and @fechaFin)
 END
 
 --Triggers

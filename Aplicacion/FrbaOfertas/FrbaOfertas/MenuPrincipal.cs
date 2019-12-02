@@ -109,6 +109,10 @@ namespace FrbaOfertas
                             if (!this.listadoMenu.Items.Contains("Registrar tarjeta"))
                                 this.listadoMenu.Items.Add("Registrar tarjeta");
                             break;
+                        case "Ver facturas":
+                            if (!this.listadoMenu.Items.Contains("Ver facturas"))
+                                this.listadoMenu.Items.Add("Ver facturas");
+                            break;
                         default: break;
                     }
                 }
@@ -196,6 +200,9 @@ namespace FrbaOfertas
                         return;
                     case "Consumición de oferta":
                         new ConsumoCupon.consumoCupon().Show();
+                        break;
+                    case "Ver facturas":
+                        new VerFacturas().Show();
                         break;
                     default: break;
                 }
