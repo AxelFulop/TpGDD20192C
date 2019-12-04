@@ -41,6 +41,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.grid = new System.Windows.Forms.DataGridView();
             this.msgFacturacion = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -161,11 +162,22 @@
             this.msgFacturacion.Size = new System.Drawing.Size(0, 25);
             this.msgFacturacion.TabIndex = 55;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1068, 12);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(98, 44);
+            this.button1.TabIndex = 56;
+            this.button1.Text = "Volver";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // VerFacturas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 644);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.msgFacturacion);
             this.Controls.Add(this.razonSocial);
             this.Controls.Add(this.cuit);
@@ -208,5 +220,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridView grid;
         private System.Windows.Forms.Label msgFacturacion;
+        private System.Windows.Forms.Button button1;
     }
 }

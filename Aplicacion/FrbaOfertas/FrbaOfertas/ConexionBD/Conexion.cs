@@ -47,7 +47,6 @@ namespace FrbaOfertas.ConexionBD
             return conn;
         }
 
-
         public static SqlConnection configDBConnection()
         {
             string datasource = @"localhost\SQLSERVER2012";
@@ -58,7 +57,6 @@ namespace FrbaOfertas.ConexionBD
 
             return GetDBConnection(datasource, database, username, password);
         }
-
 
         public void openConnection(SqlConnection conn)
         {
@@ -101,7 +99,6 @@ namespace FrbaOfertas.ConexionBD
                 Console.WriteLine(errorMessages.ToString());
             }
         }
-
 
         //Param 1 nombre de la funcion, los restantes serian parametros propios de la funcion
         public Object executeScalarFunction(String nomFunct, params Object[] parametros)
@@ -160,8 +157,6 @@ namespace FrbaOfertas.ConexionBD
                 closeConnection(conn);
             }
         }
-
-
 
         //Params pueden ser las columnas a retornar como una funcion de sql 
         //Le mando la cant de parametros necesarios y el ultimo elemento es otra query
@@ -367,8 +362,6 @@ namespace FrbaOfertas.ConexionBD
             }
             this.closeConnection(con);
             return combo;
-
-
         }
 
         public int executeQuery(String query)
@@ -395,7 +388,6 @@ namespace FrbaOfertas.ConexionBD
             }
 
             return ret;
-            
         }
 
         public void executeStoredTransaction(Tuple<string, List<string>, Object[]>[] procedures)

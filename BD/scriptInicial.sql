@@ -320,7 +320,7 @@ PRIMARY KEY (funcionalidad_id)
 
 CREATE TABLE GESTION_DE_GATOS.Rol(
 rol_id NUMERIC(18,0) IDENTITY,
-rol_nombre NVARCHAR(15) unique,
+rol_nombre NVARCHAR(25) unique,
 rol_habilitado CHAR(1),
 PRIMARY KEY (rol_id)
 );
@@ -1159,7 +1159,7 @@ END
 
 GO
 CREATE PROCEDURE GESTION_DE_GATOS.actualizarDatosProveedor
-@razonSocial NVARCHAR(100),
+@razonSocial NVARCHAR(100), --no se actualiza...
 @mail NVARCHAR(255),
 @telefono numeric(18),
 @codigoPostal NVARCHAR(255),
@@ -1170,13 +1170,14 @@ CREATE PROCEDURE GESTION_DE_GATOS.actualizarDatosProveedor
 @direccion_piso nvarchar(10),
 @direccion_depto nvarchar(5),
 @direccion_localidad nvarchar(50),
+@ciudad nvarchar(255),
 @id_proveedor NVARCHAR(255) --Para identificar al proveedor
 AS
 BEGIN
-	update GESTION_DE_GATOS.Proveedor set proveedor_razon_social=@razonSocial, proveedor_email=@mail, proveedor_telefono=@telefono,
+	update GESTION_DE_GATOS.Proveedor set proveedor_razon_social = @razonSocial, proveedor_email=@mail, proveedor_telefono=@telefono,
 		proveedor_codigo_postal=@codigoPostal, proveedor_cuit=@cuit, proveedor_rubro=@rubro, proveedor_contacto=@contacto,
 		proveedor_direccion=@direccion, proveedor_direccion_piso=@direccion_piso, proveedor_direccion_depto=@direccion_depto,
-		proveedor_direccion_localidad=@direccion_localidad 
+		proveedor_direccion_localidad=@direccion_localidad, proveedor_ciudad = @ciudad
 		where proveedor_id = @id_proveedor
 END
 
@@ -1639,7 +1640,7 @@ as begin --No puede haber 2 proveedores con la misma razon social y CUIT
 						from inserted where proveedor_id = @id_prov)
 			end
 			else begin
-				update GESTION_DE_GATOS.Proveedor set proveedor_contacto = @contacto, 
+				update GESTION_DE_GATOS.Proveedor set proveedor_contacto = @contacto, proveedor_razon_social = @r_social,
 					proveedor_baja = @baja, proveedor_ciudad = @ciudad, proveedor_codigo_postal = @cp,
 					proveedor_direccion = @dir, proveedor_direccion_depto = @depto, proveedor_direccion_localidad = @localidad,
 					proveedor_direccion_piso = @piso, proveedor_email = @mail, proveedor_rubro = @rubro,
