@@ -36,6 +36,12 @@ namespace FrbaOfertas.AbmCliente
                 return;
             }
 
+            if (dni.Text == "")
+            {
+                MessageBox.Show("Campo 'DNI' es obligatorio");
+                return;
+            }
+
             this.username= nombre.Text.ToLower() + '_' + apellido.Text.ToLower();
             DateTime fechaVenc = Properties.Settings.Default.fecha;
             string schema = Properties.Settings.Default.Schema;

@@ -101,5 +101,11 @@ namespace FrbaOfertas
                 msgFacturacion.Text = headMsgFacturacion + total.ToString();
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new MenuPrincipal().Show();
+        }
     }
 }
