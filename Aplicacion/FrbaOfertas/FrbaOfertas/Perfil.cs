@@ -317,12 +317,12 @@ namespace FrbaOfertas
                     new List<string>() {
                         "@razonSocial", "@mail", "@telefono", "@codigoPostal" , "@cuit" , "@rubro",
                         "@contacto", "@direccion", "@direccion_piso", "@direccion_depto", 
-                        "@direccion_localidad", "@id_proveedor"
+                        "@direccion_localidad", "@ciudad", "@id_proveedor"
                     },
                     new string[]{
                         prov_razonSocial.Text, prov_mail.Text, prov_telefono.Text == ""? DBNull.Value.ToString() : prov_telefono.Text, prov_cp.Text == ""? DBNull.Value.ToString() : prov_cp.Text,
                         prov_cuit.Text, prov_rubro.Text, prov_contacto.Text, dir_calle.Text + " " + (dir_numero.Text == ""? DBNull.Value.ToString() : dir_numero.Text),
-                        dir_piso.Text == ""? DBNull.Value.ToString() : dir_piso.Text, dir_depto.Text, dir_localidad.Text, id_proveedor.ToString()
+                        dir_piso.Text == ""? DBNull.Value.ToString() : dir_piso.Text, dir_depto.Text, dir_localidad.Text, prov_ciudad.Text, id_proveedor.ToString()
                     }
             );
 

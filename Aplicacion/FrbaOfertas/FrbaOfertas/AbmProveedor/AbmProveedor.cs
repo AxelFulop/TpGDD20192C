@@ -38,7 +38,7 @@ namespace FrbaOfertas.AbmProveedor
 
             string query = "SELECT proveedor_id, proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion," +
                                    "proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad," +
-                                  "proveedor_codigo_postal,proveedor_cuit, proveedor_rubro, proveedor_contacto" +
+                                  "proveedor_codigo_postal,proveedor_cuit, proveedor_rubro, proveedor_contacto, proveedor_ciudad" +
                            " FROM " + Properties.Settings.Default.Schema + ".Proveedor";
             if(listaRazonSocial != "()" || listaCuit != "()")
             {
@@ -138,7 +138,7 @@ namespace FrbaOfertas.AbmProveedor
 
             string query = "SELECT proveedor_id, proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion," +
                                    "proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad," +
-                                  "proveedor_codigo_postal,proveedor_cuit, proveedor_rubro, proveedor_contacto" +
+                                  "proveedor_codigo_postal,proveedor_cuit, proveedor_rubro, proveedor_contacto, proveedor_ciudad" +
                            " FROM " + Properties.Settings.Default.Schema + ".Proveedor";
             if (listaRazonSocial != "()" || listaCuit != "()")
             {
@@ -181,6 +181,7 @@ namespace FrbaOfertas.AbmProveedor
             datosRow["cuit"] = row.ItemArray[9].ToString();
             datosRow["rubro"] = row.ItemArray[10].ToString();
             datosRow["contacto"] = row.ItemArray[11].ToString();
+            datosRow["ciudad"] = row.ItemArray[12].ToString();
 
             return datosRow;
         }
@@ -201,7 +202,7 @@ namespace FrbaOfertas.AbmProveedor
             string listaCuit = obtenerListaBorradosQueryCuit();
 
             string query = "SELECT proveedor_id, proveedor_razon_social, proveedor_email, proveedor_telefono, proveedor_direccion,proveedor_direccion_piso,proveedor_direccion_depto,proveedor_direccion_localidad, proveedor_codigo_postal, " +
-                                  "proveedor_cuit, proveedor_rubro, proveedor_contacto" +
+                                  "proveedor_cuit, proveedor_rubro, proveedor_contacto, proveedor_ciudad" +
                            " FROM " + Properties.Settings.Default.Schema + ".Proveedor WHERE " +
                            "isnull(proveedor_email, '') LIKE '%" + mail + "%' AND proveedor_razon_social LIKE '%" + razonSocial + "%'";
             if (cuit != "")

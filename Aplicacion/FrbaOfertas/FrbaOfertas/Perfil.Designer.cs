@@ -329,7 +329,7 @@
             this.panelCliente.Controls.Add(this.cli_nombre);
             this.panelCliente.Controls.Add(this.cli_apellido);
             this.panelCliente.Controls.Add(this.label23);
-            this.panelCliente.Location = new System.Drawing.Point(547, 78);
+            this.panelCliente.Location = new System.Drawing.Point(550, 63);
             this.panelCliente.Name = "panelCliente";
             this.panelCliente.Size = new System.Drawing.Size(598, 417);
             this.panelCliente.TabIndex = 72;
@@ -723,7 +723,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 644);
-            this.Controls.Add(this.panelCliente);
             this.Controls.Add(this.panelDireccion);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.passwordNueva2);
@@ -737,6 +736,7 @@
             this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.panelProveedor);
+            this.Controls.Add(this.panelCliente);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1200, 700);
             this.MinimizeBox = false;

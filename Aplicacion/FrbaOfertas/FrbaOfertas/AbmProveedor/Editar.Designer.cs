@@ -62,6 +62,8 @@
             this.dir_piso = new System.Windows.Forms.NumericUpDown();
             this.telefono = new System.Windows.Forms.NumericUpDown();
             this.codigoPostal = new System.Windows.Forms.NumericUpDown();
+            this.ciudad = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dir_numero)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dir_piso)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.telefono)).BeginInit();
@@ -71,7 +73,7 @@
             // button2
             // 
             this.button2.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.button2.Location = new System.Drawing.Point(428, 564);
+            this.button2.Location = new System.Drawing.Point(438, 575);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(174, 57);
             this.button2.TabIndex = 41;
@@ -82,7 +84,7 @@
             // button1
             // 
             this.button1.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.button1.Location = new System.Drawing.Point(625, 564);
+            this.button1.Location = new System.Drawing.Point(635, 575);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(174, 57);
             this.button1.TabIndex = 40;
@@ -337,7 +339,7 @@
             // inhabilitarBtn
             // 
             this.inhabilitarBtn.BackColor = System.Drawing.Color.LightCoral;
-            this.inhabilitarBtn.Location = new System.Drawing.Point(263, 487);
+            this.inhabilitarBtn.Location = new System.Drawing.Point(262, 529);
             this.inhabilitarBtn.Name = "inhabilitarBtn";
             this.inhabilitarBtn.Size = new System.Drawing.Size(160, 38);
             this.inhabilitarBtn.TabIndex = 106;
@@ -349,7 +351,7 @@
             // habilitarBtn
             // 
             this.habilitarBtn.BackColor = System.Drawing.Color.LightCoral;
-            this.habilitarBtn.Location = new System.Drawing.Point(263, 487);
+            this.habilitarBtn.Location = new System.Drawing.Point(262, 529);
             this.habilitarBtn.Name = "habilitarBtn";
             this.habilitarBtn.Size = new System.Drawing.Size(160, 38);
             this.habilitarBtn.TabIndex = 105;
@@ -406,12 +408,32 @@
             this.codigoPostal.Size = new System.Drawing.Size(309, 26);
             this.codigoPostal.TabIndex = 114;
             // 
+            // ciudad
+            // 
+            this.ciudad.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ciudad.Location = new System.Drawing.Point(246, 482);
+            this.ciudad.Name = "ciudad";
+            this.ciudad.Size = new System.Drawing.Size(309, 30);
+            this.ciudad.TabIndex = 116;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(76, 485);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(75, 25);
+            this.label4.TabIndex = 115;
+            this.label4.Text = "Ciudad";
+            // 
             // Editar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 644);
             this.ControlBox = false;
+            this.Controls.Add(this.ciudad);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.codigoPostal);
             this.Controls.Add(this.telefono);
             this.Controls.Add(this.dir_piso);
@@ -499,5 +521,7 @@
         private System.Windows.Forms.NumericUpDown dir_piso;
         private System.Windows.Forms.NumericUpDown telefono;
         private System.Windows.Forms.NumericUpDown codigoPostal;
+        private System.Windows.Forms.TextBox ciudad;
+        private System.Windows.Forms.Label label4;
     }
 }

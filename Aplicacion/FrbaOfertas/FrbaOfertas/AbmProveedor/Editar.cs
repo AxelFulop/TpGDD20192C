@@ -39,6 +39,7 @@ namespace FrbaOfertas.AbmProveedor
             this.cuit.Text = row["cuit"];
             this.rubro.Text = row["rubro"];
             this.contacto.Text = row["contacto"];
+            this.ciudad.Text = row["ciudad"];
 
             Object estaHabilitado = new ConexionBD.Conexion().executeScalarFunction("proveedorEstaHabilitado",
                         razonSocial.Text, cuit.Text);
@@ -76,12 +77,12 @@ namespace FrbaOfertas.AbmProveedor
                     new List<string>() {
                         "@razonSocial", "@mail", "@telefono", "@codigoPostal" , "@cuit" , "@rubro",
                         "@contacto", "@direccion", "@direccion_piso", "@direccion_depto", 
-                        "@direccion_localidad", "@id_proveedor"
+                        "@direccion_localidad", "@ciudad", "@id_proveedor"
                     },
                     new string[]{
                         this.razonSocial.Text, mail.Text, telefono.Text == ""? DBNull.Value.ToString() : telefono.Text, codigoPostal.Text == ""? DBNull.Value.ToString() : codigoPostal.Text,
                         cuit.Text, rubro.Text, contacto.Text, dir_calle.Text + " " + (dir_numero.Text == ""? DBNull.Value.ToString() : dir_numero.Text),
-                        dir_piso.Text == ""? DBNull.Value.ToString() : dir_piso.Text, dir_depto.Text, dir_localidad.Text, datos["id"]
+                        dir_piso.Text == ""? DBNull.Value.ToString() : dir_piso.Text, dir_depto.Text, dir_localidad.Text, ciudad.Text, datos["id"]
                     }
             );
 
