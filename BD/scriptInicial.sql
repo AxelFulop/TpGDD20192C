@@ -320,7 +320,7 @@ PRIMARY KEY (funcionalidad_id)
 
 CREATE TABLE GESTION_DE_GATOS.Rol(
 rol_id NUMERIC(18,0) IDENTITY,
-rol_nombre NVARCHAR(15) unique,
+rol_nombre NVARCHAR(25) unique,
 rol_habilitado CHAR(1),
 PRIMARY KEY (rol_id)
 );

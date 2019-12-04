@@ -85,6 +85,7 @@
             this.nombreRol.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.nombreRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nombreRol.Location = new System.Drawing.Point(100, 12);
+            this.nombreRol.MaxLength = 25;
             this.nombreRol.Name = "nombreRol";
             this.nombreRol.Size = new System.Drawing.Size(281, 44);
             this.nombreRol.TabIndex = 4;

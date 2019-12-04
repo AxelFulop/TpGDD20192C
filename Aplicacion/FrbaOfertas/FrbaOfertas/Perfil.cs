@@ -34,18 +34,22 @@ namespace FrbaOfertas
 
         private void button3_Click(object sender, EventArgs e)
         {
-            switch (rol.Text)
+            string idRol = new ConexionBD.Conexion().executeScalarFunction("obtenerIdRolUsuario", usuario).ToString();
+
+            switch (idRol)
             {
-                case "Cliente":
+                case "2":
                     guardarDatosCliente();
                     break;
-                case "Proveedor":
+                case "3":
                     guardarDatosProveedor();
                     break;
-                case "Administrador":
+                case "1":
                     guardarDatosAdmin();
                     break;
-                default: break;
+                default:
+                    MessageBox.Show("No es posible guardar los cambios");
+                    break;
             }
         }
 
