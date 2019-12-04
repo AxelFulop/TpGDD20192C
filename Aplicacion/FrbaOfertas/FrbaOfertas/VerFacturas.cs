@@ -79,7 +79,7 @@ namespace FrbaOfertas
                 return;
             }
 
-            string query = "SELECT factura_numero, factura_fecha, factura_monto_total " +
+            string query = "SELECT factura_id as factura_numero, factura_fecha, factura_monto_total " +
                         "FROM " + Properties.Settings.Default.Schema + ".Factura "+ 
                         "where proveedor_id = " + idProv + " and " +
                         "factura_fecha between '" + fechaInicio.Value.ToShortDateString() 
@@ -92,6 +92,7 @@ namespace FrbaOfertas
             if (facturas.Rows.Count <= 0)
             {
                 MessageBox.Show("No hay facturas para ese proveedor en ese intervalo");
+                msgFacturacion.Text = "";
                 return;
             }
             else
