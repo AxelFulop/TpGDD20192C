@@ -54,6 +54,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.textBoxMonto = new System.Windows.Forms.NumericUpDown();
+            this.verTarjetasBtn = new System.Windows.Forms.Button();
             this.panelAgregarTarjeta.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textBoxMonto)).BeginInit();
             this.SuspendLayout();
@@ -333,11 +334,22 @@
             this.textBoxMonto.Size = new System.Drawing.Size(296, 26);
             this.textBoxMonto.TabIndex = 117;
             // 
+            // verTarjetasBtn
+            // 
+            this.verTarjetasBtn.Location = new System.Drawing.Point(467, 109);
+            this.verTarjetasBtn.Name = "verTarjetasBtn";
+            this.verTarjetasBtn.Size = new System.Drawing.Size(108, 38);
+            this.verTarjetasBtn.TabIndex = 118;
+            this.verTarjetasBtn.Text = "Ver tarjetas";
+            this.verTarjetasBtn.UseVisualStyleBackColor = true;
+            this.verTarjetasBtn.Click += new System.EventHandler(this.button2_Click_1);
+            // 
             // CargaCreditoABM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1172, 626);
+            this.Controls.Add(this.verTarjetasBtn);
             this.Controls.Add(this.textBoxMonto);
             this.Controls.Add(this.panelAgregarTarjeta);
             this.Controls.Add(this.textBoxCliente);
@@ -395,5 +407,6 @@
         private System.Windows.Forms.TextBox tarj_saldo;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.NumericUpDown textBoxMonto;
+        private System.Windows.Forms.Button verTarjetasBtn;
     }
 }

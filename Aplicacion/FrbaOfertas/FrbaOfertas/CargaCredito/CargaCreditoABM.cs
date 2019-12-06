@@ -66,19 +66,33 @@ namespace FrbaOfertas.CragaCredito
         {
             dateTimePickerFechaCarga.Value = Properties.Settings.Default.fecha;
             dateTimePickerFechaCarga.Enabled = false;
-            textBoxCliente.Text = usuario;
-            string query = "SELECT tarjeta_numero FROM GESTION_DE_GATOS.Tarjeta t " +
-            "JOIN GESTION_DE_GATOS.Cliente c on t.cliente_id = c.cliente_id " +
-            "JOIN GESTION_DE_GATOS.Usuario u on u.usuario_id = c.usuario_id " +
-            "WHERE u.usuario_nombre = " + "'" + usuario + "' and t.tarjeta_es_regalo = '0'";
-            comboBoxTarjeta = new Conexion().populateComboBox(comboBoxTarjeta, query);
 
-            if (comboBoxTarjeta.Items.Count == 0)
+            Object ret = new Conexion().executeScalarFunction("obtenerIdCliente", usuario);
+            if (ret == DBNull.Value) // Entra alguien que no es cliente
             {
-                comboBoxTarjeta.Text = "Sin tarjetas registradas";
-                SinTarjetasLink.Visible = true;
-                cargarBtn.Enabled = false;
+                textBoxCliente.Enabled = true;
             }
+            else
+            {
+                textBoxCliente.Text = usuario;
+                string query = "SELECT tarjeta_numero FROM GESTION_DE_GATOS.Tarjeta t " +
+                "JOIN GESTION_DE_GATOS.Cliente c on t.cliente_id = c.cliente_id " +
+                "JOIN GESTION_DE_GATOS.Usuario u on u.usuario_id = c.usuario_id " +
+                "WHERE u.usuario_nombre = " + "'" + usuario + "' and t.tarjeta_es_regalo = '0'";
+                comboBoxTarjeta = new Conexion().populateComboBox(comboBoxTarjeta, query);
+
+                if (comboBoxTarjeta.Items.Count == 0)
+                {
+                    comboBoxTarjeta.Text = "Sin tarjetas registradas";
+                    SinTarjetasLink.Visible = true;
+                    cargarBtn.Enabled = false;
+                }
+
+                verTarjetasBtn.Visible = false;
+            }
+                
+
+            
             this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
@@ -187,6 +201,36 @@ namespace FrbaOfertas.CragaCredito
         private void button2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            comboBoxTarjeta.Items.Clear();
+            try
+            {
+                string query = "SELECT tarjeta_numero FROM GESTION_DE_GATOS.Tarjeta t " +
+                    "JOIN GESTION_DE_GATOS.Cliente c on t.cliente_id = c.cliente_id " +
+                    "JOIN GESTION_DE_GATOS.Usuario u on u.usuario_id = c.usuario_id " +
+                    "WHERE u.usuario_nombre = " + "'" + textBoxCliente.Text + "' and t.tarjeta_es_regalo = '0'";
+                comboBoxTarjeta = new Conexion().populateComboBox(comboBoxTarjeta, query);
+
+                if (comboBoxTarjeta.Items.Count == 0)
+                {
+                    comboBoxTarjeta.Text = "Sin tarjetas registradas";
+                    SinTarjetasLink.Visible = true;
+                    cargarBtn.Enabled = false;
+                }
+                else
+                {
+                    comboBoxTarjeta.SelectedItem = comboBoxTarjeta.Items[0];
+                    SinTarjetasLink.Visible = false;
+                    cargarBtn.Enabled = true;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al traer tarjetas de dicho usuario");
+            }
         }
     }
 }

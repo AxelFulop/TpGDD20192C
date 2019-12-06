@@ -172,7 +172,7 @@ namespace FrbaOfertas.Login
                          
                     },
                     new Object[]{
-                         cli_fechaNacimiento.Value.ToString(),cli_nombre.Text,cli_apellido.Text,textBoxDni.Text == ""? DBNull.Value.ToString() : textBoxDni.Text,
+                         cli_fechaNacimiento.Value.ToShortDateString(),cli_nombre.Text,cli_apellido.Text,textBoxDni.Text == ""? DBNull.Value.ToString() : textBoxDni.Text,
                          cli_mail.Text,textBoxTelefono.Text == ""? DBNull.Value.ToString() : textBoxTelefono.Text, dir_calle.Text + " " + (dir_numero.Text == ""? DBNull.Value.ToString() : dir_numero.Text), 
                          dir_piso.Text == ""? DBNull.Value.ToString() : dir_piso.Text, dir_depto.Text, dir_localidad.Text, 
                          textBoxCodPostal.Text == ""? DBNull.Value.ToString() : textBoxCodPostal.Text, cli_ciudad.Text, usuario.Text
