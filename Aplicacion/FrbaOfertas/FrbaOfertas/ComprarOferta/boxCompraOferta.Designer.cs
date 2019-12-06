@@ -46,6 +46,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.o_descripcion = new System.Windows.Forms.RichTextBox();
             this.o_codigo = new System.Windows.Forms.TextBox();
             this.o_precio = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -54,8 +55,9 @@
             this.labelX = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.cantidad = new System.Windows.Forms.NumericUpDown();
-            this.o_descripcion = new System.Windows.Forms.RichTextBox();
-            this.SinTarjetasLink = new System.Windows.Forms.LinkLabel();
+            this.user_cliente = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.verTarjetasBtn = new System.Windows.Forms.Button();
             this.panelAgregarTarjeta.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cantidad)).BeginInit();
@@ -64,9 +66,9 @@
             // CancelBtn
             // 
             this.CancelBtn.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.CancelBtn.Location = new System.Drawing.Point(291, 390);
+            this.CancelBtn.Location = new System.Drawing.Point(338, 514);
             this.CancelBtn.Name = "CancelBtn";
-            this.CancelBtn.Size = new System.Drawing.Size(143, 42);
+            this.CancelBtn.Size = new System.Drawing.Size(177, 51);
             this.CancelBtn.TabIndex = 61;
             this.CancelBtn.Text = "Cancelar";
             this.CancelBtn.UseVisualStyleBackColor = false;
@@ -75,9 +77,9 @@
             // comprarBtn
             // 
             this.comprarBtn.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.comprarBtn.Location = new System.Drawing.Point(464, 390);
+            this.comprarBtn.Location = new System.Drawing.Point(531, 514);
             this.comprarBtn.Name = "comprarBtn";
-            this.comprarBtn.Size = new System.Drawing.Size(143, 42);
+            this.comprarBtn.Size = new System.Drawing.Size(177, 51);
             this.comprarBtn.TabIndex = 60;
             this.comprarBtn.Text = "Comprar";
             this.comprarBtn.UseVisualStyleBackColor = false;
@@ -86,7 +88,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(435, 56);
+            this.label11.Location = new System.Drawing.Point(529, 78);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(114, 20);
@@ -96,7 +98,7 @@
             // comboBoxTarjeta
             // 
             this.comboBoxTarjeta.FormattingEnabled = true;
-            this.comboBoxTarjeta.Location = new System.Drawing.Point(569, 53);
+            this.comboBoxTarjeta.Location = new System.Drawing.Point(663, 75);
             this.comboBoxTarjeta.Name = "comboBoxTarjeta";
             this.comboBoxTarjeta.Size = new System.Drawing.Size(290, 28);
             this.comboBoxTarjeta.TabIndex = 63;
@@ -106,7 +108,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label1.Location = new System.Drawing.Point(402, 21);
+            this.label1.Location = new System.Drawing.Point(496, 43);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(324, 20);
             this.label1.TabIndex = 64;
@@ -125,7 +127,7 @@
             this.panelAgregarTarjeta.Controls.Add(this.label5);
             this.panelAgregarTarjeta.Controls.Add(this.label4);
             this.panelAgregarTarjeta.Controls.Add(this.label3);
-            this.panelAgregarTarjeta.Location = new System.Drawing.Point(464, 112);
+            this.panelAgregarTarjeta.Location = new System.Drawing.Point(533, 127);
             this.panelAgregarTarjeta.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelAgregarTarjeta.Name = "panelAgregarTarjeta";
             this.panelAgregarTarjeta.Size = new System.Drawing.Size(357, 258);
@@ -247,11 +249,20 @@
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.labelX);
-            this.panel1.Location = new System.Drawing.Point(13, 14);
+            this.panel1.Location = new System.Drawing.Point(99, 127);
             this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(357, 278);
             this.panel1.TabIndex = 68;
+            // 
+            // o_descripcion
+            // 
+            this.o_descripcion.Enabled = false;
+            this.o_descripcion.Location = new System.Drawing.Point(36, 120);
+            this.o_descripcion.Name = "o_descripcion";
+            this.o_descripcion.Size = new System.Drawing.Size(294, 99);
+            this.o_descripcion.TabIndex = 17;
+            this.o_descripcion.Text = "";
             // 
             // o_codigo
             // 
@@ -316,7 +327,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(36, 346);
+            this.label14.Location = new System.Drawing.Point(344, 446);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(148, 20);
@@ -326,7 +337,7 @@
             // cantidad
             // 
             this.cantidad.ImeMode = System.Windows.Forms.ImeMode.Disable;
-            this.cantidad.Location = new System.Drawing.Point(191, 344);
+            this.cantidad.Location = new System.Drawing.Point(499, 444);
             this.cantidad.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -346,34 +357,42 @@
             0,
             0});
             // 
-            // o_descripcion
+            // user_cliente
             // 
-            this.o_descripcion.Enabled = false;
-            this.o_descripcion.Location = new System.Drawing.Point(36, 120);
-            this.o_descripcion.Name = "o_descripcion";
-            this.o_descripcion.Size = new System.Drawing.Size(294, 99);
-            this.o_descripcion.TabIndex = 17;
-            this.o_descripcion.Text = "";
+            this.user_cliente.Location = new System.Drawing.Point(188, 43);
+            this.user_cliente.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.user_cliente.Name = "user_cliente";
+            this.user_cliente.Size = new System.Drawing.Size(251, 26);
+            this.user_cliente.TabIndex = 72;
             // 
-            // SinTarjetasLink
+            // label2
             // 
-            this.SinTarjetasLink.AutoSize = true;
-            this.SinTarjetasLink.LinkColor = System.Drawing.Color.Red;
-            this.SinTarjetasLink.Location = new System.Drawing.Point(647, 84);
-            this.SinTarjetasLink.Name = "SinTarjetasLink";
-            this.SinTarjetasLink.Size = new System.Drawing.Size(123, 20);
-            this.SinTarjetasLink.TabIndex = 71;
-            this.SinTarjetasLink.TabStop = true;
-            this.SinTarjetasLink.Text = "Registrar tarjeta";
-            this.SinTarjetasLink.Visible = false;
-            this.SinTarjetasLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.SinTarjetasLink_LinkClicked);
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(61, 46);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(114, 20);
+            this.label2.TabIndex = 71;
+            this.label2.Text = "Usuario cliente";
+            // 
+            // verTarjetasBtn
+            // 
+            this.verTarjetasBtn.Location = new System.Drawing.Point(233, 78);
+            this.verTarjetasBtn.Name = "verTarjetasBtn";
+            this.verTarjetasBtn.Size = new System.Drawing.Size(134, 41);
+            this.verTarjetasBtn.TabIndex = 73;
+            this.verTarjetasBtn.Text = "Ver tarjetas";
+            this.verTarjetasBtn.UseVisualStyleBackColor = true;
+            this.verTarjetasBtn.Click += new System.EventHandler(this.button1_Click);
             // 
             // boxCompraOferta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(878, 444);
-            this.Controls.Add(this.SinTarjetasLink);
+            this.ClientSize = new System.Drawing.Size(1048, 577);
+            this.Controls.Add(this.verTarjetasBtn);
+            this.Controls.Add(this.user_cliente);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.cantidad);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.panel1);
@@ -428,6 +447,8 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.NumericUpDown cantidad;
         private System.Windows.Forms.RichTextBox o_descripcion;
-        private System.Windows.Forms.LinkLabel SinTarjetasLink;
+        private System.Windows.Forms.TextBox user_cliente;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button verTarjetasBtn;
     }
 }

@@ -25,17 +25,28 @@ namespace FrbaOfertas.ComprarOferta
 
         private void boxCompraOferta_Load(object sender, EventArgs e)
         {
-            string query = "SELECT tarjeta_numero FROM GESTION_DE_GATOS.Tarjeta t " +
-            "JOIN GESTION_DE_GATOS.Cliente c on t.cliente_id = c.cliente_id " +
-            "JOIN GESTION_DE_GATOS.Usuario u on u.usuario_id = c.usuario_id " +
-            "WHERE u.usuario_nombre = " + "'" + Logeo.username + "'";
-            comboBoxTarjeta = new ConexionBD.Conexion().populateComboBox(comboBoxTarjeta, query);
-
-            if (comboBoxTarjeta.Items.Count == 0)
+            
+            Object ret = new ConexionBD.Conexion().executeScalarFunction("obtenerIdCliente", Logeo.username);
+            if (ret == DBNull.Value) // Entra alguien que no es cliente
             {
-                comboBoxTarjeta.Text = "Sin tarjetas registradas";
                 comprarBtn.Enabled = false;
-                SinTarjetasLink.Visible = true;
+            }
+            else
+            {
+                verTarjetasBtn.Visible = false;
+                user_cliente.Text = Logeo.username;
+                user_cliente.Enabled = false;
+                string query = "SELECT tarjeta_numero FROM GESTION_DE_GATOS.Tarjeta t " +
+                    "JOIN GESTION_DE_GATOS.Cliente c on t.cliente_id = c.cliente_id " +
+                    "JOIN GESTION_DE_GATOS.Usuario u on u.usuario_id = c.usuario_id " +
+                    "WHERE u.usuario_nombre = " + "'" + Logeo.username + "'";
+                comboBoxTarjeta = new ConexionBD.Conexion().populateComboBox(comboBoxTarjeta, query);
+
+                if (comboBoxTarjeta.Items.Count == 0)
+                {
+                    comboBoxTarjeta.Text = "Sin tarjetas registradas";
+                    comprarBtn.Enabled = false;
+                }
             }
 
             o_codigo.Text = datos["codigo"];
@@ -129,7 +140,7 @@ namespace FrbaOfertas.ComprarOferta
         private Tuple<string, List<string>, object[]> altaCompra()
         {
             string idCliente = new ConexionBD.Conexion().
-                executeScalarFunction("obtenerIdCliente", Logeo.username).ToString();
+                executeScalarFunction("obtenerIdCliente", user_cliente.Text).ToString();
 
             return new Tuple<string, List<string>, Object[]>(
                    Properties.Settings.Default.Schema + ".altaCompra",
@@ -138,7 +149,7 @@ namespace FrbaOfertas.ComprarOferta
                          "@nombreUsuario","@id_cliente","@codigo_oferta","@fecha"
                     },
                    new Object[]{
-                        Logeo.username, int.Parse(idCliente), datos["codigo"],
+                        user_cliente.Text, int.Parse(idCliente), datos["codigo"],
                         Properties.Settings.Default.fecha.ToShortDateString()
                     }
            );
@@ -195,6 +206,30 @@ namespace FrbaOfertas.ComprarOferta
             this.Hide();
             pantallaOfertas.Hide();
             new RegistrarTarjeta().Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            comboBoxTarjeta.Items.Clear();
+
+            string query = "SELECT tarjeta_numero FROM GESTION_DE_GATOS.Tarjeta t " +
+                "JOIN GESTION_DE_GATOS.Cliente c on t.cliente_id = c.cliente_id " +
+                "JOIN GESTION_DE_GATOS.Usuario u on u.usuario_id = c.usuario_id " +
+                "WHERE u.usuario_nombre = " + "'" + user_cliente.Text + "'";
+            comboBoxTarjeta = new ConexionBD.Conexion().populateComboBox(comboBoxTarjeta, query);
+
+            if (comboBoxTarjeta.Items.Count == 0)
+            {
+                comboBoxTarjeta.Text = "Sin tarjetas registradas";
+                comprarBtn.Enabled = false;
+                panelAgregarTarjeta.Visible = false;
+            }
+            else
+            {
+                comboBoxTarjeta.SelectedItem = comboBoxTarjeta.Items[0];
+                comprarBtn.Enabled = true;
+                panelAgregarTarjeta.Visible = true;
+            }
         }
     }
 }

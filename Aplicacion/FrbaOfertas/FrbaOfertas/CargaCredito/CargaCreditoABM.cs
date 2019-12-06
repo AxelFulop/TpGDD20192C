@@ -71,6 +71,7 @@ namespace FrbaOfertas.CragaCredito
             if (ret == DBNull.Value) // Entra alguien que no es cliente
             {
                 textBoxCliente.Enabled = true;
+                cargarBtn.Enabled = false;
             }
             else
             {
@@ -84,7 +85,6 @@ namespace FrbaOfertas.CragaCredito
                 if (comboBoxTarjeta.Items.Count == 0)
                 {
                     comboBoxTarjeta.Text = "Sin tarjetas registradas";
-                    SinTarjetasLink.Visible = true;
                     cargarBtn.Enabled = false;
                 }
 
@@ -217,13 +217,11 @@ namespace FrbaOfertas.CragaCredito
                 if (comboBoxTarjeta.Items.Count == 0)
                 {
                     comboBoxTarjeta.Text = "Sin tarjetas registradas";
-                    SinTarjetasLink.Visible = true;
                     cargarBtn.Enabled = false;
                 }
                 else
                 {
                     comboBoxTarjeta.SelectedItem = comboBoxTarjeta.Items[0];
-                    SinTarjetasLink.Visible = false;
                     cargarBtn.Enabled = true;
                 }
             }

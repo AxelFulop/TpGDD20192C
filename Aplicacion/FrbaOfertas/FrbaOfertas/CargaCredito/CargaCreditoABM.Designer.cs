@@ -45,7 +45,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.cargarBtn = new System.Windows.Forms.Button();
-            this.SinTarjetasLink = new System.Windows.Forms.LinkLabel();
             this.textBoxCliente = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxTarjeta = new System.Windows.Forms.ComboBox();
@@ -239,19 +238,6 @@
             this.cargarBtn.UseVisualStyleBackColor = false;
             this.cargarBtn.Click += new System.EventHandler(this.button3_Click);
             // 
-            // SinTarjetasLink
-            // 
-            this.SinTarjetasLink.AutoSize = true;
-            this.SinTarjetasLink.LinkColor = System.Drawing.Color.Red;
-            this.SinTarjetasLink.Location = new System.Drawing.Point(454, 181);
-            this.SinTarjetasLink.Name = "SinTarjetasLink";
-            this.SinTarjetasLink.Size = new System.Drawing.Size(286, 20);
-            this.SinTarjetasLink.TabIndex = 44;
-            this.SinTarjetasLink.TabStop = true;
-            this.SinTarjetasLink.Text = "Registre una tarjeta para cargar crédito";
-            this.SinTarjetasLink.Visible = false;
-            this.SinTarjetasLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-            // 
             // textBoxCliente
             // 
             this.textBoxCliente.Enabled = false;
@@ -359,7 +345,6 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.SinTarjetasLink);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.cargarBtn);
             this.Controls.Add(this.label9);
@@ -396,7 +381,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button cargarBtn;
-        private System.Windows.Forms.LinkLabel SinTarjetasLink;
         private System.Windows.Forms.TextBox textBoxCliente;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBoxTarjeta;
