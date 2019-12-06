@@ -257,9 +257,9 @@
             this.precioOferta.Location = new System.Drawing.Point(254, 305);
             this.precioOferta.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.precioOferta.Maximum = new decimal(new int[] {
-            9000,
-            0,
-            0,
+            268435455,
+            1042612833,
+            542101086,
             0});
             this.precioOferta.Minimum = new decimal(new int[] {
             1,
@@ -280,9 +280,9 @@
             this.precioLista.Location = new System.Drawing.Point(254, 360);
             this.precioLista.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.precioLista.Maximum = new decimal(new int[] {
-            9000,
-            0,
-            0,
+            -402653185,
+            -1613725636,
+            54210108,
             0});
             this.precioLista.Minimum = new decimal(new int[] {
             1,
