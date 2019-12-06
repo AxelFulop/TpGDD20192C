@@ -137,9 +137,9 @@ namespace FrbaOfertas.CrearOferta
               richTextBoxDesc.Text,
               textBoxCodOferta.Text,
               dateTimePickerFechaPub.Value.Subtract(new TimeSpan(dateTimePickerFechaPub.Value.Hour, 
-                  dateTimePickerFechaPub.Value.Minute, dateTimePickerFechaPub.Value.Second)),
+                  dateTimePickerFechaPub.Value.Minute, dateTimePickerFechaPub.Value.Second)).ToShortDateString(),
               dateTimePickerFechVenc.Value.Add(new TimeSpan(23-dateTimePickerFechVenc.Value.Hour, 
-                  59-dateTimePickerFechVenc.Value.Minute, 59-dateTimePickerFechVenc.Value.Second)),
+                  59-dateTimePickerFechVenc.Value.Minute, 59-dateTimePickerFechVenc.Value.Second)).ToShortDateString(),
               numericUpDownLimCom.Value,
               numericUpDownCantDisp.Value,
               precioOferta.Text,
@@ -168,7 +168,6 @@ namespace FrbaOfertas.CrearOferta
             int num = new Util().RandomNumber(1, 9);
             string codOferta = str + num.ToString();
             textBoxCodOferta.Text = codOferta;
-            buttonGen.Enabled = false;
         }
     }
 }

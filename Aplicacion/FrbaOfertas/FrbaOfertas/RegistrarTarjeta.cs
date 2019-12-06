@@ -38,6 +38,18 @@ namespace FrbaOfertas
             this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+
+            Object ret = new Conexion().executeScalarFunction("obtenerIdCliente", Logeo.username);
+            if (ret == DBNull.Value) // Entra alguien que no es cliente
+            {
+                user_cliente.Enabled = true;
+                
+            }
+            else
+            {
+                user_cliente.Text = ret.ToString();
+                user_cliente.Enabled = false;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -53,6 +65,12 @@ namespace FrbaOfertas
                 MessageBox.Show("Tipo de tarjeta inválido");
                 return;
             }
+
+            if (user_cliente.Text == "")
+            {
+                MessageBox.Show("Complete el campo del usuario del cliente");
+                return;
+            } 
 
             String schema = Properties.Settings.Default.Schema;
             dateTimePickerFechaVenc.Format = DateTimePickerFormat.Custom;
@@ -72,13 +90,20 @@ namespace FrbaOfertas
                     return;
                 }
 
+                Object ret = new Conexion().executeScalarFunction("obtenerIdCliente", user_cliente.Text);
+                if (ret == DBNull.Value) // Entra alguien que no es cliente
+                {
+                    MessageBox.Show("Cliente inexistente");
+                    return;
+                }
+
                 List<String> parametrosTarjeta = new List<String>() { "@numeroTarjeta",
                 "@tipoTarjeta", "@bancoTarjeta","@vencimientoFechaTarjeta","@cvvTarjeta","@userName"};
                 try
                 {
                     new Conexion().executeProcedure(schema + ".altaTarjeta", parametrosTarjeta,
                         textBoxNumero.Text, comboBoxTipo.Text, textBoxBanco.Text, dateTimePickerFechaVenc.Value,
-                        textBoxCVV.Text, Logeo.username);
+                        textBoxCVV.Text, user_cliente.Text);
 
                     MessageBox.Show("Tarjeta registrada con exito");
                     this.Hide();

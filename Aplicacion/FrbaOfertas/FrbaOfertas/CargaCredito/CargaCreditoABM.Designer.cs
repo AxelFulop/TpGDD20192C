@@ -45,7 +45,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.cargarBtn = new System.Windows.Forms.Button();
-            this.SinTarjetasLink = new System.Windows.Forms.LinkLabel();
             this.textBoxCliente = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxTarjeta = new System.Windows.Forms.ComboBox();
@@ -54,6 +53,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.textBoxMonto = new System.Windows.Forms.NumericUpDown();
+            this.verTarjetasBtn = new System.Windows.Forms.Button();
             this.panelAgregarTarjeta.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textBoxMonto)).BeginInit();
             this.SuspendLayout();
@@ -238,19 +238,6 @@
             this.cargarBtn.UseVisualStyleBackColor = false;
             this.cargarBtn.Click += new System.EventHandler(this.button3_Click);
             // 
-            // SinTarjetasLink
-            // 
-            this.SinTarjetasLink.AutoSize = true;
-            this.SinTarjetasLink.LinkColor = System.Drawing.Color.Red;
-            this.SinTarjetasLink.Location = new System.Drawing.Point(454, 181);
-            this.SinTarjetasLink.Name = "SinTarjetasLink";
-            this.SinTarjetasLink.Size = new System.Drawing.Size(286, 20);
-            this.SinTarjetasLink.TabIndex = 44;
-            this.SinTarjetasLink.TabStop = true;
-            this.SinTarjetasLink.Text = "Registre una tarjeta para cargar crédito";
-            this.SinTarjetasLink.Visible = false;
-            this.SinTarjetasLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-            // 
             // textBoxCliente
             // 
             this.textBoxCliente.Enabled = false;
@@ -333,11 +320,22 @@
             this.textBoxMonto.Size = new System.Drawing.Size(296, 26);
             this.textBoxMonto.TabIndex = 117;
             // 
+            // verTarjetasBtn
+            // 
+            this.verTarjetasBtn.Location = new System.Drawing.Point(467, 109);
+            this.verTarjetasBtn.Name = "verTarjetasBtn";
+            this.verTarjetasBtn.Size = new System.Drawing.Size(108, 38);
+            this.verTarjetasBtn.TabIndex = 118;
+            this.verTarjetasBtn.Text = "Ver tarjetas";
+            this.verTarjetasBtn.UseVisualStyleBackColor = true;
+            this.verTarjetasBtn.Click += new System.EventHandler(this.button2_Click_1);
+            // 
             // CargaCreditoABM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1172, 626);
+            this.Controls.Add(this.verTarjetasBtn);
             this.Controls.Add(this.textBoxMonto);
             this.Controls.Add(this.panelAgregarTarjeta);
             this.Controls.Add(this.textBoxCliente);
@@ -347,7 +345,6 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.SinTarjetasLink);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.cargarBtn);
             this.Controls.Add(this.label9);
@@ -384,7 +381,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button cargarBtn;
-        private System.Windows.Forms.LinkLabel SinTarjetasLink;
         private System.Windows.Forms.TextBox textBoxCliente;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBoxTarjeta;
@@ -395,5 +391,6 @@
         private System.Windows.Forms.TextBox tarj_saldo;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.NumericUpDown textBoxMonto;
+        private System.Windows.Forms.Button verTarjetasBtn;
     }
 }
