@@ -168,7 +168,6 @@ namespace FrbaOfertas.CrearOferta
             int num = new Util().RandomNumber(1, 9);
             string codOferta = str + num.ToString();
             textBoxCodOferta.Text = codOferta;
-            buttonGen.Enabled = false;
         }
     }
 }
