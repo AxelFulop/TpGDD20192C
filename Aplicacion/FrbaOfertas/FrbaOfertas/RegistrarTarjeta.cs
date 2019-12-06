@@ -90,6 +90,13 @@ namespace FrbaOfertas
                     return;
                 }
 
+                Object ret = new Conexion().executeScalarFunction("obtenerIdCliente", user_cliente.Text);
+                if (ret == DBNull.Value) // Entra alguien que no es cliente
+                {
+                    MessageBox.Show("Cliente inexistente");
+                    return;
+                }
+
                 List<String> parametrosTarjeta = new List<String>() { "@numeroTarjeta",
                 "@tipoTarjeta", "@bancoTarjeta","@vencimientoFechaTarjeta","@cvvTarjeta","@userName"};
                 try
