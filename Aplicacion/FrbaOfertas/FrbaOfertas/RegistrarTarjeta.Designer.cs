@@ -43,6 +43,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.cargarBtn = new System.Windows.Forms.Button();
+            this.user_cliente = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.panelAgregarTarjeta.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,7 +61,7 @@
             this.panelAgregarTarjeta.Controls.Add(this.label4);
             this.panelAgregarTarjeta.Controls.Add(this.label3);
             this.panelAgregarTarjeta.Controls.Add(this.label2);
-            this.panelAgregarTarjeta.Location = new System.Drawing.Point(50, 73);
+            this.panelAgregarTarjeta.Location = new System.Drawing.Point(500, 89);
             this.panelAgregarTarjeta.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelAgregarTarjeta.Name = "panelAgregarTarjeta";
             this.panelAgregarTarjeta.Size = new System.Drawing.Size(628, 417);
@@ -175,7 +177,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label1.Location = new System.Drawing.Point(46, 48);
+            this.label1.Location = new System.Drawing.Point(496, 64);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(232, 20);
@@ -205,11 +207,31 @@
             this.cargarBtn.UseVisualStyleBackColor = false;
             this.cargarBtn.Click += new System.EventHandler(this.cargarBtn_Click);
             // 
+            // user_cliente
+            // 
+            this.user_cliente.Location = new System.Drawing.Point(166, 105);
+            this.user_cliente.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.user_cliente.Name = "user_cliente";
+            this.user_cliente.Size = new System.Drawing.Size(273, 26);
+            this.user_cliente.TabIndex = 46;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(39, 108);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(114, 20);
+            this.label7.TabIndex = 47;
+            this.label7.Text = "Usuario cliente";
+            // 
             // RegistrarTarjeta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1174, 635);
+            this.Controls.Add(this.user_cliente);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.cargarBtn);
             this.Controls.Add(this.panelAgregarTarjeta);
@@ -246,5 +268,7 @@
         private System.Windows.Forms.DateTimePicker dateTimePickerFechaVenc;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button cargarBtn;
+        private System.Windows.Forms.TextBox user_cliente;
+        private System.Windows.Forms.Label label7;
     }
 }
